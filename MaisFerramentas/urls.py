@@ -11,4 +11,6 @@ urlpatterns = [
     path('ferramentas/registrar_frequencia', def_registrar_frequencia, name='def_registrar_frequencia'),
 
     path('ferramentas/cadastrar_novo_usuario', def_cadastrar_novo_usuario, name='cadastrar_novo_usuario'),
+
+    path('', def_frequencia, name='pagina_principal'),
 ]
