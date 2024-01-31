@@ -1,0 +1,197 @@
+1.- Download do Python https://www.python.org/
+
+2.- Adicione o Python como uma Variavais do ambiente -> Este Computador/Propriedades/Configurações do Sistema/Variavais do ambiente/Variaveis do Sistema/Path/Editar/Novo
+
+3.- Instale o Django PIP Install Django
+
+4.- CMD - Crie um projeto django-admin startproject [Nome] / cd [Nome]
+
+5.- Instale o  adaptador PostgreSQL pip install psycopg2-binary
+
+6.- Use o VSCODE e abra a pasta do projeto criado
+
+7.- No arquivo settings.py
+    7.1- Na sessão INSTALLED_APPS adicione o [Nome] aplicativo criado.
+    7.2- Configure o banco de dados na sessão DATABASES
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'kwjetfdy',
+            'USER': 'kwjetfdy',
+            'PASSWORD': 'OJykuUEJI4lH6Km7VWyuwKjoudClVcUQ',
+            'HOST': 'silly.db.elephantsql.com',
+            'PORT': '5432',
+        }
+    }
+
+8.- No arquivo model.py crie um modelo de dados que será utilizado
+    
+    from django.db import models
+    class Frequencia(models.Model):
+        id_membro_interno = models.IntegerField(primary_key=True)
+        status_frequencia = models.CharField(max_length=255)
+
+9.-No arquivo views.py crie a consulta que será feita no banco
+
+    from django.shortcuts import render
+    from .models import Frequencia
+
+        def frequencia(request):
+            dados_frequencia = Frequencia.objects.raw('''
+                SELECT a."id_membro_interno", a."status_frequencia"
+                FROM "MaisFerramentas"."tb_Frequencia" a
+                INNER JOIN "MaisFerramentas"."tb_Membros" b
+                ON a."id_membro_interno" = b."id_membro_interno"
+            ''')
+
+            return render(request, 'frequencia.html', {'dados_frequencia': dados_frequencia})
+
+10.- Crie um arquvio Urls.py no aplicativo e adicione uma rota para acessar a view
+    from django.urls import path
+    from .views import frequencia
+
+    urlpatterns = [
+        path('frequencia/', frequencia, name='frequencia'),
+    ]
+
+11.- No arquivo Urls.py do projeto adicione uma rota para acessar o aplicativo:
+    urlpatterns = [
+        path('admin/', admin.site.urls),
+        path('', include('MaisFerramentas.urls')), 
+    ]
+
+12.- Execute no terminal do projeto: python manage.py makemigrations e python manage.py migrate que fará as migrações --Create model Frequencia
+
+13.- Crie a pasta Templates
+
+14.- Crie um template para renderizar
+    <!DOCTYPE html>
+    <html lang="en">
+        <h1>Tabela de Frequência</h1>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>ID Membro Interno</th>
+                    <th>Status de Frequência</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for dado in dados_frequencia %}
+                <tr>
+                    <td>{{ dado.id_membro_interno }}</td>
+                    <td>{{ dado.status_frequencia }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </html>
+
+15.- Execute no terminal: python manage.py runserver par ainiciar o servidor
+
+16.- Acesse http://localhost:8000/frequencia/ 
+
+
+
+
+--------------------------------------------
+
+1.- Download do Python https://www.python.org/
+
+2.- Adicione o Python como uma Variavais do ambiente -> Este Computador/Propriedades/Configurações do Sistema/Variavais do ambiente/Variaveis do Sistema/Path/Editar/Novo
+
+3.- Instale o Django PIP Install Django
+
+4.- CMD - Crie um projeto django-admin startproject [Nome] / cd [Nome]
+
+5.- Instale o  adaptador PostgreSQL pip install psycopg2-binary
+
+6.- Use o VSCODE e abra a pasta do projeto criado
+
+7.- No arquivo settings.py
+    7.1- Na sessão INSTALLED_APPS adicione o [Nome] aplicativo criado.
+    7.2- Configure o banco de dados na sessão DATABASES
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'kwjetfdy',
+            'USER': 'kwjetfdy',
+            'PASSWORD': 'OJykuUEJI4lH6Km7VWyuwKjoudClVcUQ',
+            'HOST': 'silly.db.elephantsql.com',
+            'PORT': '5432',
+        }
+    }
+
+8.- No arquivo model.py crie um modelo de dados que será utilizado
+    
+    from django.db import models
+
+    class Frequencia(models.Model):
+        # id = models.AutoField(primary_key=True)
+        id_membro_interno = models.IntegerField(primary_key=True)
+        status_frequencia = models.CharField(max_length=255)
+
+        class Meta:
+            db_table = '"MaisFerramentas". "tb_Frequencia"'
+            managed = False
+
+9.-No arquivo views.py crie a consulta que será feita no banco
+
+    from django.shortcuts import render
+    from .models import Frequencia
+
+    def frequencia(request):
+        # dados_frequencia = Frequencia.objects.raw('''
+        #     SELECT a.id_membro_interno, a.status_frequencia
+        #     FROM "MaisFerramentas"."tb_Frequencia" a
+        #     INNER JOIN "MaisFerramentas"."tb_Membros" b
+        #     ON a.id_membro_interno = b.id_membro_interno
+        # ''')
+        dados_frequencia = Frequencia.objects.all()
+
+        return render(request, 'frequencia.html', {'dados_frequencia': dados_frequencia})
+
+10.- Crie um arquvio Urls.py no aplicativo e adicione uma rota para acessar a view
+    from django.urls import path
+    from .views import frequencia
+
+    urlpatterns = [
+        path('frequencia/', frequencia, name='frequencia'),
+    ]
+
+11.- No arquivo Urls.py do projeto adicione uma rota para acessar o aplicativo:
+    urlpatterns = [
+        path('admin/', admin.site.urls),
+        path('', include('MaisFerramentas.urls')), 
+    ]
+
+12.- Execute no terminal do projeto: python manage.py makemigrations e python manage.py migrate que fará as migrações --Create model Frequencia
+
+13.- Crie a pasta Templates
+
+14.- Crie um template para renderizar
+    <!DOCTYPE html>
+    <html lang="en">
+        <h1>Tabela de Frequência</h1>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>ID Membro Interno</th>
+                    <th>Status de Frequência</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for dado in dados_frequencia %}
+                <tr>
+                    <td>{{ dado.id_membro_interno }}</td>
+                    <td>{{ dado.status_frequencia }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </html>
+
+15.- Execute no terminal: python manage.py runserver par ainiciar o servidor
+
+16.- Acesse http://localhost:8000/frequencia/ 
+
+

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exemplo DataTables com Botão de Impressão</title>
+
+    <!-- Estilos -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.7.1/css/buttons.dataTables.min.css">
+
+    <!-- JavaScript -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.7.1/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.print.min.js"></script>
+</head>
+
+<body>
+    <table id="example" class="display">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Position</th>
+                <th>Office</th>
+                <th>Age</th>
+                <th>Start date</th>
+                <th>Salary</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+            </tr>
+            <!-- Adicione mais linhas conforme necessário -->
+        </tbody>
+    </table>
+
+    <script>
+        $(document).ready(function () {
+            // Inicialize a tabela
+            var tabela = $("#example").DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'print'
+                ]
+            });
+
+            // Acesse o botão de impressão
+            var botaoPrint = new $.fn.dataTable.Buttons(tabela, {
+                buttons: [
+                    'print'
+                ]
+            });
+
+            // Verifique se o botão de impressão existe
+            if (botaoPrint.s.buttons.length > 0) {
+                console.log('Botão de impressão existe!');
+
+                // Adicione um evento de clique ao botão de impressão
+                botaoPrint.s.buttons[0].action(function (e, dt, button, config) {
+                    console.log('Botão de impressão clicado!');
+                    // Adicione aqui o código que você deseja executar quando o botão de impressão for clicado
+                });
+            } else {
+                console.log('Botão de impressão NÃO existe!');
+            }
+        });
+    </script>
+</body>
+
+</html>
