@@ -27,6 +27,16 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['maisferramentas-98f68a386705.herokuapp.com']
 
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [os.path.join(BASE_DIR, 'Templates')],
+        'APP_DIRS': True,
+        # ...
+    },
+]
+
+
 
 # Application definition
 
