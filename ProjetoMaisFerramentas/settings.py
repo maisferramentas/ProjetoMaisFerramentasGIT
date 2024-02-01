@@ -25,7 +25,11 @@ SECRET_KEY = 'django-insecure-utvdvax^5vjpdyo82(k24@6d#@1h*81dvto=+-=r+in_iym9pj
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['maisferramentas-98f68a386705.herokuapp.com']
+ALLOWED_HOSTS = [
+    'maisferramentas-98f68a386705.herokuapp.com',
+    '127.0.0.1',
+
+]
 
 
 
@@ -80,6 +84,14 @@ TEMPLATES = [
         'DIRS': [os.path.join(BASE_DIR, 'MaisFerramentas/Templates')],
         'APP_DIRS': True,
         # ...
+                'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+            ],
+        },
     },
 ]
 

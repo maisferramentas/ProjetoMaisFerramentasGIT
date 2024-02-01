@@ -1731,7 +1731,7 @@
         inserido_em,
         inserido_por,
       },
-      url: "../registrar_frequencia",
+      url: "/ferramentas/frequencia/registrar_frequencia",
       success: function (data) {
         // console.log(data.retorno);
         tabela.ajax.reload(function () {
@@ -1898,7 +1898,7 @@
     inserido_por = 90;
 
     $.ajax({
-      url: "../cadastrar_novo_usuario",
+      url: "/ferramentas/frequencia/cadastrar_novo_usuario",
       data: {
         nome_interno,
         sexo,
