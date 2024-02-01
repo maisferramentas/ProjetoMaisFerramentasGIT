@@ -1612,70 +1612,70 @@
   }
 
   function imprimir() {
+    // if (relatorios === "desativado") {
+    //   // relatorio();
+    //   status_relatorio_reativar = "sim";
+    // }
     if (status_sidebar != "escondida") {
-        sidebar_escondida();
+      sidebar_escondida();
     }
 
     if (
-        document.querySelector(".div_tabela_contagem_organizacao").style
-            .display === "none"
+      document.querySelector(".div_tabela_contagem_organizacao").style
+        .display === "none"
     ) {
-        document.querySelector(".div_tabela_contagem_organizacao").style.display =
-            "flex";
+      document.querySelector(".div_tabela_contagem_organizacao").style.display =
+        "flex";
     }
 
     janelaImpressao = window;
     janelaImpressao.document
-        .querySelectorAll(
-            " .botao_imprime,.botao_relatorios_filtros, .junino , .caixa_de_filtros, .sidebar, .menu, .botao_adicionar_a_lista, .configuracoes_frequencia, .dataTables_length, .dataTables_filter, .dataTables_info, .dataTables_paginate"
-        )
-        .forEach(function (elemento) {
-            elemento.style.display = "none";
-        });
+      .querySelectorAll(
+        " .botao_imprime,.botao_relatorios_filtros, .junino , .caixa_de_filtros, .sidebar, .menu, .botao_adicionar_a_lista, .configuracoes_frequencia, .dataTables_length, .dataTables_filter, .dataTables_info, .dataTables_paginate"
+      )
+      .forEach(function (elemento) {
+        elemento.style.display = "none";
+      });
 
     janelaImpressao.document.querySelector(
-        ".div_registro_frequencia"
+      ".div_registro_frequencia"
     ).style.marginBottom = "0px";
 
-    function afterPrintHandler() {
+    janelaImpressao.addEventListener("afterprint", function () {
+      setTimeout(() => {
         janelaImpressao.document
-            .querySelectorAll(
-                ".sidebar, .menu, .botao_relatorios_filtros, .botao_adicionar_a_lista, .configuracoes_frequencia, .dataTables_length, .dataTables_filter, .dataTables_info, .dataTables_paginate"
-            )
-            .forEach(function (elemento) {
-                elemento.style.display = "";
-            });
+          .querySelectorAll(
+            ".sidebar, .menu, .botao_relatorios_filtros, .botao_adicionar_a_lista, .configuracoes_frequencia, .dataTables_length, .dataTables_filter, .dataTables_info, .dataTables_paginate"
+          )
+          .forEach(function (elemento) {
+            elemento.style.display = "";
+          });
         janelaImpressao.document.querySelector(
-            ".botao_relatorios_filtros"
+          ".botao_relatorios_filtros"
         ).style.display = "flex";
         janelaImpressao.document.querySelector(".botao_imprime").style.display =
-            "flex";
+          "flex";
         janelaImpressao.document.querySelector(
-            ".div_registro_frequencia"
+          ".div_registro_frequencia"
         ).style.marginBottom = "25px";
 
         sidebar_escondida();
 
+        // if (status_relatorio_reativar === "sim") {
+        //   // relatorio();
+        // }
+
+        // janelaImpressao.document.removeEventListener("afterprint");
+        janelaImpressao.removeEventListener("afterprint", arguments.callee);
+
         window.scrollTo({
-            top: 385,
+          top: 385,
         });
+      }, 1000);
+    });
 
-        // Remover os eventos após a execução
-        janelaImpressao.removeEventListener("beforeprint", beforePrintHandler);
-        janelaImpressao.removeEventListener("afterprint", afterPrintHandler);
-    }
-
-    // Adicionar evento antes da impressão
-    function beforePrintHandler() {
-        // Suas ações antes da impressão aqui
-    }
-
-    janelaImpressao.addEventListener("beforeprint", beforePrintHandler);
-    janelaImpressao.addEventListener("afterprint", afterPrintHandler);
-
-    // Chamar a impressão
     janelaImpressao.print();
-}
+  }
 
   data_frequencia = document.getElementById("data").value;
   function filtros() {
