@@ -1641,38 +1641,38 @@
       ".div_registro_frequencia"
     ).style.marginBottom = "0px";
 
-    janelaImpressao.addEventListener("afterprint", function () {
-      setTimeout(() => {
-        janelaImpressao.document
-          .querySelectorAll(
-            ".sidebar, .menu, .botao_relatorios_filtros, .botao_adicionar_a_lista, .configuracoes_frequencia, .dataTables_length, .dataTables_filter, .dataTables_info, .dataTables_paginate"
-          )
-          .forEach(function (elemento) {
-            elemento.style.display = "";
-          });
-        janelaImpressao.document.querySelector(
-          ".botao_relatorios_filtros"
-        ).style.display = "flex";
-        janelaImpressao.document.querySelector(".botao_imprime").style.display =
-          "flex";
-        janelaImpressao.document.querySelector(
-          ".div_registro_frequencia"
-        ).style.marginBottom = "25px";
+    // janelaImpressao.addEventListener("afterprint", function () {
+    //   setTimeout(() => {
+    //     janelaImpressao.document
+    //       .querySelectorAll(
+    //         ".sidebar, .menu, .botao_relatorios_filtros, .botao_adicionar_a_lista, .configuracoes_frequencia, .dataTables_length, .dataTables_filter, .dataTables_info, .dataTables_paginate"
+    //       )
+    //       .forEach(function (elemento) {
+    //         elemento.style.display = "";
+    //       });
+    //     janelaImpressao.document.querySelector(
+    //       ".botao_relatorios_filtros"
+    //     ).style.display = "flex";
+    //     janelaImpressao.document.querySelector(".botao_imprime").style.display =
+    //       "flex";
+    //     janelaImpressao.document.querySelector(
+    //       ".div_registro_frequencia"
+    //     ).style.marginBottom = "25px";
 
-        sidebar_escondida();
+    //     sidebar_escondida();
 
-        // if (status_relatorio_reativar === "sim") {
-        //   // relatorio();
-        // }
+    //     // if (status_relatorio_reativar === "sim") {
+    //     //   // relatorio();
+    //     // }
 
-        // janelaImpressao.document.removeEventListener("afterprint");
-        janelaImpressao.removeEventListener("afterprint", arguments.callee);
+    //     // janelaImpressao.document.removeEventListener("afterprint");
+    //     janelaImpressao.removeEventListener("afterprint", arguments.callee);
 
-        window.scrollTo({
-          top: 385,
-        });
-      }, 1000);
-    });
+    //     window.scrollTo({
+    //       top: 385,
+    //     });
+    //   }, 1000);
+    // });
 
     janelaImpressao.print();
   }
