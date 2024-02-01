@@ -908,7 +908,7 @@
       </div>
 
       <div
-        style="display: none; flex-direction: column;"
+        style="display: none; flex-direction: column;margin-left: 33px;margin-top:13px;"
         id="caixa_de_filtros"
         class="caixa_de_filtros"
       >
@@ -1115,7 +1115,7 @@
       >
         <table id="tabela_contagem_organizacao">
           <thead>
-            <th>Organização</th>
+            <th>Organiz.</th>
             <th>Total</th>
             <th>Freq.</th>
             <th>Faltas</th>
@@ -1221,51 +1221,54 @@
       .column(4, { search: "applied" })
       .data()
       .each(function (data) {
-        if (data.organizacao === "Q. Elderes" && data.status_frequencia === 1) {
+        if (
+          data.organizacao === "Q. Elderes" &&
+          document.getElementById(data.id_membro_interno).checked === true
+        ) {
           contador_qelderes_presentes++;
         } else if (
           data.organizacao === "Q. Elderes" &&
-          data.status_frequencia === 0
+          document.getElementById(data.id_membro_interno).checked === false
         ) {
           contador_qelderes_absenteista++;
         } else if (
           data.organizacao === "S. Socorro" &&
-          data.status_frequencia === 1
+          document.getElementById(data.id_membro_interno).checked === true
         ) {
           contador_ssocorro_presentes++;
         } else if (
           data.organizacao === "S. Socorro" &&
-          data.status_frequencia === 0
+          document.getElementById(data.id_membro_interno).checked === false
         ) {
           contador_ssocorro_absenteista++;
         } else if (
           data.organizacao === "Rapazes" &&
-          data.status_frequencia === 1
+          document.getElementById(data.id_membro_interno).checked === true
         ) {
           contador_rapazes_presentes++;
         } else if (
           data.organizacao === "Rapazes" &&
-          data.status_frequencia === 0
+          document.getElementById(data.id_membro_interno).checked === false
         ) {
           contador_rapazes_absenteista++;
         } else if (
           data.organizacao === "Moças" &&
-          data.status_frequencia === 1
+          document.getElementById(data.id_membro_interno).checked === true
         ) {
           contador_mocas_presentes++;
         } else if (
           data.organizacao === "Moças" &&
-          data.status_frequencia === 0
+          document.getElementById(data.id_membro_interno).checked === false
         ) {
           contador_mocas_absenteista++;
         } else if (
           data.organizacao === "Primária" &&
-          data.status_frequencia === 1
+          document.getElementById(data.id_membro_interno).checked === true
         ) {
           contador_primaria_presentes++;
         } else if (
           data.organizacao === "Primária" &&
-          data.status_frequencia === 0
+          document.getElementById(data.id_membro_interno).checked === false
         ) {
           contador_primaria_absenteista++;
         }
@@ -1512,7 +1515,7 @@
 
             card =
               `
-              <div class="card_membro">` +
+              <div class="card_membro" style="max-width = 370px;">` +
               avatar +
               `
 
@@ -1586,7 +1589,7 @@
 
   function numeros() {
     if (
-      $("#tabela_contagem_organizacao").DataTable() != null &&
+      $("#tabela_contagem_organizacao").DataTable() != null ||
       $("#tabela_contagem_organizacao").DataTable() != undefined
     ) {
       $("#tabela_contagem_organizacao").DataTable().destroy();
@@ -1613,7 +1616,7 @@
     //   // relatorio();
     //   status_relatorio_reativar = "sim";
     // }
-
+    alert(status_sidebar);
     if (status_sidebar != "escondida") {
       sidebar_escondida();
     }
@@ -1718,8 +1721,15 @@
 
     if (document.getElementById(id_membro_interno).checked) {
       status_frequencia = 1;
+      contador++;
+      document.getElementById("contador").textContent =
+        "Frequência: " + contador;
+      numeros();
     } else {
       status_frequencia = 0;
+      contador--;
+      document.getElementById("contador").textContent =
+        "Frequência: " + contador;
     }
 
     $.ajax({
