@@ -2203,14 +2203,8 @@
       document.getElementById("ministradores_para_absenteistas").checked = true;
       document.getElementById("ministradores_para_presentes").checked = false;
 
-      if (
-        document.querySelector(".div_tabela_contagem_organizacao").style
-          .display === "none"
-      ) {
-        document.querySelector(
-          ".div_tabela_contagem_organizacao"
-        ).style.display = "flex";
-      }
+      document.querySelector(".div_tabela_contagem_organizacao").style.display =
+        "flex";
 
       // document.getElementById('filtro_Deoutraala').checked = false;
 
@@ -2243,6 +2237,11 @@
 
       relatorios = "desativado";
     }
+
+    window.scrollTo({
+      top: 640,
+      behavior: "smooth",
+    });
   }
 
   function exibir_ministradores() {
@@ -2260,7 +2259,7 @@
       relatorios_filtros = "ativo";
     } else {
       document.querySelector(".junino").style.display = "none";
-
+      document.getElementById("caixa_de_filtros").style.display = "none";
       relatorios_filtros = "inativo";
     }
   }
