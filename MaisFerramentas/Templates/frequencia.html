@@ -60,6 +60,15 @@
     color-adjust: exact !important;                 /* Firefox 48 – 96 */
     print-color-adjust: exact !important;           /* Firefox 97+, Safari 15.4+ */
     }
+
+    .botao_imprime, .botao_relatorios_filtros, .junino , .sidebar , .caixa_de_filtros, .menu, .botao_adicionar_a_lista, .configuracoes_frequencia, .dataTables_length, .dataTables_filter, .dataTables_info, .dataTables_paginate {
+      display:none !important;
+    }
+
+    .content {
+      margin-left: 0px !important;
+    }
+
   }
 
   .check_presenca {
@@ -1616,9 +1625,9 @@
     //   // relatorio();
     //   status_relatorio_reativar = "sim";
     // }
-    if (status_sidebar != "escondida") {
-      sidebar_escondida();
-    }
+    // if (status_sidebar != "escondida") {
+    //   sidebar_escondida();
+    // }
 
     if (
       document.querySelector(".div_tabela_contagem_organizacao").style
@@ -1629,17 +1638,17 @@
     }
 
     janelaImpressao = window;
-    janelaImpressao.document
-      .querySelectorAll(
-        " .botao_imprime,.botao_relatorios_filtros, .junino , .caixa_de_filtros, .sidebar, .menu, .botao_adicionar_a_lista, .configuracoes_frequencia, .dataTables_length, .dataTables_filter, .dataTables_info, .dataTables_paginate"
-      )
-      .forEach(function (elemento) {
-        elemento.style.display = "none";
-      });
+    // janelaImpressao.document
+    //   .querySelectorAll(
+    //     " .botao_imprime,.botao_relatorios_filtros, .junino , .caixa_de_filtros, .sidebar, .menu, .botao_adicionar_a_lista, .configuracoes_frequencia, .dataTables_length, .dataTables_filter, .dataTables_info, .dataTables_paginate"
+    //   )
+    //   .forEach(function (elemento) {
+    //     elemento.style.display = "none";
+    //   });
 
-    janelaImpressao.document.querySelector(
-      ".div_registro_frequencia"
-    ).style.marginBottom = "0px";
+    // janelaImpressao.document.querySelector(
+    //   ".div_registro_frequencia"
+    // ).style.marginBottom = "0px";
 
     // janelaImpressao.addEventListener("afterprint", function () {
     //   setTimeout(() => {
