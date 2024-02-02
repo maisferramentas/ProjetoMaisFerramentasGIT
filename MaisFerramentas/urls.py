@@ -12,7 +12,7 @@ urlpatterns = [
 
     path('ferramentas/frequencia/cadastrar_novo_usuario', def_cadastrar_novo_usuario, name='cadastrar_novo_usuario'),
 
-    path('', def_frequencia, name='pagina_principal'),
+    path('', def_login, name='pagina_principal'),
 
     path('ferramentas/login', def_login, name='def_login'),
     
