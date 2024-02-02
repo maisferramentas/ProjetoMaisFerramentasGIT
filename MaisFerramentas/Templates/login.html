@@ -1,95 +1,122 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login</title>
+    <link rel="stylesheet" href="styles.css" />
     <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            background-color: #002040; /* Cor de fundo */
-        }
 
-        .login-container {
-            background-color: #003057;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 300px;
-            text-align: center;
-        }
+                  body {
+                      font-family: 'Arial', sans-serif;
+                      margin: 0;
+                      padding: 0;
+                      display: flex;
+                      align-items: center;
+                      justify-content: center;
+                      height: 100vh;
+                      background-color: #f2f2f2;
+                  }
 
-        h2 {
-            color: #0099c8; /* Cor do texto principal */
-        }
+                  .login-container {
+                      background-color: #fff;
+                      padding: 20px;
+                      border-radius: 8px;
+                      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                      width: 300px;
+                  }
 
-        form {
-            display: flex;
-            flex-direction: column;
-        }
+                  h2 {
+                      text-align: center;
+                      color: #333;
+                  }
 
-        label {
-            margin-bottom: 8px;
-            color: #00bfff; /* Cor do texto secundário */
-        }
+                  form {
+                      display: flex;
+                      flex-direction: column;
+                  }
 
-        input {
-            padding: 10px;
-            margin-bottom: 16px;
-            border: 1px solid #1E90FF;
-            border-radius: 4px;
-        }
+                  label {
+                      margin-bottom: 8px;
+                      color: #555;
+                  }
 
-        button {
-            padding: 10px;
-            background-color: #1E90FF; /* Cor do botão */
-            color: #fff;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
+                  input {
+                      padding: 10px;
+                      margin-bottom: 16px;
+                      border: 1px solid #ccc;
+                      border-radius: 4px;
+                  }
 
-        button:hover {
-            background-color: #0099c8;
-        }
+                  button {
+                      padding: 10px;
+                      background-color: #4caf50;
+                      color: #fff;
+                      border: none;
+                      border-radius: 4px;
+                      cursor: pointer;
+                      transition: background-color 0.3s ease;
+                  }
+
+                  button:hover {
+                      background-color: #45a049;
+                  }
+
+
+              .capela{
+                display: inline-block ;
+                background: linear-gradient(to right, #002040, #003057, #0099c8, #00bfff,#1E90FF);
+              }
+
+              .ferramentas {
+                display: inline-block;
+              }
+              .ferramentas h1 {
+            font-style: normal;
+            transform: skewX(-20deg);
+            font-size: 180%;
+          }
+
+          a {
+        text-decoration: none;
+        color: white;
+        font-weight: bold;
+        transition: color 0.3s;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="login-container">
-        <h2>Login</h2>
-        <form id="loginForm">
-            <label for="username">Nome de Usuário:</label>
-            <input type="text" id="username" name="username" required>
+      <a href="#">
+        <div class="capela">
+          <svg
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+            style="width: 25px; height: 25px; background-color:white; border-radius: 20%"
+            onclick="sidebar_escondida()"
+          >
+            <path
+              d="M19.75 15v5.75h-5.409v-3.637A2.343 2.343 0 0 0 12 14.772a2.343 2.343 0 0 0-2.341 2.341v3.637H4.25V15h-.056l6.223-3.007c.208-.1.358-.29.407-.516L12 6.045l1.176 5.432a.748.748 0 0 0 .407.516L19.806 15h-.056zm-5.185-4.198l-1.832-8.461c-.171-.788-1.295-.788-1.466 0l-1.832 8.461-7.761 3.75a.75.75 0 1 0 .652 1.351l.424-.205V21.5c0 .414.336.75.75.75h17a.75.75 0 0 0 .75-.75v-5.802l.424.205a.75.75 0 1 0 .652-1.351l-7.761-3.75z"
+            ></path>
+          </svg>
+          <!-- <div class="ferramentas"  onclick="sidebar_block_responsive_verify('!mobile')"> -->
+          <div class="ferramentas" onclick="sidebar_travada()">
+            <h1>+Ferramentas</h1>
+          </div>
+        </div>
+      </a>
+      <h2>Login</h2>
+      <form id="loginForm">
+        <label for="username">Usuário:</label>
+        <input type="text" id="username" name="username" required />
 
-            <label for="password">Senha:</label>
-            <input type="password" id="password" name="password" required>
+        <label for="password">Senha:</label>
+        <input type="password" id="password" name="password" required />
 
-            <button type="button" onclick="submitForm()">Entrar</button>
-        </form>
+        <button type="button" onclick="submitForm()">Entrar</button>
+      </form>
     </div>
 
-    <script>
-        function submitForm() {
-            var username = document.getElementById("username").value;
-            var password = document.getElementById("password").value;
-
-            // Aqui você pode adicionar lógica para enviar os dados para o servidor (por exemplo, usando AJAX)
-            // e realizar a autenticação no lado do servidor.
-
-            // Exemplo básico:
-            if (username === "seu_usuario" && password === "sua_senha") {
-                alert("Login bem-sucedido!"); // Substitua isso pela lógica de redirecionamento real
-            } else {
-                alert("Nome de usuário ou senha inválidos.");
-            }
-        }
-    </script>
-</body>
+    <script src="script.js"></script>
+  </body>
 </html>
