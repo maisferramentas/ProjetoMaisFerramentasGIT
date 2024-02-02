@@ -113,10 +113,26 @@
         <label for="password">Senha:</label>
         <input type="password" id="password" name="password" required />
 
-        <button type="button" onclick="submitForm()">Entrar</button>
+        <button type="button" onclick="entrar()">Entrar</button>
       </form>
     </div>
 
-    <script src="script.js"></script>
+    <!-- <script src="script.js"></script> -->
   </body>
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script>
+    function entrar() {
+      $.ajax({
+        url: "../ferramentas/",
+        success: function (data) {
+          console.log(data);
+        },
+        data: function (data) {
+          console.log(data);
+        },
+      });
+
+      window.location.href = "/ferramentas/";
+    }
+  </script>
 </html>
