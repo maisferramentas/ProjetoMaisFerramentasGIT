@@ -17,6 +17,7 @@
                       height: 100vh;
                       background-color: #f2f2f2;
                       background: linear-gradient(to right, #002040, #0099c8);
+                      flex-direction: column;
                   }
 
                   .login-container {
@@ -89,9 +90,25 @@
         font-weight: bold;
         transition: color 0.3s;
       }
+      .topo{
+        width: 100%;
+        background-color: white;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
     </style>
   </head>
   <body>
+    <div class="topo">
+      <img
+        id="headerLogo"
+        src="https://www.churchofjesuschrist.org/services/platform/v4/resources/static/logo/por.svg"
+        alt="The Church of Jesus Christ of Latter-day Saints"
+        height="80px"
+      />
+    </div>
     <div class="login-container">
       <a href="#">
         <div class="capela">
@@ -111,7 +128,7 @@
           </div>
         </div>
       </a>
-      <h2>Login</h2>
+      <h2>Acesso</h2>
       <form id="loginForm">
         <label for="username">Usuário:</label>
         <input type="text" id="username" name="username" required />
