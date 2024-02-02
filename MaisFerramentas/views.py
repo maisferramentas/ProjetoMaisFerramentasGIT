@@ -24,7 +24,9 @@ def def_dados_frequencia(request):
 
     return JsonResponse({"data": data}, safe=False)
 
-
+def def_login(request):
+    return render(request, 'login.html')
+    
 def def_frequencia(request):
     return render(request, 'frequencia.html')
 

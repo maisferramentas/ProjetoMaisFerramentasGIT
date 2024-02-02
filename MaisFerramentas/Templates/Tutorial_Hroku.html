@@ -1,0 +1,95 @@
+<!-- 
+Crie uma conta no heroku
+    https://www.heroku.com/    
+Adicione um cartão
+    https://heroku.com/verify
+Instale o Heroku CLI no seu computador 
+    https://devcenter.heroku.com/articles/heroku-cli.
+Instale o GIT
+    https://git-scm.com/download/win
+Crie uma conta no gitHub
+https://github.com/
+crie um diretório
+guarde o link do diretório
+
+prepare o python, CMD no projeto:
+pip install gunicorn
+pip install whitenoise
+python manage.py collectstatic --se isso não criar uma pasta com o nome static, crie um pasta com o nome heroku run python manage.py collectstatic --noinput
+
+
+Ajustar o arquivo settings: 
+-- não remova nada do que jáexiste, apenas adicione os comandos em cada sessão
+
+import os 
+BASE_DIR / 'subdir'. BASE_DIR = Path(__file__).resolve().parent.parent
+
+ALLOWED_HOSTS = [ 'maisferramentas-98f68a386705.herokuapp.com', '127.0.0.1', ] 
+
+MIDDLEWARE = [
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+]
+
+
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [os.path.join(BASE_DIR, 'MaisFerramentas/Templates')],
+        'APP_DIRS': True,
+        # ...
+                'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+            ],
+        },
+    },
+]
+
+WSGI_APPLICATION = 'ProjetoMaisFerramentas.wsgi.application'
+
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+--fim dos ajustes em settings
+
+Crie o requerimento de dependências no diretório de sua aplicação
+    pip freeze > requirements.txt
+
+Crie um arquivo sem extensão chamado Procfile
+web: python manage.py collectstatic --noinput && gunicorn ProjetoMaisFerramentas.wsgi
+
+Crie um arquivo chamado runtime.txt e específique a versão python a ser usada 
+python-3.9.*
+
+GIT
+git init
+git config --global --add safe.directory D:/Projetos/ProjetoMaisFerramentas
+git remote add origin https://github.com/maisferramentas/maisferramentas.git
+git config --global user.email "maisferramentasmail@gmail.com"
+git config --global user.name "maisferramentas"
+git add .
+git commit -m "Primeiro commit"
+git push heroku master
+
+CMD
+heroku login
+heroku create nome-unico-da-sua-aplicacao
+heroku addons:create heroku-postgresql
+heroku config:set DJANGO_SETTINGS_MODULE=nome_do_seu_projeto.settings.prod
+heroku config:set DISABLE_COLLECTSTATIC=1
+heroku run python manage.py collectstatic --noinput
+heroku run python manage.py migrate
+heroku open
+
+
+
+
+
+
+-->
