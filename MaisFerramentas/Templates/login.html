@@ -110,6 +110,8 @@
     </style>
   </head>
   <body>
+    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}" />
+
     <!-- <div class="topo">
       <img
         id="headerLogo"
@@ -163,17 +165,40 @@
   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
   <script>
     function entrar() {
+      //   $.ajax({
+      //     url: "../ferramentas/",
+      //     success: function (data) {
+      //       console.log(data);
+      //     },
+      //     data: function (data) {
+      //       console.log(data);
+      //     },
+      //   });
+
+      //   window.location.href = "/ferramentas/";
+      username = document.getElementById("username").value;
+      password = document.getElementById("password").value;
+      csrf_token = document.getElementsByName("csrfmiddlewaretoken")[0].value;
+
       $.ajax({
-        url: "../ferramentas/",
-        success: function (data) {
-          console.log(data);
+        type: "POST",
+        url: "autenticar/",
+        data: {
+          username: username,
+          password: password,
+          csrfmiddlewaretoken: csrf_token, // Inclua o token CSRF na sua solicitação
         },
-        data: function (data) {
-          console.log(data);
+        success: function (response) {
+          if (response.status === "success") {
+            window.location.href = response.redirect;
+          } else {
+            alert("Erro de autenticação: " + response.message);
+          }
+        },
+        error: function () {
+          alert("Erro de conexão com o servidor");
         },
       });
-
-      window.location.href = "/ferramentas/";
     }
   </script>
 </html>

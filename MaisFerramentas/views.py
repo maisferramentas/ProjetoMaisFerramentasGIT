@@ -1,11 +1,13 @@
 from django.core.serializers import serialize
 from django.http import JsonResponse
 # from .models import Frequencia
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.forms.models import model_to_dict
 from django.db.models import Q 
 from datetime import date
 from django.utils import timezone
+from django.contrib.auth.decorators import login_required
+
 
 # def dados_frequencia(request):
 #     dados_frequencia = Frequencia.objects.all()
@@ -26,7 +28,9 @@ def def_dados_frequencia(request):
 
 def def_login(request):
     return render(request, 'login.html')
-    
+    # return redirect('/login.html/')
+
+@login_required
 def def_frequencia(request):
     return render(request, 'frequencia.html')
 
@@ -90,3 +94,21 @@ def def_cadastrar_novo_usuario(request):
 
     # return JsonResponse({"retorno": "Cadastro Registrado."}, safe=False)
     return JsonResponse({'id_membro_interno': id_membro_interno})
+
+from django.contrib.auth import authenticate, login
+from django.http import JsonResponse
+
+def autenticar(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            login(request, user)
+            return JsonResponse({'status': 'success', 'redirect': '/ferramentas/'})
+        else:
+            return JsonResponse({'status': 'error', 'message': 'Credenciais inválidas'})
+
+    return JsonResponse({'status': 'error', 'message': 'Método não permitido'})
