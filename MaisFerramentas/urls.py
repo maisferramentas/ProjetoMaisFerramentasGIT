@@ -7,7 +7,7 @@ from .views import def_dados_frequencia,def_frequencia,def_registrar_frequencia,
 urlpatterns = [
     path('ferramentas/frequencia/dados_frequencia/', def_dados_frequencia, name='def_dados_frequencia'),
 
-    path('ferramentas/', login_required(def_frequencia), name='def_frequencia'),
+    path('ferramentas/', def_frequencia, name='def_frequencia'),
 
     path('ferramentas/frequencia/registrar_frequencia', def_registrar_frequencia, name='def_registrar_frequencia'),
 

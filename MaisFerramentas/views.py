@@ -16,6 +16,7 @@ from django.contrib.auth.decorators import login_required
 #     return JsonResponse({"data": data}, safe=False)
 
 from .models import model_dados_frequencia
+@login_required
 def def_dados_frequencia(request):
     data_frequencia = request.GET.get('data_frequencia')
     id_tipo_frequencia = request.GET.get('id_tipo_frequencia')
@@ -57,6 +58,7 @@ def def_registrar_frequencia(request):
     return JsonResponse({"retorno": "Frequência Registrada."}, safe=False)
 
 from .models import model_cadastrar_novo_usuario
+@login_required
 def def_cadastrar_novo_usuario(request):
     nome_interno = request.GET.get('nome_interno')
     sexo = request.GET.get('sexo')
