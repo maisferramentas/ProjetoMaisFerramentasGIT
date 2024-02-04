@@ -66,3 +66,13 @@ class model_cadastrar_novo_usuario(models.Model):
     class Meta: 
         db_table = '"maisferramentas"."tb_usuarios"'
 
+class model_tb_acesso(models.Model):
+    versao_id_acesso  = models.AutoField(primary_key=True)
+    id_acesso = models.IntegerField()
+    id_membro_interno  = models.IntegerField()
+    nome_usuario_login = models.CharField(max_length=255)
+    id_tipo_acesso = models.IntegerField()
+
+    class Meta: 
+        db_table = '"maisferramentas"."tb_acessos"'
+

@@ -7,6 +7,7 @@ from django.db.models import Q
 from datetime import date
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.cache import never_cache
 
 
 # def dados_frequencia(request):
@@ -27,6 +28,7 @@ def def_dados_frequencia(request):
 
     return JsonResponse({"data": data}, safe=False)
 
+@never_cache
 def def_login(request):
     return render(request, 'login.html')
     # return redirect('/login.html/')
@@ -42,7 +44,9 @@ def def_registrar_frequencia(request):
     id_membro_interno = request.GET.get('id_membro_interno')
     status_frequencia = request.GET.get('status_frequencia')
     inserido_em = request.GET.get('inserido_em')
-    inserido_por = request.GET.get('inserido_por')
+    # inserido_por = request.GET.get('inserido_por')
+    inserido_por = model_tb_acesso.objects.filter(nome_usuario_login=def_usuario_logado(request)).values_list('id_membro_interno', flat=True).first()
+
 
     registrar_frequencia = model_registrar_frequencia(
         data_frequencia = data_frequencia,
@@ -64,7 +68,8 @@ def def_cadastrar_novo_usuario(request):
     sexo = request.GET.get('sexo')
     ano_do_nascimento = request.GET.get('ano_do_nascimento')
     id_perfil = request.GET.get('id_perfil')
-    inserido_por = request.GET.get('inserido_por')
+    # inserido_por = request.GET.get('inserido_por')
+    inserido_por = model_tb_acesso.objects.filter(nome_usuario_login=def_usuario_logado(request)).values_list('id_membro_interno', flat=True).first()
     
     cadastrar_novo_usuario = model_cadastrar_novo_usuario(
         nome_interno = nome_interno,
@@ -100,6 +105,7 @@ def def_cadastrar_novo_usuario(request):
 from django.contrib.auth import authenticate, login
 from django.http import JsonResponse
 
+from .models import model_tb_acesso
 def autenticar(request):
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -114,3 +120,30 @@ def autenticar(request):
             return JsonResponse({'status': 'error', 'message': 'Credenciais inválidas'})
 
     return JsonResponse({'status': 'error', 'message': 'Método não permitido'})
+
+from django.contrib.auth import logout
+from django.shortcuts import redirect
+
+def custom_logout(request):
+    logout(request)
+    return redirect('/ferramentas/login')  # Redireciona para a página de login após o logout
+
+def def_deslogar(request):
+    logout(request)
+
+    return redirect('/ferramentas/login')  # Redireciona para a página de login após o logout
+
+from django.http import JsonResponse
+
+def def_usuario_logado(request):
+    if request.user.is_authenticated:
+        usuario_logado = request.user.username
+        return usuario_logado
+    else:
+        return JsonResponse({'usuario_logado': None})
+
+def def_dados_usuario_logado(request):
+    id_membro_interno = model_tb_acesso.objects.filter(nome_usuario_login=def_usuario_logado(request)).values_list('id_membro_interno', flat=True).first()
+    nome_usuario_login = model_tb_acesso.objects.filter(nome_usuario_login=def_usuario_logado(request)).values_list('nome_usuario_login', flat=True).first()
+
+    return JsonResponse({'id_membro_interno': id_membro_interno, 'nome_usuario_logado':nome_usuario_login})

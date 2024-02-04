@@ -107,6 +107,10 @@
         align-items: center;
         margin-bottom: 10px;
       }
+      .swal2-popup {
+        width: 350px!important;
+        height: 300px!important;
+      }
     </style>
   </head>
   <body>
@@ -156,13 +160,14 @@
         <label for="password">Senha:</label>
         <input type="password" id="password" name="password" required />
 
-        <button type="button" onclick="entrar()">Entrar</button>
+        <button type="button" id="botao_entrar" onclick="entrar()">Entrar</button>
       </form>
     </div>
 
     <!-- <script src="script.js"></script> -->
   </body>
   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
   <script>
     function entrar() {
       //   $.ajax({
@@ -180,6 +185,9 @@
       password = document.getElementById("password").value;
       csrf_token = document.getElementsByName("csrfmiddlewaretoken")[0].value;
 
+      document.getElementById('botao_entrar').style.backgroundColor = '#ccc'
+      
+
       $.ajax({
         type: "POST",
         url: "autenticar/",
@@ -190,15 +198,42 @@
         },
         success: function (response) {
           if (response.status === "success") {
-            window.location.href = response.redirect;
+            // window.location.href = response.redirect;
+            // usuario_logado = response.id_membro_interno;
+            window.location.replace(response.redirect);
+            
           } else {
-            alert("Erro de autenticação: " + response.message);
+            alerta("Acesso negado", "Verifique usuário e senha e tente novamente!", "error");
+            document.getElementById('botao_entrar').style.backgroundColor = ''
           }
         },
         error: function () {
-          alert("Erro de conexão com o servidor");
+          alerta("Erro", "Contate o administrador!", "error");
+          console.log(
+          data.responseText.slice(
+            data.responseText.match("<th>Exception Value:</th>").index,
+            data.responseText.match("<th>Exception Value:</th>").index + 300
+          )
+        );
         },
       });
     }
+
+
+    function alerta(titulo, texto, icone) {
+    // titulo = "Adicionar à Lista";
+    // texto = "Novo registro salvo com sucesso!";
+    // icone = "success";
+
+    Swal.fire({
+      title: titulo,
+      text: texto,
+      icon: icone,
+      confirmButtonText: "Ok!",
+      timer: false,
+      //showConfirmButton: false,
+    });
+  }
+
   </script>
 </html>
