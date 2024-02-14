@@ -841,6 +841,7 @@
           document.querySelector(".overlay").style.marginLeft = "0px";
         }
       } else {
+        alert(status_sidebar_antigo);
         document.querySelector(".sidebar").style.visibility = "visible";
         document.querySelector(".sidebar").style.display = "block";
 
@@ -1065,9 +1066,6 @@
           element.style.display = "block";
         }
       });
-
-      status_sidebar_antigo = "travada";
-      status_sidebar = "escondida";
     } else {
       status_sidebar = "pequena";
       sidebar_travada();
