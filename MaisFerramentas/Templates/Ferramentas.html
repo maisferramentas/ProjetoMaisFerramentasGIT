@@ -825,7 +825,7 @@
         },
       });
     });
-    status_sidebar = "pequena";
+
     function sidebar_escondida() {
       if (status_sidebar != "escondida") {
         document.querySelector(".sidebar").style.width = "0px";
@@ -1065,7 +1065,10 @@
           element.style.display = "block";
         }
       });
+
+      status_sidebar = "escondida";
     } else {
+      status_sidebar = "pequena";
       sidebar_travada();
     }
 
@@ -1102,11 +1105,11 @@
         // Coloque aqui o código que deseja executar quando ocorrer o clique
         if (isMobile === true) {
           // status_sidebar = "travada";
+          // status_sidebar = "travada";
           sidebar_escondida();
         }
       });
     });
-
     //document.querySelector('button').addEventListener('mouseover', function() {this.style.backgroundColor = '#18c753'; /* Cor de fundo ao passar o mouse */ });
 
     // Remove estilo ao retirar o mouse
