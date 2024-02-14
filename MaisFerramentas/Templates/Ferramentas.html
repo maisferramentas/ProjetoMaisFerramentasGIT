@@ -827,7 +827,6 @@
     });
 
     function sidebar_escondida() {
-      alert(" antigo: " + status_sidebar);
       if (status_sidebar != "escondida") {
         document.querySelector(".sidebar").style.width = "0px";
         document.querySelector(".content").style.marginLeft = "0px";
@@ -870,6 +869,7 @@
           //console.log(teste);
         }
       }
+      alert(" antigo: " + status_sidebar_antigo);
       alert(" Atual: " + status_sidebar);
     }
 
