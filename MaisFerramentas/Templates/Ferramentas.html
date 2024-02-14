@@ -854,7 +854,7 @@
         }
 
         if (isMobile === true) {
-          sidebar_grande();
+          // sidebar_grande();
           document.querySelector(".overlay").style.display = "block";
           document.querySelector(".overlay").style.backgroundColor =
             "rgba(0, 0, 0, 0.4)";
@@ -1101,6 +1101,7 @@
       elemento.addEventListener("click", function () {
         // Coloque aqui o código que deseja executar quando ocorrer o clique
         if (isMobile === true) {
+          status_sidebar = "travada";
           sidebar_escondida();
         }
       });
