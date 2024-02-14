@@ -8,6 +8,8 @@ from datetime import date
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.cache import never_cache
+from django.http import HttpResponse
+from django.template.loader import render_to_string 
 
 
 # def dados_frequencia(request):
@@ -36,6 +38,14 @@ def def_login(request):
 @login_required
 def def_frequencia(request):
     return render(request, 'frequencia.html')
+
+@login_required
+def def_atas_template(request):
+    return render(request, 'ata_reuniao.html')
+
+@login_required
+def def_Ferramentas_template(request):
+    return render(request, 'Ferramentas.html')
 
 from .models import model_registrar_frequencia
 def def_registrar_frequencia(request):

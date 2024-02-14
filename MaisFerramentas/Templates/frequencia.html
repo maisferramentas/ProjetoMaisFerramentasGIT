@@ -1,166 +1,167 @@
-{% extends 'Ferramentas.html' %} {% block content %}
-
 <!-- <script src="javascript.js"></script> -->
 
-<head>
-  <!-- Estilos -->
-  <link
-    rel="stylesheet"
-    type="text/css"
-    href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css"
-  />
-  <link
-    rel="stylesheet"
-    type="text/css"
-    href="https://cdn.datatables.net/buttons/1.7.1/css/buttons.dataTables.min.css"
-  />
+<!-- Estilos -->
+<!-- <link
+  rel="stylesheet"
+  type="text/css"
+  href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css"
+/>
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="https://cdn.datatables.net/buttons/1.7.1/css/buttons.dataTables.min.css"
+/> -->
 
-  <!-- JavaScript -->
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-  <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
-  <!-- <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script> -->
+<!-- JavaScript -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script> -->
+<!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
+<!-- <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script> -->
 
-  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-  <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
-  <script src="https://cdn.datatables.net/buttons/1.7.1/js/dataTables.buttons.min.js"></script>
-  <script src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.print.min.js"></script>
+<!-- <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.7.1/js/dataTables.buttons.min.js"></script> -->
+<!-- <script src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.print.min.js"></script> -->
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.js"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.js"></script> -->
 
-  <!-- DataTables CSS e JS -->
+<!-- DataTables CSS e JS -->
 
-  <!-- DataTables Buttons CSS e JS -->
-  <script
-    type="text/javascript"
-    src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.html5.min.js"
-  ></script>
-  <script
-    type="text/javascript"
-    src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"
-  ></script>
-  <script
-    type="text/javascript"
-    src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.flash.min.js"
-  ></script>
-  <script
-    type="text/javascript"
-    src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.colVis.min.js"
-  ></script>
-</head>
+<!-- DataTables Buttons CSS e JS -->
+<!-- <script
+  type="text/javascript"
+  src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.html5.min.js"
+></script> -->
+<!-- <script
+  type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"
+></script>
+<script
+  type="text/javascript"
+  src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.flash.min.js"
+></script>
+<script
+  type="text/javascript"
+  src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.colVis.min.js"
+></script> -->
 <style>
   .swal2-popup {
     width: 350px;
     height: 300px;
   }
 
-  @media print
-  {
-    .check_presenca{
-    -webkit-print-color-adjust: exact !important;   /* Chrome, Safari 6 – 15.3, Edge */
-    color-adjust: exact !important;                 /* Firefox 48 – 96 */
-    print-color-adjust: exact !important;           /* Firefox 97+, Safari 15.4+ */
+  @media print {
+    .check_presenca {
+      -webkit-print-color-adjust: exact !important; /* Chrome, Safari 6 – 15.3, Edge */
+      color-adjust: exact !important; /* Firefox 48 – 96 */
+      print-color-adjust: exact !important; /* Firefox 97+, Safari 15.4+ */
     }
 
-    .botao_imprime, .botao_relatorios_filtros, .junino , .sidebar , .caixa_de_filtros, .menu, .botao_adicionar_a_lista, .configuracoes_frequencia, .dataTables_length, .dataTables_filter, .dataTables_info, .dataTables_paginate {
-      display:none !important;
+    .botao_imprime,
+    .botao_relatorios_filtros,
+    .junino,
+    .sidebar,
+    .caixa_de_filtros,
+    .menu,
+    .botao_adicionar_a_lista,
+    .configuracoes_frequencia,
+    .dataTables_length,
+    .dataTables_filter,
+    .dataTables_info,
+    .dataTables_paginate {
+      display: none !important;
     }
 
     .content {
       margin-left: 0px !important;
     }
-
   }
 
   .check_presenca {
-            width: 23px;
-            height: 23px;
-            color: dodgerblue;
-            vertical-align: middle;
-            -webkit-appearance: none;
-            background: none;
-            border: 0;
-            outline: 0;
-            flex-grow: 0;
-            border-radius: 50%;
-            background-color: #FFFFFF;
-            transition: background 300ms;
-            cursor: pointer;
-            /* background-color: dodgerblue;
+    width: 23px;
+    height: 23px;
+    color: dodgerblue;
+    vertical-align: middle;
+    -webkit-appearance: none;
+    background: none;
+    border: 0;
+    outline: 0;
+    flex-grow: 0;
+    border-radius: 50%;
+    background-color: #ffffff;
+    transition: background 300ms;
+    cursor: pointer;
+    /* background-color: dodgerblue;
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E %3Cpath d='M15.88 8.29L10 14.17l-1.88-1.88a.996.996 0 1 0-1.41 1.41l2.59 2.59c.39.39 1.02.39 1.41 0L17.3 9.7a.996.996 0 0 0 0-1.41c-.39-.39-1.03-.39-1.42 0z' fill='%23fff'/%3E %3C/svg%3E"); */
-          }
+  }
 
+  /* Pseudo element for check styling */
 
-          /* Pseudo element for check styling */
+  .check_presenca::before {
+    content: "";
+    color: transparent;
+    display: block;
+    width: inherit;
+    height: inherit;
+    border-radius: inherit;
+    border: 0;
+    background-color: transparent;
+    background-size: contain;
+    box-shadow: inset 0 0 0 1px #003057;
+    /* #002040, #003057, #0099c8, #00bfff,#1E90FF */
+  }
 
-          .check_presenca::before {
-            content: "";
-            color: transparent;
-            display: block;
-            width: inherit;
-            height: inherit;
-            border-radius: inherit;
-            border: 0;
-            background-color: transparent;
-            background-size: contain;
-            box-shadow: inset 0 0 0 1px #003057;
-            /* #002040, #003057, #0099c8, #00bfff,#1E90FF */
-          }
+  /* Checked */
 
-                    /* Checked */
+  .check_presenca:checked {
+    background-color: currentcolor;
+    background-color: dodgerblue;
+  }
 
-          .check_presenca:checked {
-            background-color: currentcolor;
-            background-color: dodgerblue;
-          }
+  .check_presenca:checked::before {
+    box-shadow: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E %3Cpath d='M15.88 8.29L10 14.17l-1.88-1.88a.996.996 0 1 0-1.41 1.41l2.59 2.59c.39.39 1.02.39 1.41 0L17.3 9.7a.996.996 0 0 0 0-1.41c-.39-.39-1.03-.39-1.42 0z' fill='%23fff'/%3E %3C/svg%3E");
+  }
 
-          .check_presenca:checked::before {
-            box-shadow: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E %3Cpath d='M15.88 8.29L10 14.17l-1.88-1.88a.996.996 0 1 0-1.41 1.41l2.59 2.59c.39.39 1.02.39 1.41 0L17.3 9.7a.996.996 0 0 0 0-1.41c-.39-.39-1.03-.39-1.42 0z' fill='%23fff'/%3E %3C/svg%3E");
-          }
+  /* Disabled */
 
+  .check_presenca:disabled {
+    background-color: #ccd3d8;
+    opacity: 0.84;
+    cursor: not-allowed;
+  }
 
-          /* Disabled */
+  /* IE */
 
-          .check_presenca:disabled {
-            background-color: #CCD3D8;
-            opacity: 0.84;
-            cursor: not-allowed;
-          }
+  .check_presenca::-ms-check {
+    content: "";
+    color: transparent;
+    display: block;
+    width: inherit;
+    height: inherit;
+    border-radius: inherit;
+    border: 0;
+    background-color: transparent;
+    background-size: contain;
+    box-shadow: inset 0 0 0 1px #ccd3d8;
+  }
 
-
-
-          /* IE */
-
-          .check_presenca::-ms-check {
-            content: "";
-            color: transparent;
-            display: block;
-            width: inherit;
-            height: inherit;
-            border-radius: inherit;
-            border: 0;
-            background-color: transparent;
-            background-size: contain;
-            box-shadow: inset 0 0 0 1px #CCD3D8;
-          }
-
-          /* .check_presenca:checked::-ms-check {
+  /* .check_presenca:checked::-ms-check {
             box-shadow: none;
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E %3Cpath d='M15.88 8.29L10 14.17l-1.88-1.88a.996.996 0 1 0-1.41 1.41l2.59 2.59c.39.39 1.02.39 1.41 0L17.3 9.7a.996.996 0 0 0 0-1.41c-.39-.39-1.03-.39-1.42 0z' fill='%23fff'/%3E %3C/svg%3E");
           } */
-          .div_check_presenca{
-            padding-bottom: 5px;
-          }
+  .div_check_presenca {
+    padding-bottom: 5px;
+  }
 
-          .estilo_copia_avatar{
-            margin-top: -20px;
-            margin-left: 15px;
-          }
+  .estilo_copia_avatar {
+    margin-top: -20px;
+    margin-left: 15px;
+  }
 
-          .estilo_copia_avatar_mulher{
-            margin-top: -20px;
-            margin-left: 3px;
-          }
+  .estilo_copia_avatar_mulher {
+    margin-top: -20px;
+    margin-left: 3px;
+  }
   #example {
     border: none;
   }
@@ -202,13 +203,13 @@
       max-width: 400px;
       display: flex;
       flex-direction: column;
-      /* background-color: rgba(92, 100, 109, 0.2);
+      background-color: rgba(92, 100, 109, 0.2);
       background: linear-gradient(
         to bottom,
         rgba(92, 100, 109, 0.3),
         rgba(92, 100, 109, 0.17),
         transparent 130%
-      ); */
+      );
       /* margin-right: auto; */
       align-items: center;
       justify-content: center;
@@ -337,12 +338,24 @@
       onclick="filtros()"
     /> -->
     <div
-      style="display: flex; align-items: center; flex-direction: column; font-weight: bold;color: #003057;"
+      style="
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        font-weight: bold;
+        color: #003057;
+      "
     >
       <label for="" id="descricao">Exibindo listagem de Frequência para: </label
       ><br />
       <div
-        style="display: flex; align-items: center; flex-direction: column;font-weight: bold;color: #003057;"
+        style="
+          display: flex;
+          align-items: center;
+          flex-direction: column;
+          font-weight: bold;
+          color: #003057;
+        "
       >
         <label for="" id="indicador_topo"></label>
       </div>
@@ -828,12 +841,12 @@
       <div
         class="botao_imprime"
         style="
-        margin-top: 15px;
-        color: #003057;
-        display: flex;
-        /* flex-direction: column;  */
-        align-items: center;
-      "
+          margin-top: 15px;
+          color: #003057;
+          display: flex;
+          /* flex-direction: column;  */
+          align-items: center;
+        "
         onclick="imprimir()"
       >
         <span class="material-symbols-outlined" style="margin-right: 5px">
@@ -848,12 +861,12 @@
       <div
         class="botao_relatorios_filtros"
         style="
-        margin-top: 15px;
-        color: #003057;
-        display: flex;
-        /* flex-direction: column;  */
-        align-items: center;
-      "
+          margin-top: 15px;
+          color: #003057;
+          display: flex;
+          /* flex-direction: column;  */
+          align-items: center;
+        "
         onclick="relatorio_filtros()"
       >
         <span class="material-symbols-outlined"> expand_more </span>
@@ -862,35 +875,41 @@
 
       <div
         class="junino"
-        style="display: flex; justify-content: center; flex-direction: column; align-items: center; "
+        style="
+          display: flex;
+          justify-content: center;
+          flex-direction: column;
+          align-items: center;
+        "
       >
-        <div style="display: flex; justify-content: center; margin-top: 20px;">
+        <div style="display: flex; justify-content: center; margin-top: 20px">
           <div
             class="div_botao_relatorio"
             style="
-      display: flex; align-items: center; 
-      border: #d49012 1px solid; 
-      border-radius: 10px 10px 10px 10px; 
-      width: 190px;
-      justify-content: center;  
-      
-      background-color: #d49012;
-      font-size: large;
-      border: 2px solid #d49012;
-      background-color: transparent;
-      color: #d49012;
-      padding: 5px 10px; /* Ajuste conforme necessário */
-      cursor: pointer;
-      transition: background-color 0.3s, color 0.3s;      
-      "
+              display: flex;
+              align-items: center;
+              border: #d49012 1px solid;
+              border-radius: 10px 10px 10px 10px;
+              width: 190px;
+              justify-content: center;
+
+              background-color: #d49012;
+              font-size: large;
+              border: 2px solid #d49012;
+              background-color: transparent;
+              color: #d49012;
+              padding: 5px 10px; /* Ajuste conforme necessário */
+              cursor: pointer;
+              transition: background-color 0.3s, color 0.3s;
+            "
             onclick="relatorio()"
           >
             <span
               class="material-icons icone_frequencia_sidebar"
               style="
-      color: #d49012;
-      font-variation-settings: 'FILL' 0, 'GRAD' 0, 'opsz' 24;
-      "
+                color: #d49012;
+                font-variation-settings: 'FILL' 0, 'GRAD' 0, 'opsz' 24;
+              "
             >
               fact_check
             </span>
@@ -901,12 +920,12 @@
         <div
           class="botao_fitros"
           style="
-        margin-top: 15px;
-        color: #d49012;
-        display: flex;
-        /* flex-direction: column;  */
-        align-items: center;
-      "
+            margin-top: 15px;
+            color: #d49012;
+            display: flex;
+            /* flex-direction: column;  */
+            align-items: center;
+          "
           onclick="aba_filtros()"
         >
           <span class="material-symbols-outlined" style="margin-right: 5px">
@@ -917,11 +936,16 @@
       </div>
 
       <div
-        style="display: none; flex-direction: column;margin-left: 33px;margin-top:13px;"
+        style="
+          display: none;
+          flex-direction: column;
+          margin-left: 33px;
+          margin-top: 13px;
+        "
         id="caixa_de_filtros"
         class="caixa_de_filtros"
       >
-        <div style="display: flex; align-items: center; margin-left: 92px;">
+        <div style="display: flex; align-items: center; margin-left: 92px">
           <input
             type="checkbox"
             checked
@@ -931,10 +955,10 @@
           />Selecionar Todos
         </div>
 
-        <label for="" style="margin-top: 5px; margin-bottom: 5px; "
+        <label for="" style="margin-top: 5px; margin-bottom: 5px"
           >Gênero:</label
         >
-        <div style="display: flex; align-items: center;margin-left: 92px;">
+        <div style="display: flex; align-items: center; margin-left: 92px">
           <input
             type="checkbox"
             checked
@@ -944,7 +968,7 @@
           />Homem
         </div>
 
-        <div style="display: flex; align-items: center;margin-left: 92px;">
+        <div style="display: flex; align-items: center; margin-left: 92px">
           <input
             type="checkbox"
             name=""
@@ -954,8 +978,8 @@
           />Mulher
         </div>
 
-        <label for="" style="margin-top: 5px; margin-bottom: 5px;">Tipo:</label>
-        <div style="display: flex; align-items: center;margin-left: 92px;">
+        <label for="" style="margin-top: 5px; margin-bottom: 5px">Tipo:</label>
+        <div style="display: flex; align-items: center; margin-left: 92px">
           <input
             type="checkbox"
             name=""
@@ -965,7 +989,7 @@
           />Membro
         </div>
 
-        <div style="display: flex; align-items: center;margin-left: 92px;">
+        <div style="display: flex; align-items: center; margin-left: 92px">
           <input
             type="checkbox"
             name=""
@@ -975,7 +999,7 @@
           />Visitante
         </div>
 
-        <div style="display: flex; align-items: center;margin-left: 92px;">
+        <div style="display: flex; align-items: center; margin-left: 92px">
           <input
             type="checkbox"
             name=""
@@ -985,7 +1009,7 @@
           />Criança
         </div>
 
-        <div style="display: flex; align-items: center;margin-left: 92px;">
+        <div style="display: flex; align-items: center; margin-left: 92px">
           <input
             type="checkbox"
             name=""
@@ -995,10 +1019,10 @@
           />De outra Ala
         </div>
 
-        <label for="" style="margin-top: 5px; margin-bottom: 5px;"
+        <label for="" style="margin-top: 5px; margin-bottom: 5px"
           >Status:</label
         >
-        <div style="display: flex; align-items: center;margin-left: 92px;">
+        <div style="display: flex; align-items: center; margin-left: 92px">
           <input
             type="checkbox"
             name=""
@@ -1008,7 +1032,7 @@
           />Ativo
         </div>
 
-        <div style="display: flex; align-items: center;margin-left: 92px;">
+        <div style="display: flex; align-items: center; margin-left: 92px">
           <input
             type="checkbox"
             name=""
@@ -1018,10 +1042,10 @@
           />Inativo
         </div>
 
-        <label for="" style="margin-top: 5px; margin-bottom: 5px;"
+        <label for="" style="margin-top: 5px; margin-bottom: 5px"
           >Frequência:</label
         >
-        <div style="display: flex; align-items: center;margin-left: 92px;">
+        <div style="display: flex; align-items: center; margin-left: 92px">
           <input
             type="checkbox"
             name=""
@@ -1030,7 +1054,7 @@
             onchange="alterar_filtros()"
           />Presente
         </div>
-        <div style="display: flex; align-items: center;margin-left: 92px;">
+        <div style="display: flex; align-items: center; margin-left: 92px">
           <input
             type="checkbox"
             name=""
@@ -1040,11 +1064,11 @@
           />Faltou
         </div>
 
-        <label for="" style="margin-top: 5px; margin-bottom: 5px;"
+        <label for="" style="margin-top: 5px; margin-bottom: 5px"
           >Organizações:</label
         >
 
-        <div style="display: flex; align-items: center;margin-left: 92px;">
+        <div style="display: flex; align-items: center; margin-left: 92px">
           <input
             type="checkbox"
             name=""
@@ -1053,7 +1077,7 @@
             onchange="alterar_filtros()"
           />S.Socorro
         </div>
-        <div style="display: flex; align-items: center;margin-left: 92px;">
+        <div style="display: flex; align-items: center; margin-left: 92px">
           <input
             type="checkbox"
             name=""
@@ -1062,7 +1086,7 @@
             onchange="alterar_filtros()"
           />Q.Elderes
         </div>
-        <div style="display: flex; align-items: center;margin-left: 92px;">
+        <div style="display: flex; align-items: center; margin-left: 92px">
           <input
             type="checkbox"
             name=""
@@ -1071,7 +1095,7 @@
             onchange="alterar_filtros()"
           />Rapazes
         </div>
-        <div style="display: flex; align-items: center;margin-left: 92px;">
+        <div style="display: flex; align-items: center; margin-left: 92px">
           <input
             type="checkbox"
             name=""
@@ -1080,7 +1104,7 @@
             onchange="alterar_filtros()"
           />Moças
         </div>
-        <div style="display: flex; align-items: center;margin-left: 92px;">
+        <div style="display: flex; align-items: center; margin-left: 92px">
           <input
             type="checkbox"
             name=""
@@ -1090,10 +1114,10 @@
           />Primária
         </div>
 
-        <label for="" style="margin-top: 5px; margin-bottom: 5px;"
+        <label for="" style="margin-top: 5px; margin-bottom: 5px"
           >Ministrantes:</label
         >
-        <div style="display: flex; align-items: center;">
+        <div style="display: flex; align-items: center">
           <input
             type="checkbox"
             name=""
@@ -1101,7 +1125,7 @@
             onchange="exibir_ministradores()"
           />Exibir Ministradores de membros presentes
         </div>
-        <div style="display: flex; align-items: center;">
+        <div style="display: flex; align-items: center">
           <input
             type="checkbox"
             name=""
@@ -1120,7 +1144,12 @@
 
       <div
         class="div_tabela_contagem_organizacao"
-        style="display: none; flex-direction: column; align-items: center; margin-bottom: 30px"
+        style="
+          display: none;
+          flex-direction: column;
+          align-items: center;
+          margin-bottom: 30px;
+        "
       >
         <table id="tabela_contagem_organizacao">
           <thead>
@@ -1135,26 +1164,26 @@
 
       <div
         class="botao_adicionar_a_lista"
-        style="display: flex; justify-content: center; padding-bottom: 30px;"
+        style="display: flex; justify-content: center; padding-bottom: 30px"
       >
         <div
           style="
-    display: flex; align-items: center; 
-    border: #319857 1px solid; 
-    border-radius: 10px 10px 10px 10px; 
-    width: 170px;
-    justify-content: center;  
-    
-    background-color: #319857;
-    font-size: large;
-    border: 2px solid #319857;
-    background-color: transparent;
-    color: #319857;
-    padding: 5px 10px; /* Ajuste conforme necessário */
-    cursor: pointer;
-    transition: background-color 0.3s, color 0.3s;
-    
-    "
+            display: flex;
+            align-items: center;
+            border: #319857 1px solid;
+            border-radius: 10px 10px 10px 10px;
+            width: 170px;
+            justify-content: center;
+
+            background-color: #319857;
+            font-size: large;
+            border: 2px solid #319857;
+            background-color: transparent;
+            color: #319857;
+            padding: 5px 10px; /* Ajuste conforme necessário */
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+          "
           onclick="
     document.querySelector('.cobertura_content').style.display = 'flex';
     document.querySelector('.inserir_regisro').style.display = 'flex';
@@ -1169,9 +1198,9 @@
           <span
             class="material-symbols-outlined"
             style="
-      color: #319857;
-      font-variation-settings: 'FILL' 0, 'GRAD' 0, 'opsz' 24;
-    "
+              color: #319857;
+              font-variation-settings: 'FILL' 0, 'GRAD' 0, 'opsz' 24;
+            "
           >
             group_add
           </span>
@@ -1403,9 +1432,9 @@
         // success: async function (data) {
         //   console.log(data);
         // },
-        // error: async function (data) {
-        //   console.log(data);
-        // },
+        error: async function (data) {
+          console.log(data);
+        },
       },
       // Especifique a rota do seu servidor que fornece os dados
       columns: [
@@ -2264,4 +2293,3 @@
     }
   }
 </script>
-{% endblock %}

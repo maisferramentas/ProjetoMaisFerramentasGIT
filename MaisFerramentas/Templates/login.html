@@ -6,92 +6,90 @@
     <title>Login</title>
     <link rel="stylesheet" href="styles.css" />
     <style>
+      body {
+        font-family: "Arial", sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        background-color: #f2f2f2;
+        background: linear-gradient(to right, #002040, #0099c8);
+        flex-direction: column;
+      }
 
-                  body {
-                      font-family: 'Arial', sans-serif;
-                      margin: 0;
-                      padding: 0;
-                      display: flex;
-                      align-items: center;
-                      justify-content: center;
-                      height: 100vh;
-                      background-color: #f2f2f2;
-                      background: linear-gradient(to right, #002040, #0099c8);
-                      flex-direction: column;
-                  }
+      .login-container {
+        /* margin-top: 40px; */
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        width: 300px;
+      }
 
-                  .login-container {
-                    /* margin-top: 40px; */
-                      background-color: #fff;
-                      padding: 20px;
-                      border-radius: 8px;
-                      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-                      width: 300px;
-                  }
+      h2 {
+        text-align: center;
+        color: #333;
+      }
 
-                  h2 {
-                      text-align: center;
-                      color: #333;
-                  }
+      form {
+        display: flex;
+        flex-direction: column;
+      }
 
-                  form {
-                      display: flex;
-                      flex-direction: column;
-                  }
+      label {
+        margin-bottom: 8px;
+        color: #555;
+      }
 
-                  label {
-                      margin-bottom: 8px;
-                      color: #555;
-                  }
+      input {
+        padding: 10px;
+        margin-bottom: 16px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
 
-                  input {
-                      padding: 10px;
-                      margin-bottom: 16px;
-                      border: 1px solid #ccc;
-                      border-radius: 4px;
-                  }
+      button {
+        padding: 10px;
+        background-color: #4caf50;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
 
-                  button {
-                      padding: 10px;
-                      background-color: #4caf50;
-                      color: #fff;
-                      border: none;
-                      border-radius: 4px;
-                      cursor: pointer;
-                      transition: background-color 0.3s ease;
-                  }
+      button:hover {
+        background-color: #45a049;
+      }
 
-                  button:hover {
-                      background-color: #45a049;
-                  }
+      .capela {
+        display: inline-block;
+        background: linear-gradient(to right, #002040, #003057, #0099c8);
+        width: 300px;
+        border-radius: 20px 20px 20px 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
 
+      .ferramentas {
+        display: inline-block;
+      }
+      .ferramentas h1 {
+        font-style: normal;
+        transform: skewX(-20deg);
+        font-size: 180%;
+      }
 
-              .capela{
-                display: inline-block ;
-                background: linear-gradient(to right, #002040, #003057, #0099c8);
-                width: 300px;
-                border-radius: 20px 20px 20px 20px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-              }
-
-              .ferramentas {
-                display: inline-block;
-              }
-              .ferramentas h1 {
-            font-style: normal;
-            transform: skewX(-20deg);
-            font-size: 180%;
-          }
-
-          a {
+      a {
         text-decoration: none;
         color: white;
         font-weight: bold;
         transition: color 0.3s;
       }
-      .topo{
+      .topo {
         width: 100%;
         background-color: white;
         margin-bottom: 20px;
@@ -101,15 +99,15 @@
         margin-top: 20px;
       }
 
-      .logo{
+      .logo {
         display: flex;
         justify-content: center;
         align-items: center;
         margin-bottom: 10px;
       }
       .swal2-popup {
-        width: 350px!important;
-        height: 300px!important;
+        width: 350px !important;
+        height: 300px !important;
       }
     </style>
   </head>
@@ -139,7 +137,12 @@
           <svg
             viewBox="0 0 24 24"
             xmlns="http://www.w3.org/2000/svg"
-            style="width: 25px; height: 25px; background-color:white; border-radius: 20%"
+            style="
+              width: 25px;
+              height: 25px;
+              background-color: white;
+              border-radius: 20%;
+            "
             onclick="sidebar_escondida()"
           >
             <path
@@ -160,7 +163,9 @@
         <label for="password">Senha:</label>
         <input type="password" id="password" name="password" required />
 
-        <button type="button" id="botao_entrar" onclick="entrar()">Entrar</button>
+        <button type="button" id="botao_entrar" onclick="entrar()">
+          Entrar
+        </button>
       </form>
     </div>
 
@@ -185,8 +190,8 @@
       password = document.getElementById("password").value;
       csrf_token = document.getElementsByName("csrfmiddlewaretoken")[0].value;
 
-      document.getElementById('botao_entrar').style.backgroundColor = '#ccc'
-      
+      document.getElementById("botao_entrar").style.backgroundColor = "#ccc";
+      document.getElementById("botao_entrar").style.display = "none";
 
       $.ajax({
         type: "POST",
@@ -201,39 +206,42 @@
             // window.location.href = response.redirect;
             // usuario_logado = response.id_membro_interno;
             window.location.replace(response.redirect);
-            
           } else {
-            alerta("Acesso negado", "Verifique usuário e senha e tente novamente!", "error");
-            document.getElementById('botao_entrar').style.backgroundColor = ''
+            alerta(
+              "Acesso negado",
+              "Verifique usuário e senha e tente novamente!",
+              "error"
+            );
+            document.getElementById("botao_entrar").style.backgroundColor = "";
+            document.getElementById("botao_entrar").style.display = "";
           }
         },
         error: function () {
           alerta("Erro", "Contate o administrador!", "error");
-          console.log(
-          // data.responseText.slice(
-          //   data.responseText.match("<th>Exception Value:</th>").index,
-          //   data.responseText.match("<th>Exception Value:</th>").index + 300
-          // )
-        );
+          console
+            .log
+            // data.responseText.slice(
+            //   data.responseText.match("<th>Exception Value:</th>").index,
+            //   data.responseText.match("<th>Exception Value:</th>").index + 300
+            // )
+            ();
         },
       });
     }
 
-
     function alerta(titulo, texto, icone) {
-    // titulo = "Adicionar à Lista";
-    // texto = "Novo registro salvo com sucesso!";
-    // icone = "success";
+      // titulo = "Adicionar à Lista";
+      // texto = "Novo registro salvo com sucesso!";
+      // icone = "success";
 
-    Swal.fire({
-      title: titulo,
-      text: texto,
-      icon: icone,
-      confirmButtonText: "Ok!",
-      timer: false,
-      //showConfirmButton: false,
-    });
-  }
-
+      Swal.fire({
+        title: titulo,
+        text: texto,
+        icon: icone,
+        confirmButtonText: "Ok!",
+        timer: false,
+        //showConfirmButton: false,
+      });
+    }
   </script>
 </html>
