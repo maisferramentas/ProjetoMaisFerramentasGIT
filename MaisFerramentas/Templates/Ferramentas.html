@@ -846,7 +846,7 @@
 
         status_sidebar = status_sidebar_antigo;
 
-        if (status_sidebar_antigo === "travada") {
+        if (status_sidebar_antigo === "travada" && !isMobile) {
           sidebar_grande();
         } else {
           sidebar_pequena();
@@ -854,7 +854,7 @@
         }
 
         if (isMobile === true) {
-          // sidebar_grande();
+          sidebar_grande();
           document.querySelector(".overlay").style.display = "block";
           document.querySelector(".overlay").style.backgroundColor =
             "rgba(0, 0, 0, 0.4)";
@@ -1085,7 +1085,7 @@
         url: url,
         type: "GET",
         success: function (data) {
-          console.log(data);
+          // console.log(data);
           $("#content").html(data); // Atualiza o conteúdo principal com o conteúdo da nova página
 
           // document.getElementById('content').innerHTML = data;
@@ -1101,7 +1101,7 @@
       elemento.addEventListener("click", function () {
         // Coloque aqui o código que deseja executar quando ocorrer o clique
         if (isMobile === true) {
-          status_sidebar = "travada";
+          // status_sidebar = "travada";
           sidebar_escondida();
         }
       });
