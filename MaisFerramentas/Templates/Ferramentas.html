@@ -848,7 +848,6 @@
 
         if (status_sidebar_antigo === "travada") {
           sidebar_grande();
-          alert("entrou");
         } else {
           sidebar_pequena();
           alert(status_sidebar_antigo);
@@ -1102,7 +1101,6 @@
       elemento.addEventListener("click", function () {
         // Coloque aqui o código que deseja executar quando ocorrer o clique
         if (isMobile === true) {
-          status_sidebar_antigo = "travada";
           sidebar_escondida();
         }
       });
