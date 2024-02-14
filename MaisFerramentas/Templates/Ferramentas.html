@@ -827,6 +827,7 @@
     });
 
     function sidebar_escondida() {
+      alert(" antigo: " + status_sidebar);
       if (status_sidebar != "escondida") {
         document.querySelector(".sidebar").style.width = "0px";
         document.querySelector(".content").style.marginLeft = "0px";
@@ -844,7 +845,6 @@
           status_sidebar = "escondida";
         }
       } else {
-        alert(status_sidebar_antigo);
         document.querySelector(".sidebar").style.visibility = "visible";
         document.querySelector(".sidebar").style.display = "block";
 
