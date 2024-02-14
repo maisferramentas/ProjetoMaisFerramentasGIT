@@ -846,7 +846,7 @@
 
         status_sidebar = status_sidebar_antigo;
 
-        if (status_sidebar_antigo === "travada" && !isMobile) {
+        if (status_sidebar_antigo === "travada" || isMobile === true) {
           sidebar_grande();
         } else {
           sidebar_pequena();
@@ -854,7 +854,7 @@
         }
 
         if (isMobile === true) {
-          sidebar_grande();
+          // sidebar_grande();
           document.querySelector(".overlay").style.display = "block";
           document.querySelector(".overlay").style.backgroundColor =
             "rgba(0, 0, 0, 0.4)";
