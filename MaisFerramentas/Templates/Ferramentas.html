@@ -850,9 +850,9 @@
 
         status_sidebar = status_sidebar_antigo;
 
-        if (status_sidebar_antigo === "travada" || isMobile === true) {
+        if (status_sidebar_antigo === "travada") {
           sidebar_grande();
-        } else {
+        } else if (isMobile != true) {
           sidebar_pequena();
         }
 
