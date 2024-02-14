@@ -1091,6 +1091,23 @@
       });
     }
 
+    // Seleciona todos os elementos com a classe "minha-classe"
+    var elementos = document.querySelectorAll(".suboptions_min");
+
+    // Adiciona um event listener de clique a cada elemento
+    elementos.forEach(function (elemento) {
+      elemento.addEventListener("click", function () {
+        // Coloque aqui o código que deseja executar quando ocorrer o clique
+        if (isMobile === true) {
+          sidebar_escondida();
+          alert("entrou");
+          console.log("entrou");
+        } else {
+          alert("nop");
+        }
+      });
+    });
+
     //document.querySelector('button').addEventListener('mouseover', function() {this.style.backgroundColor = '#18c753'; /* Cor de fundo ao passar o mouse */ });
 
     // Remove estilo ao retirar o mouse
