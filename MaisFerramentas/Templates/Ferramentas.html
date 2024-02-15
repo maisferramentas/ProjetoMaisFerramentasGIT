@@ -826,25 +826,24 @@
       });
     });
 
+    status_sidebar_antigo = null;
+    status_sidebar = null;
     function sidebar_escondida() {
+      alert(" antigo: " + status_sidebar_antigo);
+      alert(" Atual: " + status_sidebar);
       if (status_sidebar != "escondida") {
         //esse if aqui pode melhorar
-        if (isMobile === true && status_sidebar === "pequena") {
-          status_sidebar = "escondida";
-          sidebar_escondida();
-        } else {
-          document.querySelector(".sidebar").style.width = "0px";
-          document.querySelector(".content").style.marginLeft = "0px";
+        document.querySelector(".sidebar").style.width = "0px";
+        document.querySelector(".content").style.marginLeft = "0px";
 
-          status_sidebar_antigo = status_sidebar;
-          status_sidebar = "escondida";
+        status_sidebar_antigo = status_sidebar;
+        status_sidebar = "escondida";
 
-          if (isMobile === true) {
-            document.querySelector("body").style.position = "";
-            document.querySelector(".overlay").style.display = "none";
-            document.querySelector(".background-imgs").style.display = "none";
-            document.querySelector(".overlay").style.marginLeft = "0px";
-          }
+        if (isMobile === true) {
+          document.querySelector("body").style.position = "";
+          document.querySelector(".overlay").style.display = "none";
+          document.querySelector(".background-imgs").style.display = "none";
+          document.querySelector(".overlay").style.marginLeft = "0px";
         }
       } else {
         document.querySelector(".sidebar").style.visibility = "visible";
@@ -871,8 +870,6 @@
           //console.log(teste);
         }
       }
-      // alert(" antigo: " + status_sidebar_antigo);
-      // alert(" Atual: " + status_sidebar);
     }
 
     function sidebar_pequena() {
