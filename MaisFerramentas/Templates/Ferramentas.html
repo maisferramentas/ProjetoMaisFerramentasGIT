@@ -826,7 +826,7 @@
       });
     });
     function sidebar_escondida() {
-      if (status_sidebar != "escondida" && status_sidebar != "pequena") {
+      if (status_sidebar != "escondida") {
         document.querySelector(".sidebar").style.width = "0px";
         document.querySelector(".content").style.marginLeft = "0px";
 
@@ -838,9 +838,6 @@
           document.querySelector(".overlay").style.display = "none";
           document.querySelector(".background-imgs").style.display = "none";
           document.querySelector(".overlay").style.marginLeft = "0px";
-
-          status_sidebar_antigo = "travada";
-          status_sidebar = "escondida";
         }
       } else {
         document.querySelector(".sidebar").style.visibility = "visible";
@@ -855,7 +852,6 @@
         }
 
         if (isMobile === true) {
-          // sidebar_grande();
           document.querySelector(".overlay").style.display = "block";
           document.querySelector(".overlay").style.backgroundColor =
             "rgba(0, 0, 0, 0.4)";
@@ -1107,7 +1103,7 @@
         if (isMobile === true) {
           // status_sidebar = "travada";
           // status_sidebar = "travada";
-          sidebar_escondida();
+          sidebar_travada();
         }
       });
     });
