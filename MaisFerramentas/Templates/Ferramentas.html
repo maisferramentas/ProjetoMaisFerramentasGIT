@@ -853,6 +853,9 @@
         if (status_sidebar_antigo === "travada" || isMobile === true) {
           sidebar_grande();
         } else if (isMobile != true) {
+          alert(
+            "entrou aqui sidebar_escondida()  enviando para  sidebar_pequena()"
+          );
           sidebar_pequena();
         }
 
@@ -887,7 +890,7 @@
           document.getElementById(option_sidebar_selected).style.borderRadius =
             "";
         }
-        alert("entrou aqui");
+        alert("entrou aqui function sidebar_pequena");
         status_sidebar = "pequena";
       }
     }
@@ -1067,7 +1070,7 @@
         }
       });
     } else {
-      alert("entrou aqui");
+      alert("entrou aqui no ismobile");
       status_sidebar = "pequena";
       sidebar_travada();
     }
