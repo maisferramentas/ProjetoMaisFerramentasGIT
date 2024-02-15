@@ -874,24 +874,27 @@
     }
 
     function sidebar_pequena() {
-      if (status_sidebar != "travada") {
-        document.querySelector(".content").style.marginLeft = "";
-        document.querySelector(".sidebar").style.width = "";
-        document.querySelector(".div_botao_fixar").style.display = "none";
+      if (isMobile != true) {
+        if (status_sidebar != "travada") {
+          document.querySelector(".content").style.marginLeft = "";
+          document.querySelector(".sidebar").style.width = "";
+          document.querySelector(".div_botao_fixar").style.display = "none";
 
-        links = document.querySelectorAll(".option_sidebar a");
-        links.forEach(function (element) {
-          element.style.display = "none";
-        });
+          links = document.querySelectorAll(".option_sidebar a");
+          links.forEach(function (element) {
+            element.style.display = "none";
+          });
 
-        if (exibir_suboption != null) {
-          document.getElementById(exibir_suboption).style.display = "none";
-          document.getElementById(exibir_suboption).style.maxHeight = "0px";
-          document.getElementById(option_sidebar_selected).style.borderRadius =
-            "";
+          if (exibir_suboption != null) {
+            document.getElementById(exibir_suboption).style.display = "none";
+            document.getElementById(exibir_suboption).style.maxHeight = "0px";
+            document.getElementById(
+              option_sidebar_selected
+            ).style.borderRadius = "";
+          }
+          alert("entrou aqui function sidebar_pequena");
+          status_sidebar = "pequena";
         }
-        alert("entrou aqui function sidebar_pequena");
-        status_sidebar = "pequena";
       }
     }
 
