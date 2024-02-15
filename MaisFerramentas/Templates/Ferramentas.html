@@ -825,7 +825,6 @@
         },
       });
     });
-
     status_sidebar_antigo = null;
     status_sidebar = null;
     function sidebar_escondida() {
@@ -867,10 +866,6 @@
           teste = setTimeout(() => {
             document.querySelector(".overlay").style.marginLeft = "220px";
           }, 3);
-
-          status_sidebar_antigo = "travada";
-          status_sidebar = "travada";
-          //console.log(teste);
         }
       }
     }
@@ -1111,8 +1106,8 @@
         if (isMobile === true) {
           // status_sidebar = "travada";
           // status_sidebar = "travada";
-          status_sidebar_antigo = null;
-          status_sidebar = null;
+          status_sidebar_antigo = "travada";
+          status_sidebar = "travada";
           sidebar_escondida();
         }
       });
