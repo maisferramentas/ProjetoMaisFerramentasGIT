@@ -825,21 +825,26 @@
         },
       });
     });
+
     function sidebar_escondida() {
       if (status_sidebar != "escondida") {
-        //esse if aqui é gambiarra
+        //esse if aqui pode melhorar
+        if (isMobile === true && status_sidebar === "pequena") {
+          status_sidebar = "escondida";
+          sidebar_escondida();
+        } else {
+          document.querySelector(".sidebar").style.width = "0px";
+          document.querySelector(".content").style.marginLeft = "0px";
 
-        document.querySelector(".sidebar").style.width = "0px";
-        document.querySelector(".content").style.marginLeft = "0px";
+          status_sidebar_antigo = status_sidebar;
+          status_sidebar = "escondida";
 
-        status_sidebar_antigo = status_sidebar;
-        status_sidebar = "escondida";
-
-        if (isMobile === true) {
-          document.querySelector("body").style.position = "";
-          document.querySelector(".overlay").style.display = "none";
-          document.querySelector(".background-imgs").style.display = "none";
-          document.querySelector(".overlay").style.marginLeft = "0px";
+          if (isMobile === true) {
+            document.querySelector("body").style.position = "";
+            document.querySelector(".overlay").style.display = "none";
+            document.querySelector(".background-imgs").style.display = "none";
+            document.querySelector(".overlay").style.marginLeft = "0px";
+          }
         }
       } else {
         document.querySelector(".sidebar").style.visibility = "visible";
@@ -1089,11 +1094,6 @@
         success: function (data) {
           // console.log(data);
           $("#content").html(data); // Atualiza o conteúdo principal com o conteúdo da nova página
-          if (isMobile === true) {
-            // status_sidebar = "travada";
-            // status_sidebar = "travada";
-            sidebar_escondida();
-          }
 
           // document.getElementById('content').innerHTML = data;
         },
@@ -1101,22 +1101,19 @@
     }
 
     // Seleciona todos os elementos com a classe "minha-classe"
-    // var elementos = document.querySelectorAll(".suboptions_min");
+    var elementos = document.querySelectorAll(".suboptions_min");
 
-    // // Adiciona um event listener de clique a cada elemento
-    // elementos.forEach(function (elemento) {
-    //   elemento.addEventListener("click", function () {
-    //     // Coloque aqui o código que deseja executar quando ocorrer o clique
-    //     if (isMobile === true) {
-    //       // status_sidebar = "travada";
-    //       // status_sidebar = "travada";
-    //       sidebar_escondida();
-    //     }
-    //   });
-    // });
-
-    //aqui
-
+    // Adiciona um event listener de clique a cada elemento
+    elementos.forEach(function (elemento) {
+      elemento.addEventListener("click", function () {
+        // Coloque aqui o código que deseja executar quando ocorrer o clique
+        if (isMobile === true) {
+          // status_sidebar = "travada";
+          // status_sidebar = "travada";
+          sidebar_escondida();
+        }
+      });
+    });
     //document.querySelector('button').addEventListener('mouseover', function() {this.style.backgroundColor = '#18c753'; /* Cor de fundo ao passar o mouse */ });
 
     // Remove estilo ao retirar o mouse
