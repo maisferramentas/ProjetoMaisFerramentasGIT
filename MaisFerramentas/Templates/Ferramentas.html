@@ -845,7 +845,7 @@
 
         status_sidebar = status_sidebar_antigo;
 
-        if (status_sidebar_antigo === "travada") {
+        if (status_sidebar_antigo === "travada" || isMobile === true) {
           sidebar_grande();
         } else if (isMobile != true) {
           sidebar_pequena();
