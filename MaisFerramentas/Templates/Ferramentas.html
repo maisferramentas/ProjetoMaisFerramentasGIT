@@ -867,6 +867,9 @@
           teste = setTimeout(() => {
             document.querySelector(".overlay").style.marginLeft = "220px";
           }, 3);
+
+          status_sidebar_antigo = "travada";
+          status_sidebar = "travada";
           //console.log(teste);
         }
       }
@@ -1097,6 +1100,7 @@
       });
     }
 
+    novo_conteudo("/ferramentas/frequencia");
     // Seleciona todos os elementos com a classe "minha-classe"
     var elementos = document.querySelectorAll(".suboptions_min");
 
@@ -1107,6 +1111,8 @@
         if (isMobile === true) {
           // status_sidebar = "travada";
           // status_sidebar = "travada";
+          status_sidebar_antigo = null;
+          status_sidebar = null;
           sidebar_escondida();
         }
       });
