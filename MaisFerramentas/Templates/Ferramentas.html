@@ -845,9 +845,7 @@
         document.querySelector(".sidebar").style.visibility = "visible";
         document.querySelector(".sidebar").style.display = "block";
 
-        if (isMobile === false) {
-          status_sidebar = status_sidebar_antigo;
-        }
+        status_sidebar = status_sidebar_antigo;
 
         if (status_sidebar_antigo === "travada" || isMobile === true) {
           sidebar_grande();
@@ -1091,6 +1089,11 @@
         success: function (data) {
           // console.log(data);
           $("#content").html(data); // Atualiza o conteúdo principal com o conteúdo da nova página
+          if (isMobile === true) {
+            // status_sidebar = "travada";
+            // status_sidebar = "travada";
+            sidebar_escondida();
+          }
 
           // document.getElementById('content').innerHTML = data;
         },
@@ -1098,19 +1101,22 @@
     }
 
     // Seleciona todos os elementos com a classe "minha-classe"
-    var elementos = document.querySelectorAll(".suboptions_min");
+    // var elementos = document.querySelectorAll(".suboptions_min");
 
-    // Adiciona um event listener de clique a cada elemento
-    elementos.forEach(function (elemento) {
-      elemento.addEventListener("click", function () {
-        // Coloque aqui o código que deseja executar quando ocorrer o clique
-        if (isMobile === true) {
-          // status_sidebar = "travada";
-          // status_sidebar = "travada";
-          sidebar_escondida();
-        }
-      });
-    });
+    // // Adiciona um event listener de clique a cada elemento
+    // elementos.forEach(function (elemento) {
+    //   elemento.addEventListener("click", function () {
+    //     // Coloque aqui o código que deseja executar quando ocorrer o clique
+    //     if (isMobile === true) {
+    //       // status_sidebar = "travada";
+    //       // status_sidebar = "travada";
+    //       sidebar_escondida();
+    //     }
+    //   });
+    // });
+
+    //aqui
+
     //document.querySelector('button').addEventListener('mouseover', function() {this.style.backgroundColor = '#18c753'; /* Cor de fundo ao passar o mouse */ });
 
     // Remove estilo ao retirar o mouse
