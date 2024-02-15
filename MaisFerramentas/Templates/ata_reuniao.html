@@ -3,88 +3,103 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Arrastar e Mudar Posição</title>
+    <title>Arrastar Divs</title>
     <style>
-      /* Estilos CSS para o arrastar e mudar posição */
-      .draggable {
-        cursor: pointer;
-        user-select: none;
+      .container {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
       }
-      .draggable:hover {
-        opacity: 0.7;
+
+      .draggable {
+        border: 1px solid #ccc;
+        margin-bottom: 10px;
+        padding: 10px;
+        cursor: pointer;
+      }
+
+      .dragging {
+        opacity: 0.5;
       }
     </style>
   </head>
   <body>
-    <!-- Divs contendo os elementos A, B e C -->
-    <div id="1" class="draggable" draggable="true" ondragstart="drag(event)">
-      <span class="material-symbols-outlined drag_indicator">
-        drag_indicator
-      </span>
-      <label for="">Elemento A</label>
-      <input type="text" />
-    </div>
-    <div id="2" class="draggable" draggable="true" ondragstart="drag(event)">
-      <span class="material-symbols-outlined drag_indicator">
-        drag_indicator
-      </span>
-      <label for="">Elemento B</label>
-      <input type="text" />
-    </div>
-    <div id="3" class="draggable" draggable="true" ondragstart="drag(event)">
-      <span class="material-symbols-outlined drag_indicator">
-        drag_indicator
-      </span>
-      <label for="">Elemento C</label>
-      <input type="text" />
+    <div class="container" id="container">
+      <div class="draggable" draggable="true" id="1">
+        <span class="material-symbols-outlined drag_indicator">
+          drag_indicator
+        </span>
+        <label for="">Elemento A</label>
+        <input type="text" />
+      </div>
+      <div class="draggable" draggable="true" id="2">
+        <span class="material-symbols-outlined drag_indicator">
+          drag_indicator
+        </span>
+        <label for="">Elemento B</label>
+        <input type="text" />
+      </div>
+      <div class="draggable" draggable="true" id="3">
+        <span class="material-symbols-outlined drag_indicator">
+          drag_indicator
+        </span>
+        <label for="">Elemento C</label>
+        <input type="text" />
+      </div>
     </div>
 
     <script>
-      // Função para iniciar o arrasto
-      function drag(event) {
-        event.dataTransfer.setData("text/plain", event.target.id);
-      }
+      const draggables = document.querySelectorAll(".draggable");
+      let dragStartIndex;
 
-      // Seleciona todos os elementos com a classe 'draggable'
-      const draggableElements = document.querySelectorAll(".draggable");
-
-      // Itera sobre cada elemento draggable
-      draggableElements.forEach((elem) => {
-        elem.addEventListener("dragover", (event) => {
-          event.preventDefault();
+      draggables.forEach((draggable) => {
+        draggable.addEventListener("dragstart", () => {
+          draggable.classList.add("dragging");
+          dragStartIndex = +draggable.id;
         });
 
-        elem.addEventListener("drop", (event) => {
-          event.preventDefault();
-          const draggedId = event.dataTransfer.getData("text/plain");
-          const draggedElement = document.getElementById(draggedId);
-          const dropzoneElement = event.target.closest(".draggable");
-
-          if (draggedElement && dropzoneElement) {
-            // Verifica a posição do elemento em relação ao dropzoneElement
-            const rect = dropzoneElement.getBoundingClientRect();
-            const mouseY = event.clientY;
-            const isAbove = mouseY < rect.top + rect.height / 2;
-
-            // Insere o elemento na posição adequada
-            if (isAbove) {
-              dropzoneElement.before(draggedElement);
-            } else {
-              dropzoneElement.after(draggedElement);
-            }
-
-            // Atualiza os IDs de acordo com a nova ordem
-            updateIds();
-          }
+        draggable.addEventListener("dragend", () => {
+          draggable.classList.remove("dragging");
+          updateIds();
         });
       });
 
-      // Função para atualizar os IDs
       function updateIds() {
-        const draggableElements = document.querySelectorAll(".draggable");
-        draggableElements.forEach((elem, index) => {
-          elem.id = (index + 1).toString();
+        const draggables = document.querySelectorAll(".draggable");
+        draggables.forEach((draggable, index) => {
+          draggable.id = index + 1;
         });
+      }
+
+      const container = document.getElementById("container");
+
+      container.addEventListener("dragover", (e) => {
+        e.preventDefault();
+        const afterElement = getDragAfterElement(container, e.clientY);
+        const draggable = document.querySelector(".dragging");
+        if (afterElement == null) {
+          container.appendChild(draggable);
+        } else {
+          container.insertBefore(draggable, afterElement);
+        }
+      });
+
+      function getDragAfterElement(container, y) {
+        const draggableElements = [
+          ...container.querySelectorAll(".draggable:not(.dragging)"),
+        ];
+        return draggableElements.reduce(
+          (closest, child) => {
+            const box = child.getBoundingClientRect();
+            const offset = y - box.top - box.height / 2;
+            if (offset < 0 && offset > closest.offset) {
+              return { offset: offset, element: child };
+            } else {
+              return closest;
+            }
+          },
+          { offset: Number.NEGATIVE_INFINITY }
+        ).element;
       }
     </script>
   </body>
