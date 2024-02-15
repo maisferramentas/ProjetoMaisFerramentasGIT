@@ -845,7 +845,9 @@
         document.querySelector(".sidebar").style.visibility = "visible";
         document.querySelector(".sidebar").style.display = "block";
 
-        status_sidebar = status_sidebar_antigo;
+        if (isMobile === false) {
+          status_sidebar = status_sidebar_antigo;
+        }
 
         if (status_sidebar_antigo === "travada" || isMobile === true) {
           sidebar_grande();
@@ -1105,7 +1107,7 @@
         if (isMobile === true) {
           // status_sidebar = "travada";
           // status_sidebar = "travada";
-          sidebar_escondida((status_sidebar_antiga = "escondida"));
+          sidebar_escondida();
         }
       });
     });
