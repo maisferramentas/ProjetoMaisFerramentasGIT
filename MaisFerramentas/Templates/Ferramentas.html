@@ -828,7 +828,6 @@
 
     function sidebar_escondida() {
       if (status_sidebar != "escondida") {
-        //esse if aqui pode melhorar
         document.querySelector(".sidebar").style.width = "0px";
         document.querySelector(".content").style.marginLeft = "0px";
 
@@ -849,7 +848,7 @@
 
         if (status_sidebar_antigo === "travada" || isMobile === true) {
           sidebar_grande();
-        } else if (isMobile != true) {
+        } else {
           sidebar_pequena();
         }
 
@@ -868,26 +867,23 @@
     }
 
     function sidebar_pequena() {
-      if (isMobile != true) {
-        if (status_sidebar != "travada") {
-          document.querySelector(".content").style.marginLeft = "";
-          document.querySelector(".sidebar").style.width = "";
-          document.querySelector(".div_botao_fixar").style.display = "none";
+      if (status_sidebar != "travada" && isMobile != true) {
+        document.querySelector(".content").style.marginLeft = "";
+        document.querySelector(".sidebar").style.width = "";
+        document.querySelector(".div_botao_fixar").style.display = "none";
 
-          links = document.querySelectorAll(".option_sidebar a");
-          links.forEach(function (element) {
-            element.style.display = "none";
-          });
+        links = document.querySelectorAll(".option_sidebar a");
+        links.forEach(function (element) {
+          element.style.display = "none";
+        });
 
-          if (exibir_suboption != null) {
-            document.getElementById(exibir_suboption).style.display = "none";
-            document.getElementById(exibir_suboption).style.maxHeight = "0px";
-            document.getElementById(
-              option_sidebar_selected
-            ).style.borderRadius = "";
-          }
-          status_sidebar = "pequena";
+        if (exibir_suboption != null) {
+          document.getElementById(exibir_suboption).style.display = "none";
+          document.getElementById(exibir_suboption).style.maxHeight = "0px";
+          document.getElementById(option_sidebar_selected).style.borderRadius =
+            "";
         }
+        status_sidebar = "pequena";
       }
     }
 
