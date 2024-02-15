@@ -828,8 +828,6 @@
     status_sidebar_antigo = null;
     status_sidebar = null;
     function sidebar_escondida() {
-      alert(" antigo: " + status_sidebar_antigo);
-      alert(" Atual: " + status_sidebar);
       if (status_sidebar != "escondida") {
         //esse if aqui pode melhorar
         document.querySelector(".sidebar").style.width = "0px";
@@ -853,9 +851,6 @@
         if (status_sidebar_antigo === "travada" || isMobile === true) {
           sidebar_grande();
         } else if (isMobile != true) {
-          alert(
-            "entrou aqui sidebar_escondida()  enviando para  sidebar_pequena()"
-          );
           sidebar_pequena();
         }
 
@@ -892,7 +887,6 @@
               option_sidebar_selected
             ).style.borderRadius = "";
           }
-          alert("entrou aqui function sidebar_pequena");
           status_sidebar = "pequena";
         }
       }
@@ -1073,7 +1067,6 @@
         }
       });
     } else {
-      alert("entrou aqui no ismobile");
       status_sidebar = "pequena";
       sidebar_travada();
     }
@@ -1113,8 +1106,7 @@
         if (isMobile === true) {
           // status_sidebar = "travada";
           // status_sidebar = "travada";
-          status_sidebar_antigo = "travada";
-          status_sidebar = "travada";
+
           sidebar_escondida();
         }
       });
