@@ -1076,21 +1076,16 @@
     }
 
     function novo_conteudo(url) {
-      console.log(url);
-
       $.ajax({
         url: url,
         type: "GET",
         success: function (data) {
-          // console.log(data);
           $("#content").html(data); // Atualiza o conteúdo principal com o conteúdo da nova página
-
-          // document.getElementById('content').innerHTML = data;
         },
       });
     }
 
-    novo_conteudo("/ferramentas/frequencia");
+    novo_conteudo("/ferramentas/atas/");
     // Seleciona todos os elementos com a classe "minha-classe"
     var elementos = document.querySelectorAll(".suboptions_min");
 
