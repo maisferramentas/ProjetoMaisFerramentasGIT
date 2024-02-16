@@ -1081,11 +1081,13 @@
         type: "GET",
         success: function (data) {
           $("#content").html(data); // Atualiza o conteúdo principal com o conteúdo da nova página
+          // usuario = data.nome_usuario_logado;
         },
       });
     }
 
-    novo_conteudo("/ferramentas/atas/");
+    novo_conteudo("/ferramentas/frequencia");
+
     // Seleciona todos os elementos com a classe "minha-classe"
     var elementos = document.querySelectorAll(".suboptions_min");
 
