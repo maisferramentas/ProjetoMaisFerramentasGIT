@@ -3,105 +3,109 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Draggable Elements</title>
+    <title>Arrastar Divs</title>
     <style>
-      .container {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-      }
-
-      .drag_indicator {
-        cursor: pointer;
+      /* Estilos adicionais para melhorar a usabilidade em dispositivos móveis */
+      .draggable {
+        border: 1px solid #ccc;
+        margin-bottom: 10px;
+        padding: 20px; /* Aumentar a área clicável */
+        cursor: grab; /* Indicador de arrastar */
+        touch-action: none; /* Evitar o comportamento padrão de rolagem do navegador */
       }
 
       .dragging {
         opacity: 0.5;
       }
+
+      /* Feedback visual enquanto arrasta */
+      .dragging {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
     </style>
   </head>
   <body>
     <div class="container" id="container">
-      <div id="1">
-        <span class="material-symbols-outlined drag_indicator">
-          drag_indicator
-        </span>
+      <div class="draggable" draggable="true" id="1">
+        <span class="material-symbols-outlined drag_indicator"
+          >drag_indicator</span
+        >
         <label for="">Elemento A</label>
         <input type="text" />
       </div>
-      <div id="2">
-        <span class="material-symbols-outlined drag_indicator">
-          drag_indicator
-        </span>
+      <div class="draggable" draggable="true" id="2">
+        <span class="material-symbols-outlined drag_indicator"
+          >drag_indicator</span
+        >
         <label for="">Elemento B</label>
         <input type="text" />
       </div>
-      <div id="3">
-        <span class="material-symbols-outlined drag_indicator">
-          drag_indicator
-        </span>
+      <div class="draggable" draggable="true" id="3">
+        <span class="material-symbols-outlined drag_indicator"
+          >drag_indicator</span
+        >
         <label for="">Elemento C</label>
         <input type="text" />
       </div>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-      $(document).ready(function () {
-        $(".drag_indicator").on("mousedown", function (e) {
-          var $draggedElement = $(this).closest("div");
-          var $container = $draggedElement.parent();
-          var initialPosition = $draggedElement.index();
+      const draggables = document.querySelectorAll(".draggable");
+      let dragStartIndex;
 
-          var startX = e.clientX;
-          var startY = e.clientY;
-
-          $draggedElement.addClass("dragging");
-
-          $(document).on("mousemove", function (e) {
-            var offsetX = e.clientX - startX;
-            var offsetY = e.clientY - startY;
-
-            $draggedElement.css({
-              transform: `translate(${offsetX}px, ${offsetY}px)`,
-              transition: "none",
-            });
-
-            var newPosition = Math.floor(
-              (e.clientY - $container.offset().top) /
-                $draggedElement.outerHeight()
-            );
-
-            $container.children().each(function (index, element) {
-              if (index === newPosition) {
-                if (index < initialPosition) {
-                  $(element).before($draggedElement);
-                } else {
-                  $(element).after($draggedElement);
-                }
-                return false;
-              }
-            });
-          });
-
-          $(document).on("mouseup", function () {
-            $draggedElement.removeClass("dragging");
-            $draggedElement.css({
-              transform: "",
-              transition: "",
-            });
-
-            updateIds();
-            $(document).off("mousemove mouseup");
-          });
+      draggables.forEach((draggable) => {
+        draggable.addEventListener("dragstart", (e) => {
+          draggable.classList.add("dragging");
+          dragStartIndex = +draggable.id;
+          // Adicionando uma pequena pausa para permitir a aplicação das classes de arrastar
+          setTimeout(() => {
+            e.dataTransfer.setData("text/plain", ""); // Necessário para o Firefox
+          }, 0);
         });
 
-        function updateIds() {
-          $("#container > div").each(function (index, element) {
-            $(element).attr("id", index + 1);
-          });
+        draggable.addEventListener("dragend", () => {
+          draggable.classList.remove("dragging");
+          updateIds();
+        });
+      });
+
+      function updateIds() {
+        const draggables = document.querySelectorAll(".draggable");
+        draggables.forEach((draggable, index) => {
+          draggable.id = index + 1;
+        });
+      }
+
+      const container = document.getElementById("container");
+
+      container.addEventListener("dragover", (e) => {
+        e.preventDefault();
+        const afterElement = getDragAfterElement(container, e.clientY);
+        const draggable = document.querySelector(".dragging");
+        if (afterElement == null) {
+          container.appendChild(draggable);
+        } else {
+          container.insertBefore(draggable, afterElement);
         }
       });
+
+      function getDragAfterElement(container, y) {
+        const draggableElements = [
+          ...container.querySelectorAll(".draggable:not(.dragging)"),
+        ];
+        return draggableElements.reduce(
+          (closest, child) => {
+            const box = child.getBoundingClientRect();
+            const offset = y - box.top - box.height / 2;
+            if (offset < 0 && offset > closest.offset) {
+              return { offset: offset, element: child };
+            } else {
+              return closest;
+            }
+          },
+          { offset: Number.NEGATIVE_INFINITY }
+        ).element;
+      }
     </script>
   </body>
 </html>
