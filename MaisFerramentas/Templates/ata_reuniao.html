@@ -5,10 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Arrastar Divs</title>
     <style>
+      body {
+        font-family: Arial, sans-serif;
+      }
+
       .container {
         display: flex;
         flex-direction: column;
-        align-items: flex-start;
+        align-items: stretch;
+        padding: 10px;
       }
 
       .draggable {
@@ -16,10 +21,19 @@
         margin-bottom: 10px;
         padding: 10px;
         cursor: pointer;
+        background-color: #fff;
+        user-select: none;
       }
 
       .dragging {
         opacity: 0.5;
+      }
+
+      /* Adicionando estilos para melhorar a visualização em telas menores */
+      @media screen and (max-width: 600px) {
+        .draggable {
+          width: 100%;
+        }
       }
     </style>
   </head>
@@ -49,34 +63,28 @@
     </div>
 
     <script>
-      const draggables = document.querySelectorAll(".draggable");
       let dragStartIndex;
+      let draggable;
 
-      draggables.forEach((draggable) => {
-        draggable.addEventListener("dragstart", () => {
+      document.addEventListener("dragstart", (e) => {
+        if (e.target.classList.contains("draggable")) {
+          draggable = e.target;
           draggable.classList.add("dragging");
           dragStartIndex = +draggable.id;
-        });
-
-        draggable.addEventListener("dragend", () => {
-          draggable.classList.remove("dragging");
-          updateIds();
-        });
+        }
       });
 
-      function updateIds() {
-        const draggables = document.querySelectorAll(".draggable");
-        draggables.forEach((draggable, index) => {
-          draggable.id = index + 1;
-        });
-      }
+      document.addEventListener("dragend", (e) => {
+        if (draggable) {
+          draggable.classList.remove("dragging");
+          updateIds();
+          draggable = null;
+        }
+      });
 
-      const container = document.getElementById("container");
-
-      container.addEventListener("dragover", (e) => {
+      document.addEventListener("dragover", (e) => {
         e.preventDefault();
-        const afterElement = getDragAfterElement(container, e.clientY);
-        const draggable = document.querySelector(".dragging");
+        const afterElement = getDragAfterElement(e.clientY);
         if (afterElement == null) {
           container.appendChild(draggable);
         } else {
@@ -84,9 +92,9 @@
         }
       });
 
-      function getDragAfterElement(container, y) {
+      function getDragAfterElement(y) {
         const draggableElements = [
-          ...container.querySelectorAll(".draggable:not(.dragging)"),
+          ...document.querySelectorAll(".draggable:not(.dragging)"),
         ];
         return draggableElements.reduce(
           (closest, child) => {
@@ -100,6 +108,13 @@
           },
           { offset: Number.NEGATIVE_INFINITY }
         ).element;
+      }
+
+      function updateIds() {
+        const draggables = document.querySelectorAll(".draggable");
+        draggables.forEach((draggable, index) => {
+          draggable.id = index + 1;
+        });
       }
     </script>
   </body>
