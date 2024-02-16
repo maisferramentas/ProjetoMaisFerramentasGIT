@@ -73,6 +73,7 @@
             $(draggable).insertBefore(afterElement);
           }
           reorganizeIDs();
+          $(draggable).removeClass("dragging"); // Remover a classe "dragging" após soltar o elemento
         });
       });
 
