@@ -15,34 +15,89 @@
       .dragging {
         opacity: 0.5;
       }
+
+      .flex {
+        display: flex;
+      }
+      .column {
+        flex-direction: column;
+      }
+      .row {
+        flex-direction: row;
+      }
+      .tamanho {
+        max-width: 300px;
+      }
+      .div_img_icone {
+        display: flex;
+        border-radius: 50px;
+        width: 40px;
+        height: 40px;
+        border-color: black;
+        border-width: 1px solid;
+      }
+      .justify {
+        justify-content: center;
+      }
+      .align {
+        align-items: center;
+      }
     </style>
   </head>
   <body>
-    <div id="container">
-      <div class="draggable" draggable="true" id="1">
-        <label for="">Elemento A</label>
-        <input type="text" />
-        <span class="material-symbols-outlined drag_indicator">
-          drag_indicator
-        </span>
-      </div>
-      <div class="draggable" draggable="true" id="2">
-        <label for="">Elemento B</label>
-        <input type="text" />
-        <span class="material-symbols-outlined drag_indicator">
-          drag_indicator
-        </span>
-      </div>
-      <div class="draggable" draggable="true" id="3">
-        <label for="">Elemento C</label>
-        <input type="text" />
-        <span class="material-symbols-outlined drag_indicator">
-          drag_indicator
-        </span>
+    <div class="flex justify">
+      <div id="container">
+        <div class="draggable flex column tamanho" draggable="true" id="1">
+          <div class="align justify flex">
+            <div class="div_img_icone">
+              <img
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUb-j_tc0tQGYF8zBywQ2MXUFuh0PoqNWUL4qu8lTShtqo7IhFRBZhOlVmM1dKN0ospPs&usqp=CAU"
+                alt=""
+              />
+            </div>
+          </div>
+          <div class="flex align">
+            <label for="">Oração</label>
+            <input type="text" />
+            <span class="material-symbols-outlined drag_indicator">
+              drag_indicator
+            </span>
+          </div>
+        </div>
+        <div class="draggable flex tamanho" draggable="true" id="2">
+          <div class="flex align">
+            <div class="div_img_icone">
+              <img
+                src="https://img2.gratispng.com/20180516/hgq/kisspng-computer-icons-politics-election-political-party-p-5afc8728c5a875.5304747915264991128096.jpg"
+                alt=""
+              />
+            </div>
+            <label for="">Discurso:</label>
+            <input type="text" />
+            <span class="material-symbols-outlined drag_indicator">
+              drag_indicator
+            </span>
+          </div>
+        </div>
+        <div class="draggable flex tamanho" draggable="true" id="3">
+          <div class="flex align">
+            <div class="div_img_icone">
+              <img
+                src="https://cdn-icons-png.flaticon.com/512/5741/5741717.png
+              "
+                alt=""
+              />
+            </div>
+            <label for="">Discurso:</label>
+            <input type="text" />
+            <span class="material-symbols-outlined drag_indicator">
+              drag_indicator
+            </span>
+          </div>
+        </div>
       </div>
     </div>
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
     <script>
       $(document).ready(function () {
         $(".draggable").on("dragstart", function (e) {
