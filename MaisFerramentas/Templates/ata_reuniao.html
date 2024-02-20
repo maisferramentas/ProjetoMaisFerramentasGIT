@@ -54,6 +54,12 @@
       .direita {
         margin-left: auto;
       }
+      #container {
+        min-height: 100px; /* altura mínima para permitir arrastar até o final */
+      }
+      .campo_texto {
+        width: 100%;
+      }
     </style>
   </head>
   <body>
@@ -67,47 +73,29 @@
                 alt=""
               />
             </div>
-            <label for="">Oração</label>
-            <div class="opcoes flex align justify direita">
-              <span class="material-symbols-outlined"> delete </span>
-              <div class="div_img_icone_whats">
-                <img
-                  src="https://png.pngtree.com/element_our/png/20181011/whatsapp-social-media-icon-design-template-vector-png_127058.jpg"
-                  alt=""
-                />
-              </div>
-              <span class="material-symbols-outlined"> content_copy </span>
-            </div>
+            <label for="">Oração:</label>
+            <input type="text" class="campo_texto" />
 
             <span class="material-symbols-outlined drag_indicator direita">
               drag_indicator
             </span>
           </div>
-          <input type="text" class="" />
-          <div class="flex align justify">
+
+          <!-- <div class="flex align justify">
             <span class="material-symbols-outlined"> expand_more </span>
-          </div>
+          </div> -->
         </div>
 
         <div class="draggable flex column tamanho" draggable="true" id="2">
           <div class="flex align justify">
-            <div class="div_img_icone">
-              <img
-                src="https://img2.gratispng.com/20180516/hgq/kisspng-computer-icons-politics-election-political-party-p-5afc8728c5a875.5304747915264991128096.jpg"
-                alt=""
-              />
-            </div>
-            <label for="">Discurso</label>
-
-            <div class="opcoes flex align justify direita">
-              <span class="material-symbols-outlined"> delete </span>
-              <div class="div_img_icone_whats">
+            <div class="flex align justify">
+              <div class="div_img_icone">
                 <img
-                  src="https://png.pngtree.com/element_our/png/20181011/whatsapp-social-media-icon-design-template-vector-png_127058.jpg"
+                  src="https://img2.gratispng.com/20180516/hgq/kisspng-computer-icons-politics-election-political-party-p-5afc8728c5a875.5304747915264991128096.jpg"
                   alt=""
                 />
               </div>
-              <span class="material-symbols-outlined"> content_copy </span>
+              <label for="">Discurso</label>
             </div>
             <span class="material-symbols-outlined drag_indicator direita">
               drag_indicator
@@ -143,90 +131,61 @@
           <input type="text" class="" />
         </div>
 
-        <div id="container">
-          <div class="draggable flex column tamanho" draggable="true" id="4">
-            <div class="flex align justify">
-              <div class="div_img_icone">
+        <div class="draggable flex column tamanho" draggable="true" id="4">
+          <div class="flex align justify">
+            <div class="div_img_icone">
+              <img
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUb-j_tc0tQGYF8zBywQ2MXUFuh0PoqNWUL4qu8lTShtqo7IhFRBZhOlVmM1dKN0ospPs&usqp=CAU"
+                alt=""
+              />
+            </div>
+            <label for="">Oração</label>
+            <div class="opcoes flex align justify direita">
+              <span class="material-symbols-outlined"> delete </span>
+              <div class="div_img_icone_whats">
                 <img
-                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUb-j_tc0tQGYF8zBywQ2MXUFuh0PoqNWUL4qu8lTShtqo7IhFRBZhOlVmM1dKN0ospPs&usqp=CAU"
+                  src="https://png.pngtree.com/element_our/png/20181011/whatsapp-social-media-icon-design-template-vector-png_127058.jpg"
                   alt=""
                 />
               </div>
-              <label for="">Oração</label>
-              <div class="opcoes flex align justify direita">
-                <span class="material-symbols-outlined"> delete </span>
-                <div class="div_img_icone_whats">
-                  <img
-                    src="https://png.pngtree.com/element_our/png/20181011/whatsapp-social-media-icon-design-template-vector-png_127058.jpg"
-                    alt=""
-                  />
-                </div>
-                <span class="material-symbols-outlined"> content_copy </span>
-              </div>
+              <span class="material-symbols-outlined"> content_copy </span>
+            </div>
 
-              <span class="material-symbols-outlined drag_indicator direita">
-                drag_indicator
-              </span>
-            </div>
-            <input type="text" class="" />
-            <div class="flex align justify">
-              <span class="material-symbols-outlined"> expand_more </span>
-            </div>
+            <span class="material-symbols-outlined drag_indicator direita">
+              drag_indicator
+            </span>
           </div>
+          <input type="text" class="" />
+          <div class="flex align justify">
+            <span class="material-symbols-outlined"> expand_more </span>
+          </div>
+        </div>
 
-          <div class="draggable flex column tamanho" draggable="true" id="5">
-            <div class="flex align justify">
-              <div class="div_img_icone">
+        <div class="draggable flex column tamanho" draggable="true" id="5">
+          <div class="flex align justify">
+            <div class="div_img_icone">
+              <img
+                src="https://img2.gratispng.com/20180516/hgq/kisspng-computer-icons-politics-election-political-party-p-5afc8728c5a875.5304747915264991128096.jpg"
+                alt=""
+              />
+            </div>
+            <label for="">Discurso</label>
+
+            <div class="opcoes flex align justify direita">
+              <span class="material-symbols-outlined"> delete </span>
+              <div class="div_img_icone_whats">
                 <img
-                  src="https://img2.gratispng.com/20180516/hgq/kisspng-computer-icons-politics-election-political-party-p-5afc8728c5a875.5304747915264991128096.jpg"
+                  src="https://png.pngtree.com/element_our/png/20181011/whatsapp-social-media-icon-design-template-vector-png_127058.jpg"
                   alt=""
                 />
               </div>
-              <label for="">Discurso</label>
-
-              <div class="opcoes flex align justify direita">
-                <span class="material-symbols-outlined"> delete </span>
-                <div class="div_img_icone_whats">
-                  <img
-                    src="https://png.pngtree.com/element_our/png/20181011/whatsapp-social-media-icon-design-template-vector-png_127058.jpg"
-                    alt=""
-                  />
-                </div>
-                <span class="material-symbols-outlined"> content_copy </span>
-              </div>
-              <span class="material-symbols-outlined drag_indicator direita">
-                drag_indicator
-              </span>
+              <span class="material-symbols-outlined"> content_copy </span>
             </div>
-            <input type="text" class="" />
+            <span class="material-symbols-outlined drag_indicator direita">
+              drag_indicator
+            </span>
           </div>
-
-          <div class="draggable flex column tamanho" draggable="true" id="6">
-            <div class="flex align justify">
-              <div class="div_img_icone">
-                <img
-                  src="https://cdn-icons-png.flaticon.com/512/5741/5741717.png"
-                  alt=""
-                />
-              </div>
-              <label for="">Anúncio</label>
-
-              <div class="opcoes flex align justify direita">
-                <span class="material-symbols-outlined"> delete </span>
-                <div class="div_img_icone_whats">
-                  <img
-                    src="https://png.pngtree.com/element_our/png/20181011/whatsapp-social-media-icon-design-template-vector-png_127058.jpg"
-                    alt=""
-                  />
-                </div>
-                <span class="material-symbols-outlined"> content_copy </span>
-              </div>
-              <span class="material-symbols-outlined drag_indicator direita">
-                drag_indicator
-              </span>
-            </div>
-            <input type="text" class="" />
-          </div>
+          <input type="text" class="" />
         </div>
       </div>
     </div>
