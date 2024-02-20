@@ -9,7 +9,7 @@
         border: 1px solid #ccc;
         padding: 10px;
         margin-bottom: 5px;
-        cursor: move;
+        /* cursor: move; */
       }
 
       .dragging {
@@ -26,7 +26,7 @@
         flex-direction: row;
       }
       .tamanho {
-        max-width: 300px;
+        max-width: 370px;
       }
       .div_img_icone {
         display: flex;
@@ -42,32 +42,86 @@
       .align {
         align-items: center;
       }
+      .icone_oracao {
+        margin-left: -10px;
+      }
+      .direita {
+        margin-left: auto;
+      }
     </style>
   </head>
   <body>
     <div class="flex justify">
       <div id="container">
         <div class="draggable flex column tamanho" draggable="true" id="1">
-          <div class="align justify flex">
+          <div class="flex align justify">
             <div class="div_img_icone">
               <img
                 src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUb-j_tc0tQGYF8zBywQ2MXUFuh0PoqNWUL4qu8lTShtqo7IhFRBZhOlVmM1dKN0ospPs&usqp=CAU"
                 alt=""
               />
             </div>
-          </div>
-          <div class="flex align">
             <label for="">Oração</label>
-            <input type="text" />
-            <span class="material-symbols-outlined drag_indicator">
+            <span class="material-symbols-outlined drag_indicator direita">
               drag_indicator
             </span>
           </div>
+          <input type="text" class="" />
         </div>
+
+        <div class="draggable flex column tamanho" draggable="true" id="1">
+          <div class="flex align justify">
+            <div class="div_img_icone">
+              <img
+                src="https://img2.gratispng.com/20180516/hgq/kisspng-computer-icons-politics-election-political-party-p-5afc8728c5a875.5304747915264991128096.jpg"
+                alt=""
+              />
+            </div>
+            <label for="">Discurso</label>
+            <span class="material-symbols-outlined drag_indicator direita">
+              drag_indicator
+            </span>
+          </div>
+          <input type="text" class="" />
+        </div>
+
+        <div class="draggable flex column tamanho" draggable="true" id="1">
+          <div class="flex align justify">
+            <div class="div_img_icone">
+              <img
+                src="https://cdn-icons-png.flaticon.com/512/5741/5741717.png"
+                alt=""
+              />
+            </div>
+            <label for="">Anúncio</label>
+            <span class="material-symbols-outlined drag_indicator direita">
+              drag_indicator
+            </span>
+          </div>
+          <input type="text" class="" />
+        </div>
+
+        <div class="draggable flex column tamanho" draggable="true" id="1">
+          <div class="flex align justify">
+            <div class="div_img_icone">
+              <img
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUb-j_tc0tQGYF8zBywQ2MXUFuh0PoqNWUL4qu8lTShtqo7IhFRBZhOlVmM1dKN0ospPs&usqp=CAU"
+                alt=""
+              />
+            </div>
+            <label for="">Oração</label>
+            <span class="material-symbols-outlined drag_indicator direita">
+              drag_indicator
+            </span>
+          </div>
+          <input type="text" class="" />
+        </div>
+
         <div class="draggable flex tamanho" draggable="true" id="2">
           <div class="flex align">
             <div class="div_img_icone">
               <img
+                class="icone_oracao"
                 src="https://img2.gratispng.com/20180516/hgq/kisspng-computer-icons-politics-election-political-party-p-5afc8728c5a875.5304747915264991128096.jpg"
                 alt=""
               />
@@ -88,7 +142,7 @@
                 alt=""
               />
             </div>
-            <label for="">Discurso:</label>
+            <label for="">Anúncio:</label>
             <input type="text" />
             <span class="material-symbols-outlined drag_indicator">
               drag_indicator
