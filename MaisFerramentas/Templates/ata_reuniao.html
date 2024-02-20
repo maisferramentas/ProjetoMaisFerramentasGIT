@@ -26,7 +26,7 @@
         flex-direction: row;
       }
       .tamanho {
-        max-width: 370px;
+        max-width: 375px;
       }
       .div_img_icone {
         display: flex;
@@ -36,14 +36,20 @@
         border-color: black;
         border-width: 1px solid;
       }
+
+      .div_img_icone_whats {
+        display: flex;
+        border-radius: 50px;
+        width: 45px;
+        height: 45px;
+        border-color: black;
+        border-width: 1px solid;
+      }
       .justify {
         justify-content: center;
       }
       .align {
         align-items: center;
-      }
-      .icone_oracao {
-        margin-left: -10px;
       }
       .direita {
         margin-left: auto;
@@ -62,11 +68,25 @@
               />
             </div>
             <label for="">Oração</label>
+            <div class="flex align justify direita">
+              <span class="material-symbols-outlined"> delete </span>
+              <div class="div_img_icone_whats">
+                <img
+                  src="https://png.pngtree.com/element_our/png/20181011/whatsapp-social-media-icon-design-template-vector-png_127058.jpg"
+                  alt=""
+                />
+              </div>
+              <span class="material-symbols-outlined"> content_copy </span>
+            </div>
+
             <span class="material-symbols-outlined drag_indicator direita">
               drag_indicator
             </span>
           </div>
           <input type="text" class="" />
+          <div class="flex align justify">
+            <span class="material-symbols-outlined"> expand_more </span>
+          </div>
         </div>
 
         <div class="draggable flex column tamanho" draggable="true" id="1">
