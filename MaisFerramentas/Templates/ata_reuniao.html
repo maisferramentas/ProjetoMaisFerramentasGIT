@@ -26,7 +26,7 @@
         flex-direction: row;
       }
       .tamanho {
-        width: 375px;
+        width: 370px;
       }
       .div_img_icone {
         display: flex;
@@ -34,7 +34,12 @@
         width: 40px;
         height: 40px;
         border-color: black;
-        border-width: 1px solid;
+        border: 1px solid black;
+        background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUb-j_tc0tQGYF8zBywQ2MXUFuh0PoqNWUL4qu8lTShtqo7IhFRBZhOlVmM1dKN0ospPs&usqp=CAU");
+        background-size: 50px;
+        background-repeat: no-repeat;
+        background-position: -5px 5px;
+        /* background-color: rgba(255, 255, 255, 9.9); */
       }
 
       .div_img_icone_whats {
@@ -42,8 +47,6 @@
         border-radius: 50px;
         width: 45px;
         height: 45px;
-        border-color: black;
-        border-width: 1px solid;
       }
       .justify {
         justify-content: center;
@@ -65,6 +68,34 @@
   <body>
     <div class="flex justify">
       <div id="container">
+        <div class="draggable flex column tamanho" draggable="true" id="15">
+          <div class="flex column align">
+            <div class="div_img_icone">
+              <!-- <img 
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUb-j_tc0tQGYF8zBywQ2MXUFuh0PoqNWUL4qu8lTShtqo7IhFRBZhOlVmM1dKN0ospPs&usqp=CAU"
+                alt=""
+              /> -->
+            </div>
+            <label for="">Oração</label>
+            <input type="text" name="" id="" />
+            <!-- <span class="material-symbols-outlined drag_indicator direita">
+              drag_indicator
+            </span> -->
+            <span class="material-symbols-outlined"> expand_more </span>
+
+            <div class="opcoes flex align justify">
+              <span class="material-symbols-outlined"> delete </span>
+              <div class="div_img_icone_whats">
+                <img
+                  src="https://png.pngtree.com/element_our/png/20181011/whatsapp-social-media-icon-design-template-vector-png_127058.jpg"
+                  alt=""
+                />
+              </div>
+              <span class="material-symbols-outlined"> content_copy </span>
+            </div>
+          </div>
+        </div>
+
         <div class="draggable flex column tamanho" draggable="true" id="1">
           <div class="flex align justify">
             <div class="div_img_icone">
