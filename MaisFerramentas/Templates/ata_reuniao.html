@@ -41,6 +41,19 @@
         margin-right: 8px;
         /* background-color: rgba(255, 255, 255, 9.9); */
       }
+      .div_img_icone_2 {
+        display: flex;
+        border-radius: 50px;
+        width: 40px;
+        height: 40px;
+        border: 1px solid black;
+        background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUb-j_tc0tQGYF8zBywQ2MXUFuh0PoqNWUL4qu8lTShtqo7IhFRBZhOlVmM1dKN0ospPs&usqp=CAU");
+        background-size: 50px;
+        background-repeat: no-repeat;
+        background-position: -5px 4px;
+        margin-right: 8px;
+        /* background-color: rgba(255, 255, 255, 9.9); */
+      }
 
       .div_img_icone_whats {
         display: flex;
@@ -63,11 +76,35 @@
       .campo_texto {
         width: 240px;
       }
+
+      .campo_texto2 {
+        width: 300px;
+      }
     </style>
   </head>
   <body>
     <div class="flex justify">
       <div id="container">
+        <div class="draggable tamanho" draggable="true" id="15">
+          <div class="flex row align justify">
+            <div class="">
+              <div class="flex align justify">
+                <div class="div_img_icone_2"></div>
+                <label for="">Oração</label>
+              </div>
+
+              <div class="flex align justify">
+                <input type="text" name="" id="" class="campo_texto2" />
+              </div>
+            </div>
+            <div class="direita">
+              <span class="material-symbols-outlined drag_indicator direita">
+                drag_indicator
+              </span>
+            </div>
+          </div>
+        </div>
+
         <div class="draggable tamanho" draggable="true" id="15">
           <div class="flex align justify">
             <div class="div_img_icone"></div>
