@@ -129,22 +129,17 @@
       .img_canto {
         height: 90px;
       }
-      .img_canto_expandida {
-        height: 160px; /* Define a altura da imagem como 100% */
-        width: 57px;
-      }
     </style>
   </head>
   <body>
     <div class="">
       <div class="flex align caixa_card">
-        <div class="teste">
-          <img
-            class="img_canto"
-            src="https://lh3.googleusercontent.com/drive-viewer/AKGpihYyk0w71rkdxsX1nZGLb0tCDQMcs9lpk4rLuS-B8gYTS0f93dlBY0gTohCK9qdi3sivw0lzHJ354Eu2J5UncWzPGyYH=w1366-h382"
-            alt=""
-          />
-        </div>
+        <img
+          class="img_canto"
+          src="https://lh3.googleusercontent.com/drive-viewer/AKGpihYyk0w71rkdxsX1nZGLb0tCDQMcs9lpk4rLuS-B8gYTS0f93dlBY0gTohCK9qdi3sivw0lzHJ354Eu2J5UncWzPGyYH=w1366-h382"
+          alt=""
+        />
+
         <div class="flex column left_3px">
           <label for="" class="campo_titulo">Discursante: </label>
           <input type="text" name="" id="" class="campo_texto" />
@@ -225,10 +220,13 @@
         // Verifica se a classe 'adicionais' está sendo exibida ou ocultada
         if (adicionaisDiv.css("display") === "none") {
           adicionaisDiv.css("display", "flex");
-          imgCanto.addClass("img_canto_expandida"); // Adiciona a classe para expandir a imagem
+          document.querySelector(".img_canto").style.height =
+            document.querySelector(".caixa_card").offsetHeight + "px";
+
+          document.querySelector(".img_canto").style.width = "57px";
         } else {
           adicionaisDiv.css("display", "none");
-          imgCanto.removeClass("img_canto_expandida"); // Remove a classe para expandir a imagem
+          document.querySelector(".img_canto").style.height = "";
         }
       });
     </script>
