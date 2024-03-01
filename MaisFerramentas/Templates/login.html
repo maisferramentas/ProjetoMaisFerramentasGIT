@@ -3,234 +3,245 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Divs Arrastáveis</title>
+    <title>Login</title>
+    <link rel="stylesheet" href="styles.css" />
     <style>
-      .draggable {
-        border: 1px solid #ccc;
-        padding: 10px;
-        margin-bottom: 5px;
-        /* cursor: move; */
-      }
-
-      .dragging {
-        opacity: 0.5;
-      }
-
-      .flex {
+      body {
+        font-family: "Arial", sans-serif;
+        margin: 0;
+        padding: 0;
         display: flex;
-      }
-      .column {
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        background-color: #f2f2f2;
+        background: linear-gradient(to right, #002040, #0099c8);
         flex-direction: column;
       }
-      .row {
-        flex-direction: row;
-      }
-      .tamanho {
-        width: 360px;
-      }
-      .div_img_icone {
-        display: flex;
-        border-radius: 50px;
-        width: 50px;
-        height: 50px;
-        border: 1px solid black;
-        background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUb-j_tc0tQGYF8zBywQ2MXUFuh0PoqNWUL4qu8lTShtqo7IhFRBZhOlVmM1dKN0ospPs&usqp=CAU");
-        background-size: 62px;
-        background-repeat: no-repeat;
-        background-position: -6px 4px;
-        margin-right: 8px;
-        /* background-color: rgba(255, 255, 255, 9.9); */
-      }
-      .div_img_icone_2 {
-        display: flex;
-        border-radius: 50px;
-        width: 40px;
-        height: 40px;
-        border: 1px solid black;
-        background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUb-j_tc0tQGYF8zBywQ2MXUFuh0PoqNWUL4qu8lTShtqo7IhFRBZhOlVmM1dKN0ospPs&usqp=CAU");
-        background-size: 50px;
-        background-repeat: no-repeat;
-        background-position: -5px 4px;
-        margin-right: 8px;
-        /* background-color: rgba(255, 255, 255, 9.9); */
-      }
 
-      .div_img_icone_whats {
-        display: flex;
-        border-radius: 50px;
-        width: 45px;
-        height: 45px;
-      }
-      .justify {
-        justify-content: center;
-      }
-      .align {
-        align-items: center;
-      }
-      .direita {
-        margin-left: auto;
-      }
-      #container {
-        min-height: 100px; /* altura mínima para permitir arrastar até o final */
-      }
-      .campo_texto {
-        width: 240px;
-      }
-
-      .campo_texto2 {
-        width: 260px;
-      }
-
-      .img_icones {
-        display: flex;
-        border-radius: 50px;
-        width: 60px;
-        height: 60px;
-        margin-left: -23px;
-      }
-
-      .campo_texto {
-        width: 100%;
-        padding: 5px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        border-color: #57afc5;
-        font-size: medium;
-        /* width: 17rem; */
-      }
-
-      .campo_texto:focus {
-        outline: none;
-        border-color: #007bff;
-      }
-      .campo_titulo {
-        font-weight: bold;
-      }
-      .caixa_card {
-        max-width: 400px;
-        /* margin: 0 auto; */
+      .login-container {
+        /* margin-top: 40px; */
         background-color: #fff;
         padding: 20px;
-        padding: 20px 3px 20px 10px;
         border-radius: 8px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        margin-bottom: 10px;
-      }
-      .left_3px {
-        margin-left: 3px;
+        width: 300px;
       }
 
-      .adicionais {
-        /* max-height: 0px;
-        overflow: hidden;
-        transition: max-height 0.3s ease-in-out; */
-        display: none;
+      h2 {
+        text-align: center;
+        color: #333;
       }
-      .img_canto {
-        height: 90px;
+
+      form {
+        display: flex;
+        flex-direction: column;
       }
-      .img_canto_expandida {
-        height: 160px; /* Define a altura da imagem como 100% */
-        width: 57px;
+
+      label {
+        margin-bottom: 8px;
+        color: #555;
+      }
+
+      input {
+        padding: 10px;
+        margin-bottom: 16px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+
+      button {
+        padding: 10px;
+        background-color: #4caf50;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      button:hover {
+        background-color: #45a049;
+      }
+
+      .capela {
+        display: inline-block;
+        background: linear-gradient(to right, #002040, #003057, #0099c8);
+        width: 300px;
+        border-radius: 20px 20px 20px 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .ferramentas {
+        display: inline-block;
+      }
+      .ferramentas h1 {
+        font-style: normal;
+        transform: skewX(-20deg);
+        font-size: 180%;
+      }
+
+      a {
+        text-decoration: none;
+        color: white;
+        font-weight: bold;
+        transition: color 0.3s;
+      }
+      .topo {
+        width: 100%;
+        background-color: white;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 20px;
+      }
+
+      .logo {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 10px;
+      }
+      .swal2-popup {
+        width: 350px !important;
+        height: 300px !important;
       }
     </style>
   </head>
   <body>
-    <div class="">
-      <div class="flex align caixa_card">
-        <div class="teste">
-          <img
-            class="img_canto"
-            src="https://lh3.googleusercontent.com/drive-viewer/AKGpihYyk0w71rkdxsX1nZGLb0tCDQMcs9lpk4rLuS-B8gYTS0f93dlBY0gTohCK9qdi3sivw0lzHJ354Eu2J5UncWzPGyYH=w1366-h382"
-            alt=""
-          />
-        </div>
-        <div class="flex column left_3px">
-          <label for="" class="campo_titulo">Discursante: </label>
-          <input type="text" name="" id="" class="campo_texto" />
-          <div class="flex column adicionais">
-            <label for="" class="campo_titulo">Tema: </label>
-            <input type="text" name="" id="" class="campo_texto" />
-            <label for="" class="campo_titulo">Duração: </label>
-            <input type="text" name="" id="" class="campo_texto" />
+    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}" />
+
+    <!-- <div class="topo">
+      <img
+        id="headerLogo"
+        src="https://www.churchofjesuschrist.org/services/platform/v4/resources/static/logo/por.svg"
+        alt="The Church of Jesus Christ of Latter-day Saints"
+        height="80px"
+      />
+    </div> -->
+    <div class="login-container">
+      <div class="logo">
+        <img
+          id="headerLogo"
+          src="https://www.churchofjesuschrist.org/services/platform/v4/resources/static/logo/por.svg"
+          alt="The Church of Jesus Christ of Latter-day Saints"
+          height="80px"
+        />
+      </div>
+
+      <a href="#">
+        <div class="capela">
+          <svg
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+            style="
+              width: 25px;
+              height: 25px;
+              background-color: white;
+              border-radius: 20%;
+            "
+            onclick="sidebar_escondida()"
+          >
+            <path
+              d="M19.75 15v5.75h-5.409v-3.637A2.343 2.343 0 0 0 12 14.772a2.343 2.343 0 0 0-2.341 2.341v3.637H4.25V15h-.056l6.223-3.007c.208-.1.358-.29.407-.516L12 6.045l1.176 5.432a.748.748 0 0 0 .407.516L19.806 15h-.056zm-5.185-4.198l-1.832-8.461c-.171-.788-1.295-.788-1.466 0l-1.832 8.461-7.761 3.75a.75.75 0 1 0 .652 1.351l.424-.205V21.5c0 .414.336.75.75.75h17a.75.75 0 0 0 .75-.75v-5.802l.424.205a.75.75 0 1 0 .652-1.351l-7.761-3.75z"
+            ></path>
+          </svg>
+          <!-- <div class="ferramentas"  onclick="sidebar_block_responsive_verify('!mobile')"> -->
+          <div class="ferramentas" onclick="sidebar_travada()">
+            <h1>+Ferramentas</h1>
           </div>
         </div>
-        <span class="material-symbols-outlined direita drag_indicator arrasto">
-          drag_indicator
-        </span>
-      </div>
+      </a>
+      <h2>Acesso</h2>
+      <form id="loginForm">
+        <label for="username">Usuário:</label>
+        <input type="text" id="username" name="username" required />
+
+        <label for="password">Senha:</label>
+        <input type="password" id="password" name="password" required />
+
+        <button type="button" id="botao_entrar" onclick="entrar()">
+          Entrar
+        </button>
+      </form>
     </div>
 
-    <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
-    <script>
-      $(document).ready(function () {
-        $(".draggable").on("dragstart", function (e) {
-          e.originalEvent.dataTransfer.setData("text/plain", e.target.id);
-          setTimeout(() => {
-            e.target.classList.add("dragging");
-          }, 0);
-        });
-
-        $("#container").on("dragover", function (e) {
-          e.preventDefault();
-          const afterElement = getDragAfterElement($("#container"), e.clientY);
-          const draggable = $(".dragging");
-          if (afterElement == null) {
-            $("#container").append(draggable);
-          } else {
-            $(draggable).insertBefore(afterElement);
-          }
-        });
-
-        $(".draggable").on("drop", function (e) {
-          const id = e.originalEvent.dataTransfer.getData("text/plain");
-          const draggable = $("#" + id);
-          const afterElement = getDragAfterElement($("#container"), e.clientY);
-          if (afterElement == null) {
-            $("#container").append(draggable);
-          } else {
-            $(draggable).insertBefore(afterElement);
-          }
-          reorganizeIDs();
-          $(draggable).removeClass("dragging"); // Remover a classe "dragging" após soltar o elemento
-        });
-      });
-
-      function getDragAfterElement(container, y) {
-        const draggableElements = $(".draggable:not(.dragging)").toArray();
-        return draggableElements.reduce(
-          (closest, child) => {
-            const box = $(child).offset();
-            const offset = y - box.top - $(child).outerHeight() / 2;
-            if (offset < 0 && offset > closest.offset) {
-              return { offset: offset, element: child };
-            } else {
-              return closest;
-            }
-          },
-          { offset: Number.NEGATIVE_INFINITY }
-        ).element;
-      }
-
-      function reorganizeIDs() {
-        $(".draggable").each(function (index) {
-          $(this).attr("id", index + 1);
-        });
-      }
-
-      $(".arrasto").on("click", function () {
-        var adicionaisDiv = $(".adicionais");
-        var imgCanto = $(".img_canto");
-
-        // Verifica se a classe 'adicionais' está sendo exibida ou ocultada
-        if (adicionaisDiv.css("display") === "none") {
-          adicionaisDiv.css("display", "flex");
-          imgCanto.addClass("img_canto_expandida"); // Adiciona a classe para expandir a imagem
-        } else {
-          adicionaisDiv.css("display", "none");
-          imgCanto.removeClass("img_canto_expandida"); // Remove a classe para expandir a imagem
-        }
-      });
-    </script>
+    <!-- <script src="script.js"></script> -->
   </body>
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+  <script>
+    function entrar() {
+      //   $.ajax({
+      //     url: "../ferramentas/",
+      //     success: function (data) {
+      //       console.log(data);
+      //     },
+      //     data: function (data) {
+      //       console.log(data);
+      //     },
+      //   });
+
+      //   window.location.href = "/ferramentas/";
+      username = document.getElementById("username").value;
+      password = document.getElementById("password").value;
+      csrf_token = document.getElementsByName("csrfmiddlewaretoken")[0].value;
+
+      document.getElementById("botao_entrar").style.backgroundColor = "#ccc";
+      document.getElementById("botao_entrar").style.display = "none";
+
+      $.ajax({
+        type: "POST",
+        url: "/ferramentas/autenticar/",
+        data: {
+          username: username,
+          password: password,
+          csrfmiddlewaretoken: csrf_token, // Inclua o token CSRF na sua solicitação
+        },
+        success: function (response) {
+          if (response.status === "success") {
+            // window.location.href = response.redirect;
+            // usuario_logado = response.id_membro_interno;
+            window.location.replace(response.redirect);
+          } else {
+            alerta(
+              "Acesso negado",
+              "Verifique usuário e senha e tente novamente!",
+              "error"
+            );
+            document.getElementById("botao_entrar").style.backgroundColor = "";
+            document.getElementById("botao_entrar").style.display = "";
+          }
+        },
+        error: function () {
+          alerta("Erro", "Contate o administrador!", "error");
+          console
+            .log
+            // data.responseText.slice(
+            //   data.responseText.match("<th>Exception Value:</th>").index,
+            //   data.responseText.match("<th>Exception Value:</th>").index + 300
+            // )
+            ();
+        },
+      });
+    }
+
+    function alerta(titulo, texto, icone) {
+      // titulo = "Adicionar à Lista";
+      // texto = "Novo registro salvo com sucesso!";
+      // icone = "success";
+
+      Swal.fire({
+        title: titulo,
+        text: texto,
+        icon: icone,
+        confirmButtonText: "Ok!",
+        timer: false,
+        //showConfirmButton: false,
+      });
+    }
+  </script>
 </html>
