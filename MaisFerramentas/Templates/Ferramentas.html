@@ -68,458 +68,7 @@
       type="text/javascript"
       src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.colVis.min.js"
     ></script>
-    <style>
-      .custom-swal {
-        width: 150px; /* Ajuste conforme necessário */
-      }
-
-      .swal2-popup {
-        width: 350px;
-        height: 300px;
-      }
-      body {
-        margin: 0;
-        padding: 0;
-        font-family: Arial, sans-serif;
-        cursor: pointer;
-        font-size: 107%;
-        background-color: #f2f2f2;
-      }
-
-      .menu {
-        position: fixed;
-        width: 100%;
-        background-color: #222;
-        background: linear-gradient(
-          to right,
-          #002040,
-          #003057,
-          #0099c8,
-          #00bfff,
-          #1e90ff
-        );
-        color: white;
-        padding: 10px;
-        display: flex;
-        /* justify-content: space-between; */
-        align-items: center;
-        display: flex;
-        z-index: 4;
-        max-height: 36px;
-      }
-
-      .menu h1 {
-        margin: 0;
-        padding: 0;
-        display: inline-block;
-      }
-
-      .menu a {
-        text-decoration: none;
-        color: white;
-        font-weight: bold;
-        transition: color 0.3s;
-      }
-
-      .sidebar {
-        position: fixed;
-        width: 48px;
-        height: 100vh;
-        margin-top: 56px;
-        background: linear-gradient(to bottom, #002040, #003057);
-        transition: width 0.3s, margin-left 1.9s;
-        border-radius: 0px 10px 10px 0;
-        z-index: 4;
-        /* cursor: none; */
-      }
-
-      /* .sidebar:hover {
-    width: 200px;
-  } */
-
-      .content {
-        margin-left: 50px;
-        padding: 73px 20px 20px;
-        transition: margin-left 0.3s;
-        /* position:relative; */
-        /* position: fixed; */
-        z-index: 0;
-        position: relative;
-        /* background-color: #ffffff; */
-      }
-
-      .sidebar:hover + .content {
-        margin-left: 200px;
-      }
-
-      .div_botao_fixar {
-        display: none;
-        text-align: right;
-      }
-
-      .sidebar:hover .div_botao_fixar {
-        display: block;
-      }
-
-      .sidebar a {
-        color: white;
-        text-align: center;
-        padding: 1px 0;
-        text-decoration: none;
-        display: inline-block;
-      }
-
-      .content p {
-        margin: 0;
-      }
-
-      .suboptions {
-        max-height: 0;
-        overflow: hidden;
-        transition: max-height 0.3s ease-in-out;
-        background-color: #7c828a5e;
-      }
-
-      .option_sidebar:hover {
-        background-color: #7c828a5e; /*#7c828a4c;*/ /* Altere a cor de fundo conforme desejado */
-      }
-
-      .suboptions_min:hover {
-        background-color: #7c828a4c;
-      }
-
-      @keyframes blinking {
-        0%,
-        100% {
-          opacity: 1;
-        }
-        50% {
-          opacity: 0;
-        }
-      }
-
-      .blink {
-        animation: blinking 1s infinite; /* Define a animação para piscar */
-      }
-
-      .suboptions a {
-        display: flex;
-        padding-left: 28px;
-        padding-bottom: 5px;
-        padding-top: 5px;
-        font-size: medium;
-        /* margin-left: auto; */
-        /*flex-grow: 1; /* Faz o texto ocupar o espaço disponível */
-        /*white-space: nowrap; /* Impede a quebra de linha */
-        /*overflow: hidden; /* Impede que o texto transborde */
-        text-overflow: ellipsis; /*reticências*/
-      }
-
-      /* Desativa o destaque azul ao clicar */
-      *:active {
-        outline: none;
-        box-shadow: none;
-        color: none;
-      }
-
-      .botao_fixar {
-        font-size: 16px;
-        padding: 10px;
-        color: white;
-      }
-
-      .option_sidebar {
-        display: flex;
-        align-items: center;
-        cursor: none;
-
-        cursor: none;
-        outline: none;
-        -webkit-tap-highlight-color: transparent;
-      }
-
-      .option_sidebar:active {
-        cursor: none;
-        outline: none;
-        -webkit-tap-highlight-color: transparent;
-      }
-
-      .option_sidebar a {
-        display: none;
-      }
-
-      .icone_frequencia_sidebar {
-        padding: 5px;
-        color: white;
-        padding-left: 11px;
-        cursor: pointer;
-      }
-
-      .capela {
-        display: inline-block;
-      }
-
-      .capela_2 {
-        display: inline-block;
-        color: black;
-        background-color: white;
-      }
-
-      .ferramentas {
-        display: inline-block;
-      }
-      .ferramentas h1 {
-        font-style: normal;
-        transform: skewX(-20deg);
-        font-size: 180%;
-      }
-
-      .texto_frequencia_sidebar {
-        line-height: 1; /* Ou ajuste para obter o espaçamento vertical desejado */
-      }
-
-      .hamburger {
-        display: inline-block;
-        cursor: pointer;
-      }
-
-      .capela:hover .suboptions {
-        display: none;
-      }
-
-      .option_sidebar_2 {
-        margin-right: 18px;
-        margin-top: 12px;
-        display: flex;
-      }
-      .lados {
-        width: 40px;
-        background-color: #007da5;
-        color: #007da5;
-      }
-
-      .suboptions .circle {
-        display: inline-block;
-        width: 6px;
-        height: 6px;
-        border: 2px solid #fff; /* Cor da borda branca */
-        border-radius: 50%; /* Forma circular */
-        margin-right: 3px; /* Espaçamento entre o círculo e o texto */
-        margin-top: 4px;
-      }
-
-      @keyframes clickAnimation {
-        0% {
-          transform: scale(1);
-        }
-        50% {
-          transform: scale(1.1);
-        }
-        100% {
-          transform: scale(1);
-        }
-      }
-
-      .clicked {
-        animation: clickAnimation 0.3s;
-      }
-
-      .testew {
-        margin-top: 3px;
-        font-size: 12px;
-        margin-right: 2px;
-      }
-
-      .flecha_esquerda {
-        text-align: right;
-        margin-left: auto;
-      }
-
-      .link_with_icon {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-      }
-
-      .option_sidebar {
-        position: relative;
-        overflow: hidden;
-        cursor: pointer;
-      }
-
-      .option_sidebar::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 0;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.3);
-        transition: width 0.3s ease-in-out;
-      }
-      .suboptions_min {
-        position: relative;
-        cursor: none;
-        outline: none;
-        -webkit-tap-highlight-color: transparent;
-      }
-
-      .suboptions_min::before {
-        content: "";
-        position: absolute;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 0;
-        height: 100%;
-        background-color: #7c828a15;
-        transition: width 0.2s ease-in-out;
-      }
-
-      .suboptions_min.clicked2::before {
-        width: 100%;
-      }
-      .background-img {
-        background-color: #0099c8;
-        width: 100%;
-        transition: width 0.2s ease-in-out;
-      }
-      .option_sidebar_configuration {
-        cursor: pointer;
-      }
-
-      .option_sidebar_configuration_imagem {
-        cursor: pointer;
-      }
-
-      .overlay {
-        position: fixed;
-        display: flex;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        transition: margin-left 0.3s;
-        display: none;
-        padding: 80px 20px 20px 20px;
-        z-index: 3;
-      }
-
-      .overlaynoimg {
-        position: fixed;
-        /* left: 200px; */
-        top: 0px;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.5); /* Sombra translúcida */
-        display: none;
-      }
-
-      .overlaynoimg2 {
-        position: fixed;
-        /* left: 200px; */
-        top: 0px;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.5); /* Sombra translúcida */
-        display: none;
-      }
-
-      .background-imgs {
-        /*margin-top: 80px;*/
-        margin-left: 4px;
-        width: 100%;
-        transition: width 0.2s ease-in-out;
-        display: none;
-        /*padding : 7px 20px 20px;*/
-      }
-      .sidebar.expandida {
-        width: 230px; /* Largura expandida quando a classe 'expandida' é aplicada */
-      }
-
-      .option_sidebar a {
-        cursor: pointer;
-      }
-      .logo_igreja {
-        display: flex;
-        align-items: center;
-        /* padding-left: 150px; */
-        display: none;
-      }
-      .icones {
-        display: flex;
-        max-height: 50px;
-        margin-left: auto;
-      }
-      .atalhos {
-        display: flex;
-        max-height: 50px;
-      }
-      .atalhos {
-        display: flex;
-        /* flex-direction: column; */
-        align-items: center;
-        max-height: 50px;
-      }
-      .option_sidebar_3 {
-        display: flex;
-      }
-
-      .nome_icone {
-        color: rgb(255, 255, 255);
-        margin-top: 1px;
-        margin-bottom: 25px;
-      }
-      .minimiza_sidebar {
-        position: absolute;
-        display: flex;
-        top: 60px;
-        right: 1%;
-        color: white;
-
-        /* bottom: 0;
-      left: 0;
-      right: 0; */
-      }
-      .minimiza_sidebar2 {
-        background-color: #5a564e;
-        border-radius: 100%;
-        width: 20px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-left: auto;
-        margin-top: auto;
-        /* margin-top: -20px;
-    margin-left: 150px; */
-      }
-
-      .card_membro {
-        border-radius: 1%;
-        border-color: #07a9df; /*e7edef*/
-        /* border-style: solid; */
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-      }
-      .outras_informacoes {
-        font-size: 12px;
-      }
-
-      .informacoes_membro {
-        margin-right: auto;
-        margin-left: 5px;
-      }
-
-      /* .inserir_regisro_idade{
-             margin-top: 8px; 
-          } */
-
-      .botao-membro:hover {
-        background-color: #00bfff;
-        color: white;
-      }
-    </style>
+    <style></style>
   </head>
   <body>
     <div class="menu">
@@ -802,4 +351,347 @@
 
     <div class="content" id="content"></div>
   </body>
+  <script>
+    $(document).ready(function () {
+      $.ajax({
+        url: "/ferramentas/dados_usuario_logado/",
+        success: function (data) {
+          // window.location.href = '/ferramentas/login';
+          console.log(data);
+
+          document.getElementById("div_dados_usuario_logado").innerHTML =
+            ` <div style="font-weight: bold ;font-size: 25px ;margin-top: 4px; margin-right: 3px; background-color: rgb(10, 237, 218); border-radius: 50px; width: 40px; height: 40px; display: flex;align-items: center; justify-content: center; text-align: center;">
+        <label for="" > ` +
+            data.nome_usuario_logado.charAt(0) +
+            `</label>
+      </div>
+      <p class="nome_usuario_no_menu" style="font-weight:bold;"">` +
+            data.nome_usuario_logado +
+            `</p>`;
+          if (isMobile) {
+            document.querySelector(".nome_usuario_no_menu").style.display =
+              "none";
+          }
+        },
+      });
+    });
+
+    function sidebar_escondida() {
+      if (status_sidebar != "escondida") {
+        document.querySelector(".sidebar").style.width = "0px";
+        document.querySelector(".content").style.marginLeft = "0px";
+
+        status_sidebar_antigo = status_sidebar;
+        status_sidebar = "escondida";
+
+        if (isMobile === true) {
+          document.querySelector("body").style.position = "";
+          document.querySelector(".overlay").style.display = "none";
+          document.querySelector(".background-imgs").style.display = "none";
+          document.querySelector(".overlay").style.marginLeft = "0px";
+        }
+      } else {
+        document.querySelector(".sidebar").style.visibility = "visible";
+        document.querySelector(".sidebar").style.display = "block";
+
+        status_sidebar = status_sidebar_antigo;
+
+        if (status_sidebar_antigo === "travada" || isMobile === true) {
+          sidebar_grande();
+        } else {
+          sidebar_pequena();
+        }
+
+        if (isMobile === true) {
+          document.querySelector(".overlay").style.display = "block";
+          document.querySelector(".overlay").style.backgroundColor =
+            "rgba(0, 0, 0, 0.4)";
+          document.querySelector(".background-imgs").style.display = "block";
+          document.querySelector(".sidebar").style.zIndex = 4;
+
+          teste = setTimeout(() => {
+            document.querySelector(".overlay").style.marginLeft = "220px";
+          }, 3);
+        }
+      }
+    }
+
+    function sidebar_pequena() {
+      if (status_sidebar != "travada" && isMobile != true) {
+        document.querySelector(".content").style.marginLeft = "";
+        document.querySelector(".sidebar").style.width = "";
+        document.querySelector(".div_botao_fixar").style.display = "none";
+
+        links = document.querySelectorAll(".option_sidebar a");
+        links.forEach(function (element) {
+          element.style.display = "none";
+        });
+
+        if (exibir_suboption != null) {
+          document.getElementById(exibir_suboption).style.display = "none";
+          document.getElementById(exibir_suboption).style.maxHeight = "0px";
+          document.getElementById(option_sidebar_selected).style.borderRadius =
+            "";
+        }
+        status_sidebar = "pequena";
+      }
+    }
+
+    function sidebar_grande() {
+      if (isMobile === true) {
+        //document.querySelector('.content').style.marginLeft = '230px';
+        document.querySelector(".sidebar").style.width = "230px";
+        document.querySelector(".div_botao_fixar").style.display = "block";
+        document.querySelector(".div_botao_fixar").style.visibility = "hidden";
+        document.querySelector("body").style.position = "fixed";
+      } else if (status_sidebar != "escondida") {
+        document.querySelector(".content").style.marginLeft = "200px";
+        document.querySelector(".sidebar").style.width = "200px";
+        document.querySelector(".div_botao_fixar").style.display = "block";
+      }
+
+      links = document.querySelectorAll(".option_sidebar a");
+      links.forEach(function (element) {
+        element.style.display = "inline-flex";
+      });
+
+      if (exibir_suboption != null) {
+        document.getElementById(exibir_suboption).style.display = "block";
+        document.getElementById(exibir_suboption).style.maxHeight = "1000px";
+        document.getElementById(option_sidebar_selected).style.borderRadius =
+          "10px 10px 0px 0px ";
+      }
+
+      if (status_sidebar != "travada") {
+        status_sidebar = "grande";
+      }
+    }
+
+    function sidebar_travada() {
+      if (isMobile === true) {
+        sidebar_escondida();
+      } else {
+        //Se a sidebar não estiver travada, trava-a.
+        document.querySelector(".sidebar").style.visibility = "visible";
+        if (status_sidebar != "travada") {
+          //se estiver escondida e pequena, apenas mostra-a pequena.
+          if (
+            status_sidebar === "escondida" &&
+            status_sidebar_antigo === "pequena"
+          ) {
+            sidebar_escondida();
+
+            // setTimeout(() => {
+            sidebar_pequena();
+            // }, 5)
+          } else {
+            //Se não estiver escondida, apenas trava a sidebar em modo grande.
+            sidebar_grande();
+            status_sidebar = "travada";
+          }
+          //Se a sidebar já estiver travada, destrava-a.
+        } else {
+          status_sidebar = "grande";
+          sidebar_pequena();
+        }
+      }
+    }
+
+    exibir_suboption = null;
+    option_sidebar_selected = null;
+
+    function suboptions(id) {
+      document.getElementById(id).classList.add("clicked");
+
+      //Se alguma opção estiver aberta, remove o destaque de cor e recolhe as subopções
+      if (option_sidebar_selected != null) {
+        //remove o destaque de cor
+        setTimeout(() => {
+          document.getElementById(
+            option_sidebar_selected
+          ).style.backgroundColor = "";
+          document.getElementById(id).classList.remove("clicked");
+        }, 300);
+
+        //recolhe as subopções (caso existam).
+        if (exibir_suboption != null) {
+          document.getElementById(exibir_suboption).style.maxHeight = "0px";
+        }
+      }
+
+      //Se a opção clicada for diferente da opção aberta atualmente, destaca a opção e expande suas subopções (caso existam).
+      if (option_sidebar_selected != id) {
+        setTimeout(() => {
+          //destaca a opção
+          document.getElementById(id).classList.remove("clicked");
+          document.getElementById(id).style.backgroundColor = "#004e78";
+
+          //remove o arredondamento das bordas da opção que estava selecionada anteriormente.
+          if (option_sidebar_selected != null) {
+            document.getElementById(
+              option_sidebar_selected
+            ).style.borderRadius = "0px 0px 0px 0px";
+          }
+
+          option_sidebar_selected = id;
+
+          //expande suas subopções (caso existam)
+          if (document.getElementById("suboption_" + id.slice(7)) != null) {
+            document.getElementById(
+              "suboption_" + id.slice(7)
+            ).style.maxHeight = "1000px";
+            document.getElementById(id).style.borderRadius =
+              "10px 10px 0px 0px ";
+            exibir_suboption = "suboption_" + id.slice(7);
+          } else {
+            exibir_suboption = null;
+          }
+        }, 300);
+      } else {
+        //se a opção clicada for a mesma que já está aberta, apenas configura as variiáveis para ser anuladas.
+        exibir_suboption = null;
+        setTimeout(() => {
+          option_sidebar_selected = null;
+        }, 300);
+      }
+    }
+
+    const suboptionsMinList = document.querySelectorAll(".suboptions_min");
+
+    suboptionsMinList.forEach((suboption) => {
+      suboption.addEventListener("click", function () {
+        this.classList.add("clicked2"); // Adiciona a classe para iniciar a animação
+        setTimeout(() => {
+          this.classList.remove("clicked2"); // Remove a classe após a animação
+        }, 300); // Define o tempo da animação em milissegundos (0.3 segundos)
+      });
+    });
+
+    links = document.querySelectorAll(".nome_icone");
+    links.forEach(function (element) {
+      if (element != null && element != undefined) {
+        element.style.display = "none";
+      }
+    });
+
+    isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    if (isMobile === true) {
+      // document.getElementById('option_5').style.backgroundColor = '#004e78';
+      // option_sidebar_selected = 5;
+
+      document.querySelector(".sidebar").style.width = "230px";
+      document.querySelector(".div_botao_fixar").style.display = "block";
+      document.querySelector(".div_botao_fixar").style.visibility = "hidden";
+      status_sidebar = "travada";
+      sidebar_escondida();
+
+      //document.querySelector('.botao_e_Titulo').style.display = 'none';
+      // document.querySelector('.nome_usuario_no_menu').style.display = 'none';
+      document.querySelector(".atalhos").style.flexDirection = "column";
+      //document.querySelector('.imagem_usuario_no_menu').style.marginRight = '20px';
+
+      realocar = document.querySelector(".atalhos");
+
+      document.querySelector(".overlay").appendChild(realocar);
+      // document.querySelector('.atalhos').style.display = 'block';
+      // document.querySelector('.atalhos').style.marginLeft = '40px';
+      document.querySelector(".atalhos").style.marginTop = "30px";
+      document.querySelector(".logo_igreja").style.display = "none";
+      document.querySelector(".Logo_LCR").style.display = "none";
+      document.querySelector(".option_sidebar_3").style.display = "none";
+
+      document.querySelector("body").style.fontSize = "larger";
+      document.querySelector(".content").style.position = "static";
+      document.querySelector(".content").style.padding = "73px 10px 10px";
+
+      // document.querySelector(".inserir_regisro").style.marginTop = "50px";
+      // document.querySelector(".div_registro_frequencia").style.width = "100%";
+
+      links = document.querySelectorAll(".nome_icone");
+      links.forEach(function (element) {
+        if (element != null && element != undefined) {
+          element.style.display = "block";
+        }
+      });
+    } else {
+      status_sidebar = "pequena";
+      sidebar_travada();
+    }
+
+    function deslogar() {
+      $.ajax({
+        url: "deslogar",
+        success: function () {
+          window.location.href = "/ferramentas/login";
+        },
+      });
+    }
+
+    function novo_conteudo(url) {
+      $.ajax({
+        url: url,
+        type: "GET",
+        success: function (data) {
+          $("#content").html(data); // Atualiza o conteúdo principal com o conteúdo da nova página
+          // usuario = data.nome_usuario_logado;
+        },
+      });
+    }
+
+    // novo_conteudo("/ferramentas/frequencia");
+    novo_conteudo("/ferramentas/atas");
+
+    // Seleciona todos os elementos com a classe "minha-classe"
+    var elementos = document.querySelectorAll(".suboptions_min");
+
+    // Adiciona um event listener de clique a cada elemento
+    elementos.forEach(function (elemento) {
+      elemento.addEventListener("click", function () {
+        // Coloque aqui o código que deseja executar quando ocorrer o clique
+        if (isMobile === true) {
+          sidebar_escondida();
+        }
+      });
+    });
+    //document.querySelector('button').addEventListener('mouseover', function() {this.style.backgroundColor = '#18c753'; /* Cor de fundo ao passar o mouse */ });
+
+    // Remove estilo ao retirar o mouse
+    //document.querySelector('button').addEventListener('mouseout',function() { this.style.backgroundColor = '#1fdf64'; /* Cor de fundo padrão ao retirar o mouse */});
+    // Seleciona a div original
+    //   icone_avatar_homem = document.getElementById('avatar_homem');
+
+    //   // Cria uma cópia da div
+    //   copia_icone_avatar_homem = icone_avatar_homem.cloneNode(true);
+    //   copia_icone_avatar_homem.classList.add('estilo_copia_avatar');
+
+    //   // Insere a cópia no local desejado
+    //   document.getElementById('inserir_regisro_nome').appendChild(copia_icone_avatar_homem);
+
+    //   //copia_icone_avatar_homem.style.
+
+    // // Seleciona a div original
+    // icone_avatar_mulher = document.getElementById('avatar_mulher');
+
+    // // Cria uma cópia da div
+    // copia_icone_avatar_mulher = icone_avatar_mulher.cloneNode(true);
+    // copia_icone_avatar_mulher.classList.add('estilo_copia_avatar_mulher');
+
+    // // Insere a cópia no local desejado
+    // document.getElementById('inserir_regisro_nome').appendChild(copia_icone_avatar_mulher);
+
+    //copia_icone_avatar_mulher.style
+
+    // Host: .db.elephantsql.csillyom
+    // Porta: O padrão para o PostgreSQL é 5432.
+    // Database: kwjetfdy
+    // Usuário: kwjetfdy
+    // Senha: OJykuUEJI4lH6Km7VWyuwKjoudClVcUQ
+
+    //MaisFerramentas
+    //maisferramentasmail@gmail.com
+    //6Bdckjk8l53f4*
+
+    // isaquesantos1517@gmail.com
+    // isaque23
+  </script>
 </html>
