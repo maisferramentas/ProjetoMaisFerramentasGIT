@@ -229,6 +229,13 @@
           document.querySelector(".img_canto").style.height = "";
         }
       });
+
+      document
+        .querySelector(".arrasto")
+        .addEventListener("click", function (event) {
+          event.preventDefault(); // Evita o comportamento padrão do clique
+          // Adicione aqui o que você deseja que aconteça quando o ícone for clicado, ou simplesmente não faça nada
+        });
     </script>
   </body>
 </html>
