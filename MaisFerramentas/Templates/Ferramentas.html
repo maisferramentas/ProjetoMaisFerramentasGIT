@@ -121,6 +121,13 @@
         transition: color 0.3s;
       }
 
+      .descricao_opcoes_menu {
+        text-decoration: none;
+        color: white;
+        /* font-weight: bold; */
+        transition: color 0.3s;
+      }
+
       .sidebar {
         position: fixed;
         width: 48px;
@@ -213,6 +220,20 @@
         /*white-space: nowrap; /* Impede a quebra de linha */
         /*overflow: hidden; /* Impede que o texto transborde */
         text-overflow: ellipsis; /*reticências*/
+      }
+
+      .suboptions label {
+        display: flex;
+        padding-left: 28px;
+        padding-bottom: 5px;
+        padding-top: 5px;
+        font-size: medium;
+        /* margin-left: auto; */
+        /*flex-grow: 1; /* Faz o texto ocupar o espaço disponível */
+        /*white-space: nowrap; /* Impede a quebra de linha */
+        /*overflow: hidden; /* Impede que o texto transborde */
+        text-overflow: ellipsis; /*reticências*/
+        color: white;
       }
 
       /* Desativa o destaque azul ao clicar */
@@ -706,14 +727,15 @@
         <span class="material-symbols-outlined icone_frequencia_sidebar">
           bar_chart_4_bars
         </span>
-        <a href="#"> Dashboard </a>
+        <label for="" class="descricao_opcoes_menu">Dashboard</label>
       </div>
 
       <div class="option_sidebar" onclick="suboptions(id)" id="option_1">
         <span class="material-icons icone_frequencia_sidebar">
           fact_check
         </span>
-        <a href="#"> Frequência </a>
+        <label for="" class="descricao_opcoes_menu">Frequência</label>
+        <!-- <a href="#"> Frequência </a> -->
       </div>
 
       <div class="suboptions" id="suboption_1">
@@ -724,9 +746,12 @@
         </div>
 
         <div class="suboptions_min">
-          <a href="#">
+          <label for="" class="Frequência"
+            ><i class="mdi mdi-chevron-right"></i>Listar Frequência</label
+          >
+          <!-- <a href="#">
             <i class="mdi mdi-chevron-right"></i>Listar Frequência
-          </a>
+          </a> -->
         </div>
 
         <div class="suboptions_min">
