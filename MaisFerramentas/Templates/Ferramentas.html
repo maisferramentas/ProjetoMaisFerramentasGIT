@@ -191,6 +191,10 @@
         background-color: #7c828a5e; /*#7c828a4c;*/ /* Altere a cor de fundo conforme desejado */
       }
 
+      .option_sidebar label {
+        color: white;
+      }
+
       .suboptions_min:hover {
         background-color: #7c828a4c;
       }
@@ -712,15 +716,13 @@
       onmouseleave="sidebar_pequena()"
     >
       <div class="div_botao_fixar">
-        
-          <span
-            class="material-icons botao_fixar"
-            onclick="sidebar_travada()"
-            title="Fixação da Barra"
-          >
-            push_pin
-          </span>
-        
+        <span
+          class="material-icons botao_fixar"
+          onclick="sidebar_travada()"
+          title="Fixação da Barra"
+        >
+          push_pin
+        </span>
       </div>
 
       <div class="option_sidebar" onclick="suboptions(id)" id="option_5">
@@ -735,14 +737,20 @@
           fact_check
         </span>
         <label for="" class="descricao_opcoes_menu">Frequência</label>
-        <!-- <a href="#"> Frequência </a> -->
       </div>
 
       <div class="suboptions" id="suboption_1">
         <div class="suboptions_min">
-          <a href="#" id="/ferramentas/frequencia" onclick="novo_conteudo(id)">
+          <!-- <a href="#" id="/ferramentas/frequencia" onclick="novo_conteudo(id)">
             <i class="mdi mdi-chevron-right"></i>Registrar Frequência
-          </a>
+          </a> -->
+          <label
+            for=""
+            id="/ferramentas/frequencia"
+            onclick="novo_conteudo(id)"
+          >
+            <i class="mdi mdi-chevron-right"></i>Registrar Frequência
+          </label>
         </div>
 
         <div class="suboptions_min">
@@ -755,9 +763,9 @@
         </div>
 
         <div class="suboptions_min">
-          <a href="#">
+          <label for="">
             <i class="mdi mdi-chevron-right"></i>Listar Frequência
-          </a>
+          </label>
         </div>
       </div>
 
@@ -765,30 +773,34 @@
         <span class="material-icons icone_frequencia_sidebar">
           recent_actors
         </span>
-        <a href="#">Lista de Membros </a>
+        <label for="">Lista de Membros</label>
       </div>
 
       <div class="suboptions" id="suboption_2">
         <div class="suboptions_min">
-          <a href="#"><i class="mdi mdi-chevron-right"></i>Por Organização </a>
+          <label for=""
+            ><i class="mdi mdi-chevron-right"></i>Por Organização</label
+          >
         </div>
         <div class="suboptions_min">
-          <a href="#"><i class="mdi mdi-chevron-right"></i>Todos</a>
+          <label for=""><i class="mdi mdi-chevron-right"></i>Todos</label>
         </div>
       </div>
 
       <div class="option_sidebar" onclick="suboptions(id)" id="option_3">
         <span class="material-icons icone_frequencia_sidebar"> menu_book </span>
-        <a href="#"> Ata de Reunião </a>
+        <label for="">Ata de Reunião</label>
       </div>
       <div class="suboptions" id="suboption_3">
         <div class="suboptions_min">
-          <a href="#" id="/ferramentas/atas/" onclick="novo_conteudo(id)"
-            ><i class="mdi mdi-chevron-right"></i>Reunião Sacramental
-          </a>
+          <label for="" id="/ferramentas/atas/" onclick="novo_conteudo(id)"
+            ><i class="mdi mdi-chevron-right"></i>Reunião Sacramental</label
+          >
         </div>
         <div class="suboptions_min">
-          <a href="#"><i class="mdi mdi-chevron-right"></i>Revisar Atas</a>
+          <label for=""
+            ><i class="mdi mdi-chevron-right"></i>Revisar Atas</label
+          >
         </div>
       </div>
 
@@ -796,12 +808,12 @@
         <span class="material-icons icone_frequencia_sidebar">
           location_on
         </span>
-        <a href="#"> Mapa da Ala</a>
+        <label for="">Mapa da Ala</label>
       </div>
 
       <div class="suboptions" id="suboption_4">
         <div class="suboptions_min">
-          <a href="#"><i class="far fa-star testew"></i>Mapa </a>
+          <label for=""><i class="far fa-star testew"></i>Mapa</label>
         </div>
       </div>
 
