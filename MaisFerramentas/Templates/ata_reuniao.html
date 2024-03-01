@@ -110,8 +110,8 @@
         max-width: 400px;
         /* margin: 0 auto; */
         background-color: #fff;
-        padding: 20px;
-        padding: 20px 3px 20px 10px;
+        /* padding: 20px;
+        padding: 20px 3px 20px 10px; */
         border-radius: 8px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         margin-bottom: 10px;
@@ -221,7 +221,7 @@
         if (adicionaisDiv.css("display") === "none") {
           adicionaisDiv.css("display", "flex");
           document.querySelector(".img_canto").style.height =
-            document.querySelector(".caixa_card").offsetHeight + "px";
+            document.querySelector(".caixa_card").offsetHeight + 30 + "px";
 
           document.querySelector(".img_canto").style.width = "57px";
         } else {
