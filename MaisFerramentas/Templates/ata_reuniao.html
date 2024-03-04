@@ -137,6 +137,9 @@
       .margin_m4px {
         margin-left: -4px;
       }
+      .icone_opcoes {
+        display: none;
+      }
     </style>
   </head>
   <body>
@@ -159,12 +162,12 @@
           </div>
         </div>
         <div class="flex direita column">
-          <span class="material-symbols-outlined esquerda_15">
+          <span class="material-symbols-outlined esquerda_15 icone_opcoes">
             content_copy
           </span>
 
           <div class="flex align">
-            <div class="div_img_icone_whats">
+            <div class="div_img_icone_whats icone_opcoes">
               <img
                 src="https://www.shareicon.net/data/2048x2048/2016/07/14/607292_black_2048x2048.png"
                 alt=""
@@ -176,7 +179,9 @@
               drag_indicator
             </span>
           </div>
-          <span class="material-symbols-outlined esquerda_15"> delete </span>
+          <span class="material-symbols-outlined esquerda_15 icone_opcoes">
+            delete
+          </span>
         </div>
       </div>
     </div>
@@ -248,10 +253,21 @@
           document.querySelector(".img_canto").style.height =
             document.querySelector(".caixa_card").offsetHeight + 40 + "px";
 
+          document
+            .querySelectorAll(".icone_opcoes")
+            .forEach(function (element) {
+              element.style.display = "flex";
+            });
+
           document.querySelector(".img_canto").style.width = "57px";
         } else {
           adicionaisDiv.css("display", "none");
           document.querySelector(".img_canto").style.height = "";
+          document
+            .querySelectorAll(".icone_opcoes")
+            .forEach(function (element) {
+              element.style.display = "none";
+            });
         }
       });
 
