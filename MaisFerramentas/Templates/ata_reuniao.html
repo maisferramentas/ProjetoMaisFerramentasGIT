@@ -58,8 +58,8 @@
       .div_img_icone_whats {
         display: flex;
         border-radius: 50px;
-        width: 45px;
-        height: 45px;
+        width: 40px;
+        height: 31px;
       }
       .justify {
         justify-content: center;
@@ -113,7 +113,7 @@
         /* padding: 20px;
         padding: 20px 3px 20px 10px; */
         border-radius: 8px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
         margin-bottom: 10px;
       }
       .left_3px {
@@ -128,6 +128,10 @@
       }
       .img_canto {
         height: 90px;
+        border-radius: 8px; /*8px 0px 0px 8px*/
+      }
+      .esquerda_15 {
+        margin-left: 15px;
       }
     </style>
   </head>
@@ -150,9 +154,26 @@
             <input type="text" name="" id="" class="campo_texto" />
           </div>
         </div>
-        <span class="material-symbols-outlined direita drag_indicator arrasto">
-          drag_indicator
-        </span>
+        <div class="flex direita column">
+          <span class="material-symbols-outlined esquerda_15">
+            content_copy
+          </span>
+
+          <div class="flex align">
+            <div class="div_img_icone_whats">
+              <img
+                src="https://www.shareicon.net/data/2048x2048/2016/07/14/607292_black_2048x2048.png"
+                alt=""
+              />
+            </div>
+            <span
+              class="material-symbols-outlined direita drag_indicator arrasto"
+            >
+              drag_indicator
+            </span>
+          </div>
+          <span class="material-symbols-outlined esquerda_15"> delete </span>
+        </div>
       </div>
     </div>
 
@@ -221,7 +242,7 @@
         if (adicionaisDiv.css("display") === "none") {
           adicionaisDiv.css("display", "flex");
           document.querySelector(".img_canto").style.height =
-            document.querySelector(".caixa_card").offsetHeight + 30 + "px";
+            document.querySelector(".caixa_card").offsetHeight + 40 + "px";
 
           document.querySelector(".img_canto").style.width = "57px";
         } else {
