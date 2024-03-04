@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Divs Arrastáveis</title>
     <style>
-      .draggable {
+      /* .draggable {
         border: 1px solid #ccc;
         padding: 10px;
         margin-bottom: 5px;
-        /* cursor: move; */
-      }
+        /* cursor: move; 
+      } */
 
       .dragging {
         opacity: 0.5;
@@ -58,7 +58,7 @@
       .div_img_icone_whats {
         display: flex;
         border-radius: 50px;
-        width: 40px;
+        width: 31px;
         height: 31px;
         margin-right: -10px;
       }
@@ -71,7 +71,7 @@
       .direita {
         margin-left: auto;
       }
-      #container {
+      #area_arrastavel {
         min-height: 100px; /* altura mínima para permitir arrastar até o final */
       }
       .campo_texto {
@@ -142,10 +142,6 @@
         display: none;
       }
       .div_opcoes {
-        background-color: #55aec5;
-        background: linear-gradient(to right, #0099c8, #0087aa);
-        background: linear-gradient(to right, #c3e2ea, #9dd0dd);
-        background: linear-gradient(to right, #c3e2ea, #9dd0dd, #0088aa81);
         background: linear-gradient(
           to right,
           #bcdee7,
@@ -154,18 +150,16 @@
           #0e94b4
         );
         border-radius: 100px 0px 0px 100px;
+        background-size: 100% 0%;
+        transition: background-size 1s ease;
       }
 
+      /* .div_opcoes:hover {
+        background-size: 100% 100%;
+      } */
+
       .arrasto {
-        /* background-color: #fff; */
         background: #51acc3;
-        /* background: linear-gradient(
-          to right,
-          #bcdee7,
-          #66b7ca,
-          #50acc3,
-          #0e94b4
-        ); */
         border-radius: 50px 0px 0px 50px;
         padding-top: 10px;
         padding-bottom: 10px;
@@ -180,8 +174,8 @@
     </style>
   </head>
   <body>
-    <div class="">
-      <div class="flex align caixa_card">
+    <div class="" id="area_arrastavel">
+      <div class="draggable flex align caixa_card" draggable="true" id="1">
         <img
           class="img_canto"
           src="https://lh3.googleusercontent.com/drive-viewer/AKGpihYyk0w71rkdxsX1nZGLb0tCDQMcs9lpk4rLuS-B8gYTS0f93dlBY0gTohCK9qdi3sivw0lzHJ354Eu2J5UncWzPGyYH=w1366-h382"
@@ -190,6 +184,48 @@
 
         <div class="flex column esquerda_4px">
           <label for="" class="campo_titulo">Discursante: </label>
+          <input type="text" name="" id="" class="campo_texto" />
+          <div class="flex column adicionais">
+            <label for="" class="campo_titulo">Tema: </label>
+            <input type="text" name="" id="" class="campo_texto" />
+            <label for="" class="campo_titulo">Duração: </label>
+            <input type="text" name="" id="" class="campo_texto" />
+          </div>
+        </div>
+        <div class="div_opcoes flex direita column">
+          <span
+            class="material-symbols-outlined esquerda_15 icone_opcoes copiar"
+          >
+            content_copy
+          </span>
+
+          <div class="flex align">
+            <img
+              class="div_img_icone_whats icone_opcoes"
+              src="https://www.shareicon.net/data/2048x2048/2016/07/14/607292_black_2048x2048.png"
+              alt=""
+            />
+            <span class="material-symbols-outlined direita arrasto">
+              drag_indicator
+            </span>
+          </div>
+          <span
+            class="material-symbols-outlined esquerda_15 icone_opcoes delete"
+          >
+            delete
+          </span>
+        </div>
+      </div>
+
+      <div class="draggable flex align caixa_card" draggable="true" id="2">
+        <img
+          class="img_canto"
+          src="https://lh3.googleusercontent.com/drive-viewer/AKGpihYyk0w71rkdxsX1nZGLb0tCDQMcs9lpk4rLuS-B8gYTS0f93dlBY0gTohCK9qdi3sivw0lzHJ354Eu2J5UncWzPGyYH=w1366-h382"
+          alt=""
+        />
+
+        <div class="flex column esquerda_4px">
+          <label for="" class="campo_titulo">Oração: </label>
           <input type="text" name="" id="" class="campo_texto" />
           <div class="flex column adicionais">
             <label for="" class="campo_titulo">Tema: </label>
@@ -237,12 +273,15 @@
           }, 0);
         });
 
-        $("#container").on("dragover", function (e) {
+        $("#area_arrastavel").on("dragover", function (e) {
           e.preventDefault();
-          const afterElement = getDragAfterElement($("#container"), e.clientY);
+          const afterElement = getDragAfterElement(
+            $("#area_arrastavel"),
+            e.clientY
+          );
           const draggable = $(".dragging");
           if (afterElement == null) {
-            $("#container").append(draggable);
+            $("#area_arrastavel").append(draggable);
           } else {
             $(draggable).insertBefore(afterElement);
           }
@@ -251,9 +290,12 @@
         $(".draggable").on("drop", function (e) {
           const id = e.originalEvent.dataTransfer.getData("text/plain");
           const draggable = $("#" + id);
-          const afterElement = getDragAfterElement($("#container"), e.clientY);
+          const afterElement = getDragAfterElement(
+            $("#area_arrastavel"),
+            e.clientY
+          );
           if (afterElement == null) {
-            $("#container").append(draggable);
+            $("#area_arrastavel").append(draggable);
           } else {
             $(draggable).insertBefore(afterElement);
           }
@@ -262,7 +304,7 @@
         });
       });
 
-      function getDragAfterElement(container, y) {
+      function getDragAfterElement(area_arrastavel, y) {
         const draggableElements = $(".draggable:not(.dragging)").toArray();
         return draggableElements.reduce(
           (closest, child) => {
@@ -288,7 +330,6 @@
         var adicionaisDiv = $(".adicionais");
         var imgCanto = $(".img_canto");
 
-        // Verifica se a classe 'adicionais' está sendo exibida ou ocultada
         if (adicionaisDiv.css("display") === "none") {
           adicionaisDiv.css("display", "flex");
           document.querySelector(".img_canto").style.height =
@@ -301,6 +342,8 @@
             });
 
           document.querySelector(".arrasto").style.background = " #fff";
+          document.querySelector(".div_opcoes").style.backgroundSize =
+            "100% 100%";
           document.querySelector(".img_canto").style.width = "57px";
         } else {
           adicionaisDiv.css("display", "none");
@@ -310,19 +353,11 @@
             .forEach(function (element) {
               element.style.display = "none";
             });
-
+          document.querySelector(".div_opcoes").style.backgroundSize =
+            "100% 0%";
           document.querySelector(".arrasto").style.background = "#51acc3";
         }
       });
-
-      document
-        .querySelectorAll("body .arrasto.menu")
-        .forEach(function (element) {
-          element.addEventListener("click", function (event) {
-            event.preventDefault();
-            // Seu código para lidar com o clique aqui, ou deixe vazio se não deseja realizar nenhuma ação específica
-          });
-        });
     </script>
   </body>
 </html>
