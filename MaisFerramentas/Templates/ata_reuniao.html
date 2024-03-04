@@ -157,10 +157,18 @@
       }
 
       .arrasto {
-        background-color: #fff;
+        /* background-color: #fff; */
+        background: #51acc3;
+        /* background: linear-gradient(
+          to right,
+          #bcdee7,
+          #66b7ca,
+          #50acc3,
+          #0e94b4
+        ); */
         border-radius: 50px 0px 0px 50px;
-        padding-top: 10px;
-        padding-bottom: 10px;
+        padding-top: 17px;
+        padding-bottom: 17px;
       }
       .copiar {
         padding-top: 5px;
@@ -292,6 +300,7 @@
               element.style.display = "flex";
             });
 
+          document.querySelector(".arrasto").style.background = " #fff";
           document.querySelector(".img_canto").style.width = "57px";
         } else {
           adicionaisDiv.css("display", "none");
@@ -301,6 +310,8 @@
             .forEach(function (element) {
               element.style.display = "none";
             });
+
+          document.querySelector(".arrasto").style.background = "#51acc3";
         }
       });
 
