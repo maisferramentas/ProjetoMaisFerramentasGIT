@@ -144,7 +144,7 @@
       .div_opcoes {
         background-color: #55aec5;
         background: linear-gradient(to right, #0099c8, #0087aa);
-        background: linear-gradient(to right, #9dd0dd, #0087aa);
+        background: linear-gradient(to right, #9dd0dd, #0087aabd);
         border-radius: 100px 0px 0px 100px;
       }
 
@@ -153,6 +153,13 @@
         border-radius: 50px 0px 0px 50px;
         padding-top: 2px;
         padding-bottom: 2px;
+      }
+      .copiar {
+        padding-top: 5px;
+      }
+
+      .delete {
+        padding-bottom: 5px;
       }
     </style>
   </head>
@@ -176,7 +183,9 @@
           </div>
         </div>
         <div class="div_opcoes flex direita column">
-          <span class="material-symbols-outlined esquerda_15 icone_opcoes">
+          <span
+            class="material-symbols-outlined esquerda_15 icone_opcoes copiar"
+          >
             content_copy
           </span>
 
@@ -193,7 +202,9 @@
               drag_indicator
             </span>
           </div>
-          <span class="material-symbols-outlined esquerda_15 icone_opcoes">
+          <span
+            class="material-symbols-outlined esquerda_15 icone_opcoes delete"
+          >
             delete
           </span>
         </div>
