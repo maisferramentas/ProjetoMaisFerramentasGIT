@@ -323,6 +323,10 @@
         });
       }
 
+      $(".draggable").on("dragend", function (e) {
+        $(this).removeClass("dragging"); // Remover a classe "dragging" ao finalizar o arrastar
+      });
+
       $(".arrasto").on("click", function () {
         conteudo_div_selecionada = document.getElementById(
           this.closest(".div_card").id
