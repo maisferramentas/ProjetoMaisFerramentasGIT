@@ -107,7 +107,7 @@
       .campo_titulo {
         font-weight: bold;
       }
-      .caixa_card {
+      .div_card {
         max-width: 400px;
         /* margin: 0 auto; */
         background-color: #fff;
@@ -121,7 +121,7 @@
         margin-left: 3px;
       }
 
-      .adicionais {
+      .div_card_info_adicionais {
         /* max-height: 0px;
         overflow: hidden;
         transition: max-height 0.3s ease-in-out; */
@@ -141,7 +141,7 @@
       .icone_opcoes {
         display: none;
       }
-      .div_opcoes {
+      .div_opcoes_card {
         background: linear-gradient(
           to right,
           #bcdee7,
@@ -154,7 +154,7 @@
         transition: background-size 1s ease;
       }
 
-      /* .div_opcoes:hover {
+      /* .div_opcoes_card:hover {
         background-size: 100% 100%;
       } */
 
@@ -175,31 +175,31 @@
   </head>
   <body>
     <div class="" id="area_arrastavel">
-      <div class="draggable flex align caixa_card" draggable="true" id="1">
+      <div class="div_card draggable flex align" draggable="true" id="1">
         <img
           class="img_canto"
           src="https://lh3.googleusercontent.com/drive-viewer/AKGpihYyk0w71rkdxsX1nZGLb0tCDQMcs9lpk4rLuS-B8gYTS0f93dlBY0gTohCK9qdi3sivw0lzHJ354Eu2J5UncWzPGyYH=w1366-h382"
           alt=""
         />
-
-        <div class="flex column esquerda_4px">
+        <div class="div_card_info flex column esquerda_4px">
           <label for="" class="campo_titulo">Discursante: </label>
           <input type="text" name="" id="" class="campo_texto" />
-          <div class="flex column adicionais">
+          <div class="div_card_info_adicionais flex column">
             <label for="" class="campo_titulo">Tema: </label>
             <input type="text" name="" id="" class="campo_texto" />
             <label for="" class="campo_titulo">Duração: </label>
             <input type="text" name="" id="" class="campo_texto" />
           </div>
         </div>
-        <div class="div_opcoes flex direita column">
+
+        <div class="div_opcoes_card flex direita column">
           <span
             class="material-symbols-outlined esquerda_15 icone_opcoes copiar"
           >
             content_copy
           </span>
 
-          <div class="flex align">
+          <div class="div_opcoes_meio_card flex align">
             <img
               class="div_img_icone_whats icone_opcoes"
               src="https://www.shareicon.net/data/2048x2048/2016/07/14/607292_black_2048x2048.png"
@@ -217,40 +217,37 @@
         </div>
       </div>
 
-      <div class="draggable flex align caixa_card" draggable="true" id="2">
+      <div class="div_card draggable flex align" draggable="true" id="2">
         <img
           class="img_canto"
           src="https://lh3.googleusercontent.com/drive-viewer/AKGpihYyk0w71rkdxsX1nZGLb0tCDQMcs9lpk4rLuS-B8gYTS0f93dlBY0gTohCK9qdi3sivw0lzHJ354Eu2J5UncWzPGyYH=w1366-h382"
           alt=""
         />
-
-        <div class="flex column esquerda_4px">
+        <div class="div_card_info flex column esquerda_4px">
           <label for="" class="campo_titulo">Oração: </label>
           <input type="text" name="" id="" class="campo_texto" />
-          <div class="flex column adicionais">
+          <div class="div_card_info_adicionais flex column">
             <label for="" class="campo_titulo">Tema: </label>
             <input type="text" name="" id="" class="campo_texto" />
             <label for="" class="campo_titulo">Duração: </label>
             <input type="text" name="" id="" class="campo_texto" />
           </div>
         </div>
-        <div class="div_opcoes flex direita column">
+
+        <div class="div_opcoes_card flex direita column">
           <span
             class="material-symbols-outlined esquerda_15 icone_opcoes copiar"
           >
             content_copy
           </span>
 
-          <div class="flex align">
-            <div class="div_img_icone_whats icone_opcoes">
-              <img
-                src="https://www.shareicon.net/data/2048x2048/2016/07/14/607292_black_2048x2048.png"
-                alt=""
-              />
-            </div>
-            <span
-              class="material-symbols-outlined direita drag_indicator arrasto"
-            >
+          <div class="div_opcoes_meio_card flex align">
+            <img
+              class="div_img_icone_whats icone_opcoes"
+              src="https://www.shareicon.net/data/2048x2048/2016/07/14/607292_black_2048x2048.png"
+              alt=""
+            />
+            <span class="material-symbols-outlined direita arrasto">
               drag_indicator
             </span>
           </div>
@@ -327,35 +324,59 @@
       }
 
       $(".arrasto").on("click", function () {
-        var adicionaisDiv = $(".adicionais");
-        var imgCanto = $(".img_canto");
+        conteudo_div_selecionada = document.getElementById(
+          this.closest(".div_card").id
+        );
 
-        if (adicionaisDiv.css("display") === "none") {
-          adicionaisDiv.css("display", "flex");
-          document.querySelector(".img_canto").style.height =
-            document.querySelector(".caixa_card").offsetHeight + 40 + "px";
+        if (this.id === "" || this.id === "fechada") {
+          conteudo_div_selecionada.querySelector(
+            ".div_card_info_adicionais"
+          ).style.display = "flex";
 
-          document
+          conteudo_div_selecionada.querySelector(".img_canto").style.height =
+            document.getElementById(this.closest(".div_card").id).offsetHeight +
+            40 +
+            "px";
+
+          conteudo_div_selecionada
             .querySelectorAll(".icone_opcoes")
             .forEach(function (element) {
               element.style.display = "flex";
             });
 
-          document.querySelector(".arrasto").style.background = " #fff";
-          document.querySelector(".div_opcoes").style.backgroundSize =
-            "100% 100%";
-          document.querySelector(".img_canto").style.width = "57px";
+          conteudo_div_selecionada.querySelector(".arrasto").style.background =
+            " #fff";
+
+          conteudo_div_selecionada.querySelector(
+            ".div_opcoes_card"
+          ).style.backgroundSize = "100% 100%";
+
+          conteudo_div_selecionada.querySelector(".img_canto").style.width =
+            "57px";
+
+          this.id = "aberta";
         } else {
-          adicionaisDiv.css("display", "none");
-          document.querySelector(".img_canto").style.height = "";
-          document
+          conteudo_div_selecionada.querySelector(
+            ".div_card_info_adicionais"
+          ).style.display = "none";
+
+          conteudo_div_selecionada.querySelector(".img_canto").style.height =
+            "";
+
+          conteudo_div_selecionada
             .querySelectorAll(".icone_opcoes")
             .forEach(function (element) {
               element.style.display = "none";
             });
-          document.querySelector(".div_opcoes").style.backgroundSize =
-            "100% 0%";
-          document.querySelector(".arrasto").style.background = "#51acc3";
+
+          conteudo_div_selecionada.querySelector(
+            ".div_opcoes_card"
+          ).style.backgroundSize = "100% 0%";
+
+          conteudo_div_selecionada.querySelector(".arrasto").style.background =
+            "#51acc3";
+
+          this.id = "fechada";
         }
       });
     </script>
