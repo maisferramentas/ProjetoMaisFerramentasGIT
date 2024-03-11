@@ -74,13 +74,6 @@
       #area_arrastavel {
         min-height: 100px; /* altura mínima para permitir arrastar até o final */
       }
-      .campo_texto {
-        width: 240px;
-      }
-
-      .campo_texto2 {
-        width: 260px;
-      }
 
       .img_icones {
         display: flex;
@@ -91,7 +84,7 @@
       }
 
       .campo_texto {
-        width: 80%;
+        width: 75%;
         padding: 5px;
         border: 1px solid #ccc;
         border-radius: 5px;
@@ -194,6 +187,8 @@
         text-decoration: none;
         display: block;
         cursor: pointer;
+        max-width: 200px;
+        margin-bottom: 10px;
       }
 
       .dropdown-content a:hover {
@@ -446,7 +441,7 @@
         dropdown.innerHTML = "";
         let invalidName = true;
 
-        dropdown.style.display = "block"; //comentar na opção 1
+        // dropdown.style.display = "block"; //comentar na opção 1
 
         names.forEach((name) => {
           if (name.toLowerCase().includes(filter)) {
@@ -468,10 +463,22 @@
           document.getElementById("myDropdown").innerHTML = "";
         }
 
+        if (invalidName && filter !== "") {
+          input.style.color = "red";
+          const invalidNameElement = document.createElement("a");
+          invalidNameElement.textContent = input.value;
+          invalidNameElement.style.color = "red";
+          invalidNameElement.onclick = function () {
+            input.value = this.textContent;
+            dropdown.style.display = "none";
+          };
+          dropdown.appendChild(invalidNameElement);
+        }
+
         if (filter === "") {
           dropdown.style.display = "none";
         } else {
-          // dropdown.style.display = "block";
+          dropdown.style.display = "block";
         }
       }
 
