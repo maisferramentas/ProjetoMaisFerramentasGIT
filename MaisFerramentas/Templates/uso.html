@@ -60,6 +60,8 @@
         dropdown.innerHTML = "";
         let invalidName = true;
 
+        dropdown.style.display = "block"; //comentar na opção 1
+
         names.forEach((name) => {
           if (name.toLowerCase().includes(filter)) {
             input.style.color = "black";
@@ -73,23 +75,28 @@
             invalidName = false;
           }
         });
-
         if (invalidName && filter !== "") {
+          console.log("entrou");
           input.style.color = "red";
-          const invalidNameElement = document.createElement("a");
-          invalidNameElement.textContent = input.value;
-          invalidNameElement.style.color = "red";
-          invalidNameElement.onclick = function () {
-            input.value = this.textContent;
-            dropdown.style.display = "none";
-          };
-          dropdown.appendChild(invalidNameElement);
+          document.getElementById("myDropdown").style.display = "none";
+          document.getElementById("myDropdown").innerHTML = "";
         }
+        // if (invalidName && filter !== "") {
+        //   input.style.color = "red";
+        //   const invalidNameElement = document.createElement("a");
+        //   invalidNameElement.textContent = input.value;
+        //   invalidNameElement.style.color = "red";
+        //   invalidNameElement.onclick = function () {
+        //     input.value = this.textContent;
+        //     dropdown.style.display = "none";
+        //   };
+        //   dropdown.appendChild(invalidNameElement);
+        // }
 
         if (filter === "") {
           dropdown.style.display = "none";
         } else {
-          dropdown.style.display = "block";
+          // dropdown.style.display = "block";
         }
       }
 
