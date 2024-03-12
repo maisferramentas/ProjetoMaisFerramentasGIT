@@ -182,7 +182,7 @@
         padding: 12px;
         overflow-y: auto;
         max-height: 200px;
-        max-width: 250px;
+        max-width: 240px;
       }
 
       .dropdown-content a {
@@ -191,7 +191,7 @@
         display: block;
         cursor: pointer;
         max-height: 50px;
-        width: 250px;
+        width: 240px;
         margin-bottom: 8px;
       }
 
@@ -200,8 +200,22 @@
         color: #002344;
       }
 
-      input.invalid {
-        color: red;
+      .area_texto {
+        overflow-y: hidden; /* Para ocultar a barra de rolagem vertical */
+        resize: none; /* Para evitar que o usuário redimensione manualmente */
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        border-color: #57afc5;
+        padding: 5px;
+        font-family: Arial, sans-serif;
+        font-size: medium;
+        height: 19px;
+        width: 228px;
+      }
+
+      .area_texto:focus {
+        border-color: #007bff;
+        outline: 0;
       }
     </style>
   </head>
@@ -262,13 +276,22 @@
             />
             <div class="div_card_info flex column esquerda_4px dropdown">
               <label for="" class="campo_titulo">Oração: </label>
-              <input
+              <!-- <input
                 type="text"
                 name=""
                 id="searchInput"
                 class="campo_texto"
                 onkeyup="searchNames()"
               />
+              <div id="myDropdown" class="dropdown-content"></div> -->
+
+              <textarea
+                id="searchInput"
+                class="area_texto"
+                rows="1"
+                spellcheck="false"
+                onkeyup="searchNames()"
+              ></textarea>
               <div id="myDropdown" class="dropdown-content"></div>
               <div class="div_card_info_adicionais flex column">
                 <!-- <label for="" class="campo_titulo">Tema: </label>
@@ -456,6 +479,7 @@
             nameElement.onclick = function () {
               input.value = name;
               dropdown.style.display = "none";
+              ajusta_altura_area_texto();
             };
             dropdown.appendChild(nameElement);
             invalidName = false;
@@ -494,6 +518,17 @@
           // document.getElementById("searchInput").value = ""; // Limpa o conteúdo do input
         }
       });
+
+      document
+        .querySelector(".area_texto")
+        .addEventListener("input", ajusta_altura_area_texto);
+
+      function ajusta_altura_area_texto() {
+        area_texto = document.querySelector(".area_texto");
+
+        area_texto.style.height = "19px";
+        area_texto.style.height = area_texto.scrollHeight - 10 + "px";
+      }
     </script>
   </body>
 </html>

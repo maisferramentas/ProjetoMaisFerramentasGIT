@@ -1069,21 +1069,5 @@
 
     // isaquesantos1517@gmail.com
     // isaque23
-
-    // Função para salvar os dados no localStorage quando a página está prestes a ser descarregada
-    window.addEventListener("beforeunload", function () {
-      // Salvar dados no localStorage
-      localStorage.setItem("dadosPagina", JSON.stringify(seusDados));
-    });
-
-    // Função para restaurar os dados do localStorage quando a página é carregada
-    window.addEventListener("load", function () {
-      // Recuperar dados do localStorage
-      var dadosSalvos = JSON.parse(localStorage.getItem("dadosPagina"));
-      if (dadosSalvos) {
-        // Restaurar os dados conforme necessário
-        // Exemplo: Atualizar a interface com os dados salvos
-      }
-    });
   </script>
 </html>
