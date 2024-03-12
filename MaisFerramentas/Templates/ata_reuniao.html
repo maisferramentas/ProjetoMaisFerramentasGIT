@@ -186,7 +186,7 @@
       }
 
       .dropdown-content a {
-        /* color: #002344; */
+        color: #002b52;
         text-decoration: none;
         display: block;
         cursor: pointer;
@@ -197,7 +197,7 @@
 
       .dropdown-content a:hover {
         /* background-color: #bcdfe8; */
-        color: #002344;
+        color: #00539e;
       }
 
       .area_texto {
@@ -211,6 +211,7 @@
         font-size: medium;
         height: 19px;
         width: 228px;
+        color: #002b52;
       }
 
       .area_texto:focus {
@@ -290,7 +291,7 @@
                 class="area_texto"
                 rows="1"
                 spellcheck="false"
-                onkeyup="searchNames()"
+                onkeyup="searchNames(this)"
               ></textarea>
               <div id="myDropdown" class="dropdown-content"></div>
               <div class="div_card_info_adicionais flex column">
@@ -463,17 +464,17 @@
 
       function searchNames() {
         const input = document.getElementById("searchInput");
-        input.style.color = "black";
+        input.style.color = "#002b52";
         const filter = input.value.toLowerCase();
         const dropdown = document.getElementById("myDropdown");
         dropdown.innerHTML = "";
-        let invalidName = true;
+        invalidName = true;
 
-        // dropdown.style.display = "block"; //comentar na opção 1
+        dropdown.style.display = "block"; //comentar na opção 1
 
         names.forEach((name) => {
           if (name.toLowerCase().includes(filter)) {
-            input.style.color = "black";
+            input.style.color = "#002b52";
             const nameElement = document.createElement("a");
             nameElement.textContent = name;
             nameElement.onclick = function () {
@@ -485,47 +486,54 @@
             invalidName = false;
           }
         });
+
         if (invalidName && filter !== "") {
-          console.log("entrou");
-          input.style.color = "red";
+          input.style.color = "#9a0909";
           document.getElementById("myDropdown").style.display = "none";
           document.getElementById("myDropdown").innerHTML = "";
         }
 
-        if (invalidName && filter !== "") {
-          input.style.color = "red";
-          const invalidNameElement = document.createElement("a");
-          invalidNameElement.textContent = input.value;
-          invalidNameElement.style.color = "red";
-          invalidNameElement.onclick = function () {
-            input.value = this.textContent;
-            dropdown.style.display = "none";
-          };
-          dropdown.appendChild(invalidNameElement);
-        }
+        // if (invalidName && filter !== "") {
+        //   input.style.color = "red";
+        //   const invalidNameElement = document.createElement("a");
+        //   invalidNameElement.textContent = input.value;
+        //   invalidNameElement.style.color = "red";
+        //   invalidNameElement.onclick = function () {
+        //     input.value = this.textContent;
+        //     dropdown.style.display = "none";
+        //   };
+        //   dropdown.appendChild(invalidNameElement);
+        // }
 
         if (filter === "") {
           dropdown.style.display = "none";
         } else {
-          dropdown.style.display = "block";
+          // dropdown.style.display = "block";
         }
       }
 
-      // Fechar dropdown e limpar input quando clicar fora do dropdown
-      window.addEventListener("click", function (event) {
-        if (!event.target.matches(".dropdown")) {
-          document.getElementById("myDropdown").style.display = "none";
-          // document.getElementById("searchInput").value = ""; // Limpa o conteúdo do input
-        }
-      });
+      // // Fechar dropdown e limpar input quando clicar fora do dropdown
+      // window.addEventListener("click", function (event) {
+      //   if (
+      //     !event.target.matches(".dropdown") &&
+      //     !event.target.matches(".dropdown a") &&
+      //     !event.target.matches(".area_texto")
+      //   ) {
+      //     document.getElementById("myDropdown").style.display = "none";
+      //     // document.getElementById("searchInput").style.color = "#9a0909";
+      //   }
+      // });
 
       document
         .querySelector(".area_texto")
-        .addEventListener("input", ajusta_altura_area_texto);
+        .addEventListener("input", function () {
+          const area_texto = this;
+          area_texto.style.height = "19px";
+          area_texto.style.height = area_texto.scrollHeight - 10 + "px";
+        });
 
       function ajusta_altura_area_texto() {
-        area_texto = document.querySelector(".area_texto");
-
+        const area_texto = document.querySelector(".area_texto");
         area_texto.style.height = "19px";
         area_texto.style.height = area_texto.scrollHeight - 10 + "px";
       }
