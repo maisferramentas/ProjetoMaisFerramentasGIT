@@ -231,10 +231,16 @@
               src="https://lh3.googleusercontent.com/drive-viewer/AKGpihYyk0w71rkdxsX1nZGLb0tCDQMcs9lpk4rLuS-B8gYTS0f93dlBY0gTohCK9qdi3sivw0lzHJ354Eu2J5UncWzPGyYH=w1366-h382"
               alt=""
             />
-            <div class="div_card_info flex column esquerda_4px">
+            <div class="div_card_info flex column esquerda_4px dropdown">
               <label for="" class="campo_titulo">Discursante: </label>
-              <!-- <input type="text" name="" id="" class="campo_texto" /> -->
-              <label for="">Allysson Wyllian Santos Gomes</label>
+              <textarea
+                id="searchInput"
+                class="area_texto"
+                rows="1"
+                spellcheck="false"
+              ></textarea>
+              <div id="myDropdown" class="dropdown-content"></div>
+
               <div class="div_card_info_adicionais flex column">
                 <label for="" class="campo_titulo">Tema: </label>
                 <input type="text" name="" id="" class="campo_texto" />
@@ -291,7 +297,6 @@
                 class="area_texto"
                 rows="1"
                 spellcheck="false"
-                onkeyup="searchNames(this)"
               ></textarea>
               <div id="myDropdown" class="dropdown-content"></div>
               <div class="div_card_info_adicionais flex column">
@@ -462,11 +467,12 @@
         "Angela Maria Massaneiro dos Santos Cruz",
       ];
 
-      function searchNames() {
-        const input = document.getElementById("searchInput");
+      function searchNames(caixa_texto_id) {
+        const input = caixa_texto_id;
         input.style.color = "#002b52";
         const filter = input.value.toLowerCase();
-        const dropdown = document.getElementById("myDropdown");
+        const dropdown =
+          caixa_texto_id.parentElement.querySelector(".dropdown-content");
         dropdown.innerHTML = "";
         invalidName = true;
 
@@ -480,7 +486,7 @@
             nameElement.onclick = function () {
               input.value = name;
               dropdown.style.display = "none";
-              ajusta_altura_area_texto();
+              ajusta_altura_area_texto2(caixa_texto_id);
             };
             dropdown.appendChild(nameElement);
             invalidName = false;
@@ -524,18 +530,60 @@
       //   }
       // });
 
-      document
-        .querySelector(".area_texto")
-        .addEventListener("input", function () {
-          const area_texto = this;
-          area_texto.style.height = "19px";
-          area_texto.style.height = area_texto.scrollHeight - 10 + "px";
-        });
+      document.querySelectorAll(".area_texto").forEach(function (element) {
+        element.addEventListener("input", ajusta_altura_area_texto2);
+      });
 
-      function ajusta_altura_area_texto() {
-        const area_texto = document.querySelector(".area_texto");
+      function ajusta_altura_area_texto2(caixa_texto_id) {
+        pesquisa = true;
+        console.log(this);
+        if (this === window) {
+          console.log("clicou");
+          area_texto = caixa_texto_id;
+          pesquisa = false;
+        } else {
+          console.log("digitou");
+          area_texto = this;
+        }
+        // const area_texto = this;
         area_texto.style.height = "19px";
         area_texto.style.height = area_texto.scrollHeight - 10 + "px";
+
+        conteudo_div_selecionada = area_texto.closest(".div_card");
+
+        conteudo_div_selecionada.style.height = "90px";
+        conteudo_div_selecionada.style.height =
+          conteudo_div_selecionada.offsetHeight +
+          area_texto.scrollHeight -
+          29 +
+          "px";
+        conteudo_div_selecionada.querySelector(".img_canto").style.height =
+          "100%";
+        conteudo_div_selecionada.querySelector(".img_canto").style.width =
+          "57px";
+        if (pesquisa === true) {
+          caixa_texto_id = area_texto;
+          searchNames(caixa_texto_id);
+        }
+      }
+      function ajusta_altura_area_texto(caixa_texto_id) {
+        // console.log(caixa_texto_id);
+        const area_texto = caixa_texto_id;
+        area_texto.style.height = "19px";
+        area_texto.style.height = area_texto.scrollHeight - 10 + "px";
+
+        conteudo_div_selecionada = caixa_texto_id.closest(".div_card");
+
+        conteudo_div_selecionada.style.height = "90px";
+        conteudo_div_selecionada.style.height =
+          conteudo_div_selecionada.offsetHeight +
+          area_texto.scrollHeight -
+          29 +
+          "px";
+        conteudo_div_selecionada.querySelector(".img_canto").style.height =
+          "100%";
+        conteudo_div_selecionada.querySelector(".img_canto").style.width =
+          "57px";
       }
     </script>
   </body>
