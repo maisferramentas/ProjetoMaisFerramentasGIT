@@ -402,19 +402,12 @@
       });
 
       $(".arrasto").on("click", function () {
-        conteudo_div_selecionada = document.getElementById(
-          this.closest(".div_card").id
-        );
+        conteudo_div_selecionada = this.closest(".div_card");
 
         if (this.id === "" || this.id === "fechada") {
           conteudo_div_selecionada.querySelector(
             ".div_card_info_adicionais"
           ).style.display = "flex";
-
-          conteudo_div_selecionada.querySelector(".img_canto").style.height =
-            document.getElementById(this.closest(".div_card").id).offsetHeight +
-            40 +
-            "px";
 
           conteudo_div_selecionada
             .querySelectorAll(".icone_opcoes")
@@ -429,17 +422,23 @@
             ".div_opcoes_card"
           ).style.backgroundSize = "100% 100%";
 
-          conteudo_div_selecionada.querySelector(".img_canto").style.width =
-            "57px";
+          console.log(conteudo_div_selecionada.offsetHeight);
+          console.log(
+            conteudo_div_selecionada.querySelector(".div_card_info_adicionais")
+              .offsetHeight
+          );
+          conteudo_div_selecionada.style.height =
+            conteudo_div_selecionada.offsetHeight +
+            conteudo_div_selecionada.querySelector(".div_card_info_adicionais")
+              .offsetHeight +
+            "px";
 
           this.id = "aberta";
         } else {
+          conteudo_div_selecionada.style.height = "90px";
           conteudo_div_selecionada.querySelector(
             ".div_card_info_adicionais"
           ).style.display = "none";
-
-          conteudo_div_selecionada.querySelector(".img_canto").style.height =
-            "";
 
           conteudo_div_selecionada
             .querySelectorAll(".icone_opcoes")
@@ -454,8 +453,20 @@
           conteudo_div_selecionada.querySelector(".arrasto").style.background =
             "#51acc3";
 
+          conteudo_div_selecionada.style.height =
+            conteudo_div_selecionada.offsetHeight -
+            conteudo_div_selecionada.querySelector(".div_card_info_adicionais")
+              .offsetHeight +
+            "px";
+
           this.id = "fechada";
         }
+
+        conteudo_div_selecionada.querySelector(".img_canto").style.height =
+          "100%";
+
+        conteudo_div_selecionada.querySelector(".img_canto").style.width =
+          "57px";
       });
 
       const names = [
@@ -486,7 +497,7 @@
             nameElement.onclick = function () {
               input.value = name;
               dropdown.style.display = "none";
-              ajusta_altura_area_texto2(caixa_texto_id);
+              ajusta_altura_area_texto(caixa_texto_id);
             };
             dropdown.appendChild(nameElement);
             invalidName = false;
@@ -531,59 +542,41 @@
       // });
 
       document.querySelectorAll(".area_texto").forEach(function (element) {
-        element.addEventListener("input", ajusta_altura_area_texto2);
+        element.addEventListener("input", ajusta_altura_area_texto);
       });
 
-      function ajusta_altura_area_texto2(caixa_texto_id) {
-        pesquisa = true;
-        console.log(this);
-        if (this === window) {
-          console.log("clicou");
+      function ajusta_altura_area_texto(caixa_texto_id) {
+        if (event.type === "click") {
+          //clicou
           area_texto = caixa_texto_id;
           pesquisa = false;
         } else {
-          console.log("digitou");
+          //digitou
           area_texto = this;
         }
-        // const area_texto = this;
+
         area_texto.style.height = "19px";
         area_texto.style.height = area_texto.scrollHeight - 10 + "px";
 
         conteudo_div_selecionada = area_texto.closest(".div_card");
 
         conteudo_div_selecionada.style.height = "90px";
+
         conteudo_div_selecionada.style.height =
           conteudo_div_selecionada.offsetHeight +
           area_texto.scrollHeight -
           29 +
           "px";
+
         conteudo_div_selecionada.querySelector(".img_canto").style.height =
           "100%";
         conteudo_div_selecionada.querySelector(".img_canto").style.width =
           "57px";
-        if (pesquisa === true) {
+
+        if (event.type === "input") {
           caixa_texto_id = area_texto;
           searchNames(caixa_texto_id);
         }
-      }
-      function ajusta_altura_area_texto(caixa_texto_id) {
-        // console.log(caixa_texto_id);
-        const area_texto = caixa_texto_id;
-        area_texto.style.height = "19px";
-        area_texto.style.height = area_texto.scrollHeight - 10 + "px";
-
-        conteudo_div_selecionada = caixa_texto_id.closest(".div_card");
-
-        conteudo_div_selecionada.style.height = "90px";
-        conteudo_div_selecionada.style.height =
-          conteudo_div_selecionada.offsetHeight +
-          area_texto.scrollHeight -
-          29 +
-          "px";
-        conteudo_div_selecionada.querySelector(".img_canto").style.height =
-          "100%";
-        conteudo_div_selecionada.querySelector(".img_canto").style.width =
-          "57px";
       }
     </script>
   </body>
