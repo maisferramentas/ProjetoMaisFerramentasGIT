@@ -237,10 +237,99 @@
       .left_55px {
         margin-left: 55px;
       }
+      .insere_titulo {
+        overflow-y: hidden; /* Para ocultar a barra de rolagem vertical */
+        resize: none; /* Para evitar que o usuário redimensione manualmente */
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        border-color: #57afc5;
+        padding: 5px;
+        font-family: Arial, sans-serif;
+        font-size: medium;
+        height: 19px;
+        width: 228px;
+        color: #002b52;
+        border-color: #007bff;
+        color: black;
+        font-weight: bold;
+      }
+      .insere_titulo:focus {
+        border-color: #007bff;
+        outline: 0;
+      }
+      .insere_tipo {
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        border-color: #57afc5;
+        padding: 5px;
+        font-family: Arial, sans-serif;
+        font-size: medium;
+        height: 30.6px;
+        width: 239.6px;
+        width: 100px;
+        color: #002b52;
+        border-color: #007bff;
+        color: black;
+        font-weight: bold;
+
+        appearance: none; /* Remove a aparência padrão do navegador */
+        -webkit-appearance: none;
+        -moz-appearance: none;
+
+        cursor: pointer; /* Cursor ao passar por cima */
+      }
     </style>
   </head>
   <body>
     <div class="">
+      <div class="adicionar_elementos">
+        <div
+          class="flex align justify column"
+          style="border: 1px solid #007bff"
+        >
+          <h2>Adicionar Elementos</h2>
+
+          <div class="div_card draggable flex align" draggable="true" id="1">
+            <img
+              draggable="false"
+              class="img_canto"
+              src="https://lh3.googleusercontent.com/drive-viewer/AKGpihYyk0w71rkdxsX1nZGLb0tCDQMcs9lpk4rLuS-B8gYTS0f93dlBY0gTohCK9qdi3sivw0lzHJ354Eu2J5UncWzPGyYH=w1366-h382"
+              alt=""
+            />
+            <div class="div_card_info flex column left_55px dropdown">
+              <!-- <label for="" class="campo_titulo">Discursante: </label> -->
+              <textarea
+                id="nome"
+                class="insere_titulo"
+                rows="1"
+                spellcheck="false"
+                placeholder="Título:"
+              ></textarea>
+              <div id="myDropdown" class="dropdown-content"></div>
+
+              <div class="flex column">
+                <select name="" id="" class="insere_tipo">
+                  <option value="">Tipo</option>
+                  <option value="">Texto</option>
+                  <option value="">Data</option>
+                  <option value="">Hora</option>
+                  <option value="">Data e Hora</option>
+                </select>
+                <label for="" class="campo_titulo">Duração: </label>
+                <input type="text" name="" id="" class="campo_texto" />
+              </div>
+            </div>
+          </div>
+
+          <label for="">Titulo</label>
+          <textarea
+            id="nome"
+            class="area_texto"
+            rows="1"
+            spellcheck="false"
+          ></textarea>
+        </div>
+      </div>
       <div class="conteudo_ata flex align justify">
         <div class="" id="area_arrastavel">
           <div class="div_card draggable flex align" draggable="true" id="1">
@@ -520,8 +609,8 @@
 
         if (texto_digitado_invalido && filter !== "") {
           input.style.color = "#9a0909";
-          document.getElementById("myDropdown").style.display = "none";
-          document.getElementById("myDropdown").innerHTML = "";
+          dropdown.style.display = "none";
+          dropdown.innerHTML = "";
         }
 
         // if (texto_digitado_invalido && filter !== "") {
