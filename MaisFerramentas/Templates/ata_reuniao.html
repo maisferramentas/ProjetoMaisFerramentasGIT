@@ -234,8 +234,8 @@
         border-color: #007bff;
         outline: 0;
       }
-      .left_50px {
-        margin-left: 50px;
+      .left_55px {
+        margin-left: 55px;
       }
     </style>
   </head>
@@ -250,7 +250,7 @@
               src="https://lh3.googleusercontent.com/drive-viewer/AKGpihYyk0w71rkdxsX1nZGLb0tCDQMcs9lpk4rLuS-B8gYTS0f93dlBY0gTohCK9qdi3sivw0lzHJ354Eu2J5UncWzPGyYH=w1366-h382"
               alt=""
             />
-            <div class="div_card_info flex column left_50px dropdown">
+            <div class="div_card_info flex column left_55px dropdown">
               <label for="" class="campo_titulo">Discursante: </label>
               <textarea
                 id="searchInput"
@@ -300,7 +300,7 @@
               src="https://lh3.googleusercontent.com/drive-viewer/AKGpihYyk0w71rkdxsX1nZGLb0tCDQMcs9lpk4rLuS-B8gYTS0f93dlBY0gTohCK9qdi3sivw0lzHJ354Eu2J5UncWzPGyYH=w1366-h382"
               alt=""
             />
-            <div class="div_card_info flex column left_50px dropdown">
+            <div class="div_card_info flex column left_55px dropdown">
               <label for="" class="campo_titulo">Oração: </label>
               <!-- <input
                 type="text"
@@ -441,8 +441,6 @@
             ".div_opcoes_card"
           ).style.backgroundSize = "100% 100%";
 
-          console.log(conteudo_div_selecionada.offsetHeight);
-
           this.id = "aberta";
         } else {
           conteudo_div_selecionada.querySelector(
@@ -462,19 +460,8 @@
           conteudo_div_selecionada.querySelector(".arrasto").style.background =
             "#51acc3";
 
-          console.log(conteudo_div_selecionada.offsetHeight);
-
           this.id = "fechada";
         }
-
-        // conteudo_div_selecionada.style.height =
-        //   conteudo_div_selecionada.offsetHeight + "px";
-
-        // conteudo_div_selecionada.querySelector(".img_canto").style.height =
-        //   "100%";
-
-        // conteudo_div_selecionada.querySelector(".img_canto").style.width =
-        //   "57px";
       });
 
       const names = [
@@ -538,26 +525,45 @@
       }
 
       // // Fechar dropdown e limpar input quando clicar fora do dropdown
-      // window.addEventListener("click", function (event) {
-      //   if (
-      //     !event.target.matches(".dropdown") &&
-      //     !event.target.matches(".dropdown a") &&
-      //     !event.target.matches(".area_texto")
-      //   ) {
-      //     document.getElementById("myDropdown").style.display = "none";
-      //     // document.getElementById("searchInput").style.color = "#9a0909";
-      //   }
-      // });
+      window.addEventListener("click", function (event) {
+        if (
+          !event.target.matches(".dropdown") &&
+          !event.target.matches(".dropdown a") &&
+          !event.target.matches(".area_texto")
+        ) {
+          // document.getElementById("myDropdown").style.display = "none";
+          document
+            .querySelectorAll(".dropdown-content")
+            .forEach(function (element) {
+              if (
+                element.style.display != "none" &&
+                element.style.display != ""
+              ) {
+                element.style.display = "none";
+                if (!valor_texto) {
+                  element.parentElement.querySelector(
+                    ".area_texto"
+                  ).style.color = "#9a0909";
+                }
+              }
+
+              // document.getElementById("searchInput").style.color = "#9a0909";
+              // element.parentElement.querySelector("area_texto").style.color =
+              //   "#9a0909";
+            });
+        }
+      });
 
       document.querySelectorAll(".area_texto").forEach(function (element) {
         element.addEventListener("input", ajusta_altura_area_texto);
       });
 
       function ajusta_altura_area_texto(caixa_texto_id) {
+        valor_texto = false;
         if (event.type === "click") {
           //clicou
           area_texto = caixa_texto_id;
-          pesquisa = false;
+          valor_texto = true;
         } else {
           //digitou
           area_texto = this;
@@ -568,18 +574,8 @@
 
         conteudo_div_selecionada = area_texto.closest(".div_card");
 
-        // conteudo_div_selecionada.style.height = "90px";
-
-        // conteudo_div_selecionada.style.height =
-        //   conteudo_div_selecionada.offsetHeight +
-        //   area_texto.scrollHeight -
-        //   29 +
-        //   "px";
-
         conteudo_div_selecionada.querySelector(".img_canto").style.height =
           "100%";
-        // conteudo_div_selecionada.querySelector(".img_canto").style.width =
-        //   "57px";
 
         if (event.type === "input") {
           caixa_texto_id = area_texto;
