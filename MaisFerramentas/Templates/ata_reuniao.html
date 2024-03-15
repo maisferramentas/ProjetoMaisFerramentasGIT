@@ -253,7 +253,7 @@
             <div class="div_card_info flex column left_55px dropdown">
               <label for="" class="campo_titulo">Discursante: </label>
               <textarea
-                id="searchInput"
+                id="nome"
                 class="area_texto"
                 rows="1"
                 spellcheck="false"
@@ -301,18 +301,18 @@
               alt=""
             />
             <div class="div_card_info flex column left_55px dropdown">
-              <label for="" class="campo_titulo">Oração: </label>
+              <label for="" class="campo_titulo">Hino: </label>
               <!-- <input
                 type="text"
                 name=""
                 id="searchInput"
                 class="campo_texto"
-                onkeyup="searchNames()"
+                onkeyup="buscar_valores()"
               />
               <div id="myDropdown" class="dropdown-content"></div> -->
 
               <textarea
-                id="searchInput"
+                id="hino"
                 class="area_texto"
                 rows="1"
                 spellcheck="false"
@@ -473,48 +473,67 @@
         "Angela Maria Massaneiro dos Santos Cruz",
       ];
 
-      function searchNames(caixa_texto_id) {
+      const hinos = [
+        "2. Tal Como um Facho",
+        "3. Alegres Cantemos",
+        "4. No Monte a Bandeira",
+        "5. Israel, Jesus Te Chama",
+        "9. Graças Damos, Ó Deus, Por um Profeta",
+      ];
+
+      function buscar_valores(caixa_texto_id) {
         const input = caixa_texto_id;
         input.style.color = "#002b52";
         const filter = input.value.toLowerCase();
         const dropdown =
           caixa_texto_id.parentElement.querySelector(".dropdown-content");
         dropdown.innerHTML = "";
-        invalidName = true;
+        texto_digitado_invalido = true;
 
         dropdown.style.display = "block"; //comentar na opção 1
 
-        names.forEach((name) => {
-          if (name.toLowerCase().includes(filter)) {
+        if (input.id === "nome") {
+          valores = names;
+        } else if (input.id === "hino") {
+          valores = hinos;
+        } else if (input.id === "chamado") {
+          valores = chamados;
+        }
+        valores.forEach((valor) => {
+          if (valor.toLowerCase().includes(filter)) {
             input.style.color = "#002b52";
             const nameElement = document.createElement("a");
-            nameElement.textContent = name;
+            nameElement.textContent = valor;
             nameElement.onclick = function () {
-              input.value = name;
+              input.value = valor;
               dropdown.style.display = "none";
               ajusta_altura_area_texto(caixa_texto_id);
             };
             dropdown.appendChild(nameElement);
-            invalidName = false;
+            texto_digitado_invalido = false;
+            // teste = `<a>Angela Maria Massaneiro dos Santos Cruz</a>
+            // <a>Feminino</a>
+            // <a>50anos</a>`;
+            // dropdown.innerHTML = teste;
           }
         });
 
-        if (invalidName && filter !== "") {
+        if (texto_digitado_invalido && filter !== "") {
           input.style.color = "#9a0909";
           document.getElementById("myDropdown").style.display = "none";
           document.getElementById("myDropdown").innerHTML = "";
         }
 
-        // if (invalidName && filter !== "") {
+        // if (texto_digitado_invalido && filter !== "") {
         //   input.style.color = "red";
-        //   const invalidNameElement = document.createElement("a");
-        //   invalidNameElement.textContent = input.value;
-        //   invalidNameElement.style.color = "red";
-        //   invalidNameElement.onclick = function () {
+        //   const texto_digitado_invalidoElement = document.createElement("a");
+        //   texto_digitado_invalidoElement.textContent = input.value;
+        //   texto_digitado_invalidoElement.style.color = "red";
+        //   texto_digitado_invalidoElement.onclick = function () {
         //     input.value = this.textContent;
         //     dropdown.style.display = "none";
         //   };
-        //   dropdown.appendChild(invalidNameElement);
+        //   dropdown.appendChild(texto_digitado_invalidoElement);
         // }
 
         if (filter === "") {
@@ -579,7 +598,7 @@
 
         if (event.type === "input") {
           caixa_texto_id = area_texto;
-          searchNames(caixa_texto_id);
+          buscar_valores(caixa_texto_id);
         }
       }
     </script>

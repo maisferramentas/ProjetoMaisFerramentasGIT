@@ -1,26 +1,7 @@
-$(".arrasto").on("click", function () { conteudo_div_selecionada =
-this.closest(".div_card"); if (this.id === "" || this.id === "fechada") {
-conteudo_div_selecionada.querySelector( ".div_card_info_adicionais"
-).style.display = "flex"; conteudo_div_selecionada
-.querySelectorAll(".icone_opcoes") .forEach(function (element) {
-element.style.display = "flex"; });
-conteudo_div_selecionada.querySelector(".arrasto").style.background = " #fff";
-conteudo_div_selecionada.querySelector( ".div_opcoes_card"
-).style.backgroundSize = "100% 100%";
-console.log(conteudo_div_selecionada.offsetHeight); console.log(
-conteudo_div_selecionada.querySelector(".div_card_info_adicionais")
-.offsetHeight ); conteudo_div_selecionada.style.height =
-conteudo_div_selecionada.offsetHeight +
-conteudo_div_selecionada.querySelector(".div_card_info_adicionais")
-.offsetHeight + "px"; this.id = "aberta"; } else {
-conteudo_div_selecionada.querySelector( ".div_card_info_adicionais"
-).style.display = "none"; conteudo_div_selecionada
-.querySelectorAll(".icone_opcoes") .forEach(function (element) {
-element.style.display = "none"; }); conteudo_div_selecionada.querySelector(
-".div_opcoes_card" ).style.backgroundSize = "100% 0%";
-conteudo_div_selecionada.querySelector(".arrasto").style.background = "#51acc3";
-conteudo_div_selecionada.style.height = conteudo_div_selecionada.offsetHeight -
-conteudo_div_selecionada.querySelector(".div_card_info_adicionais")
-.offsetHeight + "px"; this.id = "fechada"; }
-conteudo_div_selecionada.querySelector(".img_canto").style.height = "100%";
-conteudo_div_selecionada.querySelector(".img_canto").style.width = "57px"; });
+--Melhorar exibição de nomes
+--criar todos os elementos
+--Criar elemento adicional
+--Adicionador de elementos
+--Criador padrão
+--Capturador de valores
+--Leitor de valores
