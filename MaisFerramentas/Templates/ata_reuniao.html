@@ -242,19 +242,19 @@
         resize: none; /* Para evitar que o usuário redimensione manualmente */
         border: 1px solid #ccc;
         border-radius: 5px;
-        border-color: #57afc5;
+        /* border-color: #57afc5; */
         padding: 5px;
         font-family: Arial, sans-serif;
         font-size: medium;
         height: 19px;
         width: 228px;
         color: #002b52;
-        border-color: #007bff;
+        /* border-color: #007bff; */
         color: black;
         font-weight: bold;
       }
       .insere_titulo:focus {
-        border-color: #007bff;
+        /* border-color: #007bff; */
         outline: 0;
       }
       .insere_tipo {
@@ -266,17 +266,59 @@
         font-size: medium;
         height: 30.6px;
         width: 239.6px;
-        width: 100px;
         color: #002b52;
-        border-color: #007bff;
-        color: black;
-        font-weight: bold;
+        border-color: #57afc5;
+        /* color: black; */
+        /* font-weight: bold; */
 
         appearance: none; /* Remove a aparência padrão do navegador */
         -webkit-appearance: none;
         -moz-appearance: none;
 
         cursor: pointer; /* Cursor ao passar por cima */
+        background-color: #ffffff;
+        margin-bottom: 10px;
+      }
+      .insere_tipo:focus-visible {
+        border-color: #57afc5;
+      }
+      .insere_tipo:hover {
+        border-color: #57afc5;
+      }
+      .left_50px {
+        margin-left: 50px;
+      }
+
+      .margin_l-1px {
+        margin-left: -1px;
+      }
+      .color_green {
+        color: green;
+      }
+      .botao_salvar_novo_card {
+        background-color: #319857; /* Cor de fundo */
+        color: #fff; /* Cor do texto */
+        padding: 5px 10px; /* Espaçamento interno */
+        font-size: 16px; /* Tamanho da fonte */
+        border: none; /* Sem borda */
+        border-radius: 5px; /* Borda arredondada */
+        cursor: pointer; /* Cursor do mouse */
+        transition: background-color 0.3s; /* Transição suave da cor de fundo */
+        margin-left: 5px;
+      }
+      .botao_fechar_novo_card {
+        background-color: #af2d16; /* Cor de fundo */
+        color: #fff; /* Cor do texto */
+        padding: 5px 10px; /* Espaçamento interno */
+        font-size: 16px; /* Tamanho da fonte */
+        border: none; /* Sem borda */
+        border-radius: 5px; /* Borda arredondada */
+        cursor: pointer; /* Cursor do mouse */
+        transition: background-color 0.3s; /* Transição suave da cor de fundo */
+      }
+      .div_botoes_salvar_fechar {
+        margin-top: 10px;
+        /* padding: 5px; */
       }
     </style>
   </head>
@@ -285,10 +327,9 @@
       <div class="adicionar_elementos">
         <div
           class="flex align justify column"
-          style="border: 1px solid #007bff"
+          style="border: 1px solid #57afc5"
         >
           <h2>Adicionar Elementos</h2>
-
           <div class="div_card draggable flex align" draggable="true" id="1">
             <img
               draggable="false"
@@ -296,38 +337,95 @@
               src="https://lh3.googleusercontent.com/drive-viewer/AKGpihYyk0w71rkdxsX1nZGLb0tCDQMcs9lpk4rLuS-B8gYTS0f93dlBY0gTohCK9qdi3sivw0lzHJ354Eu2J5UncWzPGyYH=w1366-h382"
               alt=""
             />
-            <div class="div_card_info flex column left_55px dropdown">
-              <!-- <label for="" class="campo_titulo">Discursante: </label> -->
-              <textarea
-                id="nome"
-                class="insere_titulo"
-                rows="1"
-                spellcheck="false"
-                placeholder="Título:"
-              ></textarea>
-              <div id="myDropdown" class="dropdown-content"></div>
+            <div class="div_card_info flex column left_50px dropdown">
+              <div class="elemento flex row justify align">
+                <div class="flex column">
+                  <textarea
+                    id="nome"
+                    class="insere_titulo margin_l-1px"
+                    rows="1"
+                    spellcheck="false"
+                    placeholder="Título:"
+                  ></textarea>
+                  <div id="myDropdown" class="dropdown-content"></div>
 
-              <div class="flex column">
-                <select name="" id="" class="insere_tipo">
-                  <option value="">Tipo</option>
-                  <option value="">Texto</option>
-                  <option value="">Data</option>
-                  <option value="">Hora</option>
-                  <option value="">Data e Hora</option>
-                </select>
-                <label for="" class="campo_titulo">Duração: </label>
-                <input type="text" name="" id="" class="campo_texto" />
+                  <div class="flex column">
+                    <select name="" id="" class="insere_tipo">
+                      <option value="">Texto livre</option>
+                      <option value="">Data</option>
+                      <option value="">Hora</option>
+                      <option value="">Nomes</option>
+                      <option value="">Chamados</option>
+                      <option value="">Hinos</option>
+                    </select>
+                  </div>
+                </div>
+                <span
+                  class="material-symbols-outlined"
+                  id="deleta_elemento_inserir_card"
+                >
+                  delete
+                </span>
+              </div>
+              <div
+                id="adicionar_elemento"
+                class="flex row align justify color_green"
+              >
+                <span class="material-symbols-outlined"> add </span>
+                <p>Adicionar Elemento</p>
+              </div>
+
+              <div class="div_card_info_adicionais flex column">
+                <!-- <label for="" class="campo_titulo">Tema: </label>
+                <input type="text" name="" id="" class="campo_texto" /> -->
+
+                <div
+                  class="flex row align justify color_green"
+                  id="adicionar_elemento_oculto"
+                >
+                  <span class="material-symbols-outlined"> add </span>
+                  <p>Adicionar Elemento Oculto</p>
+                </div>
+              </div>
+              <div class="div_botoes_salvar_fechar flex row align justify">
+                <input
+                  class="botao_fechar_novo_card"
+                  type="button"
+                  value="Fechar"
+                />
+
+                <input
+                  class="botao_salvar_novo_card"
+                  type="button"
+                  value="Salvar"
+                />
               </div>
             </div>
-          </div>
 
-          <label for="">Titulo</label>
-          <textarea
-            id="nome"
-            class="area_texto"
-            rows="1"
-            spellcheck="false"
-          ></textarea>
+            <div class="div_opcoes_card flex direita column">
+              <span
+                class="material-symbols-outlined esquerda_15 icone_opcoes copiar"
+              >
+                content_copy
+              </span>
+
+              <div class="div_opcoes_meio_card flex align">
+                <img
+                  class="div_img_icone_whats icone_opcoes"
+                  src="https://www.shareicon.net/data/2048x2048/2016/07/14/607292_black_2048x2048.png"
+                  alt=""
+                />
+                <span class="material-symbols-outlined direita arrasto">
+                  drag_indicator
+                </span>
+              </div>
+              <span
+                class="material-symbols-outlined esquerda_15 icone_opcoes delete"
+              >
+                delete
+              </span>
+            </div>
+          </div>
         </div>
       </div>
       <div class="conteudo_ata flex align justify">
@@ -689,6 +787,89 @@
           caixa_texto_id = area_texto;
           buscar_valores(caixa_texto_id);
         }
+      }
+
+      function adicionarElemento(divInfoAdicionais, elementoReferencia) {
+        // Criar o HTML dos elementos que você deseja adicionar
+        var novoHTML = `
+              <div class="elemento flex row justify align">
+                <div class="flex column">
+                  <textarea
+                    id="nome"
+                    class="insere_titulo margin_l-1px"
+                    rows="1"
+                    spellcheck="false"
+                    placeholder="Título:"
+                  ></textarea>
+                  <div id="myDropdown" class="dropdown-content"></div>
+
+                  <div class="flex column">
+                    <select name="" id="" class="insere_tipo">
+                      <option value="">Texto livre</option>
+                      <option value="">Data</option>
+                      <option value="">Hora</option>
+                      <option value="">Nomes</option>
+                      <option value="">Chamados</option>
+                      <option value="">Hinos</option>
+                    </select>
+                  </div>
+                </div>
+                <span
+                  class="material-symbols-outlined"
+                  id="deleta_elemento_inserir_card"
+                >
+                  delete
+                </span>
+              </div>
+    `;
+
+        // Criar um novo elemento div
+        var novoElemento = document.createElement("div");
+        novoElemento.innerHTML = novoHTML;
+
+        // Inserir o novo elemento antes do elemento de referência
+        divInfoAdicionais.insertBefore(novoElemento, elementoReferencia);
+        atualiza_ouvintes();
+      }
+
+      document
+        .querySelector("#adicionar_elemento_oculto")
+        .addEventListener("click", function () {
+          var divInfoAdicionais = this.closest(".div_card").querySelector(
+            ".div_card_info_adicionais"
+          );
+          var elementoReferencia = this;
+          adicionarElemento(divInfoAdicionais, elementoReferencia);
+        });
+
+      document
+        .querySelector("#adicionar_elemento")
+        .addEventListener("click", function () {
+          var divInfoAdicionais =
+            this.closest(".div_card").querySelector(".div_card_info");
+          var elementoReferencia = this;
+          adicionarElemento(divInfoAdicionais, elementoReferencia);
+        });
+
+      function excluir_elemento_form_criacao() {
+        this.closest(".elemento").remove();
+      }
+
+      function atualiza_ouvintes() {
+        document
+          .querySelectorAll("#deleta_elemento_inserir_card")
+          .forEach(function (element) {
+            element.addEventListener("click", excluir_elemento_form_criacao);
+          });
+      }
+      atualiza_ouvintes();
+
+      document
+        .querySelector(".botao_salvar_novo_card")
+        .addEventListener("click", salvar_novo_card);
+
+      function salvar_novo_card() {
+        console.log(this);
       }
     </script>
   </body>
