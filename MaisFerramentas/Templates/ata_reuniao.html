@@ -447,6 +447,25 @@
               ></textarea>
               <div id="myDropdown" class="dropdown-content"></div>
 
+              <div class="flex row">
+                <input
+                  type="date"
+                  name="data"
+                  id="data"
+                  onchange="mostrarDiaSemana()"
+                />
+
+                <span id="diaSemana"></span>
+
+                <input
+                  type="time"
+                  name="hora"
+                  id="hora"
+                  onchange="mostrarDiaSemana()"
+                />
+              </div>
+              <input type="datetime-local" name="" id="" />
+
               <div class="div_card_info_adicionais flex column">
                 <label for="" class="campo_titulo">Tema: </label>
                 <input type="text" name="" id="" class="campo_texto" />
@@ -870,6 +889,38 @@
 
       function salvar_novo_card() {
         console.log(this);
+      }
+
+      function mostrarDiaSemana() {
+        // Obter os valores da data e hora
+        var data = document.getElementById("data").value;
+        // var hora = document.getElementById("hora").value;
+
+        // Obter a data completa (incluindo hora) no formato 'YYYY-MM-DDTHH:MM'
+        var dataHoraCompleta = data + "T" + "00:00";
+
+        // Criar um objeto Date com a data e hora fornecidas
+        var dataObj = new Date(dataHoraCompleta);
+
+        // Array com os nomes dos dias da semana em português
+        var diasSemana = [
+          "Domingo",
+          "Segunda-feira",
+          "Terça-feira",
+          "Quarta-feira",
+          "Quinta-feira",
+          "Sexta-feira",
+          "Sábado",
+        ];
+
+        // Obter o número do dia da semana (0 para Domingo, 1 para Segunda-feira, etc.)
+        var numeroDiaSemana = dataObj.getDay();
+
+        // Obter o nome do dia da semana usando o número obtido acima
+        var nomeDiaSemana = diasSemana[numeroDiaSemana];
+
+        // Exibir o nome do dia da semana na caixa de texto
+        document.getElementById("diaSemana").textContent = nomeDiaSemana;
       }
     </script>
   </body>
