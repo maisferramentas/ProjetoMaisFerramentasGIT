@@ -320,6 +320,92 @@
         margin-top: 10px;
         /* padding: 5px; */
       }
+      .data_hora_anuncio {
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        border-color: #57afc5;
+        /* padding: 5px; */
+        font-family: Arial, sans-serif;
+        font-size: medium;
+        height: 30.6px;
+        width: 239.6px;
+        color: #002b52;
+        border-color: #57afc5;
+        /* color: black; */
+        /* font-weight: bold; */
+
+        appearance: none; /* Remove a aparência padrão do navegador */
+        -webkit-appearance: none;
+        -moz-appearance: none;
+
+        cursor: pointer; /* Cursor ao passar por cima */
+        background-color: #ffffff;
+        margin-bottom: 10px;
+      }
+      .data_hora_card {
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        border-color: #57afc5;
+        font-family: Arial, sans-serif;
+        font-size: medium;
+        /* height: 30.6px; */
+        color: #002b52;
+        border-color: #57afc5;
+
+        appearance: none; /* Remove a aparência padrão do navegador */
+        -webkit-appearance: none;
+        -moz-appearance: none;
+
+        cursor: pointer; /* Cursor ao passar por cima */
+        background-color: #ffffff;
+        border: none;
+        outline: none;
+      }
+
+      .data_hora_card:focus-visible {
+        border: none;
+      }
+      .diaSemana {
+        font-family: Arial, sans-serif;
+        font-size: medium;
+        height: 30.6px;
+        /* width: 239.6px; */
+        color: #002b52;
+        cursor: pointer; /* Cursor ao passar por cima */
+        background-color: #ffffff;
+        border: none;
+        display: flex;
+        margin-left: -5px;
+        align-items: center;
+        /* font-size: 12px; */
+      }
+      .caixa_data_hora_card {
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        border-color: #57afc5;
+        /* padding: 5px; */
+        font-family: Arial, sans-serif;
+        font-size: medium;
+        height: 30.6px;
+        width: 239.6px;
+        color: #002b52;
+        border-color: #57afc5;
+        /* color: black; */
+        /* font-weight: bold; */
+
+        appearance: none; /* Remove a aparência padrão do navegador */
+        -webkit-appearance: none;
+        -moz-appearance: none;
+
+        cursor: pointer; /* Cursor ao passar por cima */
+        background-color: #ffffff;
+      }
+      .tamanho_data_card {
+        width: 120px;
+      }
+      .margin-left-1-2px {
+        margin-left: -1.2px;
+      }
     </style>
   </head>
   <body>
@@ -447,22 +533,26 @@
               ></textarea>
               <div id="myDropdown" class="dropdown-content"></div>
 
-              <div class="flex row">
+              <div class="flex row align caixa_data_hora_card">
                 <input
                   type="date"
                   name="data"
                   id="data"
-                  onchange="mostrarDiaSemana()"
+                  class="data_hora_card tamanho_data_card"
+                  oninput="mostrarDiaSemana()"
                 />
-
-                <span id="diaSemana"></span>
-
+                <!-- <span id="diaSemana" class="diaSemana"></span> -->
+                <div id="diaSemana" class="diaSemana"></div>
                 <input
                   type="time"
                   name="hora"
                   id="hora"
-                  onchange="mostrarDiaSemana()"
+                  class="data_hora_card margin-left-1-2px"
                 />
+              </div>
+              <div class="flex row data_hora_anuncio justify align">
+                <label for="">19/03/2024 Terça-Feira 19:00</label>
+                <span class="material-symbols-outlined"> event </span>
               </div>
               <input type="datetime-local" name="" id="" />
 
@@ -904,12 +994,35 @@
 
         // Array com os nomes dos dias da semana em português
         var diasSemana = [
+          // "Domingo",
+          // "Segunda-feira",
+          // "Terça-feira",
+          // "Quarta-feira",
+          // "Quinta-feira",
+          // "Sexta-feira",
+          // "Sábado",
+          ///////////////////
+          // "Dom.",
+          // "Seg.",
+          // "Ter.",
+          // "Qua.",
+          // "Qui.",
+          // "Sex.",
+          // "Sáb.",
+          ///////////////////
+          // "Domingo",
+          // "Segunda f.",
+          // "Terça f.",
+          // "Quarta f.",
+          // "Quinta f.",
+          // "Sexta f.",
+          // "Sábado",
           "Domingo",
-          "Segunda-feira",
-          "Terça-feira",
-          "Quarta-feira",
-          "Quinta-feira",
-          "Sexta-feira",
+          "Seg.feira",
+          "Ter.feira",
+          "Qua.feira",
+          "Qui.feira",
+          "Sex.feira",
           "Sábado",
         ];
 
