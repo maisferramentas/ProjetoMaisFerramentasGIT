@@ -402,10 +402,15 @@
       }
       .tamanho_data_card {
         width: 120px;
-        width: 75px;
+        /* width: 75px; */
       }
       .margin-left-1-2px {
         margin-left: -1.2px;
+      }
+      @media only screen and (max-width: 600px) {
+        .tamanho_data_card {
+          width: 115px;
+        }
       }
     </style>
   </head>
@@ -1046,7 +1051,23 @@
         if (element.value === "") {
           element.valueAsDate = new Date();
           mostrarDiaSemana();
-          document.getElementById("hora").value = "00:00";
+
+          // Criar um novo objeto Date para representar a hora atual
+          var dataAtual = new Date();
+
+          // Obter a hora atual
+          var horaAtual = dataAtual.getHours();
+
+          // Definir os minutos para zero
+          dataAtual.setMinutes(0);
+
+          // Formatando a hora no formato HH:MM
+          var horaFormatada = dataAtual.toLocaleTimeString([], {
+            hour: "2-digit",
+            minute: "2-digit",
+          });
+
+          document.getElementById("hora").value = horaFormatada;
         }
       });
 
