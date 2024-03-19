@@ -1035,6 +1035,20 @@
         // Exibir o nome do dia da semana na caixa de texto
         document.getElementById("diaSemana").textContent = nomeDiaSemana;
       }
+
+      document.querySelectorAll("#data").forEach(function (element) {
+        if (element.value === "") {
+          element.valueAsDate = new Date();
+          mostrarDiaSemana();
+          document.getElementById("hora").value = "00:00";
+        }
+      });
+
+      function atualiza_data_campo(element) {
+        if (element.value === "") {
+          element.valueAsDate = new Date();
+        }
+      }
     </script>
   </body>
 </html>
