@@ -419,6 +419,10 @@
           margin-left: -30px;
         }
       }
+
+      #card_padrão {
+        display: none;
+      }
     </style>
   </head>
   <body>
@@ -790,7 +794,7 @@
         });
       }
 
-      $(".arrasto").on("click", function () {
+      function opcoes_card() {
         conteudo_div_selecionada = this.closest(".div_card");
 
         if (this.id === "" || this.id === "fechada") {
@@ -832,7 +836,7 @@
 
           this.id = "fechada";
         }
-      });
+      }
 
       var names = [
         "Allysson Wyllian Santos Gomes",
@@ -1043,6 +1047,12 @@
           .forEach(function (element) {
             element.addEventListener("click", excluir_elemento_form_criacao);
           });
+
+        document.querySelectorAll(".arrasto").forEach(function (element) {
+          element.addEventListener("click", opcoes_card);
+        });
+
+        // $(".arrasto").on("click", opcoes_card);
       }
       atualiza_ouvintes();
 
@@ -1104,10 +1114,6 @@
 
             tipo_campo = element.value;
 
-            referencia = document
-              .querySelector("#card_padrão")
-              .querySelector(".div_card_info_adicionais");
-
             if (element.type === "select-one" && label != "") {
               console.log(
                 label + //Etiqueta
@@ -1115,13 +1121,32 @@
                   tipo_campo //Tipo do Campo
               );
 
-              novo = document.createElement("div");
-              novo.innerHTML = label + tipo_campo;
-
-              document
+              //clona o card padrão
+              card_novo = document
                 .querySelector("#card_padrão")
+                .cloneNode(true);
+
+              //insere o card criado na área arrastável
+              document.querySelector("#area_arrastavel").appendChild(card_novo);
+
+              //cria uma referência para inserir os elementos visiveis
+              referencia = card_novo.querySelector(".div_card_info_adicionais");
+
+              //Prepara os elementos que serão inseridos
+              novo_conteudo = document.createElement("div");
+              novo_conteudo.innerHTML = label + " " + tipo_campo;
+
+              //insere os elementos na div.
+              card_novo
                 .querySelector(".div_card_info")
-                .insertBefore(novo, referencia);
+                .insertBefore(novo_conteudo, referencia);
+
+              novo_id = 9;
+              card_novo.id = novo_id;
+              card_novo.style.display = "flex";
+
+              //atualiza os ouvintes para ativar a funcionalidade dos botões do novo card
+              atualiza_ouvintes();
             }
           });
       }
