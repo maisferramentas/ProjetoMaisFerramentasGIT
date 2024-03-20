@@ -712,7 +712,9 @@
     </div>
     <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
     <script>
-      $(document).ready(function () {
+      $(document).ready(arrasto());
+
+      function arrasto() {
         $(".draggable").on("dragstart", function (e) {
           if ($(this).closest("#area_arrastavel").length === 0) {
             return false; // Ignora o arrasto se o elemento não estiver dentro de #area_arrastavel
@@ -758,7 +760,7 @@
         $(".draggable").on("dragend", function (e) {
           $(this).removeClass("dragging"); // Remover a classe "dragging" ao finalizar o arrastar
         });
-      });
+      }
 
       function getDragAfterElement(area_arrastavel, y, currentElement) {
         const draggableElements = [
@@ -1051,7 +1053,7 @@
         document.querySelectorAll(".arrasto").forEach(function (element) {
           element.addEventListener("click", opcoes_card);
         });
-
+        arrasto();
         // $(".arrasto").on("click", opcoes_card);
       }
       atualiza_ouvintes();
