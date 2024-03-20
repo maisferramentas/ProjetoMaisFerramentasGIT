@@ -731,6 +731,12 @@
               child !== currentElement
             ) {
               return { offset: offset, element: child };
+            } else if (
+              offset > 0 &&
+              offset < closest.offset &&
+              child !== currentElement
+            ) {
+              return { offset: offset, element: child };
             } else {
               return closest;
             }
