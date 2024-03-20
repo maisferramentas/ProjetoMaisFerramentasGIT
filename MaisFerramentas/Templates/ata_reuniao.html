@@ -450,12 +450,11 @@
 
                   <div class="flex column">
                     <select name="" id="" class="insere_tipo">
-                      <option value="">Texto livre</option>
-                      <option value="">Data</option>
-                      <option value="">Hora</option>
-                      <option value="">Nomes</option>
-                      <option value="">Chamados</option>
-                      <option value="">Hinos</option>
+                      <option value="texto_livre">Texto livre</option>
+                      <option value="data">Data</option>
+                      <option value="nomes">Nomes</option>
+                      <option value="chamados">Chamados</option>
+                      <option value="hinos">Hinos</option>
                     </select>
                   </div>
                 </div>
@@ -529,7 +528,47 @@
       </div>
       <div class="conteudo_ata flex align justify">
         <div class="" id="area_arrastavel">
-          <div class="div_card draggable flex align" draggable="true" id="1">
+          <div
+            class="div_card draggable flex align"
+            draggable="true"
+            id="card_padrão"
+          >
+            <img
+              draggable="false"
+              class="img_canto"
+              src="https://lh3.googleusercontent.com/drive-viewer/AKGpihYyk0w71rkdxsX1nZGLb0tCDQMcs9lpk4rLuS-B8gYTS0f93dlBY0gTohCK9qdi3sivw0lzHJ354Eu2J5UncWzPGyYH=w1366-h382"
+              alt=""
+            />
+            <div class="div_card_info flex column left_55px dropdown">
+              <div class="div_card_info_adicionais flex column"></div>
+            </div>
+
+            <div class="div_opcoes_card flex direita column">
+              <span
+                class="material-symbols-outlined esquerda_15 icone_opcoes copiar"
+              >
+                content_copy
+              </span>
+
+              <div class="div_opcoes_meio_card flex align">
+                <img
+                  class="div_img_icone_whats icone_opcoes"
+                  src="https://www.shareicon.net/data/2048x2048/2016/07/14/607292_black_2048x2048.png"
+                  alt=""
+                />
+                <span class="material-symbols-outlined direita arrasto">
+                  drag_indicator
+                </span>
+              </div>
+              <span
+                class="material-symbols-outlined esquerda_15 icone_opcoes delete"
+              >
+                delete
+              </span>
+            </div>
+          </div>
+
+          <div class="div_card draggable flex align" draggable="true" id="3">
             <img
               draggable="false"
               class="img_canto"
@@ -949,12 +988,11 @@
 
                     <div class="flex column">
                       <select name="" id="" class="insere_tipo">
-                        <option value="">Texto livre</option>
-                        <option value="">Data</option>
-                        <option value="">Hora</option>
-                        <option value="">Nomes</option>
-                        <option value="">Chamados</option>
-                        <option value="">Hinos</option>
+                        <option value="texto_livre">Texto livre</option>
+                        <option value="data">Data</option>
+                        <option value="nomes">Nomes</option>
+                        <option value="chamados">Chamados</option>
+                        <option value="hinos">Hinos</option>
                       </select>
                     </div>
                   </div>
@@ -1008,14 +1046,6 @@
       }
       atualiza_ouvintes();
 
-      document
-        .querySelector(".botao_salvar_novo_card")
-        .addEventListener("click", salvar_novo_card);
-
-      function salvar_novo_card() {
-        console.log(this);
-      }
-
       function mostrar_dia_semana_campo_data(element) {
         var diasSemana = [
           "Domingo",
@@ -1058,6 +1088,42 @@
         if (element.value === "") {
           element.valueAsDate = new Date();
         }
+      }
+
+      document
+        .querySelector(".botao_salvar_novo_card")
+        .addEventListener("click", salvar_novo_card);
+
+      function salvar_novo_card() {
+        document
+          .querySelector("#novo_card")
+          .querySelectorAll("select")
+          .forEach(function (element) {
+            label =
+              element.parentElement.parentElement.querySelector("#nome").value;
+
+            tipo_campo = element.value;
+
+            referencia = document
+              .querySelector("#card_padrão")
+              .querySelector(".div_card_info_adicionais");
+
+            if (element.type === "select-one" && label != "") {
+              console.log(
+                label + //Etiqueta
+                  ": " +
+                  tipo_campo //Tipo do Campo
+              );
+
+              novo = document.createElement("div");
+              novo.innerHTML = label + tipo_campo;
+
+              document
+                .querySelector("#card_padrão")
+                .querySelector(".div_card_info")
+                .insertBefore(novo, referencia);
+            }
+          });
       }
     </script>
   </body>
