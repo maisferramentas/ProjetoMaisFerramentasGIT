@@ -252,6 +252,7 @@
         /* border-color: #007bff; */
         color: black;
         font-weight: bold;
+        border: none;
       }
       .insere_titulo:focus {
         /* border-color: #007bff; */
@@ -407,6 +408,9 @@
       .margin-left-1-2px {
         margin-left: -1.2px;
       }
+      .icone_opcoes_card_inserir {
+        visibility: hidden;
+      }
       @media only screen and (max-width: 600px) {
         .tamanho_data_card {
           width: 280px;
@@ -440,7 +444,7 @@
                     class="insere_titulo margin_l-1px"
                     rows="1"
                     spellcheck="false"
-                    placeholder="Título:"
+                    placeholder="Insira o Título:"
                   ></textarea>
                   <div id="myDropdown" class="dropdown-content"></div>
 
@@ -499,14 +503,14 @@
 
             <div class="div_opcoes_card flex direita column">
               <span
-                class="material-symbols-outlined esquerda_15 icone_opcoes copiar"
+                class="material-symbols-outlined esquerda_15 icone_opcoes copiar icone_opcoes_card_inserir"
               >
                 content_copy
               </span>
 
               <div class="div_opcoes_meio_card flex align">
                 <img
-                  class="div_img_icone_whats icone_opcoes"
+                  class="div_img_icone_whats icone_opcoes icone_opcoes_card_inserir"
                   src="https://www.shareicon.net/data/2048x2048/2016/07/14/607292_black_2048x2048.png"
                   alt=""
                 />
@@ -515,7 +519,7 @@
                 </span>
               </div>
               <span
-                class="material-symbols-outlined esquerda_15 icone_opcoes delete"
+                class="material-symbols-outlined esquerda_15 icone_opcoes delete icone_opcoes_card_inserir"
               >
                 delete
               </span>
@@ -548,7 +552,7 @@
                   name="data"
                   id="data"
                   class="data_hora_card tamanho_data_card"
-                  oninput="mostrarDiaSemana()"
+                  oninput="mostrar_dia_semana_campo_data(this)"
                 />
                 <div id="diaSemana" class="diaSemana"></div>
                 <input
@@ -564,7 +568,7 @@
                   type="date"
                   class="data_hora_card"
                   id="data"
-                  oninput="mostrarDiaSemana()"
+                  oninput="mostrar_dia_semana_campo_data()"
                 />
                 <input type="time" class="data_hora_card" />
                 <div id="diaSemana" class="diaSemana"></div>
@@ -774,7 +778,7 @@
         }
       });
 
-      const names = [
+      var names = [
         "Allysson Wyllian Santos Gomes",
         "Julia de Salles Gomes",
         "Cecília de Salles Gomes",
@@ -783,7 +787,7 @@
         "Angela Maria Massaneiro dos Santos Cruz",
       ];
 
-      const hinos = [
+      var hinos = [
         "2. Tal Como um Facho",
         "3. Alegres Cantemos",
         "4. No Monte a Bandeira",
@@ -915,36 +919,36 @@
       function adicionarElemento(divInfoAdicionais, elementoReferencia) {
         // Criar o HTML dos elementos que você deseja adicionar
         var novoHTML = `
-              <div class="elemento flex row justify align">
-                <div class="flex column">
-                  <textarea
-                    id="nome"
-                    class="insere_titulo margin_l-1px"
-                    rows="1"
-                    spellcheck="false"
-                    placeholder="Título:"
-                  ></textarea>
-                  <div id="myDropdown" class="dropdown-content"></div>
-
+                <div class="elemento flex row justify align">
                   <div class="flex column">
-                    <select name="" id="" class="insere_tipo">
-                      <option value="">Texto livre</option>
-                      <option value="">Data</option>
-                      <option value="">Hora</option>
-                      <option value="">Nomes</option>
-                      <option value="">Chamados</option>
-                      <option value="">Hinos</option>
-                    </select>
+                    <textarea
+                      id="nome"
+                      class="insere_titulo margin_l-1px"
+                      rows="1"
+                      spellcheck="false"
+                      placeholder="Título:"
+                    ></textarea>
+                    <div id="myDropdown" class="dropdown-content"></div>
+
+                    <div class="flex column">
+                      <select name="" id="" class="insere_tipo">
+                        <option value="">Texto livre</option>
+                        <option value="">Data</option>
+                        <option value="">Hora</option>
+                        <option value="">Nomes</option>
+                        <option value="">Chamados</option>
+                        <option value="">Hinos</option>
+                      </select>
+                    </div>
                   </div>
+                  <span
+                    class="material-symbols-outlined"
+                    id="deleta_elemento_inserir_card"
+                  >
+                    delete
+                  </span>
                 </div>
-                <span
-                  class="material-symbols-outlined"
-                  id="deleta_elemento_inserir_card"
-                >
-                  delete
-                </span>
-              </div>
-    `;
+      `;
 
         // Criar um novo elemento div
         var novoElemento = document.createElement("div");
@@ -995,42 +999,8 @@
         console.log(this);
       }
 
-      function mostrarDiaSemana() {
-        // Obter os valores da data e hora
-        var data = document.getElementById("data").value;
-        // var hora = document.getElementById("hora").value;
-
-        // Obter a data completa (incluindo hora) no formato 'YYYY-MM-DDTHH:MM'
-        var dataHoraCompleta = data + "T" + "00:00";
-
-        // Criar um objeto Date com a data e hora fornecidas
-        var dataObj = new Date(dataHoraCompleta);
-
-        // Array com os nomes dos dias da semana em português
+      function mostrar_dia_semana_campo_data(element) {
         var diasSemana = [
-          // "Domingo",
-          // "Segunda-feira",
-          // "Terça-feira",
-          // "Quarta-feira",
-          // "Quinta-feira",
-          // "Sexta-feira",
-          // "Sábado",
-          ///////////////////
-          // "Dom.",
-          // "Seg.",
-          // "Ter.",
-          // "Qua.",
-          // "Qui.",
-          // "Sex.",
-          // "Sáb.",
-          ///////////////////
-          // "Domingo",
-          // "Segunda f.",
-          // "Terça f.",
-          // "Quarta f.",
-          // "Quinta f.",
-          // "Sexta f.",
-          // "Sábado",
           "Domingo",
           "Seg.feira",
           "Ter.feira",
@@ -1040,39 +1010,32 @@
           "Sábado",
         ];
 
-        // Obter o número do dia da semana (0 para Domingo, 1 para Segunda-feira, etc.)
-        var numeroDiaSemana = dataObj.getDay();
-
-        // Obter o nome do dia da semana usando o número obtido acima
-        var nomeDiaSemana = diasSemana[numeroDiaSemana];
-
-        // Exibir o nome do dia da semana na caixa de texto
-        document.getElementById("diaSemana").textContent = nomeDiaSemana;
+        element.parentElement.querySelector("#diaSemana").textContent =
+          diasSemana[new Date(element.value + "T" + "00:00").getDay()];
       }
 
-      document.querySelectorAll("#data").forEach(function (element) {
-        if (element.value === "") {
-          element.valueAsDate = new Date();
-          mostrarDiaSemana();
+      insere_hora_campo_data_vazio();
+      function insere_hora_campo_data_vazio() {
+        document.querySelectorAll("#data").forEach(function (element) {
+          if (element.value === "") {
+            element.valueAsDate = new Date();
+            mostrar_dia_semana_campo_data(element);
 
-          // Criar um novo objeto Date para representar a hora atual
-          var dataAtual = new Date();
+            var dataAtual = new Date();
 
-          // Obter a hora atual
-          var horaAtual = dataAtual.getHours();
+            var horaAtual = dataAtual.getHours();
 
-          // Definir os minutos para zero
-          dataAtual.setMinutes(0);
+            dataAtual.setMinutes(0);
 
-          // Formatando a hora no formato HH:MM
-          var horaFormatada = dataAtual.toLocaleTimeString([], {
-            hour: "2-digit",
-            minute: "2-digit",
-          });
+            var horaFormatada = dataAtual.toLocaleTimeString([], {
+              hour: "2-digit",
+              minute: "2-digit",
+            });
 
-          document.getElementById("hora").value = horaFormatada;
-        }
-      });
+            element.parentElement.querySelector("#hora").value = horaFormatada;
+          }
+        });
+      }
 
       function atualiza_data_campo(element) {
         if (element.value === "") {
