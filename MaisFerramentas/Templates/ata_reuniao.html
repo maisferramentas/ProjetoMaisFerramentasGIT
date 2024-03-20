@@ -429,7 +429,7 @@
           style="border: 1px solid #57afc5"
         >
           <h2>Adicionar Elementos</h2>
-          <div class="div_card flex align" id="1">
+          <div class="div_card flex align" id="novo_card">
             <img
               draggable="false"
               class="img_canto"
@@ -671,6 +671,9 @@
     <script>
       $(document).ready(function () {
         $(".draggable").on("dragstart", function (e) {
+          if ($(this).closest("#area_arrastavel").length === 0) {
+            return false; // Ignora o arrasto se o elemento não estiver dentro de #area_arrastavel
+          }
           e.originalEvent.dataTransfer.setData("text/plain", e.target.id);
           setTimeout(() => {
             e.target.classList.add("dragging");
@@ -691,12 +694,14 @@
           }
         });
 
-        $(".draggable").on("drop", function (e) {
+        $("#area_arrastavel .draggable").on("drop", function (e) {
+          e.preventDefault(); // Evita comportamento padrão do navegador
           const id = e.originalEvent.dataTransfer.getData("text/plain");
           const draggable = $("#" + id);
           const afterElement = getDragAfterElement(
             $("#area_arrastavel"),
-            e.clientY
+            e.clientY,
+            this
           );
           if (afterElement == null) {
             $("#area_arrastavel").append(draggable);
@@ -706,15 +711,25 @@
           reorganizeIDs();
           $(draggable).removeClass("dragging"); // Remover a classe "dragging" após soltar o elemento
         });
+
+        $(".draggable").on("dragend", function (e) {
+          $(this).removeClass("dragging"); // Remover a classe "dragging" ao finalizar o arrastar
+        });
       });
 
-      function getDragAfterElement(area_arrastavel, y) {
-        const draggableElements = $(".draggable:not(.dragging)").toArray();
+      function getDragAfterElement(area_arrastavel, y, currentElement) {
+        const draggableElements = [
+          ...$("#area_arrastavel .draggable:not(.dragging)"),
+        ];
         return draggableElements.reduce(
           (closest, child) => {
             const box = $(child).offset();
             const offset = y - box.top - $(child).outerHeight() / 2;
-            if (offset < 0 && offset > closest.offset) {
+            if (
+              offset < 0 &&
+              offset > closest.offset &&
+              child !== currentElement
+            ) {
               return { offset: offset, element: child };
             } else {
               return closest;
@@ -725,14 +740,10 @@
       }
 
       function reorganizeIDs() {
-        $(".draggable").each(function (index) {
+        $("#area_arrastavel .draggable").each(function (index) {
           $(this).attr("id", index + 1);
         });
       }
-
-      $(".draggable").on("dragend", function (e) {
-        $(this).removeClass("dragging"); // Remover a classe "dragging" ao finalizar o arrastar
-      });
 
       $(".arrasto").on("click", function () {
         conteudo_div_selecionada = this.closest(".div_card");
