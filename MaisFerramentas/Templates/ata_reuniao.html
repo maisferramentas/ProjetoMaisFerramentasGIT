@@ -669,7 +669,7 @@
               <div id="myDropdown" class="dropdown-content"></div> -->
 
               <textarea
-                id="hino"
+                id="hinos"
                 class="area_texto"
                 rows="1"
                 spellcheck="false"
@@ -838,7 +838,7 @@
         }
       }
 
-      var names = [
+      var nomes = [
         "Allysson Wyllian Santos Gomes",
         "Julia de Salles Gomes",
         "Cecília de Salles Gomes",
@@ -865,14 +865,15 @@
         texto_digitado_invalido = true;
 
         dropdown.style.display = "block"; //comentar na opção 1
-
-        if (input.id === "nome") {
-          valores = names;
-        } else if (input.id === "hino") {
+        valores = [];
+        if (input.id === "nomes") {
+          valores = nomes;
+        } else if (input.id === "hinos") {
           valores = hinos;
-        } else if (input.id === "chamado") {
+        } else if (input.id === "chamados") {
           valores = chamados;
         }
+
         valores.forEach((valor) => {
           if (valor.toLowerCase().includes(filter)) {
             input.style.color = "#002b52";
@@ -884,15 +885,17 @@
               ajusta_altura_area_texto(caixa_texto_id);
             };
             dropdown.appendChild(nameElement);
+
             texto_digitado_invalido = false;
+
             // teste = `<a>Angela Maria Massaneiro dos Santos Cruz</a>
             // <a>Feminino</a>
             // <a>50anos</a>`;
             // dropdown.innerHTML = teste;
           }
         });
-
-        if (texto_digitado_invalido && filter !== "") {
+        console.log(valores.length);
+        if (texto_digitado_invalido && filter !== "" && valores.length != 0) {
           input.style.color = "#9a0909";
           dropdown.style.display = "none";
           dropdown.innerHTML = "";
@@ -910,7 +913,7 @@
         //   dropdown.appendChild(texto_digitado_invalidoElement);
         // }
 
-        if (filter === "") {
+        if (filter === "" || valores.length === 0) {
           dropdown.style.display = "none";
         } else {
           // dropdown.style.display = "block";
@@ -945,10 +948,6 @@
               //   "#9a0909";
             });
         }
-      });
-
-      document.querySelectorAll(".area_texto").forEach(function (element) {
-        element.addEventListener("input", ajusta_altura_area_texto);
       });
 
       function ajusta_altura_area_texto(caixa_texto_id) {
@@ -1051,8 +1050,14 @@
         document.querySelectorAll(".arrasto").forEach(function (element) {
           element.addEventListener("click", opcoes_card);
         });
+
+        document.querySelectorAll(".area_texto").forEach(function (element) {
+          element.addEventListener("input", ajusta_altura_area_texto);
+        });
+
         arrasto();
         // $(".arrasto").on("click", opcoes_card);
+        insere_hora_campo_data_vazio();
       }
       atualiza_ouvintes();
 
@@ -1105,6 +1110,17 @@
         .addEventListener("click", salvar_novo_card);
 
       function salvar_novo_card() {
+        //clona o card padrão
+        card_novo = document.querySelector("#card_padrão").cloneNode(true);
+
+        //insere o card criado na área arrastável
+        document.querySelector("#area_arrastavel").appendChild(card_novo);
+
+        //cria uma referência para inserir os elementos visiveis
+        referencia = card_novo.querySelector(".div_card_info_adicionais");
+
+        novo_id = 99;
+        card_novo.id = novo_id;
         document
           .querySelector("#novo_card")
           .querySelectorAll("select")
@@ -1126,33 +1142,11 @@
               //captura o tipo de campo
               tipo_campo = element.value;
 
-              console.log(
-                label + //Etiqueta
-                  ": " +
-                  tipo_campo +
-                  " elemento é oculto?: " +
-                  elemento_oculto //Tipo do Campo
-              );
-
-              //clona o card padrão
-              card_novo = document
-                .querySelector("#card_padrão")
-                .cloneNode(true);
-
-              //insere o card criado na área arrastável
-              document.querySelector("#area_arrastavel").appendChild(card_novo);
-
-              //cria uma referência para inserir os elementos visiveis
-              referencia = card_novo.querySelector(".div_card_info_adicionais");
-              //Prepara os elementos que serão inseridos
-              novo_conteudo = document.createElement("div");
-              // novo_conteudo.innerHTML = label + " " + tipo_campo;
-
               label = `
                 <label for="" class="campo_titulo">${label}</label>`;
 
               if (tipo_campo === "data") {
-                campo = `
+                tipo_campo = `
                   <div class="flex row align caixa_data_hora_card">
                     <input
                       type="date"
@@ -1171,7 +1165,7 @@
                   </div>
                   `;
               } else {
-                campo = `
+                tipo_campo = `
                   <textarea
                     id="${tipo_campo}"
                     class="area_texto"
@@ -1181,28 +1175,28 @@
                   <div id="myDropdown" class="dropdown-content"></div>`;
               }
 
-              novo_conteudo.innerHTML = label + campo;
+              //Prepara os elementos que serão inseridos
+              novo_conteudo = document.createElement("div");
+              novo_conteudo.innerHTML = label + tipo_campo;
 
               //insere os elementos na div.
               if (elemento_oculto) {
                 card_novo
                   .querySelector(".div_card_info")
-                  .querySelector(".div_card_info_adicionais").innerHTML =
-                  label + campo;
+                  .querySelector(".div_card_info_adicionais")
+                  .appendChild(novo_conteudo);
               } else {
                 card_novo
                   .querySelector(".div_card_info")
                   .insertBefore(novo_conteudo, referencia);
               }
-
-              novo_id = 100000;
-              card_novo.id = novo_id;
-              card_novo.style.display = "flex";
-
-              //atualiza os ouvintes para ativar a funcionalidade dos botões do novo card
-              atualiza_ouvintes();
             }
           });
+        //torna o novo card visivel
+        card_novo.style.display = "flex";
+
+        //atualiza os ouvintes para ativar a funcionalidade dos botões do novo card
+        atualiza_ouvintes();
       }
     </script>
   </body>
