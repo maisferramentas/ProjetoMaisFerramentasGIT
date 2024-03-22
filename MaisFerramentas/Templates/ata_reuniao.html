@@ -441,7 +441,7 @@
               alt=""
             />
             <div class="div_card_info flex column left_50px dropdown">
-              <div class="elemento flex row justify align">
+              <div class="opcoes_novo_card elemento flex row justify align">
                 <div class="flex column">
                   <textarea
                     id="nome"
@@ -543,6 +543,39 @@
           alt=""
         />
         <div class="div_card_info flex column left_55px dropdown">
+          <div
+            class="div_campos_padrão_novo_card flex row align caixa_data_hora_card"
+          >
+            <label for="" class="campo_titulo"></label>
+            <div
+              class="div_novo_card_campo_data flex row align caixa_data_hora_card"
+            >
+              <input
+                type="date"
+                name="data"
+                id="data"
+                class="data_hora_card tamanho_data_card"
+                oninput="mostrar_dia_semana_campo_data(this)"
+              />
+              <div id="diaSemana" class="diaSemana"></div>
+              <input
+                type="time"
+                name="hora"
+                id="hora"
+                class="data_hora_card margin-left-1-2px"
+              />
+            </div>
+            <div class="div_novo_card_campo_texto">
+              <textarea
+                id=""
+                class="text_area_padrão_novo_card area_texto"
+                rows="1"
+                spellcheck="false"
+              ></textarea>
+              <div id="myDropdown" class="dropdown-content"></div>
+            </div>
+          </div>
+
           <div class="div_card_info_adicionais flex column"></div>
         </div>
 
@@ -571,143 +604,7 @@
         </div>
       </div>
       <div class="conteudo_ata flex align justify">
-        <div class="" id="area_arrastavel">
-          <div class="div_card draggable flex align" draggable="true" id="3">
-            <img
-              draggable="false"
-              class="img_canto"
-              src="https://lh3.googleusercontent.com/drive-viewer/AKGpihYyk0w71rkdxsX1nZGLb0tCDQMcs9lpk4rLuS-B8gYTS0f93dlBY0gTohCK9qdi3sivw0lzHJ354Eu2J5UncWzPGyYH=w1366-h382"
-              alt=""
-            />
-            <div class="div_card_info flex column left_55px dropdown">
-              <label for="" class="campo_titulo">Discursante: </label>
-              <textarea
-                id="nome"
-                class="area_texto"
-                rows="1"
-                spellcheck="false"
-              ></textarea>
-              <div id="myDropdown" class="dropdown-content"></div>
-
-              <div class="flex row align caixa_data_hora_card">
-                <input
-                  type="date"
-                  name="data"
-                  id="data"
-                  class="data_hora_card tamanho_data_card"
-                  oninput="mostrar_dia_semana_campo_data(this)"
-                />
-                <div id="diaSemana" class="diaSemana"></div>
-                <input
-                  type="time"
-                  name="hora"
-                  id="hora"
-                  class="data_hora_card margin-left-1-2px"
-                />
-              </div>
-
-              <!-- <div class="flex row align caixa_data_hora_card">
-                <input
-                  type="date"
-                  class="data_hora_card"
-                  id="data"
-                  oninput="mostrar_dia_semana_campo_data()"
-                />
-                <input type="time" class="data_hora_card" />
-                <div id="diaSemana" class="diaSemana"></div>
-              </div> -->
-
-              <div class="div_card_info_adicionais flex column">
-                <label for="" class="campo_titulo">Tema: </label>
-                <input type="text" name="" id="" class="campo_texto" />
-                <label for="" class="campo_titulo">Duração: </label>
-                <input type="text" name="" id="" class="campo_texto" />
-              </div>
-            </div>
-
-            <div class="div_opcoes_card flex direita column">
-              <span
-                class="material-symbols-outlined esquerda_15 icone_opcoes copiar"
-              >
-                content_copy
-              </span>
-
-              <div class="div_opcoes_meio_card flex align">
-                <img
-                  class="div_img_icone_whats icone_opcoes"
-                  src="https://www.shareicon.net/data/2048x2048/2016/07/14/607292_black_2048x2048.png"
-                  alt=""
-                />
-                <span class="material-symbols-outlined direita arrasto">
-                  drag_indicator
-                </span>
-              </div>
-              <span
-                class="material-symbols-outlined esquerda_15 icone_opcoes delete"
-              >
-                delete
-              </span>
-            </div>
-          </div>
-
-          <div class="div_card draggable flex align" draggable="true" id="2">
-            <img
-              draggable="false"
-              class="img_canto"
-              src="https://lh3.googleusercontent.com/drive-viewer/AKGpihYyk0w71rkdxsX1nZGLb0tCDQMcs9lpk4rLuS-B8gYTS0f93dlBY0gTohCK9qdi3sivw0lzHJ354Eu2J5UncWzPGyYH=w1366-h382"
-              alt=""
-            />
-            <div class="div_card_info flex column left_55px dropdown">
-              <label for="" class="campo_titulo">Hino: </label>
-              <!-- <input
-                type="text"
-                name=""
-                id="searchInput"
-                class="campo_texto"
-                onkeyup="buscar_valores()"
-              />
-              <div id="myDropdown" class="dropdown-content"></div> -->
-
-              <textarea
-                id="hinos"
-                class="area_texto"
-                rows="1"
-                spellcheck="false"
-              ></textarea>
-              <div id="myDropdown" class="dropdown-content"></div>
-              <div class="div_card_info_adicionais flex column">
-                <!-- <label for="" class="campo_titulo">Tema: </label>
-            <input type="text" name="" id="" class="campo_texto" />
-            <label for="" class="campo_titulo">Duração: </label>
-            <input type="text" name="" id="" class="campo_texto" /> -->
-              </div>
-            </div>
-
-            <div class="div_opcoes_card flex direita column">
-              <span
-                class="material-symbols-outlined esquerda_15 icone_opcoes copiar"
-              >
-                content_copy
-              </span>
-
-              <div class="div_opcoes_meio_card flex align">
-                <img
-                  class="div_img_icone_whats icone_opcoes"
-                  src="https://www.shareicon.net/data/2048x2048/2016/07/14/607292_black_2048x2048.png"
-                  alt=""
-                />
-                <span class="material-symbols-outlined direita arrasto">
-                  drag_indicator
-                </span>
-              </div>
-              <span
-                class="material-symbols-outlined esquerda_15 icone_opcoes delete"
-              >
-                delete
-              </span>
-            </div>
-          </div>
-        </div>
+        <div class="" id="area_arrastavel"></div>
       </div>
     </div>
     <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
@@ -894,7 +791,6 @@
             // dropdown.innerHTML = teste;
           }
         });
-        console.log(valores.length);
         if (texto_digitado_invalido && filter !== "" && valores.length != 0) {
           input.style.color = "#9a0909";
           dropdown.style.display = "none";
@@ -977,43 +873,13 @@
 
       function adicionarElemento(divInfoAdicionais, elementoReferencia) {
         // Criar o HTML dos elementos que você deseja adicionar
-        var novoHTML = `
-                <div class="elemento flex row justify align">
-                  <div class="flex column">
-                    <textarea
-                      id="nome"
-                      class="insere_titulo margin_l-1px"
-                      rows="1"
-                      spellcheck="false"
-                      placeholder="Título:"
-                    ></textarea>
-                    <div id="myDropdown" class="dropdown-content"></div>
+        opcoes_novo_card = document
+          .querySelector(".opcoes_novo_card")
+          .cloneNode(true);
 
-                    <div class="flex column">
-                      <select name="" id="" class="insere_tipo">
-                        <option value="texto_livre">Texto livre</option>
-                        <option value="data">Data</option>
-                        <option value="nomes">Nomes</option>
-                        <option value="chamados">Chamados</option>
-                        <option value="hinos">Hinos</option>
-                      </select>
-                    </div>
-                  </div>
-                  <span
-                    class="material-symbols-outlined"
-                    id="deleta_elemento_inserir_card"
-                  >
-                    delete
-                  </span>
-                </div>
-      `;
-
-        // Criar um novo elemento div
-        var novoElemento = document.createElement("div");
-        novoElemento.innerHTML = novoHTML;
-
+        opcoes_novo_card.querySelector("#nome").value = "";
         // Inserir o novo elemento antes do elemento de referência
-        divInfoAdicionais.insertBefore(novoElemento, elementoReferencia);
+        divInfoAdicionais.insertBefore(opcoes_novo_card, elementoReferencia);
         atualiza_ouvintes();
       }
 
@@ -1055,6 +921,9 @@
           element.addEventListener("input", ajusta_altura_area_texto);
         });
 
+        document.querySelectorAll(".delete").forEach(function (element) {
+          element.addEventListener("click", deletar_card);
+        });
         arrasto();
         // $(".arrasto").on("click", opcoes_card);
         insere_hora_campo_data_vazio();
@@ -1113,12 +982,29 @@
         //clona o card padrão
         card_novo = document.querySelector("#card_padrão").cloneNode(true);
 
-        //insere o card criado na área arrastável
+        //clona a etiqueta
+        campo_label = card_novo.querySelector(".campo_titulo").cloneNode(true);
+
+        //clona o campo de data
+        campo_data = card_novo
+          .querySelector(".div_novo_card_campo_data")
+          .cloneNode(true);
+
+        //clona o campo de texto
+        campo_texto = card_novo
+          .querySelector(".div_novo_card_campo_texto")
+          .cloneNode(true);
+
+        //remove os campos padrão do card clonado
+        card_novo.querySelector(".div_campos_padrão_novo_card").remove();
+
+        //insere o card clone criado na área arrastável
         document.querySelector("#area_arrastavel").appendChild(card_novo);
 
         //cria uma referência para inserir os elementos visiveis
         referencia = card_novo.querySelector(".div_card_info_adicionais");
 
+        //atualiza o id do novo card criado
         novo_id = 99;
         card_novo.id = novo_id;
         document
@@ -1134,69 +1020,46 @@
               }
 
               //captura a etiqueta
-              label =
+              campo_label.textContent =
                 element.parentElement.parentElement.querySelector(
                   "#nome"
                 ).value;
 
-              //captura o tipo de campo
-              tipo_campo = element.value;
-
-              label = `
-                <label for="" class="campo_titulo">${label}</label>`;
-
-              if (tipo_campo === "data") {
-                tipo_campo = `
-                  <div class="flex row align caixa_data_hora_card">
-                    <input
-                      type="date"
-                      name="data"
-                      id="data"
-                      class="data_hora_card tamanho_data_card"
-                      oninput="mostrar_dia_semana_campo_data(this)"
-                    />
-                    <div id="diaSemana" class="diaSemana"></div>
-                    <input
-                      type="time"
-                      name="hora"
-                      id="hora"
-                      class="data_hora_card margin-left-1-2px"
-                    />
-                  </div>
-                  `;
+              //Captura o campo que sera inserido
+              if (element.value === "data") {
+                tipo_de_campo = campo_data;
               } else {
-                tipo_campo = `
-                  <textarea
-                    id="${tipo_campo}"
-                    class="area_texto"
-                    rows="1"
-                    spellcheck="false"
-                  ></textarea>
-                  <div id="myDropdown" class="dropdown-content"></div>`;
+                campo_texto.querySelector(".text_area_padrão_novo_card").id =
+                  element.value;
+                tipo_de_campo = campo_texto;
               }
-
-              //Prepara os elementos que serão inseridos
-              novo_conteudo = document.createElement("div");
-              novo_conteudo.innerHTML = label + tipo_campo;
 
               //insere os elementos na div.
               if (elemento_oculto) {
-                card_novo
+                div_card_info_adicionais = card_novo
                   .querySelector(".div_card_info")
-                  .querySelector(".div_card_info_adicionais")
-                  .appendChild(novo_conteudo);
+                  .querySelector(".div_card_info_adicionais");
+
+                div_card_info_adicionais.appendChild(campo_label);
+                div_card_info_adicionais.appendChild(tipo_de_campo);
               } else {
-                card_novo
-                  .querySelector(".div_card_info")
-                  .insertBefore(novo_conteudo, referencia);
+                div_card_info = card_novo.querySelector(".div_card_info");
+
+                div_card_info.insertBefore(campo_label, referencia);
+                div_card_info.insertBefore(tipo_de_campo, referencia);
               }
             }
           });
+
         //torna o novo card visivel
         card_novo.style.display = "flex";
 
         //atualiza os ouvintes para ativar a funcionalidade dos botões do novo card
         atualiza_ouvintes();
+      }
+
+      function deletar_card() {
+        this.closest(".div_card").remove();
       }
     </script>
   </body>
