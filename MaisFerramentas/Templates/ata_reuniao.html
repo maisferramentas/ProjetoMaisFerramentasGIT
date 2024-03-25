@@ -871,12 +871,13 @@
         }
       }
 
-      function adicionarElemento(divInfoAdicionais, elementoReferencia) {
-        // Criar o HTML dos elementos que você deseja adicionar
-        opcoes_novo_card = document
-          .querySelector(".opcoes_novo_card")
-          .cloneNode(true);
+      // Criar o HTML dos elementos que você deseja adicionar
+      opcoes_novo_card_clone = document
+        .querySelector(".opcoes_novo_card")
+        .cloneNode(true);
 
+      function adicionarElemento(divInfoAdicionais, elementoReferencia) {
+        opcoes_novo_card = opcoes_novo_card_clone.cloneNode(true);
         opcoes_novo_card.querySelector("#nome").value = "";
         // Inserir o novo elemento antes do elemento de referência
         divInfoAdicionais.insertBefore(opcoes_novo_card, elementoReferencia);
@@ -892,6 +893,8 @@
           var elementoReferencia = this;
           adicionarElemento(divInfoAdicionais, elementoReferencia);
         });
+
+      // document.querySelector(".opcoes_novo_card").closest(".div_card");
 
       document
         .querySelector("#adicionar_elemento")
@@ -982,22 +985,6 @@
         //clona o card padrão
         card_novo = document.querySelector("#card_padrão").cloneNode(true);
 
-        //clona a etiqueta
-        campo_label = card_novo.querySelector(".campo_titulo").cloneNode(true);
-
-        //clona o campo de data
-        campo_data = card_novo
-          .querySelector(".div_novo_card_campo_data")
-          .cloneNode(true);
-
-        //clona o campo de texto
-        campo_texto = card_novo
-          .querySelector(".div_novo_card_campo_texto")
-          .cloneNode(true);
-
-        //remove os campos padrão do card clonado
-        card_novo.querySelector(".div_campos_padrão_novo_card").remove();
-
         //insere o card clone criado na área arrastável
         document.querySelector("#area_arrastavel").appendChild(card_novo);
 
@@ -1011,6 +998,21 @@
           .querySelector("#novo_card")
           .querySelectorAll("select")
           .forEach(function (element) {
+            //clona a etiqueta
+            campo_label = card_novo
+              .querySelector(".campo_titulo")
+              .cloneNode(true);
+
+            //clona o campo de data
+            campo_data = card_novo
+              .querySelector(".div_novo_card_campo_data")
+              .cloneNode(true);
+
+            //clona o campo de texto
+            campo_texto = card_novo
+              .querySelector(".div_novo_card_campo_texto")
+              .cloneNode(true);
+
             if (element.type === "select-one") {
               //identifica se o elemento é oculto
               if (element.closest(".div_card_info_adicionais")) {
@@ -1051,13 +1053,23 @@
             }
           });
 
+        //remove os campos padrão do card clonado
+        card_novo.querySelector(".div_campos_padrão_novo_card").remove();
+
         //torna o novo card visivel
         card_novo.style.display = "flex";
 
         //atualiza os ouvintes para ativar a funcionalidade dos botões do novo card
         atualiza_ouvintes();
+
+        fechar_tela_novo_card();
       }
 
+      // $('.botao_fechar_novo_card').on('click',fechar_tela_novo_card)
+      function fechar_tela_novo_card() {
+        $(".opcoes_novo_card").remove();
+        $("#adicionar_elemento").click();
+      }
       function deletar_card() {
         this.closest(".div_card").remove();
       }
