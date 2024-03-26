@@ -987,49 +987,49 @@
           posicao_no_card: 1,
           label: "Anúncio:",
           tipo: "texto_livre",
-          elemento_oculto: "0",
+          elemento_oculto: 0,
         },
         {
           card: 1,
           posicao_no_card: 2,
           label: "Data:",
           tipo: "data",
-          elemento_oculto: "0",
+          elemento_oculto: 0,
         },
         {
           card: 1,
           posicao_no_card: 3,
           label: "Local",
           tipo: "texto_livre",
-          elemento_oculto: "0",
+          elemento_oculto: 0,
         },
         {
           card: 1,
           posicao_no_card: 1,
           label: "Observações:",
           tipo: "texto_livre",
-          elemento_oculto: "1",
+          elemento_oculto: 1,
         },
         {
           card: 2,
           posicao_no_card: 1,
           label: "Hino de Abertura:",
           tipo: "hinos",
-          elemento_oculto: "0",
+          elemento_oculto: 0,
         },
         {
           card: 3,
           posicao_no_card: 1,
           label: "Oração:",
           tipo: "nomes",
-          elemento_oculto: "0",
+          elemento_oculto: 0,
         },
         {
           card: 3,
           posicao_no_card: 2,
           label: "Teste Oculto:",
           tipo: "nomes",
-          elemento_oculto: "1",
+          elemento_oculto: 1,
         },
       ];
 
@@ -1157,88 +1157,63 @@
       function carrega_dados() {
         teste();
 
-        cardsAgrupados[1].forEach(function (element) {
-          // console.log(element);
-        });
-
         // Agora, vamos renderizar os cards
         for (const card in cardsAgrupados) {
           if (Object.hasOwnProperty.call(cardsAgrupados, card)) {
-            console.log(`Renderizando Card ${card}:`);
-            cardsAgrupados[card].forEach((item) => {
-              // console.log(`Label: ${item.label}`);
-              // Aqui você pode adicionar a lógica para renderizar o conteúdo do card de acordo com o item
+            //clona o card padrão
+            card_novo = document.querySelector("#card_padrão").cloneNode(true);
 
-              //clona o card padrão
-              card_novo = document
-                .querySelector("#card_padrão")
+            //insere o card clone criado na área arrastável
+            document.querySelector("#area_arrastavel").appendChild(card_novo);
+
+            //cria uma referência para inserir os elementos visiveis
+            referencia = card_novo.querySelector(".div_card_info_adicionais");
+
+            //atualiza o id do novo card criado
+            novo_id = 99;
+            card_novo.id = novo_id;
+            cardsAgrupados[card].forEach((element) => {
+              //clona a etiqueta
+              campo_label = card_novo
+                .querySelector(".campo_titulo")
                 .cloneNode(true);
 
-              //insere o card clone criado na área arrastável
-              document.querySelector("#area_arrastavel").appendChild(card_novo);
+              //clona o campo de data
+              campo_data = card_novo
+                .querySelector(".div_novo_card_campo_data")
+                .cloneNode(true);
 
-              //cria uma referência para inserir os elementos visiveis
-              referencia = card_novo.querySelector(".div_card_info_adicionais");
+              //clona o campo de texto
+              campo_texto = card_novo
+                .querySelector(".div_novo_card_campo_texto")
+                .cloneNode(true);
 
-              //atualiza o id do novo card criado
-              novo_id = 99;
-              card_novo.id = novo_id;
+              //captura a etiqueta
+              campo_label.textContent = element.label;
 
-              cards.forEach(function (element) {
-                element.card;
+              //Captura o campo que sera inserido
+              if (element.tipo === "data") {
+                tipo_de_campo = campo_data;
+              } else {
+                campo_texto.querySelector(".text_area_padrão_novo_card").id =
+                  element.tipo;
+                tipo_de_campo = campo_texto;
+              }
 
-                //clona a etiqueta
-                campo_label = card_novo
-                  .querySelector(".campo_titulo")
-                  .cloneNode(true);
+              //insere os elementos na div.
+              if (element.elemento_oculto === 1) {
+                div_card_info_adicionais = card_novo
+                  .querySelector(".div_card_info")
+                  .querySelector(".div_card_info_adicionais");
 
-                //clona o campo de data
-                campo_data = card_novo
-                  .querySelector(".div_novo_card_campo_data")
-                  .cloneNode(true);
+                div_card_info_adicionais.appendChild(campo_label);
+                div_card_info_adicionais.appendChild(tipo_de_campo);
+              } else {
+                div_card_info = card_novo.querySelector(".div_card_info");
 
-                //clona o campo de texto
-                campo_texto = card_novo
-                  .querySelector(".div_novo_card_campo_texto")
-                  .cloneNode(true);
-
-                //identifica se o elemento é oculto
-                if (element.elemento_oculto === 1) {
-                  elemento_oculto = true;
-                } else {
-                  elemento_oculto = false;
-                }
-
-                //captura a etiqueta
-                campo_label.textContent = element.label;
-
-                //Captura o campo que sera inserido
-                if (element.tipo === "data") {
-                  tipo_de_campo = campo_data;
-                } else {
-                  campo_texto.querySelector(".text_area_padrão_novo_card").id =
-                    element.tipo;
-                  tipo_de_campo = campo_texto;
-                }
-
-                //insere os elementos na div.
-                if (elemento_oculto === 1) {
-                  div_card_info_adicionais = card_novo
-                    .querySelector(".div_card_info")
-                    .querySelector(".div_card_info_adicionais");
-
-                  div_card_info_adicionais.appendChild(campo_label);
-                  div_card_info_adicionais.appendChild(tipo_de_campo);
-                } else {
-                  div_card_info = card_novo.querySelector(".div_card_info");
-
-                  div_card_info.insertBefore(campo_label, referencia);
-                  div_card_info.insertBefore(tipo_de_campo, referencia);
-                }
-              });
-
-              //remove os campos padrão do card clonado
-              card_novo.querySelector(".div_campos_padrão_novo_card").remove();
+                div_card_info.insertBefore(campo_label, referencia);
+                div_card_info.insertBefore(tipo_de_campo, referencia);
+              }
 
               //torna o novo card visivel
               card_novo.style.display = "flex";
@@ -1248,6 +1223,8 @@
 
               fechar_tela_novo_card();
             });
+            //remove os campos padrão do card clonado
+            card_novo.querySelector(".div_campos_padrão_novo_card").remove();
           }
         }
       }
