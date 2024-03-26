@@ -847,6 +847,7 @@
       });
 
       function ajusta_altura_area_texto(caixa_texto_id) {
+        console.log(caixa_texto_id);
         valor_texto = false;
         if (event.type === "click") {
           //clicou
@@ -922,6 +923,7 @@
 
         document.querySelectorAll(".area_texto").forEach(function (element) {
           element.addEventListener("input", ajusta_altura_area_texto);
+          element.addEventListener("onload", ajusta_altura_area_texto);
         });
 
         document.querySelectorAll(".delete").forEach(function (element) {
@@ -988,6 +990,7 @@
           label: "Anúncio:",
           tipo: "texto_livre",
           elemento_oculto: 0,
+          value: "Teste Titulo Anuncio",
         },
         {
           card: 1,
@@ -995,6 +998,7 @@
           label: "Data:",
           tipo: "data",
           elemento_oculto: 0,
+          value: "2024-03-12T19:00",
         },
         {
           card: 1,
@@ -1016,6 +1020,7 @@
           label: "Hino de Abertura:",
           tipo: "hinos",
           elemento_oculto: 0,
+          value: "9. Graças Damos, Ó Deus, Por um Profeta",
         },
         {
           card: 3,
@@ -1034,7 +1039,6 @@
       ];
 
       function salvar_novo_card() {
-        cards = [];
         //clona o card padrão
         card_novo = document.querySelector("#card_padrão").cloneNode(true);
 
@@ -1103,7 +1107,7 @@
                 div_card_info.insertBefore(campo_label, referencia);
                 div_card_info.insertBefore(tipo_de_campo, referencia);
               }
-
+              cards = [];
               cards.push({
                 card: null,
                 posicao_no_card: null,
@@ -1138,7 +1142,7 @@
         this.closest(".div_card").remove();
       }
 
-      function teste() {
+      function separar_array() {
         // Objeto para armazenar os cards agrupados
         cardsAgrupados = {};
 
@@ -1155,7 +1159,7 @@
       }
 
       function carrega_dados() {
-        teste();
+        separar_array();
 
         // Agora, vamos renderizar os cards
         for (const card in cardsAgrupados) {
@@ -1193,10 +1197,36 @@
 
               //Captura o campo que sera inserido
               if (element.tipo === "data") {
+                //Se a data tem valor predefinido Insere o valor da data
+                element.value
+                  ? (campo_data.querySelector("#data").value =
+                      element.value.substr(0, 10))
+                  : "";
+
+                //Se a hora tem valor predefinido Insere o valor da hora
+                element.value
+                  ? (campo_data.querySelector("#hora").value =
+                      element.value.substr(11, 5))
+                  : "";
+
                 tipo_de_campo = campo_data;
               } else {
                 campo_texto.querySelector(".text_area_padrão_novo_card").id =
                   element.tipo;
+
+                element.value
+                  ? (campo_texto.querySelector("#" + element.tipo).value =
+                      element.value)
+                  : "";
+
+                console.log(
+                  campo_texto.querySelector(".text_area_padrão_novo_card")
+                );
+
+                // ajusta_altura_area_texto(
+                //   campo_texto.querySelector(".text_area_padrão_novo_card")
+                // );
+
                 tipo_de_campo = campo_texto;
               }
 
