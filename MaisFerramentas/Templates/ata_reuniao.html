@@ -1028,6 +1028,7 @@
           label: "Oração:",
           tipo: "nomes",
           elemento_oculto: 0,
+          value: "Angela Maria Massaneiro dos Santos Cruz",
         },
         {
           card: 3,
@@ -1118,6 +1119,7 @@
                 elemento_oculto: elemento_oculto,
               });
               console.log(cards);
+              carrega_dados();
             }
           });
 
@@ -1219,10 +1221,6 @@
                       element.value)
                   : "";
 
-                console.log(
-                  campo_texto.querySelector(".text_area_padrão_novo_card")
-                );
-
                 // ajusta_altura_area_texto(
                 //   campo_texto.querySelector(".text_area_padrão_novo_card")
                 // );
@@ -1244,6 +1242,10 @@
                 div_card_info.insertBefore(campo_label, referencia);
                 div_card_info.insertBefore(tipo_de_campo, referencia);
               }
+
+              area_texto = campo_texto.querySelector(".area_texto");
+              area_texto.style.height = "19px";
+              area_texto.style.height = area_texto.scrollHeight - 10 + "px";
 
               //torna o novo card visivel
               card_novo.style.display = "flex";
