@@ -114,7 +114,7 @@
         position: relative;
         padding-bottom: 20px;
         padding-top: 20px;
-        /* background-image: url("https://lh3.googleusercontent.com/u/0/drive-viewer/AKGpihZ7uZz20Mqj53BgikOvObKhBVARcC0h0R-meBGwwnNFI2mhcDjBsz0gGpfIoCVZ0hCeDsOxw_Xt_OWq4WJps0Z8VqBs=w1366-h612");
+        /* background-image: url("https://lh3.googleusercontent.com/drive-viewer/AKGpihYyk0w71rkdxsX1nZGLb0tCDQMcs9lpk4rLuS-B8gYTS0f93dlBY0gTohCK9qdi3sivw0lzHJ354Eu2J5UncWzPGyYH=w1366-h382");
         background-repeat: no-repeat; */
         /* background-color: rgba(255, 255, 255, 9.9); */
         /* background-position: -60px 135px; */
@@ -437,7 +437,7 @@
             <img
               draggable="false"
               class="img_canto"
-              src="https://lh3.googleusercontent.com/u/0/drive-viewer/AKGpihZ7uZz20Mqj53BgikOvObKhBVARcC0h0R-meBGwwnNFI2mhcDjBsz0gGpfIoCVZ0hCeDsOxw_Xt_OWq4WJps0Z8VqBs=w1366-h612"
+              src="https://lh3.googleusercontent.com/drive-viewer/AKGpihYyk0w71rkdxsX1nZGLb0tCDQMcs9lpk4rLuS-B8gYTS0f93dlBY0gTohCK9qdi3sivw0lzHJ354Eu2J5UncWzPGyYH=w1366-h382"
               alt=""
             />
             <div class="div_card_info flex column left_50px dropdown">
@@ -528,7 +528,6 @@
               </span>
             </div>
           </div>
-          <button onclick="captura_dados()">Aoba</button>
         </div>
       </div>
 
@@ -540,7 +539,7 @@
         <img
           draggable="false"
           class="img_canto"
-          src="https://lh3.googleusercontent.com/u/0/drive-viewer/AKGpihZ7uZz20Mqj53BgikOvObKhBVARcC0h0R-meBGwwnNFI2mhcDjBsz0gGpfIoCVZ0hCeDsOxw_Xt_OWq4WJps0Z8VqBs=w1366-h612"
+          src="https://lh3.googleusercontent.com/drive-viewer/AKGpihYyk0w71rkdxsX1nZGLb0tCDQMcs9lpk4rLuS-B8gYTS0f93dlBY0gTohCK9qdi3sivw0lzHJ354Eu2J5UncWzPGyYH=w1366-h382"
           alt=""
         />
         <div class="div_card_info flex column left_55px dropdown">
@@ -848,6 +847,7 @@
       });
 
       function ajusta_altura_area_texto(caixa_texto_id) {
+        console.log(caixa_texto_id);
         valor_texto = false;
         if (event.type === "click") {
           //clicou
@@ -1040,21 +1040,77 @@
       ];
 
       function salvar_novo_card() {
-        cards = [];
+        //clona o card padrão
+        card_novo = document.querySelector("#card_padrão").cloneNode(true);
+
+        //insere o card clone criado na área arrastável
+        document.querySelector("#area_arrastavel").appendChild(card_novo);
+
+        //cria uma referência para inserir os elementos visiveis
+        referencia = card_novo.querySelector(".div_card_info_adicionais");
+
+        //atualiza o id do novo card criado
+        novo_id = 99;
+        card_novo.id = novo_id;
         document
           .querySelector("#novo_card")
           .querySelectorAll("select")
           .forEach(function (element) {
+            //clona a etiqueta
+            campo_label = card_novo
+              .querySelector(".campo_titulo")
+              .cloneNode(true);
+
+            //clona o campo de data
+            campo_data = card_novo
+              .querySelector(".div_novo_card_campo_data")
+              .cloneNode(true);
+
+            //clona o campo de texto
+            campo_texto = card_novo
+              .querySelector(".div_novo_card_campo_texto")
+              .cloneNode(true);
+
             if (element.type === "select-one") {
               //identifica se o elemento é oculto
               if (element.closest(".div_card_info_adicionais")) {
-                elemento_oculto = 1;
+                elemento_oculto = true;
               } else {
-                elemento_oculto = 0;
+                elemento_oculto = false;
               }
 
+              //captura a etiqueta
+              campo_label.textContent =
+                element.parentElement.parentElement.querySelector(
+                  "#nome"
+                ).value;
+
+              //Captura o campo que sera inserido
+              if (element.value === "data") {
+                tipo_de_campo = campo_data;
+              } else {
+                campo_texto.querySelector(".text_area_padrão_novo_card").id =
+                  element.value;
+                tipo_de_campo = campo_texto;
+              }
+
+              //insere os elementos na div.
+              if (elemento_oculto) {
+                div_card_info_adicionais = card_novo
+                  .querySelector(".div_card_info")
+                  .querySelector(".div_card_info_adicionais");
+
+                div_card_info_adicionais.appendChild(campo_label);
+                div_card_info_adicionais.appendChild(tipo_de_campo);
+              } else {
+                div_card_info = card_novo.querySelector(".div_card_info");
+
+                div_card_info.insertBefore(campo_label, referencia);
+                div_card_info.insertBefore(tipo_de_campo, referencia);
+              }
+              cards = [];
               cards.push({
-                card: 1,
+                card: null,
                 posicao_no_card: null,
                 label:
                   element.parentElement.parentElement.querySelector("#nome")
@@ -1062,9 +1118,20 @@
                 tipo: element.value,
                 elemento_oculto: elemento_oculto,
               });
+              console.log(cards);
+              carrega_dados();
             }
           });
-        carrega_dados();
+
+        //remove os campos padrão do card clonado
+        card_novo.querySelector(".div_campos_padrão_novo_card").remove();
+
+        //torna o novo card visivel
+        card_novo.style.display = "flex";
+
+        //atualiza os ouvintes para ativar a funcionalidade dos botões do novo card
+        atualiza_ouvintes();
+
         fechar_tela_novo_card();
       }
 
@@ -1154,27 +1221,28 @@
                       element.value)
                   : "";
 
+                // ajusta_altura_area_texto(
+                //   campo_texto.querySelector(".text_area_padrão_novo_card")
+                // );
+
                 tipo_de_campo = campo_texto;
               }
 
-              //cria uma div e insere os elemento
-              campo_card_com_label = document.createElement("div");
-              campo_card_com_label.id = "campo_card_com_label";
-              campo_card_com_label.appendChild(campo_label);
-              campo_card_com_label.appendChild(tipo_de_campo);
-
-              //insere os elementos na div (caso seja oculta insere na div oculta).
+              //insere os elementos na div.
               if (element.elemento_oculto === 1) {
                 div_card_info_adicionais = card_novo
                   .querySelector(".div_card_info")
                   .querySelector(".div_card_info_adicionais");
-                div_card_info_adicionais.appendChild(campo_card_com_label);
+
+                div_card_info_adicionais.appendChild(campo_label);
+                div_card_info_adicionais.appendChild(tipo_de_campo);
               } else {
                 div_card_info = card_novo.querySelector(".div_card_info");
-                div_card_info.insertBefore(campo_card_com_label, referencia);
+
+                div_card_info.insertBefore(campo_label, referencia);
+                div_card_info.insertBefore(tipo_de_campo, referencia);
               }
 
-              //ajusta altura dos elementos de texto
               area_texto = campo_texto.querySelector(".area_texto");
               area_texto.style.height = "19px";
               area_texto.style.height = area_texto.scrollHeight - 10 + "px";
@@ -1191,42 +1259,6 @@
             card_novo.querySelector(".div_campos_padrão_novo_card").remove();
           }
         }
-      }
-
-      function captura_dados() {
-        carrega_dados();
-        capturados = [];
-        aqui = document
-          .querySelector("#area_arrastavel")
-          .querySelectorAll("#campo_card_com_label"); //$('#area_arrastavel')
-
-        aqui.forEach(function (element) {
-          tipo = element.querySelector("textarea, input[type=date]").id;
-          if (tipo === "data") {
-            value =
-              element.querySelector(" input[type=date]").value +
-              "T" +
-              element.querySelector(" input[type=time]").value;
-          } else {
-            value = element.querySelector("textarea").value;
-          }
-          if (element.closest(".div_card_info_adicionais")) {
-            elemento_oculto = 1;
-          } else {
-            elemento_oculto = 0;
-          }
-
-          capturados.push({
-            card: element.closest(".div_card").id,
-            posicao_no_card: null,
-            label: element.querySelector("label").textContent,
-            tipo: tipo,
-            elemento_oculto: elemento_oculto,
-            value: value,
-          });
-        });
-        console.log(capturados);
-        carrega_dados();
       }
     </script>
   </body>
