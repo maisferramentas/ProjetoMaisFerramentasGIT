@@ -610,53 +610,55 @@
     </div>
     <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
     <script>
-      function arrasto() {
-        $(".draggable").on("dragstart", function (e) {
-          if ($(this).closest("#area_arrastavel").length === 0) {
-            return false; // Ignora o arrasto se o elemento não estiver dentro de #area_arrastavel
-          }
-          e.originalEvent.dataTransfer.setData("text/plain", e.target.id);
-          setTimeout(() => {
-            e.target.classList.add("dragging");
-          }, 0);
-        });
+      // function arrasto() {
+      //   $(".draggable").on("dragstart", function (e) {
+      //     if ($(this).closest("#area_arrastavel").length === 0) {
+      //       return false; // Ignora o arrasto se o elemento não estiver dentro de #area_arrastavel
+      //     }
+      //     e.originalEvent.dataTransfer.setData("text/plain", e.target.id);
 
-        $("#area_arrastavel").on("dragover", function (e) {
-          e.preventDefault();
-          const afterElement = getDragAfterElement(
-            $("#area_arrastavel"),
-            e.clientY
-          );
-          const draggable = $(".dragging");
-          if (afterElement == null) {
-            $("#area_arrastavel").append(draggable);
-          } else {
-            $(draggable).insertBefore(afterElement);
-          }
-        });
+      //    setTimeout(() => {
+      //       e.target.classList.add("dragging");
+      //    }, 0);
+      //   });
 
-        $("#area_arrastavel .draggable").on("drop", function (e) {
-          e.preventDefault(); // Evita comportamento padrão do navegador
-          const id = e.originalEvent.dataTransfer.getData("text/plain");
-          const draggable = $("#" + id);
-          const afterElement = getDragAfterElement(
-            $("#area_arrastavel"),
-            e.clientY,
-            this
-          );
-          if (afterElement == null) {
-            $("#area_arrastavel").append(draggable);
-          } else {
-            $(draggable).insertBefore(afterElement);
-          }
-          reorganizeIDs();
-          $(draggable).removeClass("dragging"); // Remover a classe "dragging" após soltar o elemento
-        });
+      //   $("#area_arrastavel").on("dragover", function (e) {
+      //     e.preventDefault();
+      //     const afterElement = getDragAfterElement(
+      //       $("#area_arrastavel"),
+      //       e.clientY
+      //     );
+      //     const draggable = $(".dragging");
+      //     if (afterElement == null) {
+      //       $("#area_arrastavel").append(draggable);
+      //     } else {
+      //       $(draggable).insertBefore(afterElement);
+      //     }
+      //   });
 
-        $(".draggable").on("dragend", function (e) {
-          $(this).removeClass("dragging"); // Remover a classe "dragging" ao finalizar o arrastar
-        });
-      }
+      //   $(".draggable").on("dragend", function (e) {
+      //     $(this).removeClass("dragging"); // Remover a classe "dragging" ao finalizar o arrastar
+      //   });
+
+      //   $("#area_arrastavel .draggable").on("drop", function (e) {
+      //     e.preventDefault(); // Evita comportamento padrão do navegador
+      //     const id = e.originalEvent.dataTransfer.getData("text/plain");
+      //     const draggable = $("#" + id);
+      //     const afterElement = getDragAfterElement(
+      //       $("#area_arrastavel"),
+      //       e.clientY,
+      //       this
+      //     );
+      //     if (afterElement == null) {
+      //       $("#area_arrastavel").append(draggable);
+      //     } else {
+      //       $(draggable).insertBefore(afterElement);
+      //     }
+      //     reorganizeIDs();
+      //     $(draggable).removeClass("dragging"); // Remover a classe "dragging" após soltar o elemento
+      //   });
+
+      // }
 
       function getDragAfterElement(area_arrastavel, y, currentElement) {
         const draggableElements = [
@@ -686,9 +688,87 @@
         ).element;
       }
 
+      function arrasto() {
+        document.querySelectorAll(".draggable").forEach(function (element) {
+          // Adiciona os listeners de eventos para os eventos de arrastar
+          element.addEventListener("dragstart", dragStart);
+          element.addEventListener("dragend", dragEnd);
+        });
+
+        document
+          .querySelectorAll("#area_arrastavel")
+          .forEach(function (element) {
+            // Adiciona os listeners de eventos para os eventos de soltar
+            element.addEventListener("dragenter", dragEnter);
+            element.addEventListener("dragover", dragOver);
+            element.addEventListener("dragleave", dragLeave);
+            element.addEventListener("drop", drop);
+          });
+      }
+
+      // Função chamada quando o arrasto inicia
+      function dragStart(event) {
+        // event.dataTransfer.setData('text/plain', 'Hello');
+        // Adiciona uma classe para estilizar o elemento durante o arraste
+        this.classList.add("dragging");
+      }
+
+      // Função chamada quando o arrasto termina
+      function dragEnd() {
+        // Remove a classe de estilização
+        this.classList.remove("dragging");
+      }
+
+      // Função chamada quando o elemento arrastado entra na zona de drop
+      function dragEnter(event) {
+        event.preventDefault();
+        this.classList.add("hovered");
+        console.log("inicio do arrasto");
+      }
+
+      // Função chamada quando o elemento arrastado está sobre a zona de drop
+      function dragOver(event) {
+        event.preventDefault();
+        console.log("area arrastavel");
+        // const afterElement = getDragAfterElement(
+        //   $("#area_arrastavel"),
+        //   event.clientY,
+        //   this
+        // );
+        // console.log(afterElement);
+      }
+
+      // Função chamada quando o elemento arrastado sai da zona de drop
+      function dragLeave() {
+        this.classList.remove("hovered");
+        console.log("Fora da area arrastavel");
+      }
+
+      // Função chamada quando o elemento arrastado é solto na zona de drop
+      function drop(event) {
+        event.preventDefault();
+        this.classList.remove("hovered");
+        const data = event.dataTransfer.getData("text/plain");
+        console.log("soltou");
+        // this.innerText = data;
+
+        console.log(
+          document
+            .elementFromPoint(event.clientX, event.clientY)
+            .closest(".div_card")
+        );
+
+        alert(
+          document
+            .elementFromPoint(event.clientX, event.clientY)
+            .closest(".div_card").id
+        );
+      }
+
       function reorganizeIDs() {
         $("#area_arrastavel .draggable").each(function (index) {
           $(this).attr("id", index + 1);
+          numero_de_cards = index + 1;
         });
       }
 
@@ -1191,6 +1271,7 @@
             card_novo.querySelector(".div_campos_padrão_novo_card").remove();
           }
         }
+        reorganizeIDs();
       }
 
       function captura_dados() {
