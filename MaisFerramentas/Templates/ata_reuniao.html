@@ -741,7 +741,6 @@
 
       // Função chamada quando o arrasto inicia
       function dragStart(event) {
-        console.log(this);
         // event.dataTransfer.setData("text/plain", "Hello");
         // event.originalEvent.dataTransfer.setData("text/plain", this.target.id);
         event.dataTransfer.setData("text/plain", event.target.id);
@@ -783,10 +782,7 @@
       // Função chamada quando o elemento arrastado é solto na zona de drop
       function drop(event) {
         event.preventDefault();
-        this.classList.remove("hovered");
-        const data = event.dataTransfer.getData("text/plain");
-        console.log("soltou");
-        // this.innerText = data;
+        // event.dataTransfer.getData("text/plain");
 
         mouse_em = document.elementFromPoint(event.clientX, event.clientY);
         if (mouse_em.id != "area_arrastavel") {
@@ -802,11 +798,14 @@
         }
 
         arrastando = document.querySelector(".dragging");
+
+        console.log(arrastando);
+        console.log(afterElement);
+
         document
           .querySelector("#area_arrastavel")
           .insertBefore(arrastando, afterElement);
-        console.log(afterElement);
-        console.log(arrastando);
+        reorganizeIDs();
       }
 
       function reorganizeIDs() {
