@@ -610,202 +610,202 @@
     </div>
     <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
     <script>
-      // function arrasto() {
-      //   $(".draggable").on("dragstart", function (e) {
-      //     if ($(this).closest("#area_arrastavel").length === 0) {
-      //       return false; // Ignora o arrasto se o elemento não estiver dentro de #area_arrastavel
-      //     }
-      //     e.originalEvent.dataTransfer.setData("text/plain", e.target.id);
-
-      //     setTimeout(() => {
-      //       e.target.classList.add("dragging");
-      //     }, 0);
-      //   });
-
-      //   $("#area_arrastavel").on("dragover", function (e) {
-      //     e.preventDefault();
-      //     // const afterElement = getDragAfterElement(
-      //     //   $("#area_arrastavel"),
-      //     //   event
-      //     // );
-
-      //     mouse_em = document.elementFromPoint(event.clientX, event.clientY);
-      //     if (mouse_em.id != "area_arrastavel") {
-      //       elemento_abaixo = parseInt(mouse_em.closest(".div_card").id) + 1;
-
-      //       elemento_abaixo =
-      //         elemento_abaixo > numero_de_cards
-      //           ? numero_de_cards
-      //           : elemento_abaixo;
-      //       afterElement = document.getElementById(elemento_abaixo);
-      //     } else {
-      //       afterElement = null;
-      //     }
-      //     console.log(afterElement);
-      //     afterElement2 = afterElement;
-
-      //     const draggable = $(".dragging");
-      //     if (afterElement == null) {
-      //       $("#area_arrastavel").append(draggable);
-      //     } else {
-      //       $(draggable).insertBefore(afterElement);
-      //     }
-      //   });
-
-      //   $("#area_arrastavel .draggable").on("drop", function (e) {
-      //     e.preventDefault(); // Evita comportamento padrão do navegador
-      //     const id = e.originalEvent.dataTransfer.getData("text/plain");
-      //     const draggable = $("#" + id);
-      //     // const afterElement = getDragAfterElement(
-      //     //   $("#area_arrastavel"),
-      //     //   event,
-      //     //   this
-      //     // );
-
-      //     const afterElement = afterElement2;
-      //     if (afterElement == null) {
-      //       $("#area_arrastavel").append(draggable);
-      //     } else {
-      //       $(draggable).insertBefore(afterElement);
-      //     }
-      //     reorganizeIDs();
-      //     $(draggable).removeClass("dragging"); // Remover a classe "dragging" após soltar o elemento
-      //   });
-
-      //   $(".draggable").on("dragend", function (e) {
-      //     $(this).removeClass("dragging"); // Remover a classe "dragging" ao finalizar o arrastar
-      //   });
-      // }
-
-      // function getDragAfterElement(area_arrastavel, y, currentElement) {
-      //   const draggableElements = [
-      //     ...$("#area_arrastavel .draggable:not(.dragging)"),
-      //   ];
-      //   return draggableElements.reduce(
-      //     (closest, child) => {
-      //       const box = $(child).offset();
-      //       const offset = y - box.top - $(child).outerHeight() / 2;
-      //       if (
-      //         offset < 0 &&
-      //         offset > closest.offset &&
-      //         child !== currentElement
-      //       ) {
-      //         return { offset: offset, element: child };
-      //       } else if (
-      //         offset > 0 &&
-      //         offset < closest.offset &&
-      //         child !== currentElement
-      //       ) {
-      //         return { offset: offset, element: child };
-      //       } else {
-      //         return closest;
-      //       }
-      //     },
-      //     { offset: Number.NEGATIVE_INFINITY }
-      //   ).element;
-      // }
-
-      // function getDragAfterElement(area_arrastavel, event, currentElement) {
-      //   elemento_abaixo =
-      //     parseInt(
-      //       document
-      //         .elementFromPoint(event.clientX, event.clientY)
-      //         .closest(".div_card").id
-      //     ) + 1;
-
-      //   elemento_abaixo =
-      //     elemento_abaixo > numero_de_cards ? numero_de_cards : elemento_abaixo;
-
-      //   elemento_abaixo = document.getElementById("elemento_abaixo");
-
-      //   return elemento_abaixo;
-      // }
-
       function arrasto() {
-        document.querySelectorAll(".draggable").forEach(function (element) {
-          // Adiciona os listeners de eventos para os eventos de arrastar
-          element.addEventListener("dragstart", dragStart);
-          element.addEventListener("dragend", dragEnd);
+        $(".draggable").on("dragstart", function (e) {
+          if ($(this).closest("#area_arrastavel").length === 0) {
+            return false; // Ignora o arrasto se o elemento não estiver dentro de #area_arrastavel
+          }
+          e.originalEvent.dataTransfer.setData("text/plain", e.target.id);
+
+          setTimeout(() => {
+            e.target.classList.add("dragging");
+          }, 0);
         });
 
-        document
-          .querySelectorAll("#area_arrastavel")
-          .forEach(function (element) {
-            // Adiciona os listeners de eventos para os eventos de soltar
-            element.addEventListener("dragenter", dragEnter);
-            element.addEventListener("dragover", dragOver);
-            element.addEventListener("dragleave", dragLeave);
-            element.addEventListener("drop", drop);
-          });
+        $("#area_arrastavel").on("dragover", function (e) {
+          e.preventDefault();
+          // const afterElement = getDragAfterElement(
+          //   $("#area_arrastavel"),
+          //   event
+          // );
+
+          mouse_em = document.elementFromPoint(event.clientX, event.clientY);
+          if (mouse_em.id != "area_arrastavel") {
+            elemento_abaixo = parseInt(mouse_em.closest(".div_card").id) + 1;
+
+            elemento_abaixo =
+              elemento_abaixo > numero_de_cards
+                ? numero_de_cards
+                : elemento_abaixo;
+            afterElement = document.getElementById(elemento_abaixo);
+          } else {
+            afterElement = null;
+          }
+          console.log(afterElement);
+          afterElement2 = afterElement;
+
+          const draggable = $(".dragging");
+          if (afterElement == null) {
+            $("#area_arrastavel").append(draggable);
+          } else {
+            $(draggable).insertBefore(afterElement);
+          }
+        });
+
+        $("#area_arrastavel .draggable").on("drop", function (e) {
+          e.preventDefault(); // Evita comportamento padrão do navegador
+          const id = e.originalEvent.dataTransfer.getData("text/plain");
+          const draggable = $("#" + id);
+          // const afterElement = getDragAfterElement(
+          //   $("#area_arrastavel"),
+          //   event,
+          //   this
+          // );
+
+          const afterElement = afterElement2;
+          if (afterElement == null) {
+            $("#area_arrastavel").append(draggable);
+          } else {
+            $(draggable).insertBefore(afterElement);
+          }
+          reorganizeIDs();
+          $(draggable).removeClass("dragging"); // Remover a classe "dragging" após soltar o elemento
+        });
+
+        $(".draggable").on("dragend", function (e) {
+          $(this).removeClass("dragging"); // Remover a classe "dragging" ao finalizar o arrastar
+        });
       }
 
-      // Função chamada quando o arrasto inicia
-      function dragStart(event) {
-        // event.dataTransfer.setData('text/plain', 'Hello');
-        // event.originalEvent.dataTransfer.setData("text/plain", event.target.id);
-        // Adiciona uma classe para estilizar o elemento durante o arraste
-        this.classList.add("dragging");
+      function getDragAfterElement(area_arrastavel, y, currentElement) {
+        const draggableElements = [
+          ...$("#area_arrastavel .draggable:not(.dragging)"),
+        ];
+        return draggableElements.reduce(
+          (closest, child) => {
+            const box = $(child).offset();
+            const offset = y - box.top - $(child).outerHeight() / 2;
+            if (
+              offset < 0 &&
+              offset > closest.offset &&
+              child !== currentElement
+            ) {
+              return { offset: offset, element: child };
+            } else if (
+              offset > 0 &&
+              offset < closest.offset &&
+              child !== currentElement
+            ) {
+              return { offset: offset, element: child };
+            } else {
+              return closest;
+            }
+          },
+          { offset: Number.NEGATIVE_INFINITY }
+        ).element;
       }
 
-      // Função chamada quando o arrasto termina
-      function dragEnd() {
-        // Remove a classe de estilização
-        this.classList.remove("dragging");
+      function getDragAfterElement(area_arrastavel, event, currentElement) {
+        elemento_abaixo =
+          parseInt(
+            document
+              .elementFromPoint(event.clientX, event.clientY)
+              .closest(".div_card").id
+          ) + 1;
+
+        elemento_abaixo =
+          elemento_abaixo > numero_de_cards ? numero_de_cards : elemento_abaixo;
+
+        elemento_abaixo = document.getElementById("elemento_abaixo");
+
+        return elemento_abaixo;
       }
 
-      // Função chamada quando o elemento arrastado entra na zona de drop
-      function dragEnter(event) {
-        event.preventDefault();
-        this.classList.add("hovered");
-        // console.log("inicio do arrasto");
-      }
+      // function arrasto() {
+      //   document.querySelectorAll(".draggable").forEach(function (element) {
+      //     // Adiciona os listeners de eventos para os eventos de arrastar
+      //     element.addEventListener("dragstart", dragStart);
+      //     element.addEventListener("dragend", dragEnd);
+      //   });
 
-      // Função chamada quando o elemento arrastado está sobre a zona de drop
-      function dragOver(event) {
-        event.preventDefault();
-        // console.log("area arrastavel");
-        // const afterElement = getDragAfterElement(
-        //   $("#area_arrastavel"),
-        //   event.clientY,
-        //   this
-        // );
-        // console.log(afterElement);
-      }
+      //   document
+      //     .querySelectorAll("#area_arrastavel")
+      //     .forEach(function (element) {
+      //       // Adiciona os listeners de eventos para os eventos de soltar
+      //       element.addEventListener("dragenter", dragEnter);
+      //       element.addEventListener("dragover", dragOver);
+      //       element.addEventListener("dragleave", dragLeave);
+      //       element.addEventListener("drop", drop);
+      //     });
+      // }
 
-      // Função chamada quando o elemento arrastado sai da zona de drop
-      function dragLeave() {
-        this.classList.remove("hovered");
-        // console.log("Fora da area arrastavel");
-      }
+      // // Função chamada quando o arrasto inicia
+      // function dragStart(event) {
+      //   // event.dataTransfer.setData('text/plain', 'Hello');
+      //   // event.originalEvent.dataTransfer.setData("text/plain", event.target.id);
+      //   // Adiciona uma classe para estilizar o elemento durante o arraste
+      //   this.classList.add("dragging");
+      // }
 
-      // Função chamada quando o elemento arrastado é solto na zona de drop
-      function drop(event) {
-        event.preventDefault();
-        this.classList.remove("hovered");
-        const data = event.dataTransfer.getData("text/plain");
-        console.log("soltou");
-        // this.innerText = data;
+      // // Função chamada quando o arrasto termina
+      // function dragEnd() {
+      //   // Remove a classe de estilização
+      //   this.classList.remove("dragging");
+      // }
 
-        mouse_em = document.elementFromPoint(event.clientX, event.clientY);
-        if (mouse_em.id != "area_arrastavel") {
-          elemento_abaixo = parseInt(mouse_em.closest(".div_card").id) + 1;
+      // // Função chamada quando o elemento arrastado entra na zona de drop
+      // function dragEnter(event) {
+      //   event.preventDefault();
+      //   this.classList.add("hovered");
+      //   // console.log("inicio do arrasto");
+      // }
 
-          elemento_abaixo =
-            elemento_abaixo > numero_de_cards
-              ? numero_de_cards
-              : elemento_abaixo;
-          afterElement = document.getElementById(elemento_abaixo);
-        } else {
-          afterElement = null;
-        }
+      // // Função chamada quando o elemento arrastado está sobre a zona de drop
+      // function dragOver(event) {
+      //   event.preventDefault();
+      //   // console.log("area arrastavel");
+      //   // const afterElement = getDragAfterElement(
+      //   //   $("#area_arrastavel"),
+      //   //   event.clientY,
+      //   //   this
+      //   // );
+      //   // console.log(afterElement);
+      // }
 
-        arrastando = document.querySelector(".dragging");
-        document
-          .querySelector("#area_arrastavel")
-          .insertBefore(arrastando, afterElement);
-        console.log(afterElement);
-        console.log(arrastando);
-      }
+      // // Função chamada quando o elemento arrastado sai da zona de drop
+      // function dragLeave() {
+      //   this.classList.remove("hovered");
+      //   // console.log("Fora da area arrastavel");
+      // }
+
+      // // Função chamada quando o elemento arrastado é solto na zona de drop
+      // function drop(event) {
+      //   event.preventDefault();
+      //   this.classList.remove("hovered");
+      //   const data = event.dataTransfer.getData("text/plain");
+      //   console.log("soltou");
+      //   // this.innerText = data;
+
+      //   mouse_em = document.elementFromPoint(event.clientX, event.clientY);
+      //   if (mouse_em.id != "area_arrastavel") {
+      //     elemento_abaixo = parseInt(mouse_em.closest(".div_card").id) + 1;
+
+      //     elemento_abaixo =
+      //       elemento_abaixo > numero_de_cards
+      //         ? numero_de_cards
+      //         : elemento_abaixo;
+      //     afterElement = document.getElementById(elemento_abaixo);
+      //   } else {
+      //     afterElement = null;
+      //   }
+
+      //   arrastando = document.querySelector(".dragging");
+      //   document
+      //     .querySelector("#area_arrastavel")
+      //     .insertBefore(arrastando, afterElement);
+      //   console.log(afterElement);
+      //   console.log(arrastando);
+      // }
 
       function reorganizeIDs() {
         $("#area_arrastavel .draggable").each(function (index) {
