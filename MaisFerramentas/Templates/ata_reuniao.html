@@ -783,28 +783,52 @@
       function drop(event) {
         event.preventDefault();
         // event.dataTransfer.getData("text/plain");
-
-        mouse_em = document.elementFromPoint(event.clientX, event.clientY);
-        if (mouse_em.id != "area_arrastavel") {
-          elemento_abaixo = parseInt(mouse_em.closest(".div_card").id) + 1;
-
-          elemento_abaixo =
-            elemento_abaixo > numero_de_cards
-              ? numero_de_cards
-              : elemento_abaixo;
-          afterElement = document.getElementById(elemento_abaixo);
-        } else {
-          afterElement = null;
-        }
-
         arrastando = document.querySelector(".dragging");
 
-        console.log(arrastando);
-        console.log(afterElement);
+        mouse_em = document.elementFromPoint(event.clientX, event.clientY);
 
-        document
-          .querySelector("#area_arrastavel")
-          .insertBefore(arrastando, afterElement);
+        if (mouse_em.id != "area_arrastavel") {
+          console.log(
+            "arrastando: " + arrastando.id + " mouse em: " + mouse_em.id
+          );
+
+          tipo_arrasto =
+            arrastando.id < mouse_em.id ? "cima_baixo" : "baixo_cima";
+          console.log(tipo_arrasto);
+
+          if (arrastando.id < mouse_em.id) {
+            //"cima_baixo"
+
+            elemento_referencia =
+              parseInt(mouse_em.closest(".div_card").id) + 1;
+
+            // elemento_referencia =
+            //   elemento_referencia > numero_de_cards
+            //     ? numero_de_cards
+            //     : elemento_referencia;
+
+            elemento_referencia = document.getElementById(elemento_referencia);
+
+            document
+              .querySelector("#area_arrastavel")
+              .insertBefore(arrastando, elemento_referencia);
+          } else {
+            //"baixo_cima"
+
+            elemento_referencia = parseInt(mouse_em.closest(".div_card").id);
+
+            elemento_referencia = document.getElementById(elemento_referencia);
+
+            console.log(elemento_referencia);
+
+            document
+              .querySelector("#area_arrastavel")
+              .insertBefore(arrastando, elemento_referencia);
+          }
+        } else {
+          elemento_referencia = null;
+        }
+
         reorganizeIDs();
       }
 
