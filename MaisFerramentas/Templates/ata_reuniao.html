@@ -1239,8 +1239,11 @@
           .querySelectorAll("textarea, input[type=date], input[type=time]")
           .forEach(function (element) {
             element.value = "";
-          });
 
+            if (element.type === "textarea") {
+              element.style.height = "19px";
+            }
+          });
         document
           .querySelector("#area_arrastavel")
           .insertBefore(clone, elemento_atual);
