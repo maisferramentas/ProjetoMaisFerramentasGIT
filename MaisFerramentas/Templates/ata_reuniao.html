@@ -771,6 +771,31 @@
         //   this
         // );
         // console.log(afterElement);
+
+        // event.dataTransfer.getData("text/plain");
+        arrastando = document.querySelector(".dragging");
+
+        mouse_em = document.elementFromPoint(event.clientX, event.clientY);
+
+        elemento_referencia = null;
+
+        if (arrastando.id < mouse_em.id && mouse_em.id != "area_arrastavel") {
+          //"cima_baixo"
+          elemento_referencia = parseInt(mouse_em.closest(".div_card").id) + 1;
+        } else if (mouse_em.id != "area_arrastavel") {
+          //"baixo_cima"
+          elemento_referencia = parseInt(mouse_em.closest(".div_card").id);
+        }
+
+        if (elemento_referencia != null) {
+          elemento_referencia = document.getElementById(elemento_referencia);
+
+          document
+            .querySelector("#area_arrastavel")
+            .insertBefore(arrastando, elemento_referencia);
+
+          reorganizeIDs();
+        }
       }
 
       // Função chamada quando o elemento arrastado sai da zona de drop
@@ -787,49 +812,25 @@
 
         mouse_em = document.elementFromPoint(event.clientX, event.clientY);
 
-        if (mouse_em.id != "area_arrastavel") {
-          console.log(
-            "arrastando: " + arrastando.id + " mouse em: " + mouse_em.id
-          );
+        elemento_referencia = null;
 
-          tipo_arrasto =
-            arrastando.id < mouse_em.id ? "cima_baixo" : "baixo_cima";
-          console.log(tipo_arrasto);
-
-          if (arrastando.id < mouse_em.id) {
-            //"cima_baixo"
-
-            elemento_referencia =
-              parseInt(mouse_em.closest(".div_card").id) + 1;
-
-            // elemento_referencia =
-            //   elemento_referencia > numero_de_cards
-            //     ? numero_de_cards
-            //     : elemento_referencia;
-
-            elemento_referencia = document.getElementById(elemento_referencia);
-
-            document
-              .querySelector("#area_arrastavel")
-              .insertBefore(arrastando, elemento_referencia);
-          } else {
-            //"baixo_cima"
-
-            elemento_referencia = parseInt(mouse_em.closest(".div_card").id);
-
-            elemento_referencia = document.getElementById(elemento_referencia);
-
-            console.log(elemento_referencia);
-
-            document
-              .querySelector("#area_arrastavel")
-              .insertBefore(arrastando, elemento_referencia);
-          }
-        } else {
-          elemento_referencia = null;
+        if (arrastando.id < mouse_em.id && mouse_em.id != "area_arrastavel") {
+          //"cima_baixo"
+          elemento_referencia = parseInt(mouse_em.closest(".div_card").id) + 1;
+        } else if (mouse_em.id != "area_arrastavel") {
+          //"baixo_cima"
+          elemento_referencia = parseInt(mouse_em.closest(".div_card").id);
         }
 
-        reorganizeIDs();
+        if (elemento_referencia != null) {
+          elemento_referencia = document.getElementById(elemento_referencia);
+
+          document
+            .querySelector("#area_arrastavel")
+            .insertBefore(arrastando, elemento_referencia);
+
+          reorganizeIDs();
+        }
       }
 
       function reorganizeIDs() {
