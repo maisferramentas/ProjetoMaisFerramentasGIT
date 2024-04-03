@@ -694,11 +694,13 @@
           .querySelectorAll("#area_arrastavel")
           .forEach(function (element) {
             // Adiciona os listeners de eventos para os eventos de soltar
-            element.addEventListener("dragover", movimentacao_elemento);
+            element.addEventListener("dragover", dragover);
             element.addEventListener("drop", movimentacao_elemento);
           });
       }
-
+      function dragover() {
+        event.preventDefault();
+      }
       // Função chamada quando o arrasto inicia
       function dragStart(event) {
         //A Etiqueta de arrasto terá a aparência do próprio elemento
@@ -721,8 +723,6 @@
         mouse_em = document.elementFromPoint(event.clientX, event.clientY);
 
         elemento_referencia = null;
-
-        console.log(mouse_em.id);
 
         if (arrastando.id < mouse_em.id && mouse_em.id != "area_arrastavel") {
           //"cima_baixo"
@@ -754,12 +754,12 @@
         conteudo_div_selecionada = this.closest(".div_card");
 
         if (this.id === "" || this.id === "fechada") {
-          conteudo_div_selecionada.querySelector(
-            ".div_card_info_adicionais"
-          ).style.display = "flex";
+          // conteudo_div_selecionada.querySelector(
+          //   ".div_card_info_adicionais"
+          // ).style.display = "flex";
 
           conteudo_div_selecionada
-            .querySelectorAll(".icone_opcoes")
+            .querySelectorAll(".icone_opcoes, .div_card_info_adicionais")
             .forEach(function (element) {
               element.style.display = "flex";
             });
@@ -773,12 +773,12 @@
 
           this.id = "aberta";
         } else {
-          conteudo_div_selecionada.querySelector(
-            ".div_card_info_adicionais"
-          ).style.display = "none";
+          // conteudo_div_selecionada.querySelector(
+          //   ".div_card_info_adicionais"
+          // ).style.display = "none";
 
           conteudo_div_selecionada
-            .querySelectorAll(".icone_opcoes")
+            .querySelectorAll(".icone_opcoes, .div_card_info_adicionais")
             .forEach(function (element) {
               element.style.display = "none";
             });
@@ -804,7 +804,9 @@
         texto_digitado_invalido = true;
 
         dropdown.style.display = "block"; //comentar na opção 1
+
         valores = [];
+
         if (input.id === "nomes") {
           valores = nomes;
         } else if (input.id === "hinos") {
@@ -826,35 +828,17 @@
             dropdown.appendChild(nameElement);
 
             texto_digitado_invalido = false;
-
-            // teste = `<a>Angela Maria Massaneiro dos Santos Cruz</a>
-            // <a>Feminino</a>
-            // <a>50anos</a>`;
-            // dropdown.innerHTML = teste;
           }
         });
+
         if (texto_digitado_invalido && filter !== "" && valores.length != 0) {
           input.style.color = "#9a0909";
           dropdown.style.display = "none";
           dropdown.innerHTML = "";
         }
 
-        // if (texto_digitado_invalido && filter !== "") {
-        //   input.style.color = "red";
-        //   const texto_digitado_invalidoElement = document.createElement("a");
-        //   texto_digitado_invalidoElement.textContent = input.value;
-        //   texto_digitado_invalidoElement.style.color = "red";
-        //   texto_digitado_invalidoElement.onclick = function () {
-        //     input.value = this.textContent;
-        //     dropdown.style.display = "none";
-        //   };
-        //   dropdown.appendChild(texto_digitado_invalidoElement);
-        // }
-
         if (filter === "" || valores.length === 0) {
           dropdown.style.display = "none";
-        } else {
-          // dropdown.style.display = "block";
         }
       }
 
@@ -865,7 +849,6 @@
           !event.target.matches(".dropdown a") &&
           !event.target.matches(".area_texto")
         ) {
-          // document.getElementById("myDropdown").style.display = "none";
           document
             .querySelectorAll(".dropdown-content")
             .forEach(function (element) {
@@ -880,10 +863,6 @@
                   ).style.color = "#9a0909";
                 }
               }
-
-              // document.getElementById("searchInput").style.color = "#9a0909";
-              // element.parentElement.querySelector("area_texto").style.color =
-              //   "#9a0909";
             });
         }
       });
@@ -935,8 +914,6 @@
           var elementoReferencia = this;
           adicionarElemento(divInfoAdicionais, elementoReferencia);
         });
-
-      // document.querySelector(".opcoes_novo_card").closest(".div_card");
 
       document
         .querySelector("#adicionar_elemento")
@@ -1142,7 +1119,7 @@
                 tipo_de_campo = campo_texto;
               }
 
-              //cria uma div e insere os elemento
+              //cria uma div e insere os elementos
               campo_card_com_label = document.createElement("div");
               campo_card_com_label.id = "campo_card_com_label";
               campo_card_com_label.appendChild(campo_label);
