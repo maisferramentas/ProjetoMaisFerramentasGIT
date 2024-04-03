@@ -760,25 +760,10 @@
           troca_anterior = mouse_em.id + "e" + arrastando.id;
           reorganizeIDs();
 
-          moverMouseParaMeioDaDivY(arrastando);
+          setTimeout(() => {
+            troca_anterior = null;
+          }, 2000);
         }
-      }
-
-      function moverMouseParaMeioDaDivY(elementoDiv) {
-        // Obtém as coordenadas da div em relação à janela do navegador
-        let rect = elementoDiv.getBoundingClientRect();
-
-        // Calcula o ponto médio no eixo Y da div
-        let pontoMedioY = rect.top + rect.height / 2;
-
-        // Simula um evento de mouse para mover o cursor para o meio do eixo Y da div
-        let eventoMouse = new MouseEvent("mousemove", {
-          clientX: window.pageXOffset + (rect.left + rect.width / 2), // centraliza horizontalmente
-          clientY: window.pageYOffset + pontoMedioY,
-        });
-
-        // Dispara o evento de mouse
-        document.dispatchEvent(eventoMouse);
       }
 
       function reorganizeIDs() {
