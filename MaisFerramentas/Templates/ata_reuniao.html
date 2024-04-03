@@ -610,6 +610,79 @@
     </div>
     <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
     <script>
+      var nomes = [
+        "Allysson Wyllian Santos Gomes",
+        "Julia de Salles Gomes",
+        "Cecília de Salles Gomes",
+        "David",
+        "Eve",
+        "Angela Maria Massaneiro dos Santos Cruz",
+      ];
+
+      var hinos = [
+        "2. Tal Como um Facho",
+        "3. Alegres Cantemos",
+        "4. No Monte a Bandeira",
+        "5. Israel, Jesus Te Chama",
+        "9. Graças Damos, Ó Deus, Por um Profeta",
+      ];
+
+      cards = [
+        {
+          card: 1,
+          posicao_no_card: 1,
+          label: "Anúncio:",
+          tipo: "texto_livre",
+          elemento_oculto: 0,
+          value: "Teste Titulo Anuncio",
+        },
+        {
+          card: 1,
+          posicao_no_card: 2,
+          label: "Data:",
+          tipo: "data",
+          elemento_oculto: 0,
+          value: "2024-03-12T19:00",
+        },
+        {
+          card: 1,
+          posicao_no_card: 3,
+          label: "Local",
+          tipo: "texto_livre",
+          elemento_oculto: 0,
+        },
+        {
+          card: 1,
+          posicao_no_card: 1,
+          label: "Observações:",
+          tipo: "texto_livre",
+          elemento_oculto: 1,
+        },
+        {
+          card: 2,
+          posicao_no_card: 1,
+          label: "Hino de Abertura:",
+          tipo: "hinos",
+          elemento_oculto: 0,
+          value: "9. Graças Damos, Ó Deus, Por um Profeta",
+        },
+        {
+          card: 3,
+          posicao_no_card: 1,
+          label: "Oração:",
+          tipo: "nomes",
+          elemento_oculto: 0,
+          value: "Angela Maria Massaneiro dos Santos Cruz",
+        },
+        {
+          card: 3,
+          posicao_no_card: 2,
+          label: "Teste Oculto:",
+          tipo: "nomes",
+          elemento_oculto: 1,
+        },
+      ];
+
       function arrasto() {
         document.querySelectorAll(".draggable").forEach(function (element) {
           // Adiciona os listeners de eventos para os eventos de arrastar
@@ -621,29 +694,17 @@
           .querySelectorAll("#area_arrastavel")
           .forEach(function (element) {
             // Adiciona os listeners de eventos para os eventos de soltar
-            element.addEventListener("dragover", dragOver);
-            element.addEventListener("drop", drop);
+            element.addEventListener("dragover", movimentacao_elemento);
+            element.addEventListener("drop", movimentacao_elemento);
           });
       }
 
       // Função chamada quando o arrasto inicia
       function dragStart(event) {
-        //O elemento arrastado será o e
-        // event.dataTransfer.setData("text/plain", event.target.id);
-        // Adiciona uma classe para estilizar o elemento durante o arraste
+        //A Etiqueta de arrasto terá a aparência do próprio elemento
+        event.dataTransfer.setData("text/plain", event.target.id);
+        // Deixa opaco o elemento que está sendo arrastado
         this.classList.add("dragging");
-      }
-
-      // Função chamada quando o elemento arrastado está sobre a zona de drop
-      function dragOver(event) {
-        event.preventDefault();
-        movimentacao_elemento(event);
-      }
-
-      // Função chamada quando o elemento arrastado é solto na zona de drop
-      function drop(event) {
-        event.preventDefault();
-        movimentacao_elemento(event);
       }
 
       // Função chamada quando o arrasto termina
@@ -653,6 +714,8 @@
       }
 
       function movimentacao_elemento(event) {
+        event.preventDefault();
+
         arrastando = document.querySelector(".dragging");
 
         mouse_em = document.elementFromPoint(event.clientX, event.clientY);
@@ -730,23 +793,6 @@
           this.id = "fechada";
         }
       }
-
-      var nomes = [
-        "Allysson Wyllian Santos Gomes",
-        "Julia de Salles Gomes",
-        "Cecília de Salles Gomes",
-        "David",
-        "Eve",
-        "Angela Maria Massaneiro dos Santos Cruz",
-      ];
-
-      var hinos = [
-        "2. Tal Como um Facho",
-        "3. Alegres Cantemos",
-        "4. No Monte a Bandeira",
-        "5. Israel, Jesus Te Chama",
-        "9. Graças Damos, Ó Deus, Por um Profeta",
-      ];
 
       function buscar_valores(caixa_texto_id) {
         const input = caixa_texto_id;
@@ -977,62 +1023,6 @@
       document
         .querySelector(".botao_salvar_novo_card")
         .addEventListener("click", salvar_novo_card);
-
-      cards = [
-        {
-          card: 1,
-          posicao_no_card: 1,
-          label: "Anúncio:",
-          tipo: "texto_livre",
-          elemento_oculto: 0,
-          value: "Teste Titulo Anuncio",
-        },
-        {
-          card: 1,
-          posicao_no_card: 2,
-          label: "Data:",
-          tipo: "data",
-          elemento_oculto: 0,
-          value: "2024-03-12T19:00",
-        },
-        {
-          card: 1,
-          posicao_no_card: 3,
-          label: "Local",
-          tipo: "texto_livre",
-          elemento_oculto: 0,
-        },
-        {
-          card: 1,
-          posicao_no_card: 1,
-          label: "Observações:",
-          tipo: "texto_livre",
-          elemento_oculto: 1,
-        },
-        {
-          card: 2,
-          posicao_no_card: 1,
-          label: "Hino de Abertura:",
-          tipo: "hinos",
-          elemento_oculto: 0,
-          value: "9. Graças Damos, Ó Deus, Por um Profeta",
-        },
-        {
-          card: 3,
-          posicao_no_card: 1,
-          label: "Oração:",
-          tipo: "nomes",
-          elemento_oculto: 0,
-          value: "Angela Maria Massaneiro dos Santos Cruz",
-        },
-        {
-          card: 3,
-          posicao_no_card: 2,
-          label: "Teste Oculto:",
-          tipo: "nomes",
-          elemento_oculto: 1,
-        },
-      ];
 
       function salvar_novo_card() {
         cards = [];
