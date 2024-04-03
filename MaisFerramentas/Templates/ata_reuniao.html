@@ -754,9 +754,6 @@
 
         troca_atual = arrastando.id + "e" + mouse_em.id;
 
-        console.log("atual =" + troca_atual);
-        console.log("evitar = " + troca_anterior);
-
         if (
           elemento_referencia != null &&
           parseInt(elemento_referencia.id) != null &&
@@ -1235,12 +1232,21 @@
 
       function clonar_elemento() {
         elemento_atual = this.closest(".div_card");
+
         clone = elemento_atual.cloneNode(true);
+
+        elemento_atual
+          .querySelectorAll("textarea, input[type=date], input[type=time]")
+          .forEach(function (element) {
+            element.value = "";
+          });
 
         document
           .querySelector("#area_arrastavel")
           .insertBefore(clone, elemento_atual);
-        console.log();
+
+        atualiza_ouvintes();
+        reorganizeIDs();
       }
     </script>
   </body>
