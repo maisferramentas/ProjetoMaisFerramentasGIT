@@ -694,13 +694,15 @@
           .querySelectorAll("#area_arrastavel")
           .forEach(function (element) {
             // Adiciona os listeners de eventos para os eventos de soltar
-            element.addEventListener("dragover", dragover);
+            element.addEventListener("dragover", movimentacao_elemento);
             element.addEventListener("drop", movimentacao_elemento);
           });
       }
+
       function dragover() {
         event.preventDefault();
       }
+
       // Função chamada quando o arrasto inicia
       function dragStart(event) {
         //A Etiqueta de arrasto terá a aparência do próprio elemento
