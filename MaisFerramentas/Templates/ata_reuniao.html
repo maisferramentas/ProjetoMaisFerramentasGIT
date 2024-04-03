@@ -716,7 +716,7 @@
         // Remove a classe de estilização
         this.classList.remove("dragging");
       }
-
+      troca_anterior = null;
       function movimentacao_elemento(event) {
         event.preventDefault();
 
@@ -726,23 +726,59 @@
 
         elemento_referencia = null;
 
-        if (arrastando.id < mouse_em.id && mouse_em.id != "area_arrastavel") {
+        if (
+          arrastando.id < mouse_em.id &&
+          mouse_em.id != "area_arrastavel" &&
+          arrastando.id != mouse_em.id
+        ) {
           //"cima_baixo"
           elemento_referencia = parseInt(mouse_em.closest(".div_card").id) + 1;
-        } else if (mouse_em.id != "area_arrastavel") {
+        } else if (
+          mouse_em.id != "area_arrastavel" &&
+          arrastando.id != mouse_em.id
+        ) {
           //"baixo_cima"
           elemento_referencia = parseInt(mouse_em.closest(".div_card").id);
         }
 
-        if (elemento_referencia != null) {
+        troca_atual = arrastando.id + "e" + mouse_em.id;
+
+        console.log("atual =" + troca_atual);
+        console.log("evitar = " + troca_anterior);
+
+        if (
+          elemento_referencia != null &&
+          parseInt(elemento_referencia.id) != null &&
+          troca_atual != troca_anterior
+        ) {
           elemento_referencia = document.getElementById(elemento_referencia);
 
           document
             .querySelector("#area_arrastavel")
             .insertBefore(arrastando, elemento_referencia);
 
+          troca_anterior = mouse_em.id + "e" + arrastando.id;
           reorganizeIDs();
+
+          moverMouseParaMeioDaDivY(arrastando);
         }
+      }
+
+      function moverMouseParaMeioDaDivY(elementoDiv) {
+        // Obtém as coordenadas da div em relação à janela do navegador
+        let rect = elementoDiv.getBoundingClientRect();
+
+        // Calcula o ponto médio no eixo Y da div
+        let pontoMedioY = rect.top + rect.height / 2;
+
+        // Simula um evento de mouse para mover o cursor para o meio do eixo Y da div
+        let eventoMouse = new MouseEvent("mousemove", {
+          clientX: window.pageXOffset + (rect.left + rect.width / 2), // centraliza horizontalmente
+          clientY: window.pageYOffset + pontoMedioY,
+        });
+
+        // Dispara o evento de mouse
+        document.dispatchEvent(eventoMouse);
       }
 
       function reorganizeIDs() {
