@@ -985,6 +985,10 @@
         arrasto();
         // $(".arrasto").on("click", opcoes_card);
         insere_hora_campo_data_vazio();
+
+        document.querySelectorAll(".clonar").forEach(function (element) {
+          element.addEventListener("click", clonar_elemento);
+        });
       }
       atualiza_ouvintes();
 
@@ -1228,6 +1232,16 @@
       }
 
       captura_dados();
+
+      function clonar_elemento() {
+        elemento_atual = this.closest(".div_card");
+        clone = elemento_atual.cloneNode(true);
+
+        document
+          .querySelector("#area_arrastavel")
+          .insertBefore(clone, elemento_atual);
+        console.log();
+      }
     </script>
   </body>
 </html>
