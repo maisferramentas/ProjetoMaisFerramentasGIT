@@ -1094,6 +1094,8 @@
         document.querySelectorAll(".clonar").forEach(function (element) {
           element.addEventListener("click", clonar_elemento);
         });
+
+        $(".copiar").on("click", copiar);
       }
       atualiza_ouvintes();
 
@@ -1400,8 +1402,6 @@
         carrega_dados();
       }
 
-      $(".copiar").on("click", copiar);
-
       function copiar() {
         captura_dados();
 
@@ -1410,11 +1410,11 @@
         dados_da_div = capturados.filter((card) => card.card === div.id);
 
         texto = "";
+
         dados_da_div.forEach(
           (element) =>
             (texto = texto + element.label + " " + element.value + "\n")
         );
-        console.log(texto);
 
         textarea = document.createElement("textarea");
         textarea.value = texto;
