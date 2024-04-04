@@ -438,6 +438,7 @@
           style="border: 1px solid #57afc5"
         >
           <h2>Adicionar Elementos</h2>
+          <h5>Criar Elemento</h5>
           <div class="div_card flex align" id="novo_card">
             <img
               draggable="false"
@@ -532,6 +533,49 @@
                 delete
               </span>
             </div>
+          </div>
+
+          <h5>Adicionar Elemento pronto</h5>
+
+          <div class="div_card flex align" id="adicionar_card_existente">
+            <img
+              draggable="false"
+              class="img_canto"
+              src="https://lh3.googleusercontent.com/u/0/drive-viewer/AKGpihZ7uZz20Mqj53BgikOvObKhBVARcC0h0R-meBGwwnNFI2mhcDjBsz0gGpfIoCVZ0hCeDsOxw_Xt_OWq4WJps0Z8VqBs=w1366-h612"
+              alt=""
+            />
+            <div class="div_card_info flex column left_50px dropdown">
+              <div class="elemento flex row justify align">
+                <div class="flex column">
+                  <div class="flex column">
+                    <select name="" id="" class="insere_tipo">
+                      <option value="texto_livre">Texto livre</option>
+                      <option value="data">Data</option>
+                      <option value="nomes">Nomes</option>
+                      <option value="chamados">Chamados</option>
+                      <option value="hinos">Hinos</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div class="div_card_info_adicionais flex column"></div>
+              <div class="div_botoes_salvar_fechar flex row align justify">
+                <input
+                  class="botao_fechar_novo_card"
+                  type="button"
+                  value="Fechar"
+                />
+
+                <input
+                  class="botao_salvar_novo_card"
+                  type="button"
+                  value="Salvar"
+                />
+              </div>
+            </div>
+
+            <div class="div_opcoes_card flex direita column"></div>
           </div>
           <button onclick="captura_dados()">Aoba</button>
         </div>
@@ -771,9 +815,9 @@
 
           reorganizeIDs();
 
-          // setTimeout(() => {
-          //   troca_anterior = null;
-          // }, 1300);
+          setTimeout(() => {
+            troca_anterior = null;
+          }, 1300);
         }
       }
 
