@@ -428,6 +428,16 @@
       .clonar {
         margin-left: 8px;
       }
+
+      .titulo_card_criar_adicionar_novo_card {
+        font-weight: bold;
+        margin: 0;
+        margin-bottom: 10px;
+      }
+
+      .margins {
+        margin: 0;
+      }
     </style>
   </head>
   <body>
@@ -447,7 +457,8 @@
               alt=""
             />
             <div class="div_card_info flex column left_50px dropdown">
-              <div class="opcoes_novo_card elemento flex row justify align">
+              <p class="titulo_card_criar_adicionar_novo_card">Criar CARD</p>
+              <div class="opcoes_novo_card elemento flex row align">
                 <div class="flex column">
                   <textarea
                     id="nome"
@@ -480,7 +491,7 @@
                 class="flex row align justify color_green"
               >
                 <span class="material-symbols-outlined"> add </span>
-                <p>Adicionar Elemento</p>
+                <p class="margins">Adicionar Elemento</p>
               </div>
 
               <div class="div_card_info_adicionais flex column">
@@ -545,21 +556,17 @@
               alt=""
             />
             <div class="div_card_info flex column left_50px dropdown">
-              <div class="elemento flex row justify align">
-                <div class="flex column">
-                  <div class="flex column">
-                    <select name="" id="" class="insere_tipo">
-                      <option value="texto_livre">Texto livre</option>
-                      <option value="data">Data</option>
-                      <option value="nomes">Nomes</option>
-                      <option value="chamados">Chamados</option>
-                      <option value="hinos">Hinos</option>
-                    </select>
-                  </div>
-                </div>
+              <p class="titulo_card_criar_adicionar_novo_card">
+                Adicionar CARD
+              </p>
+              <div class="flex column">
+                <select
+                  name=""
+                  id="insere_novo_card_pronto"
+                  class="insere_tipo insere_novo_card_pronto"
+                ></select>
               </div>
 
-              <div class="div_card_info_adicionais flex column"></div>
               <div class="div_botoes_salvar_fechar flex row align justify">
                 <input
                   class="botao_fechar_novo_card"
@@ -568,14 +575,13 @@
                 />
 
                 <input
+                  id="salvar_adicionar_card_pronto"
                   class="botao_salvar_novo_card"
                   type="button"
                   value="Salvar"
                 />
               </div>
             </div>
-
-            <div class="div_opcoes_card flex direita column"></div>
           </div>
           <button onclick="captura_dados()">Aoba</button>
         </div>
@@ -685,6 +691,62 @@
       ];
 
       cards = [
+        {
+          card: 1,
+          posicao_no_card: 1,
+          label: "Anúncio:",
+          tipo: "texto_livre",
+          elemento_oculto: 0,
+          value: "Teste Titulo Anuncio",
+        },
+        {
+          card: 1,
+          posicao_no_card: 2,
+          label: "Data:",
+          tipo: "data",
+          elemento_oculto: 0,
+          value: "2024-03-12T19:00",
+        },
+        {
+          card: 1,
+          posicao_no_card: 3,
+          label: "Local",
+          tipo: "texto_livre",
+          elemento_oculto: 0,
+        },
+        {
+          card: 1,
+          posicao_no_card: 1,
+          label: "Observações:",
+          tipo: "texto_livre",
+          elemento_oculto: 1,
+        },
+        {
+          card: 2,
+          posicao_no_card: 1,
+          label: "Hino de Abertura:",
+          tipo: "hinos",
+          elemento_oculto: 0,
+          value: "9. Graças Damos, Ó Deus, Por um Profeta",
+        },
+        {
+          card: 3,
+          posicao_no_card: 1,
+          label: "Oração:",
+          tipo: "nomes",
+          elemento_oculto: 0,
+          value: "Angela Maria Massaneiro dos Santos Cruz",
+        },
+        {
+          card: 3,
+          posicao_no_card: 2,
+          label: "Teste Oculto:",
+          tipo: "nomes",
+          elemento_oculto: 1,
+        },
+      ];
+
+      cards_padrão = [
         {
           card: 1,
           posicao_no_card: 1,
@@ -1237,9 +1299,8 @@
         }
         reorganizeIDs();
       }
-
+      carrega_dados();
       function captura_dados() {
-        carrega_dados();
         capturados = [];
         aqui = document
           .querySelector("#area_arrastavel")
@@ -1271,10 +1332,7 @@
           });
         });
         console.log(capturados);
-        carrega_dados();
       }
-
-      captura_dados();
 
       function clonar_elemento() {
         elemento_atual = this.closest(".div_card");
@@ -1296,6 +1354,74 @@
 
         atualiza_ouvintes();
         reorganizeIDs();
+      }
+
+      // Array para armazenar os labels dos primeiros objetos de cada card
+      let opcoes_para_select = [];
+
+      // Objeto para rastrear quais cards já foram processados
+      let cardsProcessados = {};
+
+      // Itera sobre o array cards_padrão
+      cards_padrão.forEach((card) => {
+        // Verifica se o card já foi processado
+        if (!cardsProcessados[card.card]) {
+          // Adiciona o label do primeiro objeto do card ao array
+          opcoes_para_select.push({ card: card.card, label: card.label });
+
+          select_de_opcoes = document.getElementById("insere_novo_card_pronto");
+
+          let nova_opcao = document.createElement("option");
+          nova_opcao.value = card.card;
+          nova_opcao.textContent = card.label;
+          select_de_opcoes.appendChild(nova_opcao);
+
+          // Marca o card como processado
+          cardsProcessados[card.card] = true;
+        }
+      });
+
+      $("#salvar_adicionar_card_pronto").on(
+        "click",
+        salvar_adicionar_card_pronto
+      );
+
+      function salvar_adicionar_card_pronto() {
+        select_de_opcoes = document.getElementById("insere_novo_card_pronto");
+        card_selecionado = select_de_opcoes.value;
+
+        let array_card_selecionado = cards_padrão.filter(
+          (card) => card.card === parseInt(card_selecionado)
+        );
+
+        cards = [];
+        cards = array_card_selecionado;
+
+        carrega_dados();
+      }
+
+      $(".copiar").on("click", copiar);
+
+      function copiar() {
+        captura_dados();
+
+        div = this.closest(".div_card");
+
+        dados_da_div = capturados.filter((card) => card.card === div.id);
+
+        texto = "";
+        dados_da_div.forEach(
+          (element) =>
+            (texto = texto + element.label + " " + element.value + "\n")
+        );
+        console.log(texto);
+
+        textarea = document.createElement("textarea");
+        textarea.value = texto;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand("copy");
+        textarea.remove();
       }
     </script>
   </body>
