@@ -1569,7 +1569,13 @@
 
         console.log(convite + copiado);
 
-        texto = convite + "%201%" + copiado;
+        texto = convite + "\n" + copiado;
+
+        console.log(texto);
+
+        texto = encodeURIComponent(texto);
+
+        console.log(texto);
 
         link = `https://api.whatsapp.com/send?phone=5541988799408&text=linha%201%0Alinha%202`;
 
