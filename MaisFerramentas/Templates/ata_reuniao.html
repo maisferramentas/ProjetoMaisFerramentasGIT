@@ -744,6 +744,46 @@
           tipo: "nomes",
           elemento_oculto: 1,
         },
+        {
+          card: 4,
+          elemento_oculto: 0,
+          label: "Discursante:",
+          posicao_no_card: null,
+          tipo: "nomes",
+          value: "",
+        },
+        {
+          card: 4,
+          elemento_oculto: 1,
+          label: "Tema:",
+          posicao_no_card: null,
+          tipo: "texto_livre",
+          value: "",
+        },
+        {
+          card: 4,
+          elemento_oculto: 1,
+          label: "Duração:",
+          posicao_no_card: null,
+          tipo: "texto_livre",
+          value: "",
+        },
+        {
+          card: 5,
+          elemento_oculto: 0,
+          label: "Regente:",
+          posicao_no_card: null,
+          tipo: "nomes",
+          value: "",
+        },
+        {
+          card: 6,
+          elemento_oculto: 0,
+          label: "Organista:",
+          posicao_no_card: null,
+          tipo: "nomes",
+          value: "",
+        },
       ];
 
       cards_padrão = [
@@ -753,7 +793,7 @@
           label: "Anúncio:",
           tipo: "texto_livre",
           elemento_oculto: 0,
-          value: "Teste Titulo Anuncio",
+          value: "",
         },
         {
           card: 1,
@@ -761,7 +801,7 @@
           label: "Data:",
           tipo: "data",
           elemento_oculto: 0,
-          value: "2024-03-12T19:00",
+          value: "",
         },
         {
           card: 1,
@@ -783,7 +823,7 @@
           label: "Hino de Abertura:",
           tipo: "hinos",
           elemento_oculto: 0,
-          value: "9. Graças Damos, Ó Deus, Por um Profeta",
+          value: "",
         },
         {
           card: 3,
@@ -791,7 +831,7 @@
           label: "Oração:",
           tipo: "nomes",
           elemento_oculto: 0,
-          value: "Angela Maria Massaneiro dos Santos Cruz",
+          value: "",
         },
         {
           card: 3,
@@ -799,6 +839,46 @@
           label: "Teste Oculto:",
           tipo: "nomes",
           elemento_oculto: 1,
+        },
+        {
+          card: 4,
+          elemento_oculto: 0,
+          label: "Discursante:",
+          posicao_no_card: null,
+          tipo: "nomes",
+          value: "",
+        },
+        {
+          card: 4,
+          elemento_oculto: 1,
+          label: "Tema:",
+          posicao_no_card: null,
+          tipo: "texto_livre",
+          value: "",
+        },
+        {
+          card: 4,
+          elemento_oculto: 1,
+          label: "Duração:",
+          posicao_no_card: null,
+          tipo: "texto_livre",
+          value: "",
+        },
+        {
+          card: 5,
+          elemento_oculto: 0,
+          label: "Regente:",
+          posicao_no_card: null,
+          tipo: "nomes",
+          value: "",
+        },
+        {
+          card: 6,
+          elemento_oculto: 0,
+          label: "Organista:",
+          posicao_no_card: null,
+          tipo: "nomes",
+          value: "",
         },
       ];
 
@@ -877,9 +957,13 @@
 
           reorganizeIDs();
 
-          setTimeout(() => {
+          if (event.type === "drop") {
             troca_anterior = null;
-          }, 1300);
+          } else {
+            setTimeout(() => {
+              troca_anterior = null;
+            }, 1300);
+          }
         }
       }
 
@@ -1096,6 +1180,7 @@
         });
 
         $(".copiar").on("click", copiar);
+        $(".div_img_icone_whats").on("click", enviar_via_whatsapp);
       }
       atualiza_ouvintes();
 
@@ -1359,10 +1444,10 @@
       }
 
       // Array para armazenar os labels dos primeiros objetos de cada card
-      let opcoes_para_select = [];
+      var opcoes_para_select = [];
 
       // Objeto para rastrear quais cards já foram processados
-      let cardsProcessados = {};
+      var cardsProcessados = {};
 
       // Itera sobre o array cards_padrão
       cards_padrão.forEach((card) => {
@@ -1373,7 +1458,7 @@
 
           select_de_opcoes = document.getElementById("insere_novo_card_pronto");
 
-          let nova_opcao = document.createElement("option");
+          var nova_opcao = document.createElement("option");
           nova_opcao.value = card.card;
           nova_opcao.textContent = card.label;
           select_de_opcoes.appendChild(nova_opcao);
@@ -1392,7 +1477,7 @@
         select_de_opcoes = document.getElementById("insere_novo_card_pronto");
         card_selecionado = select_de_opcoes.value;
 
-        let array_card_selecionado = cards_padrão.filter(
+        var array_card_selecionado = cards_padrão.filter(
           (card) => card.card === parseInt(card_selecionado)
         );
 
@@ -1402,19 +1487,35 @@
         carrega_dados();
       }
 
-      function copiar() {
+      function copiar(div_selecionada) {
         captura_dados();
+        console.log(event.type);
 
-        div = this.closest(".div_card");
+        if (div_selecionada instanceof HTMLElement) {
+          div = div_selecionada;
+        } else {
+          div = this.closest(".div_card");
+        }
+
+        // if (event.type === "click") {
+        //   div = this.closest(".div_card");
+        // } else {
+        //   div = div_selecionada;
+        // }
 
         dados_da_div = capturados.filter((card) => card.card === div.id);
 
         texto = "";
 
-        dados_da_div.forEach(
-          (element) =>
-            (texto = texto + element.label + " " + element.value + "\n")
-        );
+        dados_da_div.forEach(function (element) {
+          if (element.tipo === "data") {
+            valor = formatar_data_hora(element.value);
+          } else {
+            valor = element.value;
+          }
+
+          texto = texto + element.label + " " + valor + "\n";
+        });
 
         textarea = document.createElement("textarea");
         textarea.value = texto;
@@ -1422,6 +1523,59 @@
         textarea.select();
         document.execCommand("copy");
         textarea.remove();
+
+        return texto;
+      }
+
+      function formatar_data_hora(data) {
+        //Formato recebido 2024-03-12T19:00
+        // Extrai os componentes da data
+        let dia = data.substr(8, 2);
+        let mes = data.substr(5, 2);
+        let ano = data.substr(0, 4);
+        let horas = data.substr(11, 2);
+        let minutos = data.substr(14, 2);
+
+        // Retorna a data formatada
+        var data_formatada =
+          dia + "/" + mes + "/" + ano + " às " + horas + ":" + minutos;
+
+        return data_formatada;
+      }
+
+      function enviar_via_whatsapp() {
+        captura_dados();
+
+        div = this.closest(".div_card");
+
+        nomes = "";
+        nomes_concatenados = "";
+
+        div.querySelectorAll("#nomes").forEach(function (element) {
+          nome = element.value;
+
+          // Divide a string pelo espaço em branco
+          partesNome = nome.split(" ");
+
+          // O primeiro nome é a primeira parte do array resultante
+          nome = partesNome[0];
+
+          nomes_concatenados = nomes_concatenados + " " + nome + ",";
+        });
+
+        convite = `Olá ${nomes_concatenados} tudo bem? O Bispado lhe estende o convite para participar da Reunião Sacramental do dia 05/04/2024, cumprindo a seguinte designação: \n \n`;
+
+        copiado = copiar(div);
+
+        console.log(convite + copiado);
+
+        texto = convite + "%201%" + copiado;
+
+        link = `https://api.whatsapp.com/send?phone=5541988799408&text=linha%201%0Alinha%202`;
+
+        link = `https://api.whatsapp.com/send?phone=5541988799408&text=${texto}`;
+
+        window.open(link, "_blank");
       }
     </script>
   </body>
