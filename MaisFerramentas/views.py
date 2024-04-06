@@ -157,3 +157,6 @@ def def_dados_usuario_logado(request):
     nome_usuario_login = model_tb_acesso.objects.filter(nome_usuario_login=def_usuario_logado(request)).values_list('nome_usuario_login', flat=True).first()
 
     return JsonResponse({'id_membro_interno': id_membro_interno, 'nome_usuario_logado':nome_usuario_login})
+
+def def_mapa(request):
+    return render(request, 'mapa.html')

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Obter Localização Atual</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+    }
+    #demo {
+        margin-top: 20px;
+    }
+    #retryButton {
+        display: none; /* Esconder o botão inicialmente */
+        margin-top: 10px;
+    }
+</style>
+</head>
+<body>
+
+<h1>Obter Localização Atual</h1>
+<p id="demo"></p>
+<button id="retryButton" onclick="retryLocation()">Tentar novamente</button>
+
+<script>
+// Função para exibir a localização
+function showPosition(position) {
+    // Extrai as coordenadas de latitude e longitude da posição atual
+    var latitude = position.coords.latitude;
+    var longitude = position.coords.longitude;
+    
+    // Exibe as coordenadas
+    document.getElementById("demo").innerHTML = "Latitude: " + latitude + "<br>Longitude: " + longitude;
+    
+    // Cria o link para o Google Maps com as coordenadas
+    var mapsLink = "https://www.google.com/maps?q=" + latitude + "," + longitude;
+    
+    // Abre uma nova aba com o link do Google Maps
+    window.open(mapsLink, "_blank");
+}
+
+// Função para lidar com erros
+function showError(error) {
+    switch(error.code) {
+        case error.PERMISSION_DENIED:
+            document.getElementById("demo").innerHTML = "Usuário negou a solicitação de geolocalização.";
+            document.getElementById("retryButton").style.display = "inline"; // Exibe o botão de tentar novamente
+            break;
+        case error.POSITION_UNAVAILABLE:
+            document.getElementById("demo").innerHTML = "Localização indisponível.";
+            break;
+        case error.TIMEOUT:
+            document.getElementById("demo").innerHTML = "Tempo expirado ao tentar obter a localização.";
+            break;
+        case error.UNKNOWN_ERROR:
+            document.getElementById("demo").innerHTML = "Erro desconhecido ao tentar obter a localização.";
+            break;
+    }
+}
+
+// Função para tentar obter a localização novamente
+function retryLocation() {
+    document.getElementById("demo").innerHTML = ""; // Limpa a mensagem de erro
+    document.getElementById("retryButton").style.display = "none"; // Esconde o botão de tentar novamente
+    // Solicita a localização do usuário novamente
+    navigator.geolocation.getCurrentPosition(showPosition, showError);
+}
+
+// Verifica se o navegador suporta geolocalização
+if (navigator.geolocation) {
+    // Opções de precisão para obter uma localização mais precisa
+    var options = {
+        enableHighAccuracy: true, // Ativar alta precisão
+        timeout: 5000, // Tempo limite para a obtenção da localização (em milissegundos)
+        maximumAge: 0 // Indica que o navegador não deve usar uma localização em cache
+    };
+    
+    // Solicita a localização do usuário com as opções de precisão configuradas
+    navigator.geolocation.getCurrentPosition(showPosition, showError, options);
+} else {
+    document.getElementById("demo").innerHTML = "Geolocalização não é suportada pelo seu navegador.";
+}
+</script>
+
+</body>
+</html>
