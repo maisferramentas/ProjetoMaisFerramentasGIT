@@ -12,7 +12,7 @@
         margin-top: 20px;
     }
     #retryButton {
-        display: none; /* Esconder o botão inicialmente */
+        /* display: none;  */
         margin-top: 10px;
     }
 </style>
@@ -24,14 +24,16 @@
 <button id="retryButton" onclick="retryLocation()">Tentar novamente</button>
 
 <script>
+alert('É Necessário permitit a atuação do geolacation, clique em ok')
+
 // Função para exibir a localização
 function showPosition(position) {
     // Extrai as coordenadas de latitude e longitude da posição atual
     var latitude = position.coords.latitude;
     var longitude = position.coords.longitude;
     
-    // Exibe as coordenadas
-    document.getElementById("demo").innerHTML = "Latitude: " + latitude + "<br>Longitude: " + longitude;
+    // // Exibe as coordenadas
+    // document.getElementById("demo").innerHTML = "Latitude: " + latitude + "<br>Longitude: " + longitude;
     
     // Cria o link para o Google Maps com as coordenadas
     var mapsLink = "https://www.google.com/maps?q=" + latitude + "," + longitude;
@@ -44,8 +46,8 @@ function showPosition(position) {
 function showError(error) {
     switch(error.code) {
         case error.PERMISSION_DENIED:
-            document.getElementById("demo").innerHTML = "Usuário negou a solicitação de geolocalização.";
-            document.getElementById("retryButton").style.display = "inline"; // Exibe o botão de tentar novamente
+            document.getElementById("demo").innerHTML = "Você negou a solicitação de geolocalização. Clique em tentar novamente e permita.";
+            // document.getElementById("retryButton").style.display = "inline"; // Exibe o botão de tentar novamente
             break;
         case error.POSITION_UNAVAILABLE:
             document.getElementById("demo").innerHTML = "Localização indisponível.";
@@ -61,18 +63,21 @@ function showError(error) {
 
 // Função para tentar obter a localização novamente
 function retryLocation() {
-    document.getElementById("demo").innerHTML = ""; // Limpa a mensagem de erro
-    document.getElementById("retryButton").style.display = "none"; // Esconde o botão de tentar novamente
+    // document.getElementById("demo").innerHTML = ""; // Limpa a mensagem de erro
+    // document.getElementById("retryButton").style.display = "none"; // Esconde o botão de tentar novamente
     // Solicita a localização do usuário novamente
-    navigator.geolocation.getCurrentPosition(showPosition, showError);
+    // navigator.geolocation.getCurrentPosition(showPosition, showError);
+    obter_localizacao();
 }
-
+obter_localizacao();
+function obter_localizacao(){
+    document.getElementById("demo").innerHTML = ""; // Limpa a mensagem de erro
 // Verifica se o navegador suporta geolocalização
 if (navigator.geolocation) {
     // Opções de precisão para obter uma localização mais precisa
     var options = {
         enableHighAccuracy: true, // Ativar alta precisão
-        timeout: 5000, // Tempo limite para a obtenção da localização (em milissegundos)
+        timeout: 50000, // Tempo limite para a obtenção da localização (em milissegundos)
         maximumAge: 0 // Indica que o navegador não deve usar uma localização em cache
     };
     
@@ -80,6 +85,7 @@ if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(showPosition, showError, options);
 } else {
     document.getElementById("demo").innerHTML = "Geolocalização não é suportada pelo seu navegador.";
+}
 }
 </script>
 
