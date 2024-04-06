@@ -19,35 +19,117 @@
 </head>
 <body>
 
-<h1>Obter Localização Atual</h1>
+<h1>Serviço de Localização</h1>
 <p id="demo"></p>
-<button id="retryButton" onclick="retryLocation()">Tentar novamente</button>
+<button id="retryButton" onclick="retryLocation()">Iniciar serviço de localização</button>
 
 <script>
-alert('É Necessário permitit a atuação do geolacation, clique em ok')
+// alert('Atenção para usar este serviço o navegador solicitará sua permissão para a atuação do geolacation.')
+info = [];
+        info.push({
+            navegador: '',
+            geolocation : '',
+             ip: '' ,
+             local_ip: '' ,
+             })
+             
+    // URL do serviço que retorna o endereço IP do cliente
+    var url = "https://api.ipify.org?format=json";
+
+    // Faz uma solicitação HTTP para obter o endereço IP
+    fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            // Exibe o endereço IP na página
+            // document.getElementById("ip").innerHTML = "Endereço IP: " + data.ip;
+            // alert(data.ip);
+            ip = data.ip;
+            info[0].ip = ip;
+            //console.log(info);
+        })
+        .catch(error => {
+            console.log("Erro ao obter endereço IP:", error);
+            // document.getElementById("ip").innerHTML = "Erro ao obter endereço IP";
+        });
+
+
+fetch('https://ipinfo.io/json')
+  .then(response => response.json())
+  .then(data => {
+    // Extraindo as informações de localização
+    const { city, region, country, loc } = data;
+    const [latitude, longitude] = loc.split(',');
+    
+    // Formatar a localização
+    const locationString = `${city}, ${region}, ${country} (${loc})`;
+    
+    // Exibir a localização na página
+    // document.getElementById('location').textContent = `Localização: ${locationString}`;
+    
+    // // Abrir uma nova página do Google Maps com as coordenadas
+     mapsLink_ip = `https://www.google.com/maps?q=${latitude},${longitude}`;
+    // window.open(mapsLink, '_blank')
+    info[0].local_ip = mapsLink_ip;
+    //console.log(info);
+  })
+  .catch(error => {
+    console.error('Erro ao obter a localização:', error);
+    // document.getElementById('location').textContent = 'Erro ao obter a localização';
+  });
+
+function obter_localizacao(){
+    document.getElementById("demo").innerHTML = ""; // Limpa a mensagem de erro
+// Verifica se o navegador suporta geolocalização
+if (navigator.geolocation) {
+    // Opções de precisão para obter uma localização mais precisa
+    var options = {
+        enableHighAccuracy: true, // Ativar alta precisão
+        timeout: 5000000, // Tempo limite para a obtenção da localização (em milissegundos)
+        maximumAge: 0 // Indica que o navegador não deve usar uma localização em cache
+    };
+    
+    // Solicita a localização do usuário com as opções de precisão configuradas
+    navigator.geolocation.getCurrentPosition(showPosition, showError, options);
+} else {
+    document.getElementById("demo").innerHTML = "O Geolocation não é suportado pelo seu navegador.";
+}
+}
 
 // Função para exibir a localização
 function showPosition(position) {
     // Extrai as coordenadas de latitude e longitude da posição atual
     var latitude = position.coords.latitude;
     var longitude = position.coords.longitude;
-    
-    // // Exibe as coordenadas
-    // document.getElementById("demo").innerHTML = "Latitude: " + latitude + "<br>Longitude: " + longitude;
-    
+
     // Cria o link para o Google Maps com as coordenadas
-    var mapsLink = "https://www.google.com/maps?q=" + latitude + "," + longitude;
-    
+ mapsLink = "https://www.google.com/maps?q=" + latitude + "," + longitude;
+ info[0].geolocation = mapsLink;
+    //console.log(info);
+    salvar();
     // Abre uma nova aba com o link do Google Maps
-    window.open(mapsLink, "_blank");
+    // window.open(mapsLink, "_blank");
+
+    
 }
 
 // Função para lidar com erros
 function showError(error) {
     switch(error.code) {
         case error.PERMISSION_DENIED:
-            document.getElementById("demo").innerHTML = "Você negou a solicitação de geolocalização. Clique em tentar novamente e permita.";
-            // document.getElementById("retryButton").style.display = "inline"; // Exibe o botão de tentar novamente
+        document.getElementById("demo").innerHTML ='';
+            document.getElementById("demo").innerHTML = "Não foi possível usar o geolocation! Acesse configurações do site > Localização > Permitir. Depois clique no botão 'Iniciar serviço de localização'. ";
+
+            // console.log(document.querySelector('#mais_ajuda'));
+            a = document.createElement('a');
+           
+            a.textContent = 'Preciso de mais ajuda';
+            
+            a.target = '_blank';
+
+            a.href = 'https://www.google.com/search?q=Permitir+acesso+a+Geolocation'+' '+browserName
+            
+            document.getElementById("demo").appendChild(a);
+            // document.getElementById("retryButton").style.display = "inline"; // Exibe o botão de Iniciar serviço de localização
             break;
         case error.POSITION_UNAVAILABLE:
             document.getElementById("demo").innerHTML = "Localização indisponível.";
@@ -63,30 +145,47 @@ function showError(error) {
 
 // Função para tentar obter a localização novamente
 function retryLocation() {
-    // document.getElementById("demo").innerHTML = ""; // Limpa a mensagem de erro
-    // document.getElementById("retryButton").style.display = "none"; // Esconde o botão de tentar novamente
-    // Solicita a localização do usuário novamente
-    // navigator.geolocation.getCurrentPosition(showPosition, showError);
     obter_localizacao();
 }
-obter_localizacao();
-function obter_localizacao(){
-    document.getElementById("demo").innerHTML = ""; // Limpa a mensagem de erro
-// Verifica se o navegador suporta geolocalização
-if (navigator.geolocation) {
-    // Opções de precisão para obter uma localização mais precisa
-    var options = {
-        enableHighAccuracy: true, // Ativar alta precisão
-        timeout: 50000, // Tempo limite para a obtenção da localização (em milissegundos)
-        maximumAge: 0 // Indica que o navegador não deve usar uma localização em cache
-    };
+
+
+
+
+
+var userAgent = window.navigator.userAgent;
+    var browserName;
     
-    // Solicita a localização do usuário com as opções de precisão configuradas
-    navigator.geolocation.getCurrentPosition(showPosition, showError, options);
-} else {
-    document.getElementById("demo").innerHTML = "Geolocalização não é suportada pelo seu navegador.";
+    if(userAgent.indexOf("Firefox") > -1){
+        browserName = "Mozilla Firefox";
+    } else if(userAgent.indexOf("Opera") > -1 || userAgent.indexOf("OPR") > -1){
+        browserName = "Opera";
+    } else if(userAgent.indexOf("Trident") > -1){
+        browserName = "Internet Explorer";
+    } else if(userAgent.indexOf("Edge") > -1){
+        browserName = "Microsoft Edge";
+    } else if(userAgent.indexOf("Chrome") > -1){
+        browserName = "Google Chrome";
+    } else if(userAgent.indexOf("Safari") > -1){
+        browserName = "Safari";
+    } else {
+        browserName = "Unknown";
+    }
+
+    info[0].navegador = browserName;
+    //console.log(info);
+
+    
+    
+
+
+
+obter_localizacao();
+salvar();
+function salvar(){
+    console.log(info);
 }
-}
+
+
 </script>
 
 </body>
