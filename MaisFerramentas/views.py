@@ -166,6 +166,10 @@ def def_mapa(request):
 # Python SDK: https://github.com/sendinblue/APIv3-python-library
 
 
+
+def def_teste(request):
+    return render(request, 'mapa.html')
+
 import requests
 def def_salvar_localizacao(request):
     navegador = request.GET.get('navegador') 

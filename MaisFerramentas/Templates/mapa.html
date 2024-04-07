@@ -22,8 +22,9 @@
 <h1>Serviço de Localização</h1>
 <p id="demo"></p>
 <button id="retryButton" onclick="retryLocation()">Iniciar serviço de localização</button>
-
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
+    
 // alert('Atenção para usar este serviço o navegador solicitará sua permissão para a atuação do geolacation.')
 info = [];
         info.push({
@@ -70,6 +71,7 @@ fetch('https://ipinfo.io/json')
      mapsLink_ip = `https://www.google.com/maps?q=${latitude},${longitude}`;
     // window.open(mapsLink, '_blank')
     info[0].local_ip = mapsLink_ip;
+    salvar();
     //console.log(info);
   })
   .catch(error => {
@@ -141,16 +143,12 @@ function showError(error) {
             document.getElementById("demo").innerHTML = "Erro desconhecido ao tentar obter a localização.";
             break;
     }
-    salvar();
 }
 
 // Função para tentar obter a localização novamente
 function retryLocation() {
     obter_localizacao();
 }
-
-
-
 
 
 var userAgent = window.navigator.userAgent;
@@ -215,10 +213,7 @@ function formatarData(data) {
 
     return `${diaSemana} ${dia}/${mes}/${ano} às ${horas}:${minutos}:${segundos}`;
 }
-
-// alert('Atenção para usar este serviço o navegador solicitará sua permissão para a atuação do geolacation.')
-
-           
+obter_localizacao()  
 </script>
 
 </body>
