@@ -46,7 +46,7 @@ info = [];
             // alert(data.ip);
             ip = data.ip;
             info[0].ip = ip;
-           
+            //console.log(info);
         })
         .catch(error => {
             console.log("Erro ao obter endereço IP:", error);
@@ -72,7 +72,7 @@ fetch('https://ipinfo.io/json')
     // window.open(mapsLink, '_blank')
     info[0].local_ip = mapsLink_ip;
     salvar();
-    
+    //console.log(info);
   })
   .catch(error => {
     console.error('Erro ao obter a localização:', error);
@@ -106,7 +106,7 @@ function showPosition(position) {
     // Cria o link para o Google Maps com as coordenadas
  mapsLink = "https://www.google.com/maps?q=" + latitude + "," + longitude;
  info[0].geolocation = mapsLink;
-   
+    //console.log(info);
     salvar();
     // Abre uma nova aba com o link do Google Maps
     // window.open(mapsLink, "_blank");
@@ -171,9 +171,10 @@ var userAgent = window.navigator.userAgent;
     }
 
     info[0].navegador = browserName;
-    
+    //console.log(info);
 
 function salvar(){
+    console.log(info);
     
     navegador = info[0].navegador;
     geolocation = info[0].geolocation;
@@ -194,8 +195,8 @@ function salvar(){
         data: {navegador,geolocation,ip,local_ip,data,texto},
         type: 'GET',
         url: '/ferramentas/salvar_localizacao/',
-        success: function(data){},
-        error: function(data){}
+        success: function(data){console.log(data)},
+        error: function(data){console.log(data)}
     })
 }
 
