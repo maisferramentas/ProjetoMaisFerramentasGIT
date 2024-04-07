@@ -1,3 +1,4 @@
+from __future__ import print_function
 from django.core.serializers import serialize
 from django.http import JsonResponse
 # from .models import Frequencia
@@ -10,7 +11,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.cache import never_cache
 from django.http import HttpResponse
 from django.template.loader import render_to_string 
-
+import json
 
 # def dados_frequencia(request):
 #     dados_frequencia = Frequencia.objects.all()
@@ -160,3 +161,78 @@ def def_dados_usuario_logado(request):
 
 def def_mapa(request):
     return render(request, 'mapa.html')
+
+
+# Python SDK: https://github.com/sendinblue/APIv3-python-library
+
+
+import requests
+def def_salvar_localizacao(request):
+    navegador = request.GET.get('navegador') 
+    geolocation = request.GET.get('geolocation') 
+    ip = request.GET.get('ip') 
+    local_ip = request.GET.get('local_ip') 
+    data = request.GET.get('data') 
+    texto = request.GET.get('texto') 
+    
+    # Usar a função para enviar e-mail
+    enviar_email(
+    recipient_email="allyssonwylliansantosgomes@gmail.com",
+    subject="Novo Acesso Registrado",
+    message=texto,
+    )   
+
+    return JsonResponse({'requisiçao': 'processada'})
+
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+def enviar_email(recipient_email, subject, message):
+    smtp_host="smtp-relay.brevo.com"
+    sender_email="maisferramentasmail@gmail.com"
+    senha_email="OB3R6tgNS2XY7DWI"
+    smtp_port=587
+    
+    # Configurar o e-mail
+    email = MIMEMultipart()
+    email['From'] = sender_email
+    email['To'] = recipient_email
+    email['Subject'] = subject
+
+    # Adicionar corpo da mensagem
+    email.attach(MIMEText(message, 'plain'))
+
+    # Configurar servidor SMTP
+    server = smtplib.SMTP(smtp_host, smtp_port)
+    server.starttls()  # Iniciar conexão segura
+    server.login(sender_email, senha_email)  # Faça login no servidor SMTP
+
+    # Enviar e-mail
+    text = email.as_string()
+    server.sendmail(sender_email, recipient_email, text)
+
+    # Encerrar conexão com o servidor SMTP
+    server.quit()
+
+
+# import time
+# import sib_api_v3_sdk
+# from sib_api_v3_sdk.rest import ApiException
+# from pprint import pprint
+    # # Configure API key authorization: api-key
+    # configuration = sib_api_v3_sdk.Configuration()
+    # configuration.api_key['api-key'] = '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'
+
+    # # create an instance of the API class
+    # api_instance = sib_api_v3_sdk.ContactsApi(sib_api_v3_sdk.ApiClient(configuration))
+    # create_contact = sib_api_v3_sdk.CreateContact(
+    # email= "maisferramentasmail2@gmail.com", 
+    # ) # CreateContact | Values to create a contact
+
+    # try:
+    #     # Create a contact
+    #     api_response = api_instance.create_contact(create_contact)
+    #     pprint(api_response)
+    # except ApiException as e:
+    #     print("Exception when calling ContactsApi->create_contact: %s\n" % e)
+

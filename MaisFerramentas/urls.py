@@ -1,6 +1,6 @@
 from django.urls import path
 from django.contrib.auth.decorators import login_required
-from .views import def_dados_frequencia,def_frequencia,def_registrar_frequencia,def_cadastrar_novo_usuario,def_login,autenticar,custom_logout,def_deslogar,def_usuario_logado,def_dados_usuario_logado,def_atas_template,def_Ferramentas_template,def_mapa
+from .views import def_dados_frequencia,def_frequencia,def_registrar_frequencia,def_cadastrar_novo_usuario,def_login,autenticar,custom_logout,def_deslogar,def_usuario_logado,def_dados_usuario_logado,def_atas_template,def_Ferramentas_template,def_mapa,def_salvar_localizacao
 from django.contrib.auth.views import LogoutView
 # from .views import frequencia
 # from .views import registrar_frequencia
@@ -33,5 +33,7 @@ urlpatterns = [
     path('ferramentas/atas/', def_atas_template, name='def_atas_template'),
 
     path('ferramentas/mapa/', def_mapa, name='def_mapa'),
+
+    path('ferramentas/salvar_localizacao/', def_salvar_localizacao, name='salvar_localizacao')
     
 ]
