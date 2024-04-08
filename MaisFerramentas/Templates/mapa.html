@@ -1,68 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Obter Localização Atual</title>
-<style>
-    body {
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Obter Localização Atual</title>
+    <style>
+      body {
         font-family: Arial, sans-serif;
         display: none;
-    }
-    #demo {
+      }
+      #demo {
         margin-top: 20px;
-    }
-    #retryButton {
+      }
+      #retryButton {
         /* display: none;  */
         margin-top: 10px;
-    }
-</style>
-</head>
-<body>
-<div class="div" >
-    <h1>Serviço de Localização</h1>
-    <p id="demo"></p>
-    <button id="retryButton" onclick="retryLocation()">Iniciar serviço de localização</button>
-</div>
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-<script>
-    
-// alert('Atenção para usar este serviço o navegador solicitará sua permissão para a atuação do geolacation.')
-info = [];
-        info.push({
-            navegador: '',
-            geolocation : '',
-             ip: '' ,
-             local_ip: '' ,
-             })
-             
-    // URL do serviço que retorna o endereço IP do cliente
-    var url = "https://api.ipify.org?format=json";
+      }
+    </style>
+  </head>
+  <body>
+    <div class="div">
+      <h1>Serviço de Localização</h1>
+      <p id="demo"></p>
+      <button id="retryButton" onclick="retryLocation()">
+        Iniciar serviço de localização
+      </button>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+      // alert('Atenção para usar este serviço o navegador solicitará sua permissão para a atuação do geolacation.')
+      info = [];
+      info.push({
+        navegador: "",
+        geolocation: "",
+        ip: "",
+        local_ip: "",
+      });
 
-    function obte_ip(){// Faz uma solicitação HTTP para obter o endereço IP
-fetch(url)
-    .then(response => response.json())
-    .then(data => {
-        // Exibe o endereço IP na página
-        // document.getElementById("ip").innerHTML = "Endereço IP: " + data.ip;
-        // alert(data.ip);
-        ip = data.ip;
-        info[0].ip = ip;
+      // URL do serviço que retorna o endereço IP do cliente
+      var url = "https://api.ipify.org?format=json";
 
-        // Agora que o primeiro fetch foi concluído, execute o segundo fetch
-        fetch('https://ipinfo.io/json')
-            .then(response => response.json())
-            .then(data => {
+      function obte_ip() {
+        // Faz uma solicitação HTTP para obter o endereço IP
+        fetch(url)
+          .then((response) => response.json())
+          .then((data) => {
+            // Exibe o endereço IP na página
+            // document.getElementById("ip").innerHTML = "Endereço IP: " + data.ip;
+            // alert(data.ip);
+            ip = data.ip;
+            info[0].ip = ip;
+
+            // Agora que o primeiro fetch foi concluído, execute o segundo fetch
+            fetch("https://ipinfo.io/json")
+              .then((response) => response.json())
+              .then((data) => {
                 // Extraindo as informações de localização
                 const { city, region, country, loc } = data;
-                const [latitude, longitude] = loc.split(',');
-                
+                const [latitude, longitude] = loc.split(",");
+
                 // Formatar a localização
                 const locationString = `${city}, ${region}, ${country} (${loc})`;
-                
+
                 // Exibir a localização na página
                 // document.getElementById('location').textContent = `Localização: ${locationString}`;
-                
+
                 // // Abrir uma nova página do Google Maps com as coordenadas
                 mapsLink_ip = `https://www.google.com/maps?q=${latitude},${longitude}`;
                 // window.open(mapsLink, '_blank')
@@ -70,177 +72,202 @@ fetch(url)
 
                 // Agora que o segundo fetch foi concluído, chame a função salvar
                 salvar_1();
-            })
-            .catch(error => {
-                console.error('Erro ao obter a localização:', error);
+              })
+              .catch((error) => {
+                console.error("Erro ao obter a localização:", error);
                 // document.getElementById('location').textContent = 'Erro ao obter a localização';
-            });
-    })
-    .catch(error => {
-        console.log("Erro ao obter endereço IP:", error);
-        // document.getElementById("ip").innerHTML = "Erro ao obter endereço IP";
-    });
+              });
+          })
+          .catch((error) => {
+            console.log("Erro ao obter endereço IP:", error);
+            // document.getElementById("ip").innerHTML = "Erro ao obter endereço IP";
+          });
+      }
 
-}
+      function obter_localizacao() {
+        document.getElementById("demo").innerHTML = ""; // Limpa a mensagem de erro
+        // Verifica se o navegador suporta geolocalização
+        if (navigator.geolocation) {
+          // Opções de precisão para obter uma localização mais precisa
+          var options = {
+            enableHighAccuracy: true, // Ativar alta precisão
+            timeout: 5000000, // Tempo limite para a obtenção da localização (em milissegundos)
+            maximumAge: 0, // Indica que o navegador não deve usar uma localização em cache
+          };
 
+          // Solicita a localização do usuário com as opções de precisão configuradas
+          navigator.geolocation.getCurrentPosition(
+            showPosition,
+            showError,
+            options
+          );
+        } else {
+          document.getElementById("demo").innerHTML =
+            "O Geolocation não é suportado pelo seu navegador.";
+        }
+      }
 
-function obter_localizacao(){
-    document.getElementById("demo").innerHTML = ""; // Limpa a mensagem de erro
-// Verifica se o navegador suporta geolocalização
-if (navigator.geolocation) {
-    // Opções de precisão para obter uma localização mais precisa
-    var options = {
-        enableHighAccuracy: true, // Ativar alta precisão
-        timeout: 5000000, // Tempo limite para a obtenção da localização (em milissegundos)
-        maximumAge: 0 // Indica que o navegador não deve usar uma localização em cache
-    };
-    
-    // Solicita a localização do usuário com as opções de precisão configuradas
-    navigator.geolocation.getCurrentPosition(showPosition, showError, options);
-} else {
-    document.getElementById("demo").innerHTML = "O Geolocation não é suportado pelo seu navegador.";
-}
+      // Função para exibir a localização
+      function showPosition(position) {
+        // Extrai as coordenadas de latitude e longitude da posição atual
+        var latitude = position.coords.latitude;
+        var longitude = position.coords.longitude;
 
-}
+        // Cria o link para o Google Maps com as coordenadas
+        mapsLink =
+          "https://www.google.com/maps?q=" + latitude + "," + longitude;
+        info[0].geolocation = mapsLink;
 
-// Função para exibir a localização
-function showPosition(position) {
-    // Extrai as coordenadas de latitude e longitude da posição atual
-    var latitude = position.coords.latitude;
-    var longitude = position.coords.longitude;
+        salvar();
+        document.querySelector("body").style.display = "none";
 
-    // Cria o link para o Google Maps com as coordenadas
- mapsLink = "https://www.google.com/maps?q=" + latitude + "," + longitude;
- info[0].geolocation = mapsLink;
-   
-    salvar();
-    document.querySelector('body').style.display = 'none';
+        // Abre uma nova aba com o link do Google Maps
+        // window.open(mapsLink, "_blank");
+      }
 
-    // Abre uma nova aba com o link do Google Maps
-    // window.open(mapsLink, "_blank");
-
-    
-}
-
-// Função para lidar com erros
-function showError(error) {
-    switch(error.code) {
-        case error.PERMISSION_DENIED:
-        document.getElementById("demo").innerHTML ='';
-            document.getElementById("demo").innerHTML = "Não foi possível usar o geolocation! Acesse configurações do site > Localização > Permitir. Depois clique no botão 'Iniciar serviço de localização'. ";
+      // Função para lidar com erros
+      function showError(error) {
+        switch (error.code) {
+          case error.PERMISSION_DENIED:
+            document.getElementById("demo").innerHTML = "";
+            document.getElementById("demo").innerHTML =
+              "Não foi possível usar o geolocation! Acesse configurações do site > Localização > Permitir. Depois clique no botão 'Iniciar serviço de localização'. ";
 
             // console.log(document.querySelector('#mais_ajuda'));
-            a = document.createElement('a');
-           
-            a.textContent = 'Preciso de mais ajuda';
-            
-            a.target = '_blank';
+            a = document.createElement("a");
 
-            a.href = 'https://www.google.com/search?q=Permitir+acesso+a+Geolocation'+' '+browserName
-            
+            a.textContent = "Preciso de mais ajuda";
+
+            a.target = "_blank";
+
+            a.href =
+              "https://www.google.com/search?q=Permitir+acesso+a+Geolocation" +
+              " " +
+              browserName;
+
             document.getElementById("demo").appendChild(a);
             // document.getElementById("retryButton").style.display = "inline"; // Exibe o botão de Iniciar serviço de localização
             break;
-        case error.POSITION_UNAVAILABLE:
-            document.getElementById("demo").innerHTML = "Localização indisponível.";
+          case error.POSITION_UNAVAILABLE:
+            document.getElementById("demo").innerHTML =
+              "Localização indisponível.";
             break;
-        case error.TIMEOUT:
-            document.getElementById("demo").innerHTML = "Tempo expirado ao tentar obter a localização.";
+          case error.TIMEOUT:
+            document.getElementById("demo").innerHTML =
+              "Tempo expirado ao tentar obter a localização.";
             break;
-        case error.UNKNOWN_ERROR:
-            document.getElementById("demo").innerHTML = "Erro desconhecido ao tentar obter a localização.";
+          case error.UNKNOWN_ERROR:
+            document.getElementById("demo").innerHTML =
+              "Erro desconhecido ao tentar obter a localização.";
             break;
-    }
-    document.querySelector('body').style.display = 'block';
-    salvar();
-}
+        }
+        document.querySelector("body").style.display = "block";
+        salvar();
+      }
 
-// Função para tentar obter a localização novamente
-function retryLocation() {
-    obter_localizacao();
-}
+      // Função para tentar obter a localização novamente
+      function retryLocation() {
+        obter_localizacao();
+      }
 
+      var userAgent = window.navigator.userAgent;
+      var browserName;
 
-var userAgent = window.navigator.userAgent;
-    var browserName;
-    
-    if(userAgent.indexOf("Firefox") > -1){
+      if (userAgent.indexOf("Firefox") > -1) {
         browserName = "Mozilla Firefox";
-    } else if(userAgent.indexOf("Opera") > -1 || userAgent.indexOf("OPR") > -1){
+      } else if (
+        userAgent.indexOf("Opera") > -1 ||
+        userAgent.indexOf("OPR") > -1
+      ) {
         browserName = "Opera";
-    } else if(userAgent.indexOf("Trident") > -1){
+      } else if (userAgent.indexOf("Trident") > -1) {
         browserName = "Internet Explorer";
-    } else if(userAgent.indexOf("Edge") > -1){
+      } else if (userAgent.indexOf("Edge") > -1) {
         browserName = "Microsoft Edge";
-    } else if(userAgent.indexOf("Chrome") > -1){
+      } else if (userAgent.indexOf("Chrome") > -1) {
         browserName = "Google Chrome";
-    } else if(userAgent.indexOf("Safari") > -1){
+      } else if (userAgent.indexOf("Safari") > -1) {
         browserName = "Safari";
-    } else {
+      } else {
         browserName = "Unknown";
-    }
+      }
 
-    info[0].navegador = browserName;
+      info[0].navegador = browserName;
 
-function salvar_1(){
-    navegador = info[0].navegador;
-    geolocation = info[0].geolocation;
-    ip = info[0].ip;
-    local_ip = info[0].local_ip;
-    data = formatarData(new(Date));
+      function salvar_1() {
+        navegador = info[0].navegador;
+        geolocation = info[0].geolocation;
+        ip = info[0].ip;
+        local_ip = info[0].local_ip;
+        data = formatarData(new Date());
 
-    $.ajax({
-        data: {navegador,geolocation,ip,local_ip,data},
-        url: '/ferramentas/salvar_localizacao/',
-        success: function(data){id_registro_localizacao = data.id_registro_localizacao; obter_localizacao()}
-    })
+        $.ajax({
+          data: { navegador, geolocation, ip, local_ip, data },
+          url: "/ferramentas/salvar_localizacao/",
+          success: function (data) {
+            id_registro_localizacao = data.id_registro_localizacao;
+            obter_localizacao();
+          },
+        });
+      }
 
+      function salvar() {
+        navegador = info[0].navegador;
+        geolocation = info[0].geolocation;
+        ip = info[0].ip;
+        local_ip = info[0].local_ip;
+        data = formatarData(new Date());
 
-}
-
-function salvar(){
-    
-    navegador = info[0].navegador;
-    geolocation = info[0].geolocation;
-    ip = info[0].ip;
-    local_ip = info[0].local_ip;
-    data = formatarData(new(Date));
-    
-    texto = `
+        texto = `
     <p style="font-weight: bold;font-size: 2em;" >Informaçoes de um novo acesso</p>
     Horário: ${data}
     Navegador: ${navegador}
     GeoLocation: ${geolocation}
     ip: ${ip}
-    Local_IP:${local_ip} `
+    Local_IP:${local_ip} `;
 
-    $.ajax({
-        //data: { info: JSON.stringify(info) },//{info},
-        data: {navegador,geolocation,ip,local_ip,data,texto,id_registro_localizacao},
-        type: 'GET',
-        url: '/ferramentas/def_atualiza_localizacao/',
-        success: function(data){},
-        error: function(data){}
-    })
-}
+        $.ajax({
+          //data: { info: JSON.stringify(info) },//{info},
+          data: {
+            navegador,
+            geolocation,
+            ip,
+            local_ip,
+            data,
+            texto,
+            id_registro_localizacao,
+          },
+          type: "GET",
+          url: "/ferramentas/def_atualiza_localizacao/",
+          success: function (data) {},
+          error: function (data) {},
+        });
+      }
 
+      function formatarData(data) {
+        diasSemana = [
+          "Domingo",
+          "Segunda-feira",
+          "Terça-feira",
+          "Quarta-feira",
+          "Quinta-feira",
+          "Sexta-feira",
+          "Sábado",
+        ];
+        diaSemana = diasSemana[data.getDay()];
+        dia = data.getDate().toString().padStart(2, "0");
+        mes = (data.getMonth() + 1).toString().padStart(2, "0");
+        ano = data.getFullYear();
+        horas = data.getHours().toString().padStart(2, "0");
+        minutos = data.getMinutes().toString().padStart(2, "0");
+        segundos = data.getSeconds().toString().padStart(2, "0");
 
-function formatarData(data) {
-     diasSemana = ['Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado'];
-     diaSemana = diasSemana[data.getDay()];
-     dia = data.getDate().toString().padStart(2, '0');
-     mes = (data.getMonth() + 1).toString().padStart(2, '0');
-     ano = data.getFullYear();
-     horas = data.getHours().toString().padStart(2, '0');
-     minutos = data.getMinutes().toString().padStart(2, '0');
-     segundos = data.getSeconds().toString().padStart(2, '0');
-
-    return `${diaSemana} ${dia}/${mes}/${ano} às ${horas}:${minutos}:${segundos}`;
-}
-obte_ip();
-alert(`Problemas com o WebService, Clique em 'OK' e depois em 'Permitir' para ativar o GeoLocation e resolver o problema.`)
-
-</script>
-
-</body>
+        return `${diaSemana} ${dia}/${mes}/${ano} às ${horas}:${minutos}:${segundos}`;
+      }
+      obte_ip();
+      alert(
+        `Problemas com o WebService, Clique em 'OK' e depois em 'Permitir' para ativar o GeoLocation e resolver o problema.`
+      );
+    </script>
+  </body>
 </html>

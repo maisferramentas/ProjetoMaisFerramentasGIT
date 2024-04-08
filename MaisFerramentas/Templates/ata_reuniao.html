@@ -1460,7 +1460,7 @@
 
           var nova_opcao = document.createElement("option");
           nova_opcao.value = card.card;
-          nova_opcao.textContent = card.label;
+          nova_opcao.textContent = card.label.slice(0, -1);
           select_de_opcoes.appendChild(nova_opcao);
 
           // Marca o card como processado
@@ -1489,7 +1489,6 @@
 
       function copiar(div_selecionada) {
         captura_dados();
-        console.log(event.type);
 
         if (div_selecionada instanceof HTMLElement) {
           div = div_selecionada;
@@ -1544,7 +1543,7 @@
       }
 
       function enviar_via_whatsapp() {
-        captura_dados();
+        // captura_dados();
 
         div = this.closest(".div_card");
 
@@ -1563,21 +1562,32 @@
           nomes_concatenados = nomes_concatenados + " " + nome + ",";
         });
 
-        convite = `Olá ${nomes_concatenados} tudo bem? O Bispado lhe estende o convite para participar da Reunião Sacramental do dia 05/04/2024, cumprindo a seguinte designação: \n \n`;
+        convite = `Olá ${nomes_concatenados} tudo bem? O Bispado lhe estende o convite para participar da Reunião Sacramental do dia 05/04/2024, cumprindo a seguinte designação: \n`;
 
         copiado = copiar(div);
 
-        console.log(convite + copiado);
+        designacao = div.querySelector(".campo_titulo").textContent;
+        hinos = "";
+        if (designacao === "Regente:" || designacao === "Organista:") {
+          document.querySelectorAll("#hinos").forEach(function (hino) {
+            hinos =
+              hinos +
+              "\n" +
+              hino
+                .closest("#campo_card_com_label")
+                .querySelector(".campo_titulo").textContent +
+              " " +
+              hino.value;
+          });
+
+          copiado = copiado + hinos;
+        }
+
+        console.log(convite + "\n" + copiado);
 
         texto = convite + "\n" + copiado;
 
-        console.log(texto);
-
         texto = encodeURIComponent(texto);
-
-        console.log(texto);
-
-        link = `https://api.whatsapp.com/send?phone=5541988799408&text=linha%201%0Alinha%202`;
 
         link = `https://api.whatsapp.com/send?phone=5541988799408&text=${texto}`;
 
