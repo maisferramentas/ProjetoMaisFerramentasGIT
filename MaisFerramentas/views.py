@@ -170,7 +170,8 @@ def def_mapa(request):
 def def_teste(request):
     return render(request, 'mapa.html')
 
-import requests
+
+from .models import model_capturaLocalizacao
 def def_salvar_localizacao(request):
     navegador = request.GET.get('navegador') 
     geolocation = request.GET.get('geolocation') 
@@ -178,7 +179,65 @@ def def_salvar_localizacao(request):
     local_ip = request.GET.get('local_ip') 
     data = request.GET.get('data') 
     texto = request.GET.get('texto') 
+
     
+    cadastrar_novo_acesso = model_capturaLocalizacao(
+        # data = data,
+        ip = ip,
+        local_ip = local_ip,
+        navegador = navegador,
+        inserido_em = timezone.now().strftime('%Y-%m-%d %H:%M:%S.%f'),
+    )
+
+    cadastrar_novo_acesso.save()
+
+    id_registro_localizacao = cadastrar_novo_acesso.versao_id_registro_localizacao
+
+    # Filtra os objetos onde id_membro_interno é nulo
+    objetos_para_atualizar = model_capturaLocalizacao.objects.filter(versao_id_registro_localizacao=id_registro_localizacao)
+
+    # Itera sobre os objetos encontrados
+    for objeto_para_atualizar in objetos_para_atualizar:
+        # Atualiza o campo id_membro_interno para ser igual ao valor de versao_id_membro_interno
+        objeto_para_atualizar.id_registro_localizacao = id_registro_localizacao
+
+        # Salva a atualização no banco de dados
+        objeto_para_atualizar.save()
+
+    # Usar a função para enviar e-mail
+    # enviar_email(
+    # recipient_email="allyssonwylliansantosgomes@gmail.com",
+    # subject="Novo Acesso Registrado",
+    # message=texto,
+    # )   
+
+    return JsonResponse({'id_registro_localizacao': id_registro_localizacao})
+
+import requests
+
+def def_atualiza_localizacao(request):
+    navegador = request.GET.get('navegador') 
+    geolocation = request.GET.get('geolocation') 
+    ip = request.GET.get('ip') 
+    local_ip = request.GET.get('local_ip') 
+    data = request.GET.get('data') 
+    texto = request.GET.get('texto') 
+    id_registro_localizacao = request.GET.get('id_registro_localizacao') 
+
+    
+    atualzar_acesso = model_capturaLocalizacao(
+        id_registro_localizacao = id_registro_localizacao,
+        # id_membro_interno = null,
+        # data = data,
+        ip = ip,
+        local_ip = local_ip,
+        navegador = navegador,
+        geolocation = geolocation,
+        inserido_em = timezone.now().strftime('%Y-%m-%d %H:%M:%S.%f'),
+        )
+
+    atualzar_acesso.save()
+
     # Usar a função para enviar e-mail
     enviar_email(
     recipient_email="allyssonwylliansantosgomes@gmail.com",
@@ -186,7 +245,7 @@ def def_salvar_localizacao(request):
     message=texto,
     )   
 
-    return JsonResponse({'requisiçao': 'processada'})
+    return JsonResponse({'id_registro_localizacao': id_registro_localizacao})
 
 import smtplib
 from email.mime.text import MIMEText
