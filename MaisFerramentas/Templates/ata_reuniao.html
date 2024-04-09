@@ -111,7 +111,7 @@
         padding: 20px 3px 20px 10px; */
         border-radius: 8px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-        margin-bottom: 5px;
+        margin-bottom: 15px;
         min-width: 370px;
         position: relative;
         padding-bottom: 20px;
@@ -438,17 +438,54 @@
       .margins {
         margin: 0;
       }
+      #novo_card {
+        display: none;
+        height: 150px;
+        margin-top: 70px;
+      }
+      #adicionar_card_existente {
+        display: none;
+        height: 150px;
+        margin-top: 70px;
+      }
+
+      .div_botao_adicionar_elemento_pronto {
+        margin-top: 15px;
+        color: green;
+        display: flex;
+        /* flex-direction: column;  */
+        align-items: center;
+      }
+      .cobertura_content {
+        background-color: rgba(0, 0, 0, 0.4);
+        position: fixed;
+        inset: 0px 0px 0px -18px;
+        z-index: 1;
+        display: flex;
+        display: none;
+        position: absolute;
+        justify-content: center;
+      }
     </style>
   </head>
   <body>
     <div class="">
+      <div class="cobertura_content"></div>
+      <div
+        class="div_botao_adicionar_elemento_pronto flex align justify column"
+      >
+        <div class="flex" id="botao_adicionar_card_pronto">
+          <span class="material-symbols-outlined"> add </span>
+          Adicionar Card Pronto
+        </div>
+        <div class="flex" id="botao_criar_card_novo">
+          <span class="material-symbols-outlined"> add </span>
+          Criar Card Novo
+        </div>
+      </div>
+
       <div class="adicionar_elementos">
-        <div
-          class="flex align justify column"
-          style="border: 1px solid #57afc5"
-        >
-          <h2>Adicionar Elementos</h2>
-          <h5>Criar Elemento</h5>
+        <div class="flex align justify column">
           <div class="div_card flex align" id="novo_card">
             <img
               draggable="false"
@@ -546,8 +583,6 @@
             </div>
           </div>
 
-          <h5>Adicionar Elemento pronto</h5>
-
           <div class="div_card flex align" id="adicionar_card_existente">
             <img
               draggable="false"
@@ -583,7 +618,6 @@
               </div>
             </div>
           </div>
-          <button onclick="captura_dados()">Aoba</button>
         </div>
       </div>
 
@@ -1030,7 +1064,6 @@
         dropdown.style.display = "block"; //comentar na opção 1
 
         valores = [];
-
         if (input.id === "nomes") {
           valores = nomes;
         } else if (input.id === "hinos") {
@@ -1547,7 +1580,6 @@
 
         div = this.closest(".div_card");
 
-        nomes = "";
         nomes_concatenados = "";
 
         div.querySelectorAll("#nomes").forEach(function (element) {
@@ -1581,17 +1613,58 @@
           });
 
           copiado = copiado + hinos;
+        } else if (designacao === "Discursante:") {
+          orientacao_discursante =
+            "Por favor siga as instruções do documento a seguir:";
+          copiado = copiado + "\n" + orientacao_discursante;
+        } else if (designacao.substr(0, 7) === "Oração:") {
+          orientacao_oracao =
+            "Por favor, esteja no púlpito antes que o hino termine, não espere o hino acabar para subir ao estrado.";
+          copiado = copiado + "\n" + orientacao_oracao;
         }
 
-        console.log(convite + "\n" + copiado);
+        // console.log(convite + "\n" + copiado);
 
         texto = convite + "\n" + copiado;
 
         texto = encodeURIComponent(texto);
 
-        link = `https://api.whatsapp.com/send?phone=5541988799408&text=${texto}`;
+        contato = "5541988799408";
+
+        link = `https://api.whatsapp.com/send?phone=${contato}&text=${texto}`;
 
         window.open(link, "_blank");
+      }
+
+      $("#botao_adicionar_card_pronto").on(
+        "click",
+        botao_adicionar_card_pronto
+      );
+
+      cobertura = $(".cobertura_content");
+      clone_adicionar_card_existente = $("#adicionar_card_existente").clone(
+        true
+      );
+
+      function botao_adicionar_card_pronto() {
+        cobertura.css("display", "flex", "position", "fixed");
+        clone_adicionar_card_existente.css("display", "flex");
+        cobertura.append(clone_adicionar_card_existente);
+      }
+
+      $("#botao_criar_card_novo").on("click", botao_criar_card_novo);
+      clone_criar_card_novo = $("#novo_card").clone(true);
+      function botao_criar_card_novo() {
+        cobertura.css("display", "flex", "position", "fixed");
+        clone_criar_card_novo.css("display", "flex");
+        cobertura.append(clone_criar_card_novo);
+      }
+
+      $(".cobertura_content").on("click", fechar_cobertura);
+      function fechar_cobertura() {
+        if (event.target.className === "cobertura_content") {
+          cobertura.css("display", "none", "position", "absolute");
+        }
       }
     </script>
   </body>
