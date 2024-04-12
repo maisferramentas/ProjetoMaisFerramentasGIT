@@ -442,11 +442,13 @@
         display: none;
         height: 150px;
         margin-top: 70px;
+        margin-left: 18px;
       }
       #adicionar_card_existente {
         display: none;
         height: 150px;
         margin-top: 70px;
+        margin-left: 18px;
       }
 
       .div_botao_adicionar_elemento_pronto {
@@ -1150,7 +1152,7 @@
       }
 
       // Criar o HTML dos elementos que você deseja adicionar
-      const opcoes_novo_card_clone = document
+      opcoes_novo_card_clone = document
         .querySelector(".opcoes_novo_card")
         .cloneNode(true);
 
@@ -1174,6 +1176,7 @@
       function f_adicionar_elemento() {
         var divInfoAdicionais =
           this.closest(".div_card").querySelector(".div_card_info");
+
         var elementoReferencia = this;
         adicionarElemento(divInfoAdicionais, elementoReferencia);
       }
@@ -1211,22 +1214,31 @@
 
         $(".copiar").on("click", copiar);
         $(".div_img_icone_whats").on("click", enviar_via_whatsapp);
-        $(".botao_salvar_novo_card").on("click", salvar_novo_card);
+        // $(".botao_salvar_novo_card").on("click", salvar_novo_card);
         $("#botao_criar_card_novo").on("click", botao_criar_card_novo);
         $("#botao_adicionar_card_pronto").on(
           "click",
           botao_adicionar_card_pronto
         );
-        $("#adicionar_elemento").on("click", f_adicionar_elemento);
+
+        document
+          .querySelectorAll("#adicionar_elemento")
+          .forEach(function (element) {
+            element.addEventListener("click", f_adicionar_elemento);
+          });
+
+        document
+          .querySelectorAll("#adicionar_elemento_oculto")
+          .forEach(function (element) {
+            element.addEventListener("click", f_adicionar_elemento_oculto);
+          });
+
         $("#salvar_adicionar_card_pronto").on(
           "click",
           salvar_adicionar_card_pronto
         );
+
         $(".botao_fechar_novo_card").on("click", botao_fechar_novo_card);
-        $("#adicionar_elemento_oculto").on(
-          "click",
-          f_adicionar_elemento_oculto
-        );
       }
       atualiza_ouvintes();
 
