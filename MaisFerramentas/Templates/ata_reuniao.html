@@ -1150,36 +1150,33 @@
       }
 
       // Criar o HTML dos elementos que você deseja adicionar
-      opcoes_novo_card_clone = document
+      const opcoes_novo_card_clone = document
         .querySelector(".opcoes_novo_card")
         .cloneNode(true);
 
       function adicionarElemento(divInfoAdicionais, elementoReferencia) {
         opcoes_novo_card = opcoes_novo_card_clone.cloneNode(true);
-        opcoes_novo_card.querySelector("#nome").value = "";
+
+        // opcoes_novo_card.querySelector("#nome").value = "";
         // Inserir o novo elemento antes do elemento de referência
         divInfoAdicionais.insertBefore(opcoes_novo_card, elementoReferencia);
         atualiza_ouvintes();
       }
 
-      document
-        .querySelector("#adicionar_elemento_oculto")
-        .addEventListener("click", function () {
-          var divInfoAdicionais = this.closest(".div_card").querySelector(
-            ".div_card_info_adicionais"
-          );
-          var elementoReferencia = this;
-          adicionarElemento(divInfoAdicionais, elementoReferencia);
-        });
+      function f_adicionar_elemento_oculto() {
+        var divInfoAdicionais = this.closest(".div_card").querySelector(
+          ".div_card_info_adicionais"
+        );
+        var elementoReferencia = this;
+        adicionarElemento(divInfoAdicionais, elementoReferencia);
+      }
 
-      document
-        .querySelector("#adicionar_elemento")
-        .addEventListener("click", function () {
-          var divInfoAdicionais =
-            this.closest(".div_card").querySelector(".div_card_info");
-          var elementoReferencia = this;
-          adicionarElemento(divInfoAdicionais, elementoReferencia);
-        });
+      function f_adicionar_elemento() {
+        var divInfoAdicionais =
+          this.closest(".div_card").querySelector(".div_card_info");
+        var elementoReferencia = this;
+        adicionarElemento(divInfoAdicionais, elementoReferencia);
+      }
 
       function excluir_elemento_form_criacao() {
         this.closest(".elemento").remove();
@@ -1214,6 +1211,22 @@
 
         $(".copiar").on("click", copiar);
         $(".div_img_icone_whats").on("click", enviar_via_whatsapp);
+        $(".botao_salvar_novo_card").on("click", salvar_novo_card);
+        $("#botao_criar_card_novo").on("click", botao_criar_card_novo);
+        $("#botao_adicionar_card_pronto").on(
+          "click",
+          botao_adicionar_card_pronto
+        );
+        $("#adicionar_elemento").on("click", f_adicionar_elemento);
+        $("#salvar_adicionar_card_pronto").on(
+          "click",
+          salvar_adicionar_card_pronto
+        );
+        $(".botao_fechar_novo_card").on("click", botao_fechar_novo_card);
+        $("#adicionar_elemento_oculto").on(
+          "click",
+          f_adicionar_elemento_oculto
+        );
       }
       atualiza_ouvintes();
 
@@ -1261,10 +1274,6 @@
         }
       }
 
-      document
-        .querySelector(".botao_salvar_novo_card")
-        .addEventListener("click", salvar_novo_card);
-
       function salvar_novo_card() {
         cards = [];
         document
@@ -1294,10 +1303,9 @@
         fechar_tela_novo_card();
       }
 
-      $(".botao_fechar_novo_card").on("click", carrega_dados);
       function fechar_tela_novo_card() {
-        $(".opcoes_novo_card").remove();
-        $("#adicionar_elemento").click();
+        // $(".opcoes_novo_card").remove();
+        // $("#adicionar_elemento").click();
       }
       function deletar_card() {
         this.closest(".div_card").remove();
@@ -1501,11 +1509,6 @@
         }
       });
 
-      $("#salvar_adicionar_card_pronto").on(
-        "click",
-        salvar_adicionar_card_pronto
-      );
-
       function salvar_adicionar_card_pronto() {
         select_de_opcoes = document.getElementById("insere_novo_card_pronto");
         card_selecionado = select_de_opcoes.value;
@@ -1518,6 +1521,7 @@
         cards = array_card_selecionado;
 
         carrega_dados();
+        cobertura.css("display", "none", "position", "absolute");
       }
 
       function copiar(div_selecionada) {
@@ -1636,28 +1640,28 @@
         window.open(link, "_blank");
       }
 
-      $("#botao_adicionar_card_pronto").on(
-        "click",
-        botao_adicionar_card_pronto
-      );
-
       cobertura = $(".cobertura_content");
-      clone_adicionar_card_existente = $("#adicionar_card_existente").clone(
-        true
-      );
+      // clone_adicionar_card_existente = $("#adicionar_card_existente").clone(
+      //   true
+      // );
+      const clone_adicionar_card_existente = $("#adicionar_card_existente");
 
       function botao_adicionar_card_pronto() {
+        cobertura.html("");
         cobertura.css("display", "flex", "position", "fixed");
         clone_adicionar_card_existente.css("display", "flex");
         cobertura.append(clone_adicionar_card_existente);
+        atualiza_ouvintes();
       }
 
-      $("#botao_criar_card_novo").on("click", botao_criar_card_novo);
-      clone_criar_card_novo = $("#novo_card").clone(true);
+      const clone_criar_card_novo = $("#novo_card");
+      console.log();
       function botao_criar_card_novo() {
+        cobertura.html("");
         cobertura.css("display", "flex", "position", "fixed");
         clone_criar_card_novo.css("display", "flex");
         cobertura.append(clone_criar_card_novo);
+        atualiza_ouvintes();
       }
 
       $(".cobertura_content").on("click", fechar_cobertura);
@@ -1665,6 +1669,10 @@
         if (event.target.className === "cobertura_content") {
           cobertura.css("display", "none", "position", "absolute");
         }
+      }
+
+      function botao_fechar_novo_card() {
+        cobertura.css("display", "none", "position", "absolute");
       }
     </script>
   </body>
