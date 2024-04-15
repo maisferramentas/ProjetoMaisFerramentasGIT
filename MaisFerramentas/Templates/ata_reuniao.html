@@ -1649,16 +1649,16 @@
           });
         carrega_dados();
 
-        // div_novo_card = document.querySelector("#novo_card");
-        // elementos_a_remover =
-        //   div_novo_card.querySelectorAll(".opcoes_novo_card");
+        div_novo_card = document.querySelector("#novo_card");
+        elementos_a_remover =
+          div_novo_card.querySelectorAll(".opcoes_novo_card");
 
-        // elementos_a_remover.forEach(function (element) {
-        //   element.remove();
-        // });
-        // elementoReferencia = div_novo_card.querySelector("#adicionar_elemento");
-        // divInfoAdicionais = div_novo_card.querySelector(".div_card_info");
-        // adicionarElemento(divInfoAdicionais, elementoReferencia);
+        elementos_a_remover.forEach(function (element) {
+          element.remove();
+        });
+        elementoReferencia = div_novo_card.querySelector("#adicionar_elemento");
+        divInfoAdicionais = div_novo_card.querySelector(".div_card_info");
+        adicionarElemento(divInfoAdicionais, elementoReferencia);
 
         fechar_tela_novo_card();
       }
