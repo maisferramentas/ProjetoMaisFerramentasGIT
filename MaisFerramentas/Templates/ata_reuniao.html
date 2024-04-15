@@ -440,13 +440,14 @@
       }
       #novo_card {
         display: none;
-        height: 150px;
+        /*height: 150px;*/
         margin-top: 70px;
         margin-left: 18px;
+        height: fit-content;
       }
       #adicionar_card_existente {
         display: none;
-        height: 150px;
+        height: fit-content;
         margin-top: 70px;
         margin-left: 18px;
       }
@@ -554,6 +555,7 @@
 
                 <input
                   class="botao_salvar_novo_card"
+                  id="botao_salvar_novo_card"
                   type="button"
                   value="Salvar"
                 />
@@ -1151,40 +1153,6 @@
         }
       }
 
-      // Criar o HTML dos elementos que você deseja adicionar
-      opcoes_novo_card_clone = document
-        .querySelector(".opcoes_novo_card")
-        .cloneNode(true);
-
-      function adicionarElemento(divInfoAdicionais, elementoReferencia) {
-        opcoes_novo_card = opcoes_novo_card_clone.cloneNode(true);
-
-        // opcoes_novo_card.querySelector("#nome").value = "";
-        // Inserir o novo elemento antes do elemento de referência
-        divInfoAdicionais.insertBefore(opcoes_novo_card, elementoReferencia);
-        atualiza_ouvintes();
-      }
-
-      function f_adicionar_elemento_oculto() {
-        var divInfoAdicionais = this.closest(".div_card").querySelector(
-          ".div_card_info_adicionais"
-        );
-        var elementoReferencia = this;
-        adicionarElemento(divInfoAdicionais, elementoReferencia);
-      }
-
-      function f_adicionar_elemento() {
-        var divInfoAdicionais =
-          this.closest(".div_card").querySelector(".div_card_info");
-
-        var elementoReferencia = this;
-        adicionarElemento(divInfoAdicionais, elementoReferencia);
-      }
-
-      function excluir_elemento_form_criacao() {
-        this.closest(".elemento").remove();
-      }
-
       function atualiza_ouvintes() {
         document
           .querySelectorAll("#deleta_elemento_inserir_card")
@@ -1233,12 +1201,23 @@
             element.addEventListener("click", f_adicionar_elemento_oculto);
           });
 
+        // $("#salvar_adicionar_card_pronto").on(
+        //   "click",
+        //   salvar_adicionar_card_pronto
+        // );
+
+        // document
+        //   .querySelector("#salvar_adicionar_card_pronto")
+        //   .addEventListener("click", salvar_adicionar_card_pronto);
+
         $("#salvar_adicionar_card_pronto").on(
           "click",
           salvar_adicionar_card_pronto
         );
 
-        $(".botao_fechar_novo_card").on("click", botao_fechar_novo_card);
+        $("#botao_salvar_novo_card").on("click", salvar_novo_card);
+
+        $(".botao_fechar_novo_card").on("click", fechar_tela_novo_card);
       }
       atualiza_ouvintes();
 
@@ -1286,39 +1265,6 @@
         }
       }
 
-      function salvar_novo_card() {
-        cards = [];
-        document
-          .querySelector("#novo_card")
-          .querySelectorAll("select")
-          .forEach(function (element) {
-            if (element.type === "select-one") {
-              //identifica se o elemento é oculto
-              if (element.closest(".div_card_info_adicionais")) {
-                elemento_oculto = 1;
-              } else {
-                elemento_oculto = 0;
-              }
-
-              cards.push({
-                card: 1,
-                posicao_no_card: null,
-                label:
-                  element.parentElement.parentElement.querySelector("#nome")
-                    .value,
-                tipo: element.value,
-                elemento_oculto: elemento_oculto,
-              });
-            }
-          });
-        carrega_dados();
-        fechar_tela_novo_card();
-      }
-
-      function fechar_tela_novo_card() {
-        // $(".opcoes_novo_card").remove();
-        // $("#adicionar_elemento").click();
-      }
       function deletar_card() {
         this.closest(".div_card").remove();
       }
@@ -1431,7 +1377,7 @@
               //atualiza os ouvintes para ativar a funcionalidade dos botões do novo card
               atualiza_ouvintes();
 
-              fechar_tela_novo_card();
+              // fechar_tela_novo_card();
             });
             //remove os campos padrão do card clonado
             card_novo.querySelector(".div_campos_padrão_novo_card").remove();
@@ -1439,6 +1385,7 @@
         }
         reorganizeIDs();
       }
+
       carrega_dados();
       function captura_dados() {
         capturados = [];
@@ -1496,6 +1443,7 @@
         reorganizeIDs();
       }
 
+      //Adiciona Opções de CARD Padrão
       // Array para armazenar os labels dos primeiros objetos de cada card
       var opcoes_para_select = [];
 
@@ -1520,21 +1468,6 @@
           cardsProcessados[card.card] = true;
         }
       });
-
-      function salvar_adicionar_card_pronto() {
-        select_de_opcoes = document.getElementById("insere_novo_card_pronto");
-        card_selecionado = select_de_opcoes.value;
-
-        var array_card_selecionado = cards_padrão.filter(
-          (card) => card.card === parseInt(card_selecionado)
-        );
-
-        cards = [];
-        cards = array_card_selecionado;
-
-        carrega_dados();
-        cobertura.css("display", "none", "position", "absolute");
-      }
 
       function copiar(div_selecionada) {
         captura_dados();
@@ -1652,12 +1585,7 @@
         window.open(link, "_blank");
       }
 
-      cobertura = $(".cobertura_content");
-      // clone_adicionar_card_existente = $("#adicionar_card_existente").clone(
-      //   true
-      // );
-      const clone_adicionar_card_existente = $("#adicionar_card_existente");
-
+      //Card Pronto
       function botao_adicionar_card_pronto() {
         cobertura.html("");
         cobertura.css("display", "flex", "position", "fixed");
@@ -1666,8 +1594,26 @@
         atualiza_ouvintes();
       }
 
-      const clone_criar_card_novo = $("#novo_card");
-      console.log();
+      cobertura = $(".cobertura_content");
+      clone_adicionar_card_existente = $("#adicionar_card_existente");
+
+      function salvar_adicionar_card_pronto() {
+        select_de_opcoes = document.getElementById("insere_novo_card_pronto");
+        card_selecionado = select_de_opcoes.value;
+
+        var array_card_selecionado = cards_padrão.filter(
+          (card) => card.card === parseInt(card_selecionado)
+        );
+
+        cards = [];
+        cards = array_card_selecionado;
+
+        carrega_dados();
+        fechar_tela_novo_card();
+      }
+
+      //Novo Card
+      clone_criar_card_novo = $("#novo_card");
       function botao_criar_card_novo() {
         cobertura.html("");
         cobertura.css("display", "flex", "position", "fixed");
@@ -1676,15 +1622,89 @@
         atualiza_ouvintes();
       }
 
+      function salvar_novo_card() {
+        cards = [];
+        document
+          .querySelector("#novo_card")
+          .querySelectorAll("select")
+          .forEach(function (element) {
+            if (element.type === "select-one") {
+              //identifica se o elemento é oculto
+              if (element.closest(".div_card_info_adicionais")) {
+                elemento_oculto = 1;
+              } else {
+                elemento_oculto = 0;
+              }
+
+              cards.push({
+                card: 1,
+                posicao_no_card: null,
+                label:
+                  element.parentElement.parentElement.querySelector("#nome")
+                    .value,
+                tipo: element.value,
+                elemento_oculto: elemento_oculto,
+              });
+            }
+          });
+        carrega_dados();
+
+        // div_novo_card = document.querySelector("#novo_card");
+        // elementos_a_remover =
+        //   div_novo_card.querySelectorAll(".opcoes_novo_card");
+
+        // elementos_a_remover.forEach(function (element) {
+        //   element.remove();
+        // });
+        // elementoReferencia = div_novo_card.querySelector("#adicionar_elemento");
+        // divInfoAdicionais = div_novo_card.querySelector(".div_card_info");
+        // adicionarElemento(divInfoAdicionais, elementoReferencia);
+
+        fechar_tela_novo_card();
+      }
+
+      //Adiciona Elemento Para novo CARD
+      function f_adicionar_elemento_oculto() {
+        var divInfoAdicionais = this.closest(".div_card").querySelector(
+          ".div_card_info_adicionais"
+        );
+        var elementoReferencia = this;
+        adicionarElemento(divInfoAdicionais, elementoReferencia);
+      }
+
+      function f_adicionar_elemento() {
+        var divInfoAdicionais =
+          this.closest(".div_card").querySelector(".div_card_info");
+
+        var elementoReferencia = this;
+        adicionarElemento(divInfoAdicionais, elementoReferencia);
+      }
+
+      opcoes_novo_card_clone = document
+        .querySelector(".opcoes_novo_card")
+        .cloneNode(true);
+
+      function adicionarElemento(divInfoAdicionais, elementoReferencia) {
+        opcoes_novo_card = opcoes_novo_card_clone.cloneNode(true);
+        divInfoAdicionais.insertBefore(opcoes_novo_card, elementoReferencia);
+        atualiza_ouvintes();
+      }
+
+      //Remove elemento o novo CARD
+      function excluir_elemento_form_criacao() {
+        this.closest(".elemento").remove();
+      }
+
+      //Fecha a cobertura e seu conteúdo
+      function fechar_tela_novo_card() {
+        cobertura.css("display", "none", "position", "absolute");
+      }
+
       $(".cobertura_content").on("click", fechar_cobertura);
       function fechar_cobertura() {
         if (event.target.className === "cobertura_content") {
           cobertura.css("display", "none", "position", "absolute");
         }
-      }
-
-      function botao_fechar_novo_card() {
-        cobertura.css("display", "none", "position", "absolute");
       }
     </script>
   </body>
