@@ -473,6 +473,14 @@
   </head>
   <body>
     <div class="">
+      <div class="flex column">
+        <button onclick="copiar_texto_completo_da_ata()">
+          copiar_texto_completo_da_ata
+        </button>
+        <button onclick="enviar_texto_completo_da_ata_via_whatsapp()">
+          enviar_texto_completo_da_ata_via_whatsapp
+        </button>
+      </div>
       <div class="cobertura_content"></div>
       <div
         class="div_botao_adicionar_elemento_pronto flex align justify column"
@@ -1181,8 +1189,15 @@
         });
 
         $(".copiar").on("click", copiar);
-        $(".div_img_icone_whats").on("click", enviar_via_whatsapp);
-        // $(".botao_salvar_novo_card").on("click", salvar_novo_card);
+
+        // $(".div_img_icone_whats").on("click", preparar_texto_card_whatsapp);
+
+        document
+          .querySelectorAll(".div_img_icone_whats")
+          .forEach(function (element) {
+            element.addEventListener("click", preparar_texto_card_whatsapp);
+          });
+
         $("#botao_criar_card_novo").on("click", botao_criar_card_novo);
         $("#botao_adicionar_card_pronto").on(
           "click",
@@ -1215,7 +1230,11 @@
           salvar_adicionar_card_pronto
         );
 
-        $("#botao_salvar_novo_card").on("click", salvar_novo_card);
+        document
+          .querySelectorAll("#botao_salvar_novo_card")
+          .forEach(function (element) {
+            element.addEventListener("click", salvar_novo_card);
+          });
 
         $(".botao_fechar_novo_card").on("click", fechar_tela_novo_card);
       }
@@ -1497,7 +1516,11 @@
 
           texto = texto + element.label + " " + valor + "\n";
         });
+        copiar_texto(texto);
+      }
 
+      function copiar_texto(texto) {
+        console.log("chegooo");
         textarea = document.createElement("textarea");
         textarea.value = texto;
         document.body.appendChild(textarea);
@@ -1524,7 +1547,7 @@
         return data_formatada;
       }
 
-      function enviar_via_whatsapp() {
+      function preparar_texto_card_whatsapp() {
         // captura_dados();
 
         div = this.closest(".div_card");
@@ -1540,7 +1563,7 @@
           // O primeiro nome é a primeira parte do array resultante
           nome = partesNome[0];
 
-          nomes_concatenados = nomes_concatenados + " " + nome + ",";
+          nomes_concatenados = nomes_concatenados + " " + nome /*+ ","*/;
         });
 
         convite = `Olá ${nomes_concatenados} tudo bem? O Bispado lhe estende o convite para participar da Reunião Sacramental do dia 05/04/2024, cumprindo a seguinte designação: \n`;
@@ -1575,7 +1598,11 @@
         // console.log(convite + "\n" + copiado);
 
         texto = convite + "\n" + copiado;
+        enviar_via_whatsapp(texto);
+      }
 
+      //enviar um texto via whatsapp
+      function enviar_via_whatsapp(texto) {
         texto = encodeURIComponent(texto);
 
         contato = "5541988799408";
@@ -1621,14 +1648,16 @@
         cobertura.append(clone_criar_card_novo);
         atualiza_ouvintes();
       }
-
+      contagem = 0;
       function salvar_novo_card() {
+        console.log(contagem++);
         cards = [];
         document
           .querySelector("#novo_card")
           .querySelectorAll("select")
           .forEach(function (element) {
             if (element.type === "select-one") {
+              // console.log(element);
               //identifica se o elemento é oculto
               if (element.closest(".div_card_info_adicionais")) {
                 elemento_oculto = 1;
@@ -1649,6 +1678,7 @@
           });
         carrega_dados();
 
+        //Limpar o Formulário
         div_novo_card = document.querySelector("#novo_card");
         elementos_a_remover =
           div_novo_card.querySelectorAll(".opcoes_novo_card");
@@ -1704,6 +1734,84 @@
       function fechar_cobertura() {
         if (event.target.className === "cobertura_content") {
           cobertura.css("display", "none", "position", "absolute");
+        }
+      }
+
+      //Copiar Texto completo da Ata
+      botao = document.createElement("button");
+      botao.textContent = "prepara_texto_completo_da_ata";
+      botao.id = "prepara_texto_completo_da_ata";
+      botao.onclick = prepara_texto_completo_da_ata;
+      vbotao_adicionar_card_pronto = document.querySelector(
+        "#botao_adicionar_card_pronto"
+      );
+      document
+        .querySelector(".div_botao_adicionar_elemento_pronto")
+        .insertBefore(botao, vbotao_adicionar_card_pronto);
+
+      function prepara_texto_completo_da_ata() {
+        captura_dados();
+        let conteudo_texto_completo_da_ata = "";
+        let card_em_tratamento = null;
+
+        //Repassa todos os dados capturados transformando-os em um texto
+        capturados.forEach(function (element) {
+          card_a_tratar = element.card;
+
+          //Pula uma linha no texto para separar os cards
+          if (card_em_tratamento != card_a_tratar) {
+            card_em_tratamento = card_a_tratar;
+            conteudo_texto_completo_da_ata =
+              conteudo_texto_completo_da_ata + "\n";
+          }
+
+          //Caso a linha corresponda a uma data faz o tratamento
+          if (element.tipo === "data") {
+            valor = formatar_data_hora(element.value);
+          } else {
+            valor = element.value;
+          }
+
+          //Adiciona informações ao texto
+          conteudo_texto_completo_da_ata =
+            conteudo_texto_completo_da_ata + "\n" + element.label + valor;
+        });
+        return conteudo_texto_completo_da_ata;
+      }
+
+      function enviar_texto_completo_da_ata_via_whatsapp() {
+        enviar_via_whatsapp(prepara_texto_completo_da_ata());
+      }
+
+      function copiar_texto_completo_da_ata() {
+        console.log("aeeeee");
+        copiar_texto(prepara_texto_completo_da_ata());
+      }
+
+      //Verifica se a tela foi fechada ou minimizada a fim de salvar os dados atuais
+      document.addEventListener(
+        "visibilitychange",
+        verifica_tela_fechada_ou_minimizada
+      ); //minimiza
+
+      document.addEventListener(
+        "beforeunload",
+        verifica_tela_fechada_ou_minimizada
+      ); //fecha
+
+      ultimo_envio = null;
+      function verifica_tela_fechada_ou_minimizada() {
+        if (
+          document.visibilityState === "hidden" ||
+          event.type === "beforeunload"
+        ) {
+          // A janela foi minimizada ou fechada
+          captura_dados();
+          if (ultimo_envio != capturados) {
+            //chamar função que savará os dados
+            //Atualiza o ultimo_envio
+            ultimo_envio = capturados;
+          }
         }
       }
     </script>
