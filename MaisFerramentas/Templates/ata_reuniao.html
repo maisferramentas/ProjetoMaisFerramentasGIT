@@ -1520,7 +1520,6 @@
       }
 
       function copiar_texto(texto) {
-        console.log("chegooo");
         textarea = document.createElement("textarea");
         textarea.value = texto;
         document.body.appendChild(textarea);
@@ -1648,9 +1647,8 @@
         cobertura.append(clone_criar_card_novo);
         atualiza_ouvintes();
       }
-      contagem = 0;
+
       function salvar_novo_card() {
-        console.log(contagem++);
         cards = [];
         document
           .querySelector("#novo_card")
@@ -1784,7 +1782,6 @@
       }
 
       function copiar_texto_completo_da_ata() {
-        console.log("aeeeee");
         copiar_texto(prepara_texto_completo_da_ata());
       }
 
