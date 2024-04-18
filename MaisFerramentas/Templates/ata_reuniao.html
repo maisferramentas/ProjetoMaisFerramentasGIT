@@ -473,14 +473,14 @@
   </head>
   <body>
     <div class="">
-      <div class="flex column">
+      <!-- <div class="flex column">
         <button onclick="copiar_texto_completo_da_ata()">
           copiar_texto_completo_da_ata
         </button>
         <button onclick="enviar_texto_completo_da_ata_via_whatsapp()">
           enviar_texto_completo_da_ata_via_whatsapp
         </button>
-      </div>
+      </div> -->
       <div class="cobertura_content"></div>
       <div
         class="div_botao_adicionar_elemento_pronto flex align justify column"
@@ -719,6 +719,9 @@
     </div>
     <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
     <script>
+      //Function para montar o menu de seleção de data e tipo de reunião
+      carrega_menu_data_e_tipo_de_reuniao();
+
       var nomes = [
         "Allysson Wyllian Santos Gomes",
         "Julia de Salles Gomes",
@@ -1490,7 +1493,7 @@
 
       function copiar(div_selecionada) {
         captura_dados();
-
+        
         if (div_selecionada instanceof HTMLElement) {
           div = div_selecionada;
         } else {
@@ -1516,17 +1519,20 @@
 
           texto = texto + element.label + " " + valor + "\n";
         });
+        
         copiar_texto(texto);
+        return texto;
       }
 
       function copiar_texto(texto) {
+        
         textarea = document.createElement("textarea");
         textarea.value = texto;
         document.body.appendChild(textarea);
         textarea.select();
         document.execCommand("copy");
         textarea.remove();
-
+        
         return texto;
       }
 
@@ -1565,10 +1571,13 @@
           nomes_concatenados = nomes_concatenados + " " + nome /*+ ","*/;
         });
 
-        convite = `Olá ${nomes_concatenados} tudo bem? O Bispado lhe estende o convite para participar da Reunião Sacramental do dia 05/04/2024, cumprindo a seguinte designação: \n`;
+        data_e_tipo_de_reuniao = captura_data_e_tipo_de_reuniao();
+
+        convite = `Olá ${nomes_concatenados} tudo bem? O Bispado lhe estende o convite para participar da ${data_e_tipo_de_reuniao}, cumprindo a seguinte designação: \n`;
 
         copiado = copiar(div);
-
+        // console.log(copiado);
+        
         designacao = div.querySelector(".campo_titulo").textContent;
         hinos = "";
         if (designacao === "Regente:" || designacao === "Organista:") {
@@ -1618,6 +1627,7 @@
         clone_adicionar_card_existente.css("display", "flex");
         cobertura.append(clone_adicionar_card_existente);
         atualiza_ouvintes();
+        subir_ao_topo();
       }
 
       cobertura = $(".cobertura_content");
@@ -1646,6 +1656,7 @@
         clone_criar_card_novo.css("display", "flex");
         cobertura.append(clone_criar_card_novo);
         atualiza_ouvintes();
+        subir_ao_topo();
       }
 
       function salvar_novo_card() {
@@ -1735,17 +1746,17 @@
         }
       }
 
-      //Copiar Texto completo da Ata
-      botao = document.createElement("button");
-      botao.textContent = "prepara_texto_completo_da_ata";
-      botao.id = "prepara_texto_completo_da_ata";
-      botao.onclick = prepara_texto_completo_da_ata;
-      vbotao_adicionar_card_pronto = document.querySelector(
-        "#botao_adicionar_card_pronto"
-      );
-      document
-        .querySelector(".div_botao_adicionar_elemento_pronto")
-        .insertBefore(botao, vbotao_adicionar_card_pronto);
+      // //Copiar Texto completo da Ata
+      // botao = document.createElement("button");
+      // botao.textContent = "prepara_texto_completo_da_ata";
+      // botao.id = "prepara_texto_completo_da_ata";
+      // botao.onclick = prepara_texto_completo_da_ata;
+      // vbotao_adicionar_card_pronto = document.querySelector(
+      //   "#botao_adicionar_card_pronto"
+      // );
+      // document
+      //   .querySelector(".div_botao_adicionar_elemento_pronto")
+      //   .insertBefore(botao, vbotao_adicionar_card_pronto);
 
       function prepara_texto_completo_da_ata() {
         captura_dados();
@@ -1774,6 +1785,10 @@
           conteudo_texto_completo_da_ata =
             conteudo_texto_completo_da_ata + "\n" + element.label + valor;
         });
+
+        //Acrescenta Cabeçalho com informação de data_e_tipo_de_reuniao
+        conteudo_texto_completo_da_ata = captura_data_e_tipo_de_reuniao() + conteudo_texto_completo_da_ata;
+
         return conteudo_texto_completo_da_ata;
       }
 
@@ -1810,6 +1825,92 @@
             ultimo_envio = capturados;
           }
         }
+      }
+      
+      //Function para montar o menu de seleção de data e tipo de reunião
+      function carrega_menu_data_e_tipo_de_reuniao(){
+        $.ajax({
+          url: '/ferramentas/frequencia',
+          success: function(data){
+            //Cria um objeto
+            nova_div = document.createElement('div');
+
+            //Adiciona ao objeto o conteúdo da página de registro de Frequência
+            nova_div.innerHTML = data;
+
+            //Cria uma variável contendo apenas o menu
+            menu_data_e_tipo_de_reuniao = nova_div.querySelector('.div_registro_frequencia');
+
+            //Ajusta o texto do Cabeçalho da Tela
+            menu_data_e_tipo_de_reuniao.querySelector('label').innerText = 'Ata de Reunião';
+
+            //Ajusta o Texto De descrição da tela
+            menu_data_e_tipo_de_reuniao.querySelector('label').nextElementSibling.innerText = 'Serviço de Registro de Atas das Reuniões da Igreja.';
+
+            //ajusta a cor do texto exibido
+            menu_data_e_tipo_de_reuniao.querySelector('.configuracoes_frequencia').querySelectorAll('label').forEach(function(element){element.style.color = '#003057'});
+
+            //Ajusta o texto descrição de exibição
+            menu_data_e_tipo_de_reuniao.querySelector('#descricao').innerText = 'Exibindo Ata para:'
+
+            //Atualiza as funções que serão chamadas ao alterar a data e o tipo de reunião
+            menu_data_e_tipo_de_reuniao.querySelector('#data').onchange = captura_data_e_tipo_de_reuniao;
+            menu_data_e_tipo_de_reuniao.querySelector('#tipo').onchange = captura_data_e_tipo_de_reuniao;
+            
+            //Insere o menu_data_e_tipo_de_reuniao na tela
+            vbotao_adicionar_card_pronto = document.querySelector(
+              "#botao_adicionar_card_pronto"
+            );
+
+            document
+              .querySelector(".div_botao_adicionar_elemento_pronto")
+              .insertBefore(menu_data_e_tipo_de_reuniao, vbotao_adicionar_card_pronto);
+
+              captura_data_e_tipo_de_reuniao();
+
+              window.scrollTo({
+                top: 400,
+                behavior: "smooth",
+              });
+          },
+          error: function(data){
+            console.log(data);
+          }
+        })
+      }
+
+      
+      //function para capturar data e tipo de reunião 
+      function captura_data_e_tipo_de_reuniao(){
+        //Captura data e tipo de reunião selecionados
+        data = document.querySelector('#data');
+        tipo = document.querySelector('#tipo');
+
+        //Caso a data esteja vazia insere hoje
+        if(data.valueAsDate === null){
+          data.valueAsDate = new Date();
+        }
+
+        //Captura o Texto do Tipo de Reunião
+        texto_do_tipo = tipo.options[tipo.selectedIndex].textContent;
+        
+        //Captura e formata para DD/MM/AAAA a data da reunião
+        texto_da_data = data.value + 'T00:00';
+        texto_da_data = formatar_data_hora(texto_da_data);
+        texto_da_data = texto_da_data.substr(0,10)
+
+        data_e_tipo_de_reuniao = texto_do_tipo +' do dia ' + texto_da_data;
+        //Insere o tipo e data da reunião na indicador_topo
+        document.querySelector('#indicador_topo').innerText = data_e_tipo_de_reuniao;
+
+        return data_e_tipo_de_reuniao;
+      }
+
+      function subir_ao_topo(){
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
       }
     </script>
   </body>
