@@ -469,10 +469,17 @@
         position: absolute;
         justify-content: center;
       }
+      #funcoes_gerais_da_ata {
+        margin-top: 15px;
+        color: #003057;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
     </style>
   </head>
   <body>
-    <div class="">
+    <div class="" id="conteudo">
       <!-- <div class="flex column">
         <button onclick="copiar_texto_completo_da_ata()">
           copiar_texto_completo_da_ata
@@ -482,6 +489,11 @@
         </button>
       </div> -->
       <div class="cobertura_content"></div>
+      <div class="flex column justify align" id="funcoes_gerais_da_ata">
+        <label for="" id="eviar_ata_completa_via_whatsapp">Enviar Ata via Whatsapp</label>
+        <label for="">Copiar conteúdo da Ata</label>
+        <label for="">Imprimir Ata</label>
+      </div>
       <div
         class="div_botao_adicionar_elemento_pronto flex align justify column"
       >
@@ -1858,13 +1870,13 @@
             menu_data_e_tipo_de_reuniao.querySelector('#tipo').onchange = captura_data_e_tipo_de_reuniao;
             
             //Insere o menu_data_e_tipo_de_reuniao na tela
-            vbotao_adicionar_card_pronto = document.querySelector(
-              "#botao_adicionar_card_pronto"
+            funcoes_gerais_da_ata = document.querySelector(
+              "#eviar_ata_completa_via_whatsapp"
             );
 
             document
-              .querySelector(".div_botao_adicionar_elemento_pronto")
-              .insertBefore(menu_data_e_tipo_de_reuniao, vbotao_adicionar_card_pronto);
+              .querySelector("#funcoes_gerais_da_ata")
+              .insertBefore(menu_data_e_tipo_de_reuniao, funcoes_gerais_da_ata);
 
               captura_data_e_tipo_de_reuniao();
 
@@ -1912,6 +1924,15 @@
           behavior: "smooth",
         });
       }
+
+      $(document).ajaxSend(function(event, jqXHR, ajaxOptions) {
+          // Sua função aqui
+          // console.log("Função executada antes de enviar a solicitação AJAX");
+      });
+
+      // linear-gradient( to right, #bcdee7, #66b7ca, #50acc3, #0e94b4 )
+      // linear-gradient( to bottom, #0e94b4, #50acc3, #66b7ca, #bcdee7)
+
     </script>
   </body>
 </html>
