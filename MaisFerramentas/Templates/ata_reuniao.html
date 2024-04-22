@@ -75,6 +75,7 @@
       }
       #area_arrastavel {
         min-height: 100px; /* altura mínima para permitir arrastar até o final */
+        margin-top: 30px;
       }
 
       .img_icones {
@@ -476,6 +477,31 @@
         flex-direction: column;
         align-items: center;
       }
+      /* .img_whatsapp_funcoes_gerais_ata{
+        background-color: #0dc143;
+      } */
+      /* #etiqueta_enviar_ata_via_whats{
+        margin-left: 10px;
+      } */
+      .botoes_de_adicao {
+        display: flex;
+        align-items: center;
+        border: #319857 1px solid;
+        border-radius: 10px 10px 10px 10px;
+        justify-content: center;
+        background-color: #319857;
+        font-size: large;
+        border: 2px solid #319857;
+        background-color: transparent;
+        color: #319857;
+        padding: 5px 10px;
+        cursor: pointer;
+        transition: background-color 0.3s, color 0.3s;
+        margin-bottom: 10px;
+      }
+      .div_de_uma_funcao_geral_da_ata{
+        margin-bottom: 10px;
+      }
     </style>
   </head>
   <body>
@@ -490,18 +516,44 @@
       </div> -->
       <div class="cobertura_content"></div>
       <div class="flex column justify align" id="funcoes_gerais_da_ata">
-        <label for="" id="eviar_ata_completa_via_whatsapp">Enviar Ata via Whatsapp</label>
-        <label for="">Copiar conteúdo da Ata</label>
-        <label for="">Imprimir Ata</label>
+
+        <div class="flex align justify div_de_uma_funcao_geral_da_ata" id="enviar_texto_completo_da_ata_via_whatsapp" >
+          <!-- <img class="div_img_icone_whats icone_opcoes img_whatsapp_funcoes_gerais_ata" src="https://www.shareicon.net/data/2048x2048/2016/07/14/607292_black_2048x2048.png" alt="" style="display: flex;"> -->
+          <span class="material-symbols-outlined"
+          style="margin-right: 5px">
+          send
+          </span>
+          <label for="" id="etiqueta_enviar_ata_via_whats" 
+          >Enviar Ata via Whatsapp</label>
+        </div>
+        
+        
+        <div class="flex align justify div_de_uma_funcao_geral_da_ata" id="copiar_texto_completo_da_ata">
+          <span class="material-symbols-outlined" style="margin-right: 5px">
+            content_copy
+          </span>
+          <label for="">Copiar conteúdo da Ata</label>
+        </div>
+
+        
+        <div class="flex align justify div_de_uma_funcao_geral_da_ata" >
+          <span class="material-symbols-outlined" style="margin-right: 5px">
+            print
+          </span>
+          <label for="">Imprimir Ata</label>
+        </div>
+
+
+        
       </div>
       <div
         class="div_botao_adicionar_elemento_pronto flex align justify column"
       >
-        <div class="flex" id="botao_adicionar_card_pronto">
+        <div class="flex botoes_de_adicao" id="botao_adicionar_card_pronto">
           <span class="material-symbols-outlined"> add </span>
           Adicionar Card Pronto
         </div>
-        <div class="flex" id="botao_criar_card_novo">
+        <div class="flex botoes_de_adicao" id="botao_criar_card_novo">
           <span class="material-symbols-outlined"> add </span>
           Criar Card Novo
         </div>
@@ -1252,9 +1304,15 @@
           });
 
         $(".botao_fechar_novo_card").on("click", fechar_tela_novo_card);
+
+        
+        
       }
       atualiza_ouvintes();
 
+      $("#enviar_texto_completo_da_ata_via_whatsapp").on('click',enviar_texto_completo_da_ata_via_whatsapp);
+
+      $("#copiar_texto_completo_da_ata").on('click',copiar_texto_completo_da_ata);
       function mostrar_dia_semana_campo_data(element) {
         var diasSemana = [
           "Domingo",
@@ -1807,7 +1865,7 @@
       function enviar_texto_completo_da_ata_via_whatsapp() {
         enviar_via_whatsapp(prepara_texto_completo_da_ata());
       }
-
+      
       function copiar_texto_completo_da_ata() {
         copiar_texto(prepara_texto_completo_da_ata());
       }
@@ -1871,7 +1929,7 @@
             
             //Insere o menu_data_e_tipo_de_reuniao na tela
             funcoes_gerais_da_ata = document.querySelector(
-              "#eviar_ata_completa_via_whatsapp"
+              "#enviar_texto_completo_da_ata_via_whatsapp"
             );
 
             document
