@@ -1873,16 +1873,16 @@
       //Verifica se a tela foi fechada ou minimizada a fim de salvar os dados atuais
       document.addEventListener(
         "visibilitychange",
-        verifica_tela_fechada_ou_minimizada
+        verifica_tela_fechada_ou_minimizada_ou_descarregada
       ); //minimiza
 
       document.addEventListener(
         "beforeunload",
-        verifica_tela_fechada_ou_minimizada
+        verifica_tela_fechada_ou_minimizada_ou_descarregada
       ); //fecha
 
       ultimo_envio = null;
-      function verifica_tela_fechada_ou_minimizada() {
+      function verifica_tela_fechada_ou_minimizada_ou_descarregada() {
         if (
           document.visibilityState === "hidden" ||
           event.type === "beforeunload"
@@ -1990,6 +1990,28 @@
 
       // linear-gradient( to right, #bcdee7, #66b7ca, #50acc3, #0e94b4 )
       // linear-gradient( to bottom, #0e94b4, #50acc3, #66b7ca, #bcdee7)
+
+      // Captura o estado da página antes de ser descarregada
+      window.addEventListener('beforeunload', function(event) {
+          // Capture o estado da página, por exemplo, usando localStorage
+          localStorage.setItem('pageState', JSON.stringify({
+              scrollTop: window.scrollY, // Posição de rolagem vertical
+              // Outras informações de estado que você deseja capturar
+          }));
+      });
+
+      // Restaura o estado da página quando o usuário volta
+      window.addEventListener('load', function(event) {
+          // Verifica se há um estado da página armazenado
+          var pageState = localStorage.getItem('pageState');
+          if (pageState) {
+              // Restaura o estado da página
+              pageState = JSON.parse(pageState);
+              window.scrollTo(0, pageState.scrollTop); // Restaura a posição de rolagem vertical
+              // Restaure outras informações de estado, se necessário
+              // Por exemplo, você pode precisar restaurar os valores dos campos de formulário
+          }
+      });
 
     </script>
   </body>
