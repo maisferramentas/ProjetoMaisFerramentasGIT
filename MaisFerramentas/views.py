@@ -299,16 +299,16 @@ def enviar_email(recipient_email, subject, message):
     # except ApiException as e:
     #     print("Exception when calling ContactsApi->create_contact: %s\n" % e)
 
-import schedule
-import time
+# import schedule
+# import time
 
-def minha_tarefa():
-    print("Olá, mundo!")
+# def minha_tarefa():
+#     print("Olá, mundo!")
 
-# Agendar a tarefa para ser executada a cada 5 segundos
-schedule.every(5).seconds.do(minha_tarefa)
+# # Agendar a tarefa para ser executada a cada 5 segundos
+# schedule.every(5).seconds.do(minha_tarefa)
 
-# Loop para executar o agendador
-while True:
-    schedule.run_pending()
-    time.sleep(1)  # Dormir por 1 segundo para evitar uso excessivo da CPU
+# # Loop para executar o agendador
+# while True:
+#     schedule.run_pending()
+#     time.sleep(1)  # Dormir por 1 segundo para evitar uso excessivo da CPU
