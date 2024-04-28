@@ -1,0 +1,32 @@
+Criar conta
+Pesquisar por EC2 (Tipo de serviço AWS)
+Selecionar o ubuntu
+Criar par de chave (download automático)
+
+Acessar o arquivo de chave > Propriedades > Segurança > Controle total
+
+conceder permissão com PowerShell >> icacls "C:\Projetos\ProjetoMaisFerramentas\maisferramentas.pem" /inheritance:r /grant:r "allysson.santos:F"
+arquivo processado: C:\Projetos\ProjetoMaisFerramentas\maisferramentas.pem
+Processados com sucesso 1 arquivos; falha no processamento de 0 arquivos
+
+CMD > Acessa o servidor ubunto criado
+C:\Projetos\ProjetoMaisFerramentas>ssh -i C:\Projetos\ProjetoMaisFerramentas\maisferramentas.pem ubuntu@18.231.47.174
+
+Atualiza o ubunto 
+sudo apt update
+
+instala o python
+sudo apt install python3-pip
+
+instala o django
+sudo apt install python3-django
+
+verifique a versão instalada
+django-admin --version
+
+instala o gunicorn
+sudo apt install gunicorn nginx
+
+$ git remote add aws ubuntu@ip-172-31-13-123:~/projetos/projetomaisferramentas
+
+scp -i C:\Projetos\ProjetoMaisFerramentas\maisferramentas.pem -r /C:\Projetos\ProjetoMaisFerramentas ubuntu@18.231.47.174:~/projetos/projetomaisferramentas

@@ -28,6 +28,7 @@ DEBUG = True
 ALLOWED_HOSTS = [
     'maisferramentas-98f68a386705.herokuapp.com',
     '127.0.0.1',
+'18.231.47.174',
 ]
 
 
