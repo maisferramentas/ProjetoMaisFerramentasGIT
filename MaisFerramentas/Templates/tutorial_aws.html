@@ -27,6 +27,115 @@ django-admin --version
 instala o gunicorn
 sudo apt install gunicorn nginx
 
-$ git remote add aws ubuntu@ip-172-31-13-123:~/projetos/projetomaisferramentas
+--Transfere os arqvuis para o servidor
+no terminal pc
+scp -i "C:/Projetos/ProjetoMaisFerramentas/maisferramentas.pem" -r "C:/Projetos/ProjetoMaisFerramentas" ubuntu@18.231.47.174:~/projetos/projetomaisferramentas
 
-scp -i C:\Projetos\ProjetoMaisFerramentas\maisferramentas.pem -r /C:\Projetos\ProjetoMaisFerramentas ubuntu@18.231.47.174:~/projetos/projetomaisferramentas
+pip install -r requirements.txt
+--aqui
+
+acesse o console AWS EC2 Rede e Segurança e grupos de segurança e criar nova regra, configure htttp 
+
+sudo nano /etc/nginx/sites-available/projetomaisferramentas
+
+server {
+    listen 80;
+    server_name 18.231.47.174;
+
+    location = /favicon.ico { access_log off; log_not_found off; }
+    location /static/ {
+        root /caminho/para/sua/aplicacao;
+    }
+
+    location / {
+        proxy_pass http://127.0.0.1:8000; # Ajuste a porta se necessário
+        include proxy_params;
+        proxy_connect_timeout 600s;
+        proxy_read_timeout 600s;
+    }
+}
+
+Adicione o IP em server_name SEU_ENDEREÇO_DE_IP; ctrl+x para salvar
+
+link
+sudo ln -s /etc/nginx/sites-available/projetomaisferramentas /etc/nginx/sites-enabled/projetomaisferramentas
+
+sudo nginx -t #Deve retornar ok
+
+--crie um job que executará o runserver
+sudo nano /etc/systemd/system/meu_projeto.service
+
+[Unit]
+Description=Meu Projeto Django
+After=network.target
+
+[Service]
+User=ubuntu
+Group=ubuntu
+WorkingDirectory=/home/ubuntu/projetos/projetomaisferramentas/ProjetoMaisFerramentas
+ExecStart=/usr/bin/python3 /home/ubuntu/projetos/projetomaisferramentas/ProjetoMaisFerramentas/manage.py runserver 0.0.0.0:8000
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+
+sudo systemctl daemon-reload
+sudo systemctl start meu_projeto
+sudo systemctl enable meu_projeto
+
+
+Entre no GIT e crie um token
+
+//maisferramentas
+//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
+
+
+Entre no Servidor ubuntu
+git init
+git add .
+git commit -m "Inicializar repositório com o projeto Django"
+git remote add origin https://github.com/maisferramentas/ProjetoMaisFerramentasGIT.git
+git push -u origin master
+
+Para clonar o projeto
+git clone https://github.com/maisferramentas/ProjetoMaisFerramentasGIT.git
+
+--Para subir uma atualização
+git add . 
+git commit -m "Inicializar repositório com o projeto Django"
+git push -u origin master
+
+
+
+Acessar o ssh
+git pull https://github.com/maisferramentas/ProjetoMaisFerramentasGIT.git
+
+
+
+
+Para subir o projeto
+
+
+C:\Users\allysson.santos> ssh-keygen -t rsa -b 4096 -C "maisferramentasmail@gmail.com"
+Generating public/private rsa key pair.
+Enter file in which to save the key (C:\Users\allysson.santos/.ssh/id_rsa):
+Enter passphrase (empty for no passphrase):
+Enter same passphrase again:
+Your identification has been saved in C:\Users\allysson.santos/.ssh/id_rsa.
+Your public key has been saved in C:\Users\allysson.santos/.ssh/id_rsa.pub.
+The key fingerprint is:
+SHA256:Nvk6Tr+G03ANy9koHlry3WzIllZHyzwdOZxPVoVQINo maisferramentasmail@gmail.com
+The key's randomart image is:
++---[RSA 4096]----+
+|          . o+..o|
+|         o .  . .|
+|        . E   . +|
+|         ..   .*o|
+|        S. B + =+|
+|      ..=o* + * o|
+|       *.X.* . . |
+|      ..*oX +    |
+|       .o*oo     |
++----[SHA256]-----+
+
+C:\Users\allysson.santos>
