@@ -1869,33 +1869,6 @@
       function copiar_texto_completo_da_ata() {
         copiar_texto(prepara_texto_completo_da_ata());
       }
-
-      //Verifica se a tela foi fechada ou minimizada a fim de salvar os dados atuais
-      document.addEventListener(
-        "visibilitychange",
-        verifica_tela_fechada_ou_minimizada_ou_descarregada
-      ); //minimiza
-
-      document.addEventListener(
-        "beforeunload",
-        verifica_tela_fechada_ou_minimizada_ou_descarregada
-      ); //fecha
-
-      ultimo_envio = null;
-      function verifica_tela_fechada_ou_minimizada_ou_descarregada() {
-        if (
-          document.visibilityState === "hidden" ||
-          event.type === "beforeunload"
-        ) {
-          // A janela foi minimizada ou fechada
-          captura_dados();
-          if (ultimo_envio != capturados) {
-            //chamar função que savará os dados
-            //Atualiza o ultimo_envio
-            ultimo_envio = capturados;
-          }
-        }
-      }
       
       //Function para montar o menu de seleção de data e tipo de reunião
       function carrega_menu_data_e_tipo_de_reuniao(){
@@ -1983,10 +1956,7 @@
         });
       }
 
-      $(document).ajaxSend(function(event, jqXHR, ajaxOptions) {
-          // Sua função aqui
-          // console.log("Função executada antes de enviar a solicitação AJAX");
-      });
+
 
       // linear-gradient( to right, #bcdee7, #66b7ca, #50acc3, #0e94b4 )
       // linear-gradient( to bottom, #0e94b4, #50acc3, #66b7ca, #bcdee7)
@@ -2013,6 +1983,59 @@
           }
       });
 
+
+
+      //funções para salvar o formulário:
+      
+      //Verifica se a tela foi fechada ou minimizada a fim de salvar os dados atuais
+      document.addEventListener(
+        "visibilitychange",
+        verifica_tela_fechada_ou_minimizada_ou_descarregada
+      ); //minimiza
+
+      document.addEventListener(
+        "beforeunload",
+        verifica_tela_fechada_ou_minimizada_ou_descarregada
+      ); //fecha
+
+      function verifica_tela_fechada_ou_minimizada_ou_descarregada(event) {
+        if (
+          document.visibilityState === "hidden" 
+          //|| event.type === "beforeunload" 
+          //|| event.type === 'ajaxSend'
+        ) {
+          enviar_ata_para_o_bando();
+        }
+      }
+
+      $(document).one("ajaxSend", function(event, jqXHR, ajaxOptions) {
+          // Sua função aqui
+          console.log("Função executada antes de enviar a solicitação AJAX");
+          enviar_ata_para_o_bando();
+      });
+
+      function enviar_ata_para_o_bando(){
+        //define ultimo_envio
+        if(typeof ultimo_envio === 'undefined'){
+          ultimo_envio = null;
+        }
+
+        window.open(`https://www.trivago.com.br`, "_blank");
+        captura_dados();
+        if (ultimo_envio != capturados) {
+          //Atualiza o ultimo_envio
+          ultimo_envio = capturados;
+
+
+          // $.ajax({
+          //   url: url,
+          //   data: data,
+          //   success: function*(data){console.log(data);},
+          //   error: function(data){console.log(data);}
+          // })
+
+        }
+      }
     </script>
   </body>
 </html>
