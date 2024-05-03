@@ -55,7 +55,7 @@ JOIN frequencia.tb_tipo_Frequencia f ON f.id_tipo_frequencia = a.id_tipo_frequen
              LEFT JOIN maisferramentas.tb_membros d ON d.id_membro_interno = b.inserido_por) e
   WHERE e.versao_mais_recente = 1;
   --------------
-
+--Derrubar Conexões
   SELECT * FROM pg_stat_activity
 where datname = 'kwjetfdy';
 

@@ -117,7 +117,7 @@
         position: relative;
         padding-bottom: 20px;
         padding-top: 20px;
-        /* background-image: url("https://lh3.googleusercontent.com/u/0/drive-viewer/AKGpihZ7uZz20Mqj53BgikOvObKhBVARcC0h0R-meBGwwnNFI2mhcDjBsz0gGpfIoCVZ0hCeDsOxw_Xt_OWq4WJps0Z8VqBs=w1366-h612");
+        /* background-image: url("https://lh3.googleusercontent.com/u/0/drive-viewer/AKGpihashdFwspuu_FFEENE5OwOA-hx1cpncY9jAG_VEu-iS9HkknAl29yXZOiRLgpjwCeOyTjzNk5HkOHN_MUNoEl5etYofGqH-Hg=w1366-h612");
         background-repeat: no-repeat; */
         /* background-color: rgba(255, 255, 255, 9.9); */
         /* background-position: -60px 135px; */
@@ -502,9 +502,29 @@
       .div_de_uma_funcao_geral_da_ata{
         margin-bottom: 10px;
       }
+
+      
+      .botao-flutuante {
+          position: fixed;
+          bottom: 20px;
+          right: 20px;
+          padding: 10px 20px;
+          background-color: #007bff;
+          color: #fff;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+          box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+          z-index: 1000;
+      }
+
+      .botao-flutuante:hover {
+          background-color: #0056b3;
+      }
     </style>
   </head>
   <body>
+    <button id="botaoSalvar" class="botao-flutuante">Salvar</button>
     <div class="" id="conteudo">
       <!-- <div class="flex column">
         <button onclick="copiar_texto_completo_da_ata()">
@@ -565,7 +585,7 @@
             <img
               draggable="false"
               class="img_canto"
-              src="https://lh3.googleusercontent.com/u/0/drive-viewer/AKGpihZ7uZz20Mqj53BgikOvObKhBVARcC0h0R-meBGwwnNFI2mhcDjBsz0gGpfIoCVZ0hCeDsOxw_Xt_OWq4WJps0Z8VqBs=w1366-h612"
+              src="https://lh3.googleusercontent.com/u/0/drive-viewer/AKGpihashdFwspuu_FFEENE5OwOA-hx1cpncY9jAG_VEu-iS9HkknAl29yXZOiRLgpjwCeOyTjzNk5HkOHN_MUNoEl5etYofGqH-Hg=w1366-h612"
               alt=""
             />
             <div class="div_card_info flex column left_50px dropdown">
@@ -663,7 +683,7 @@
             <img
               draggable="false"
               class="img_canto"
-              src="https://lh3.googleusercontent.com/u/0/drive-viewer/AKGpihZ7uZz20Mqj53BgikOvObKhBVARcC0h0R-meBGwwnNFI2mhcDjBsz0gGpfIoCVZ0hCeDsOxw_Xt_OWq4WJps0Z8VqBs=w1366-h612"
+              src="https://lh3.googleusercontent.com/u/0/drive-viewer/AKGpihashdFwspuu_FFEENE5OwOA-hx1cpncY9jAG_VEu-iS9HkknAl29yXZOiRLgpjwCeOyTjzNk5HkOHN_MUNoEl5etYofGqH-Hg=w1366-h612"
               alt=""
             />
             <div class="div_card_info flex column left_50px dropdown">
@@ -705,7 +725,7 @@
         <img
           draggable="false"
           class="img_canto"
-          src="https://lh3.googleusercontent.com/u/0/drive-viewer/AKGpihZ7uZz20Mqj53BgikOvObKhBVARcC0h0R-meBGwwnNFI2mhcDjBsz0gGpfIoCVZ0hCeDsOxw_Xt_OWq4WJps0Z8VqBs=w1366-h612"
+          src="https://lh3.googleusercontent.com/u/0/drive-viewer/AKGpihashdFwspuu_FFEENE5OwOA-hx1cpncY9jAG_VEu-iS9HkknAl29yXZOiRLgpjwCeOyTjzNk5HkOHN_MUNoEl5etYofGqH-Hg=w1366-h612"
           alt=""
         />
         <div class="div_card_info flex column left_55px dropdown">
@@ -811,6 +831,7 @@
           tipo: "texto_livre",
           elemento_oculto: 0,
           value: "Teste Titulo Anuncio",
+          data_da_ata: '2024-05-02',
         },
         {
           card: 1,
@@ -819,6 +840,7 @@
           tipo: "data",
           elemento_oculto: 0,
           value: "2024-03-12T19:00",
+          data_da_ata: '2024-05-02',
         },
         {
           card: 1,
@@ -826,6 +848,7 @@
           label: "Local",
           tipo: "texto_livre",
           elemento_oculto: 0,
+          data_da_ata: '2024-05-02',
         },
         {
           card: 1,
@@ -833,6 +856,7 @@
           label: "Observações:",
           tipo: "texto_livre",
           elemento_oculto: 1,
+          data_da_ata: '2024-05-02',
         },
         {
           card: 2,
@@ -841,6 +865,7 @@
           tipo: "hinos",
           elemento_oculto: 0,
           value: "9. Graças Damos, Ó Deus, Por um Profeta",
+          data_da_ata: '2024-05-02',
         },
         {
           card: 3,
@@ -849,6 +874,7 @@
           tipo: "nomes",
           elemento_oculto: 0,
           value: "Angela Maria Massaneiro dos Santos Cruz",
+          data_da_ata: '2024-05-02',
         },
         {
           card: 3,
@@ -856,6 +882,7 @@
           label: "Teste Oculto:",
           tipo: "nomes",
           elemento_oculto: 1,
+          data_da_ata: '2024-05-02',
         },
         {
           card: 4,
@@ -864,6 +891,7 @@
           posicao_no_card: null,
           tipo: "nomes",
           value: "",
+          data_da_ata: '2024-05-02',
         },
         {
           card: 4,
@@ -872,6 +900,7 @@
           posicao_no_card: null,
           tipo: "texto_livre",
           value: "",
+          data_da_ata: '2024-05-02',
         },
         {
           card: 4,
@@ -880,6 +909,7 @@
           posicao_no_card: null,
           tipo: "texto_livre",
           value: "",
+          data_da_ata: '2024-05-02',
         },
         {
           card: 5,
@@ -888,6 +918,7 @@
           posicao_no_card: null,
           tipo: "nomes",
           value: "",
+          data_da_ata: '2024-05-02',
         },
         {
           card: 6,
@@ -896,6 +927,7 @@
           posicao_no_card: null,
           tipo: "nomes",
           value: "",
+          data_da_ata: '2024-05-02',
         },
       ];
 
@@ -1478,7 +1510,7 @@
         reorganizeIDs();
       }
 
-      carrega_dados();
+      
       function captura_dados() {
         capturados = [];
         aqui = document
@@ -1508,9 +1540,25 @@
             tipo: tipo,
             elemento_oculto: elemento_oculto,
             value: value,
+            data_da_ata: document.querySelector('#data').value,
+            tipo_de_ata: document.querySelector('#tipo').value,
+            id_ata: id_ata,
           });
         });
-        console.log(capturados);
+        // console.log(capturados);
+      }
+
+      function obter_id_ata(){
+        url='/obter_id_ata';
+        data_da_ata= document.querySelector('#data').value;
+        tipo_de_ata= document.querySelector('#tipo').value;
+
+        $.ajax({
+          url:url,
+          data:{data_da_ata,tipo_de_ata},
+          success: function(result){id_ata = result.id_ata},
+          error: function(data){console.log(data)},
+        })
       }
 
       function clonar_elemento() {
@@ -1946,6 +1994,10 @@
         //Insere o tipo e data da reunião na indicador_topo
         document.querySelector('#indicador_topo').innerText = data_e_tipo_de_reuniao;
 
+        //function que seta a data e o tipo de reunião
+        obter_id_ata();
+        carrega_dados();
+
         return data_e_tipo_de_reuniao;
       }
 
@@ -1987,55 +2039,91 @@
 
       //funções para salvar o formulário:
       
-      //Verifica se a tela foi fechada ou minimizada a fim de salvar os dados atuais
-      document.addEventListener(
-        "visibilitychange",
-        verifica_tela_fechada_ou_minimizada_ou_descarregada
-      ); //minimiza
+      // //Verifica se a tela foi fechada ou minimizada a fim de salvar os dados atuais
+      // document.addEventListener(
+      //   "visibilitychange",
+      //   verifica_tela_fechada_ou_minimizada_ou_descarregada
+      // ); //minimiza
 
-      document.addEventListener(
-        "beforeunload",
-        verifica_tela_fechada_ou_minimizada_ou_descarregada
-      ); //fecha
+      // document.addEventListener(
+      //   "beforeunload",
+      //   verifica_tela_fechada_ou_minimizada_ou_descarregada
+      // ); //
+      
+      // window.addEventListener("beforeunload", function(event) {
+      // // Executa sua função aqui
+      //   // console.log("Executando função antes do recarregamento...");
+      //   enviar_ata_para_o_banco();
+      //   event.returnValue = "Tem certeza que deseja sair desta página?";
+      // });
 
-      function verifica_tela_fechada_ou_minimizada_ou_descarregada(event) {
-        if (
-          document.visibilityState === "hidden" 
-          //|| event.type === "beforeunload" 
-          //|| event.type === 'ajaxSend'
-        ) {
-          enviar_ata_para_o_bando();
-        }
-      }
 
-      $(document).one("ajaxSend", function(event, jqXHR, ajaxOptions) {
+      // function verifica_tela_fechada_ou_minimizada_ou_descarregada(event) {
+      //   if (
+      //     document.visibilityState === "hidden" 
+      //     //|| event.type === "beforeunload" 
+      //     //|| event.type === 'ajaxSend'
+      //   ) {
+      //     enviar_ata_para_o_banco();
+      //   }
+      // }
+
+      //$(document).one
+      //document.addEventListener
+      $(document).on("ajaxSend", function(event, jqXHR, ajaxOptions) {
           // Sua função aqui
           console.log("Função executada antes de enviar a solicitação AJAX");
-          enviar_ata_para_o_bando();
+          // console.log(event, jqXHR, ajaxOptions);
+          enviar_ata_para_o_banco();
       });
-
-      function enviar_ata_para_o_bando(){
-        //define ultimo_envio
-        if(typeof ultimo_envio === 'undefined'){
-          ultimo_envio = null;
-        }
-
-        window.open(`https://www.trivago.com.br`, "_blank");
+      
+      
+      function enviar_ata_para_o_banco(){
         captura_dados();
-        if (ultimo_envio != capturados) {
+
+        //Cria variável ultimo_envio
+        if(typeof ultimo_envio === 'undefined'){
+          ultimo_envio = capturados;
+        }
+        
+        if (JSON.stringify(ultimo_envio) !== JSON.stringify(capturados)) {
           //Atualiza o ultimo_envio
           ultimo_envio = capturados;
+          console.log('Salvar Acionado');
 
+          data = JSON.stringify(capturados);
+          url = "/enviar_ata_para_o_banco?data=" + encodeURIComponent(data);
 
+          data = capturados;
           // $.ajax({
           //   url: url,
-          //   data: data,
-          //   success: function*(data){console.log(data);},
+          //   // data: data,
+          //   success: function(data){console.log(data);},
           //   error: function(data){console.log(data);}
           // })
-
         }
       }
+
+      function obter_dados_de_ata_no_banco (){
+          data_inicio = document.querySelector('#data').value;
+          tipo = document.querySelector('#tipo').value;
+
+          //data = [data_inicio: data_inicio]
+          url = '/obter_dados_de_ata_no_banco';
+          data = capturados;
+          $.ajax({
+            url: url,
+            data: data,
+            success: function*(data){console.log(data);},
+            error: function(data){console.log(data);}
+          })
+      }
+
+      // Adiciona um ouvinte de eventos para o clique no botão
+      document.getElementById("botaoSalvar").addEventListener("click", function() {
+          // Lógica para salvar aqui
+          alert("Salvando...");
+      });
     </script>
   </body>
 </html>

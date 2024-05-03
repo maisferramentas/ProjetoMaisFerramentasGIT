@@ -247,6 +247,63 @@ def def_atualiza_localizacao(request):
 
     return JsonResponse({'id_registro_localizacao': id_registro_localizacao})
 
+import json
+from .models import model_ata_no_banco
+def enviar_ata_para_o_banco(request):
+    data = request.GET.get('data')
+
+    inserido_por = model_tb_acesso.objects.filter(nome_usuario_login=def_usuario_logado(request)).values_list('id_membro_interno', flat=True).first()
+    
+    inserido_em=timezone.now()
+    
+    dados = json.loads(data)
+    for item in dados:
+        ata = model_ata_no_banco(
+            id_ata=item.get('id_ata'),
+            data_da_ata=item.get('data_da_ata'),
+            tipo_de_ata=item.get('tipo_de_ata'),
+            card=item.get('card'),
+            elemento_oculto=item.get('elemento_oculto'),
+            label=item.get('label'),
+            tipo=item.get('tipo'),
+            value=item.get('value'),
+            inserido_por=inserido_por,
+            inserido_em=inserido_em
+        )
+        # Salvar a instância no banco de dados
+        ata.save()
+
+    return JsonResponse({'result': 'Retorno do server para enviar_ata_para_o_banco'})
+
+def obter_dados_de_ata_no_banco(request):
+    return JsonResponse({'result': 'Chegou!'})
+
+def obter_id_ata(request):
+    data_da_ata = request.GET.get('data')
+    tipo_de_ata = request.GET.get('tipo_de_ata')
+    
+
+    #Busca o id da ata de acordo com a data
+    consulta_id_ata = model_ata_no_banco.objects.raw('SELECT versao_id_ata, id_ata FROM atas.tb_atas WHERE data_da_ata = %s AND tipo_de_ata = %s ORDER BY id_ata DESC LIMIT 1;', [data_da_ata, tipo_de_ata])
+    
+    #Caso encontre um id retorna o id_ata, se não o configura nulo e passa para o p´roximo passo
+    if consulta_id_ata: 
+        id_ata = consulta_id_ata[0].id_ata
+    else:
+        id_ata = None
+
+    #Se Não há ata para esta data cria-se um novo id = max id + 1
+    if id_ata is None:
+        consulta_id_ata = model_ata_no_banco.objects.raw('SELECT versao_id_ata,COALESCE(id_ata,1)+1 id_ata FROM atas.tb_atas WHERE tipo_de_ata = %s ORDER BY id_ata DESC LIMIT 1;', [ tipo_de_ata])
+
+    #Se há um id retorna id_ata, se não retorna 1 (primeiro id da tabela)
+    if consulta_id_ata: 
+        id_ata = consulta_id_ata[0].id_ata
+    else:
+        id_ata = 1
+    
+    return JsonResponse({'id_ata': id_ata})
+    
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
