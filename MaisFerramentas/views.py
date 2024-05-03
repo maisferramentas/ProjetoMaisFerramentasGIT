@@ -275,8 +275,19 @@ def enviar_ata_para_o_banco(request):
 
     return JsonResponse({'result': 'Retorno do server para enviar_ata_para_o_banco'})
 
+from django.core import serializers
 def obter_dados_de_ata_no_banco(request):
-    return JsonResponse({'result': 'Chegou!'})
+    data_da_ata = request.GET.get('data_da_ata')
+    tipo_de_ata = request.GET.get('tipo_de_ata')
+    
+    # Busca o id da ata de acordo com a data
+    dados_de_ata_no_banco = model_ata_no_banco.objects.filter(data_da_ata=data_da_ata, tipo_de_ata=tipo_de_ata)
+
+    # Converte o queryset em uma lista de dicionários
+    dados_serializados = serializers.serialize('json', dados_de_ata_no_banco)
+
+    return JsonResponse({'result': dados_serializados})
+
 
 def obter_id_ata(request):
     data_da_ata = request.GET.get('data')

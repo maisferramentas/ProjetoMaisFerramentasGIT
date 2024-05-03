@@ -524,7 +524,7 @@
     </style>
   </head>
   <body>
-    <button id="botaoSalvar" class="botao-flutuante">Salvar</button>
+    <!-- <button id="botaoSalvar" class="botao-flutuante">Salvar</button> -->
     <div class="" id="conteudo">
       <!-- <div class="flex column">
         <button onclick="copiar_texto_completo_da_ata()">
@@ -2050,31 +2050,35 @@
       //   verifica_tela_fechada_ou_minimizada_ou_descarregada
       // ); //
       
-      // window.addEventListener("beforeunload", function(event) {
-      // // Executa sua função aqui
-      //   // console.log("Executando função antes do recarregamento...");
-      //   enviar_ata_para_o_banco();
-      //   event.returnValue = "Tem certeza que deseja sair desta página?";
-      // });
-
 
       // function verifica_tela_fechada_ou_minimizada_ou_descarregada(event) {
       //   if (
-      //     document.visibilityState === "hidden" 
-      //     //|| event.type === "beforeunload" 
+      //     event.type === "beforeunload"
+      //     //|| document.visibilityState === "hidden" 
       //     //|| event.type === 'ajaxSend'
       //   ) {
       //     enviar_ata_para_o_banco();
       //   }
       // }
 
-      //$(document).one
-      //document.addEventListener
+      //Salvamento automático em caso de fechar ou atualizar a aba
+      window.addEventListener("beforeunload", function(event) {
+      // Executa sua função aqui
+        // console.log("Executando função antes do recarregamento...");
+        enviar_ata_para_o_banco();
+        // window.open('http://www.google.com', "_blank");
+        // event.returnValue = "Tem certeza que deseja sair desta página?";
+        
+      });
+
+      //Salvamento Automático: Intercepta qualquer ajax (redirecionamento / Deslogar) e salva o conteúdo antes de finalizar o ajax
       $(document).on("ajaxSend", function(event, jqXHR, ajaxOptions) {
-          // Sua função aqui
-          console.log("Função executada antes de enviar a solicitação AJAX");
-          // console.log(event, jqXHR, ajaxOptions);
+        //Verifica se está na tela de atas efetua o salvamento, se não, remove o ouvinte;
+        if(document.querySelector("#area_arrastavel") != null){
           enviar_ata_para_o_banco();
+        }else{
+          $(document).off("ajaxSend");
+        }
       });
       
       
@@ -2086,6 +2090,7 @@
           ultimo_envio = capturados;
         }
         
+        //Verifica se o último envio é igual ao atual para não inserir no banco informação repetida
         if (JSON.stringify(ultimo_envio) !== JSON.stringify(capturados)) {
           //Atualiza o ultimo_envio
           ultimo_envio = capturados;
@@ -2095,35 +2100,35 @@
           url = "/enviar_ata_para_o_banco?data=" + encodeURIComponent(data);
 
           data = capturados;
-          // $.ajax({
-          //   url: url,
-          //   // data: data,
-          //   success: function(data){console.log(data);},
-          //   error: function(data){console.log(data);}
-          // })
+          $.ajax({
+            url: url,
+            // data: data,
+            success: function(data){console.log(data);},
+            error: function(data){console.log(data);}
+          })
         }
       }
 
       function obter_dados_de_ata_no_banco (){
-          data_inicio = document.querySelector('#data').value;
-          tipo = document.querySelector('#tipo').value;
+        data_da_ata = document.querySelector('#data').value;
+        tipo_de_ata = document.querySelector('#tipo').value;
 
-          //data = [data_inicio: data_inicio]
-          url = '/obter_dados_de_ata_no_banco';
-          data = capturados;
-          $.ajax({
-            url: url,
-            data: data,
-            success: function*(data){console.log(data);},
-            error: function(data){console.log(data);}
-          })
+        //data = [data_inicio: data_inicio]
+        url = '/obter_dados_de_ata_no_banco';
+        data = capturados;
+        $.ajax({
+          url: url,
+          data: {data_da_ata,tipo_de_ata},
+          success: function(data){console.log(data);},
+          error: function(data){console.log(data);}
+        })
       }
 
       // Adiciona um ouvinte de eventos para o clique no botão
-      document.getElementById("botaoSalvar").addEventListener("click", function() {
-          // Lógica para salvar aqui
-          alert("Salvando...");
-      });
+      // document.getElementById("botaoSalvar").addEventListener("click", function() {
+      //     // Lógica para salvar aqui
+      //     alert("Salvando...");
+      // });
     </script>
   </body>
 </html>
