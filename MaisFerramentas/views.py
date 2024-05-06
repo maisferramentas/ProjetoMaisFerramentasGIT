@@ -290,12 +290,13 @@ def obter_dados_de_ata_no_banco(request):
 
 
 def obter_id_ata(request):
-    data_da_ata = request.GET.get('data')
-    tipo_de_ata = request.GET.get('tipo_de_ata')
-    
+    data_da_ata_para_obter_ID = request.GET.get('data_da_ata_para_obter_ID')
+    tipo_de_ata_para_obter_ID = request.GET.get('tipo_de_ata_para_obter_ID')
 
     #Busca o id da ata de acordo com a data
-    consulta_id_ata = model_ata_no_banco.objects.raw('SELECT versao_id_ata, id_ata FROM atas.tb_atas WHERE data_da_ata = %s AND tipo_de_ata = %s ORDER BY id_ata DESC LIMIT 1;', [data_da_ata, tipo_de_ata])
+    consulta_id_ata = model_ata_no_banco.objects.raw('SELECT versao_id_ata, id_ata FROM atas.tb_atas WHERE data_da_ata = %s AND tipo_de_ata = %s ORDER BY id_ata DESC LIMIT 1;', [data_da_ata_para_obter_ID, tipo_de_ata_para_obter_ID])
+
+    print(consulta_id_ata)
     
     #Caso encontre um id retorna o id_ata, se não o configura nulo e passa para o p´roximo passo
     if consulta_id_ata: 
@@ -305,7 +306,7 @@ def obter_id_ata(request):
 
     #Se Não há ata para esta data cria-se um novo id = max id + 1
     if id_ata is None:
-        consulta_id_ata = model_ata_no_banco.objects.raw('SELECT versao_id_ata,COALESCE(id_ata,1)+1 id_ata FROM atas.tb_atas WHERE tipo_de_ata = %s ORDER BY id_ata DESC LIMIT 1;', [ tipo_de_ata])
+        consulta_id_ata = model_ata_no_banco.objects.raw('SELECT versao_id_ata,COALESCE(id_ata,1)+1 id_ata FROM atas.tb_atas ORDER BY id_ata DESC LIMIT 1;')
 
     #Se há um id retorna id_ata, se não retorna 1 (primeiro id da tabela)
     if consulta_id_ata: 

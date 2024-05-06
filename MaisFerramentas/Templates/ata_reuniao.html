@@ -1540,8 +1540,8 @@
             tipo: tipo,
             elemento_oculto: elemento_oculto,
             value: value,
-            data_da_ata: document.querySelector('#data').value,
-            tipo_de_ata: document.querySelector('#tipo').value,
+            data_da_ata: data_da_ata,
+            tipo_de_ata: tipo_de_ata,
             id_ata: id_ata,
           });
         });
@@ -1550,15 +1550,18 @@
 
       function obter_id_ata(){
         url='/obter_id_ata';
-        data_da_ata= document.querySelector('#data').value;
-        tipo_de_ata= document.querySelector('#tipo').value;
+        data_da_ata_para_obter_ID = document.querySelector('#data').value;
+        data_da_ata_para_obter_ID = `'${data_da_ata_para_obter_ID}'`;
+        tipo_de_ata_para_obter_ID = document.querySelector('#tipo').value;
 
         $.ajax({
           url:url,
-          data:{data_da_ata,tipo_de_ata},
-          success: function(result){id_ata = result.id_ata},
+          data:{data_da_ata_para_obter_ID,tipo_de_ata_para_obter_ID},
+          success: function(result){id_ata = result.id_ata;},
           error: function(data){console.log(data)},
-        })
+        });
+
+        atualiza_variaveis_data_da_ata_e_tipo_de_ata();
       }
 
       function clonar_elemento() {
@@ -1694,7 +1697,6 @@
         convite = `Olá ${nomes_concatenados} tudo bem? O Bispado lhe estende o convite para participar da ${data_e_tipo_de_reuniao}, cumprindo a seguinte designação: \n`;
 
         copiado = copiar(div);
-        // console.log(copiado);
         
         designacao = div.querySelector(".campo_titulo").textContent;
         hinos = "";
@@ -1720,8 +1722,6 @@
             "Por favor, esteja no púlpito antes que o hino termine, não espere o hino acabar para subir ao estrado.";
           copiado = copiado + "\n" + orientacao_oracao;
         }
-
-        // console.log(convite + "\n" + copiado);
 
         texto = convite + "\n" + copiado;
         enviar_via_whatsapp(texto);
@@ -1784,7 +1784,6 @@
           .querySelectorAll("select")
           .forEach(function (element) {
             if (element.type === "select-one") {
-              // console.log(element);
               //identifica se o elemento é oculto
               if (element.closest(".div_card_info_adicionais")) {
                 elemento_oculto = 1;
@@ -1996,9 +1995,16 @@
 
         //function que seta a data e o tipo de reunião
         obter_id_ata();
+        atualiza_variaveis_data_da_ata_e_tipo_de_ata();
         carrega_dados();
 
         return data_e_tipo_de_reuniao;
+      }
+
+      function atualiza_variaveis_data_da_ata_e_tipo_de_ata(){
+        //Seta as Variaveis
+        data_da_ata = document.querySelector('#data').value;
+        tipo_de_ata = document.querySelector('#tipo').value;
       }
 
       function subir_ao_topo(){
@@ -2062,25 +2068,31 @@
       // }
 
       //Salvamento automático em caso de fechar ou atualizar a aba
-      window.addEventListener("beforeunload", function(event) {
-      // Executa sua função aqui
-        // console.log("Executando função antes do recarregamento...");
-        enviar_ata_para_o_banco();
-        // window.open('http://www.google.com', "_blank");
-        // event.returnValue = "Tem certeza que deseja sair desta página?";
-        
-      });
+      window.addEventListener("beforeunload", salvar_antes_de_atualizar_tela);
 
-      //Salvamento Automático: Intercepta qualquer ajax (redirecionamento / Deslogar) e salva o conteúdo antes de finalizar o ajax
-      $(document).on("ajaxSend", function(event, jqXHR, ajaxOptions) {
-        //Verifica se está na tela de atas efetua o salvamento, se não, remove o ouvinte;
-        if(document.querySelector("#area_arrastavel") != null){
-          enviar_ata_para_o_banco();
-        }else{
-          $(document).off("ajaxSend");
-        }
-      });
-      
+      function salvar_antes_de_atualizar_tela(event) {
+        //Salva as Informações
+        enviar_ata_para_o_banco();
+
+        //Burla o navegador segurando a página por tempo suficiente para envio da requisição
+        novaJanela = window.open('', '_blank');
+        setTimeout(function() {
+            novaJanela.close();
+        }, 0);
+      }
+
+      //Salvamento Automático: Intercepta qualquer ajax (redirecionamento / Deslogar) e salva o conteúdo da ata antes.
+      salvar_antes_de_uma_requisicao_ajax();
+      function salvar_antes_de_uma_requisicao_ajax(){
+        $(document).on("ajaxSend", function(event, jqXHR, ajaxOptions) {
+          if(document.querySelector("#area_arrastavel") != null){
+            enviar_ata_para_o_banco();
+          }else{
+            $(document).off("ajaxSend");
+            window.removeEventListener("beforeunload", salvar_antes_de_atualizar_tela);
+          }
+        });
+      }
       
       function enviar_ata_para_o_banco(){
         captura_dados();
@@ -2099,29 +2111,35 @@
           data = JSON.stringify(capturados);
           url = "/enviar_ata_para_o_banco?data=" + encodeURIComponent(data);
 
+          $(document).off("ajaxSend");
           data = capturados;
           $.ajax({
             url: url,
             // data: data,
-            success: function(data){console.log(data);},
+            success: function(data){
+              //console.log(data);
+              obter_id_ata();
+              salvar_antes_de_uma_requisicao_ajax();
+            },
             error: function(data){console.log(data);}
-          })
+          });
         }
       }
 
       function obter_dados_de_ata_no_banco (){
         data_da_ata = document.querySelector('#data').value;
+        data_da_ata = `'${data_da_ata}'`;
         tipo_de_ata = document.querySelector('#tipo').value;
 
         //data = [data_inicio: data_inicio]
         url = '/obter_dados_de_ata_no_banco';
         data = capturados;
-        $.ajax({
-          url: url,
-          data: {data_da_ata,tipo_de_ata},
-          success: function(data){console.log(data);},
-          error: function(data){console.log(data);}
-        })
+        // $.ajax({
+        //   url: url,
+        //   data: {data_da_ata,tipo_de_ata},
+        //   success: function(data){console.log(data);},
+        //   error: function(data){console.log(data);}
+        // })
       }
 
       // Adiciona um ouvinte de eventos para o clique no botão
