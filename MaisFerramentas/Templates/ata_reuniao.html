@@ -1412,7 +1412,7 @@
       numero_de_cards = 0;
       function carrega_dados() {
         separar_array();
-        document.querySelector("#area_arrastavel").innerHTML = '';
+        // document.querySelector("#area_arrastavel").innerHTML = '';
 
         // Agora, vamos renderizar os cards
         for (const card in cardsAgrupados) {
@@ -2141,13 +2141,15 @@
         //data = [data_inicio: data_inicio]
         url = '/obter_dados_de_ata_no_banco';
         data = capturados;
-        console.log(id_ata);
+        $(document).off("ajaxSend");
         $.ajax({
           url: url,
           data: {data_da_ata,tipo_de_ata,id_ata},
-          success: function(data){console.log(data);
+          success: function(data){
+            document.querySelector("#area_arrastavel").innerHTML = '';
             cards = data.data;
             carrega_dados();
+            salvar_antes_de_uma_requisicao_ajax();
           },
           error: function(data){console.log(data);}
         })
