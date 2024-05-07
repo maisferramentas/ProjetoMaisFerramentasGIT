@@ -102,6 +102,7 @@ class model_ata_no_banco(models.Model):
     value = models.CharField(max_length=255)
     inserido_por = models.IntegerField()
     inserido_em = models.DateTimeField()
+    status = models.IntegerField()
 
     class Meta:
         db_table = '"atas"."tb_atas"'
