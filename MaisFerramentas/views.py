@@ -279,14 +279,21 @@ from django.core import serializers
 def obter_dados_de_ata_no_banco(request):
     data_da_ata = request.GET.get('data_da_ata')
     tipo_de_ata = request.GET.get('tipo_de_ata')
+    id_ata = request.GET.get('id_ata')
     
-    # Busca o id da ata de acordo com a data
-    dados_de_ata_no_banco = model_ata_no_banco.objects.filter(data_da_ata=data_da_ata, tipo_de_ata=tipo_de_ata)
+    #Busca a versão mais recente da ata
+    versao_mais_recente_da_ata = model_ata_no_banco.objects.filter(id_ata=id_ata).order_by('-inserido_em').first()
 
-    # Converte o queryset em uma lista de dicionários
-    dados_serializados = serializers.serialize('json', dados_de_ata_no_banco)
+    if versao_mais_recente_da_ata is not None:
+        inserido_em = versao_mais_recente_da_ata.inserido_em
+        # Busca os dados da ata de acordo com o id e o momento em que foi inserida
+        dados_de_ata_no_banco = model_ata_no_banco.objects.filter(id_ata=id_ata, inserido_em=inserido_em)
 
-    return JsonResponse({'result': dados_serializados})
+        data = [model_to_dict(obj) for obj in dados_de_ata_no_banco]
+    else:
+        data = []
+
+    return JsonResponse({"data": data}, safe=False)
 
 
 def obter_id_ata(request):
