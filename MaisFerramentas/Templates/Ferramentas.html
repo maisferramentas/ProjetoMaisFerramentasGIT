@@ -736,6 +736,8 @@
         success: function (data) {
           // window.location.href = '/ferramentas/login';
           console.log(data);
+          dados_usuario_logado = data;
+          telefone_do_usuario_logado = dados_usuario_logado.dados_adicionais[0].telefone_individual;
 
           document.getElementById("div_dados_usuario_logado").innerHTML =
             ` <div style="font-weight: bold ;font-size: 25px ;margin-top: 4px; margin-right: 3px; background-color: rgb(10, 237, 218); border-radius: 50px; width: 40px; height: 40px; display: flex;align-items: center; justify-content: center; text-align: center;">

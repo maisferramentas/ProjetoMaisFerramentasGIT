@@ -1735,7 +1735,7 @@
       function enviar_via_whatsapp(texto) {
         texto = encodeURIComponent(texto);
 
-        contato = "5541988799408";
+        contato = telefone_do_usuario_logado;
 
         link = `https://api.whatsapp.com/send?phone=${contato}&text=${texto}`;
 
@@ -2163,50 +2163,44 @@
         })
       }
 
+      obter_informacoes_de_apoio();
+      function obter_informacoes_de_apoio(){
+
+        hinos = [];
+        chamados = [];
+        nomes=[];
+        
+        url = '/obter_informacoes_de_apoio';
+        $.ajax({
+          url:url,
+          success: function(result){
+
+            result.chamados.forEach(function(chamado){
+              chamados.push(chamado.chamado)
+            });
+            
+            result.hinos.forEach(function(hino){
+              hinos.push(hino.hino)
+            });
+
+            result.nomes.forEach(function(nome){
+              nomes.push(nome.nome_interno)
+            });
+
+            telefone_do_usuario_logado = telefone_do_usuario_logado;
+
+          },
+          error: function(result){console.log(result)},
+        })
+      }
+
       // Adiciona um ouvinte de eventos para o clique no botão
       // document.getElementById("botaoSalvar").addEventListener("click", function() {
       //     // Lógica para salvar aqui
       //     alert("Salvando...");
       // });
 
-
-
-
-      //função para aguardar execução de outras funções:
-
-      function aguardar(funcao) {
-          // Cria uma Promise para aguardar as requisições Ajax
-          return new Promise(function(resolve, reject) {
-              // Cria um contador para acompanhar o número de requisições pendentes
-              let numRequisicoesPendentes = 0;
-
-              // Função para decrementar o contador quando uma requisição for concluída
-              function requisicaoConcluida() {
-                  numRequisicoesPendentes--;
-                  // Verifica se todas as requisições foram concluídas
-                  if (numRequisicoesPendentes === 0) {
-                      resolve();
-                  }
-              }
-
-              // Sobrescreve a função XMLHttpRequest.open para interceptar as requisições Ajax
-              const originalOpen = XMLHttpRequest.prototype.open;
-              XMLHttpRequest.prototype.open = function() {
-                  numRequisicoesPendentes++;
-                  this.addEventListener('load', requisicaoConcluida);
-                  originalOpen.apply(this, arguments);
-              };
-
-              // Executa a função passada como parâmetro
-              funcao();
-
-              // Se não houver requisições pendentes, resolve imediatamente
-              if (numRequisicoesPendentes === 0) {
-                  resolve();
-              }
-          });
-      }
-
+        
     </script>
   </body>
 </html>

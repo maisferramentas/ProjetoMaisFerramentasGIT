@@ -155,9 +155,14 @@ def def_usuario_logado(request):
 
 def def_dados_usuario_logado(request):
     id_membro_interno = model_tb_acesso.objects.filter(nome_usuario_login=def_usuario_logado(request)).values_list('id_membro_interno', flat=True).first()
+
     nome_usuario_login = model_tb_acesso.objects.filter(nome_usuario_login=def_usuario_logado(request)).values_list('nome_usuario_login', flat=True).first()
 
-    return JsonResponse({'id_membro_interno': id_membro_interno, 'nome_usuario_logado':nome_usuario_login})
+    dados_adicionais = vw_usuarios.objects.filter(id_membro_interno = id_membro_interno)
+
+    dados_adicionais = [model_to_dict(obj) for obj in dados_adicionais]
+
+    return JsonResponse({'id_membro_interno': id_membro_interno, 'nome_usuario_logado':nome_usuario_login, 'dados_adicionais':dados_adicionais})
 
 def def_mapa(request):
     return render(request, 'mapa.html')
@@ -324,7 +329,21 @@ def obter_id_ata(request):
         id_ata = 1
     
     return JsonResponse({'id_ata': id_ata})
-    
+
+from .models import tb_chamados
+from .models import tb_hinos
+from .models import vw_usuarios
+def obter_informacoes_de_apoio(request):
+    chamados = tb_chamados.objects.all()
+    chamados = [model_to_dict(obj) for obj in chamados]
+
+    hinos = tb_hinos.objects.all()
+    hinos = [model_to_dict(obj) for obj in hinos]
+
+    nomes = vw_usuarios.objects.all()
+    nomes = [model_to_dict(obj) for obj in nomes]
+
+    return JsonResponse({'chamados': chamados,'hinos':hinos,'nomes':nomes})
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart

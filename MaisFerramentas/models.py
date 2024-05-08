@@ -106,3 +106,28 @@ class model_ata_no_banco(models.Model):
 
     class Meta:
         db_table = '"atas"."tb_atas"'
+
+class tb_hinos(models.Model):
+    id_hino	= models.AutoField(primary_key=True)
+    hino = models.CharField(max_length=255)
+    origem = models.IntegerField()
+
+    class Meta:
+        db_table = '"atas"."tb_hinos"'
+
+class tb_chamados(models.Model):
+    id_chamado = models.AutoField(primary_key=True)
+    chamado = models.CharField(max_length=255)
+
+    class Meta:
+        db_table = '"atas"."tb_chamados"'
+
+class vw_usuarios(models.Model):
+    versao_id_membro_interno = models.AutoField(primary_key=True)
+    id_membro_interno = models.IntegerField()
+    nome_interno = models.CharField(max_length=255)
+    telefone_individual = models.CharField(max_length=255)
+
+
+    class Meta:
+        db_table = '"maisferramentas"."vw_usuarios"'
