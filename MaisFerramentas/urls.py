@@ -1,6 +1,6 @@
 from django.urls import path
 from django.contrib.auth.decorators import login_required
-from .views import def_dados_frequencia,def_frequencia,def_registrar_frequencia,def_cadastrar_novo_usuario,def_login,autenticar,custom_logout,def_deslogar,def_usuario_logado,def_dados_usuario_logado,def_atas_template,def_Ferramentas_template,def_mapa,def_salvar_localizacao, def_teste,def_atualiza_localizacao,enviar_ata_para_o_banco,obter_dados_de_ata_no_banco,obter_id_ata,obter_informacoes_de_apoio
+from .views import def_dados_frequencia,def_frequencia,def_registrar_frequencia,def_cadastrar_novo_usuario,def_login,autenticar,custom_logout,def_deslogar,def_usuario_logado,def_dados_usuario_logado,def_atas_template,def_Ferramentas_template,def_mapa,def_salvar_localizacao, def_teste,def_atualiza_localizacao,enviar_ata_para_o_banco,obter_dados_de_ata_no_banco,obter_id_ata,obter_informacoes_de_apoio,obter_modelo_de_ata_padrao
 from django.contrib.auth.views import LogoutView
 # from .views import frequencia
 # from .views import registrar_frequencia
@@ -47,7 +47,10 @@ urlpatterns = [
     path('obter_id_ata', obter_id_ata, name='/obter_id_ata'),
 
     
-    path('obter_informacoes_de_apoio', obter_informacoes_de_apoio, name='/obter_informacoes_de_apoio')
+    path('obter_informacoes_de_apoio', obter_informacoes_de_apoio, name='/obter_informacoes_de_apoio'),
+
+    path('obter_modelo_de_ata_padrao', obter_modelo_de_ata_padrao, name='/obter_modelo_de_ata_padrao')
+    
     
 
 ]

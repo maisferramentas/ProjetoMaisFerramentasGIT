@@ -521,6 +521,23 @@
       .botao-flutuante:hover {
           background-color: #0056b3;
       }
+
+      .botao_usar_ata_padrao{
+        display: flex;
+        align-items: center;
+        border: #003057 1px solid;
+        border-radius: 10px 10px 10px 10px;
+        justify-content: center;
+        background-color: #003057;
+        font-size: large;
+        border: 2px solid #003057;
+        background-color: transparent;
+        color: #003057;
+        padding: 5px 10px;
+        cursor: pointer;
+        transition: background-color 0.3s, color 0.3s;
+        margin-bottom: 10px;
+      }
     </style>
   </head>
   <body>
@@ -537,6 +554,21 @@
       <div class="cobertura_content"></div>
       <div class="flex column justify align" id="funcoes_gerais_da_ata">
 
+
+        <!-- <div class="flex botao_usar_ata_padrao" id="botao_usar_ata_padrao">
+          <span class="material-symbols-outlined">
+            list_alt
+          </span>
+          Usar modelo de ata padrão
+        </div> -->
+
+        <div class="flex align justify div_de_uma_funcao_geral_da_ata" id="botao_usar_ata_padrao">
+          <span class="material-symbols-outlined" style="margin-right: 5px">
+            list_alt
+          </span>
+          <label for="">Usar modelo de ata padrão</label>
+        </div>
+        
         <div class="flex align justify div_de_uma_funcao_geral_da_ata" id="enviar_texto_completo_da_ata_via_whatsapp" >
           <!-- <img class="div_img_icone_whats icone_opcoes img_whatsapp_funcoes_gerais_ata" src="https://www.shareicon.net/data/2048x2048/2016/07/14/607292_black_2048x2048.png" alt="" style="display: flex;"> -->
           <span class="material-symbols-outlined"
@@ -556,12 +588,12 @@
         </div>
 
         
-        <div class="flex align justify div_de_uma_funcao_geral_da_ata" >
+        <!-- <div class="flex align justify div_de_uma_funcao_geral_da_ata" >
           <span class="material-symbols-outlined" style="margin-right: 5px">
             print
           </span>
           <label for="">Imprimir Ata</label>
-        </div>
+        </div> -->
 
 
         
@@ -806,32 +838,16 @@
       //Function para montar o menu de seleção de data e tipo de reunião
       carrega_menu_data_e_tipo_de_reuniao();
 
-      var nomes = [
-        "Allysson Wyllian Santos Gomes",
-        "Julia de Salles Gomes",
-        "Cecília de Salles Gomes",
-        "David",
-        "Eve",
-        "Angela Maria Massaneiro dos Santos Cruz",
-      ];
+      cards = [];
 
-      var hinos = [
-        "2. Tal Como um Facho",
-        "3. Alegres Cantemos",
-        "4. No Monte a Bandeira",
-        "5. Israel, Jesus Te Chama",
-        "9. Graças Damos, Ó Deus, Por um Profeta",
-      ];
-
-      cards = [
+      cards_padrão = [
         // {
         //   card: 1,
         //   posicao_no_card: 1,
         //   label: "Anúncio:",
         //   tipo: "texto_livre",
         //   elemento_oculto: 0,
-        //   value: "Teste Titulo Anuncio",
-        //   data_da_ata: '2024-05-02',
+        //   value: "",
         // },
         // {
         //   card: 1,
@@ -839,8 +855,7 @@
         //   label: "Data:",
         //   tipo: "data",
         //   elemento_oculto: 0,
-        //   value: "2024-03-12T19:00",
-        //   data_da_ata: '2024-05-02',
+        //   value: "",
         // },
         // {
         //   card: 1,
@@ -848,7 +863,6 @@
         //   label: "Local",
         //   tipo: "texto_livre",
         //   elemento_oculto: 0,
-        //   data_da_ata: '2024-05-02',
         // },
         // {
         //   card: 1,
@@ -856,7 +870,6 @@
         //   label: "Observações:",
         //   tipo: "texto_livre",
         //   elemento_oculto: 1,
-        //   data_da_ata: '2024-05-02',
         // },
         // {
         //   card: 2,
@@ -864,8 +877,7 @@
         //   label: "Hino de Abertura:",
         //   tipo: "hinos",
         //   elemento_oculto: 0,
-        //   value: "9. Graças Damos, Ó Deus, Por um Profeta",
-        //   data_da_ata: '2024-05-02',
+        //   value: "",
         // },
         // {
         //   card: 3,
@@ -873,8 +885,7 @@
         //   label: "Oração:",
         //   tipo: "nomes",
         //   elemento_oculto: 0,
-        //   value: "Angela Maria Massaneiro dos Santos Cruz",
-        //   data_da_ata: '2024-05-02',
+        //   value: "",
         // },
         // {
         //   card: 3,
@@ -882,7 +893,6 @@
         //   label: "Teste Oculto:",
         //   tipo: "nomes",
         //   elemento_oculto: 1,
-        //   data_da_ata: '2024-05-02',
         // },
         // {
         //   card: 4,
@@ -891,7 +901,6 @@
         //   posicao_no_card: null,
         //   tipo: "nomes",
         //   value: "",
-        //   data_da_ata: '2024-05-02',
         // },
         // {
         //   card: 4,
@@ -900,7 +909,6 @@
         //   posicao_no_card: null,
         //   tipo: "texto_livre",
         //   value: "",
-        //   data_da_ata: '2024-05-02',
         // },
         // {
         //   card: 4,
@@ -909,7 +917,6 @@
         //   posicao_no_card: null,
         //   tipo: "texto_livre",
         //   value: "",
-        //   data_da_ata: '2024-05-02',
         // },
         // {
         //   card: 5,
@@ -918,7 +925,6 @@
         //   posicao_no_card: null,
         //   tipo: "nomes",
         //   value: "",
-        //   data_da_ata: '2024-05-02',
         // },
         // {
         //   card: 6,
@@ -927,104 +933,7 @@
         //   posicao_no_card: null,
         //   tipo: "nomes",
         //   value: "",
-        //   data_da_ata: '2024-05-02',
         // },
-      ];
-
-      cards_padrão = [
-        {
-          card: 1,
-          posicao_no_card: 1,
-          label: "Anúncio:",
-          tipo: "texto_livre",
-          elemento_oculto: 0,
-          value: "",
-        },
-        {
-          card: 1,
-          posicao_no_card: 2,
-          label: "Data:",
-          tipo: "data",
-          elemento_oculto: 0,
-          value: "",
-        },
-        {
-          card: 1,
-          posicao_no_card: 3,
-          label: "Local",
-          tipo: "texto_livre",
-          elemento_oculto: 0,
-        },
-        {
-          card: 1,
-          posicao_no_card: 1,
-          label: "Observações:",
-          tipo: "texto_livre",
-          elemento_oculto: 1,
-        },
-        {
-          card: 2,
-          posicao_no_card: 1,
-          label: "Hino de Abertura:",
-          tipo: "hinos",
-          elemento_oculto: 0,
-          value: "",
-        },
-        {
-          card: 3,
-          posicao_no_card: 1,
-          label: "Oração:",
-          tipo: "nomes",
-          elemento_oculto: 0,
-          value: "",
-        },
-        {
-          card: 3,
-          posicao_no_card: 2,
-          label: "Teste Oculto:",
-          tipo: "nomes",
-          elemento_oculto: 1,
-        },
-        {
-          card: 4,
-          elemento_oculto: 0,
-          label: "Discursante:",
-          posicao_no_card: null,
-          tipo: "nomes",
-          value: "",
-        },
-        {
-          card: 4,
-          elemento_oculto: 1,
-          label: "Tema:",
-          posicao_no_card: null,
-          tipo: "texto_livre",
-          value: "",
-        },
-        {
-          card: 4,
-          elemento_oculto: 1,
-          label: "Duração:",
-          posicao_no_card: null,
-          tipo: "texto_livre",
-          value: "",
-        },
-        {
-          card: 5,
-          elemento_oculto: 0,
-          label: "Regente:",
-          posicao_no_card: null,
-          tipo: "nomes",
-          value: "",
-        },
-        {
-          card: 6,
-          elemento_oculto: 0,
-          label: "Organista:",
-          posicao_no_card: null,
-          tipo: "nomes",
-          value: "",
-        },
       ];
 
       function arrasto() {
@@ -1345,6 +1254,7 @@
       $("#enviar_texto_completo_da_ata_via_whatsapp").on('click',enviar_texto_completo_da_ata_via_whatsapp);
 
       $("#copiar_texto_completo_da_ata").on('click',copiar_texto_completo_da_ata);
+
       function mostrar_dia_semana_campo_data(element) {
         var diasSemana = [
           "Domingo",
@@ -1598,23 +1508,25 @@
       var cardsProcessados = {};
 
       // Itera sobre o array cards_padrão
-      cards_padrão.forEach((card) => {
-        // Verifica se o card já foi processado
-        if (!cardsProcessados[card.card]) {
-          // Adiciona o label do primeiro objeto do card ao array
-          opcoes_para_select.push({ card: card.card, label: card.label });
+      function atualizar_cards_padrao(){
+        cards_padrão.forEach((card) => {
+          // Verifica se o card já foi processado
+          if (!cardsProcessados[card.card]) {
+            // Adiciona o label do primeiro objeto do card ao array
+            opcoes_para_select.push({ card: card.card, label: card.label });
 
-          select_de_opcoes = document.getElementById("insere_novo_card_pronto");
+            select_de_opcoes = document.getElementById("insere_novo_card_pronto");
 
-          var nova_opcao = document.createElement("option");
-          nova_opcao.value = card.card;
-          nova_opcao.textContent = card.label.slice(0, -1);
-          select_de_opcoes.appendChild(nova_opcao);
+            var nova_opcao = document.createElement("option");
+            nova_opcao.value = card.card;
+            nova_opcao.textContent = card.label.slice(0, -1);
+            select_de_opcoes.appendChild(nova_opcao);
 
-          // Marca o card como processado
-          cardsProcessados[card.card] = true;
-        }
-      });
+            // Marca o card como processado
+            cardsProcessados[card.card] = true;
+          }
+        });
+      }
 
       function copiar(div_selecionada) {
         captura_dados();
@@ -1953,7 +1865,7 @@
             
             //Insere o menu_data_e_tipo_de_reuniao na tela
             funcoes_gerais_da_ata = document.querySelector(
-              "#enviar_texto_completo_da_ata_via_whatsapp"
+              "#botao_usar_ata_padrao"
             );
 
             document
@@ -2192,6 +2104,33 @@
           },
           error: function(result){console.log(result)},
         })
+      }
+      
+      
+      document.querySelector('#botao_usar_ata_padrao').addEventListener('click',usar_modelo_de_ata_padrao);
+
+      function usar_modelo_de_ata_padrao(){
+        console.log('chegou');
+        console.log(tipo_de_ata);
+      }
+
+      obter_modelo_de_ata_padrao();
+      function obter_modelo_de_ata_padrao(){
+        url = '/obter_modelo_de_ata_padrao'
+        $.ajax({
+          url:url,
+          success: function(result){
+            modelo_de_ata_padrao = result.replace(/<script>/gi, '').replace(/<\/script>/gi, '');
+            // console.log(cards_padrão);
+            eval(modelo_de_ata_padrao);
+            console.log(cards_padrão);
+            atualizar_cards_padrao()
+          
+        },
+          error: function(result){console.log(result)},
+        });
+
+        
       }
 
       // Adiciona um ouvinte de eventos para o clique no botão

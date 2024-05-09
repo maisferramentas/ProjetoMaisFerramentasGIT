@@ -342,7 +342,7 @@ def obter_informacoes_de_apoio(request):
 
     nomes = vw_usuarios.objects.all()
     nomes = [model_to_dict(obj) for obj in nomes]
-
+    
     return JsonResponse({'chamados': chamados,'hinos':hinos,'nomes':nomes})
 import smtplib
 from email.mime.text import MIMEText
@@ -409,3 +409,18 @@ def enviar_email(recipient_email, subject, message):
 # while True:
 #     schedule.run_pending()
 #     time.sleep(1)  # Dormir por 1 segundo para evitar uso excessivo da CPU
+
+
+def obter_modelo_de_ata_padrao(request):
+    return render(request, 'modelos_de_ata.html')
+    # return JsonResponse({'return':'return'})
+
+
+# from django.http import HttpResponse
+# def obter_modelo_de_ata_padrao(request):
+#      # Ler o conteúdo do arquivo JavaScript
+#     with open('caminho/para/o/arquivo/modelos_de_ata.js', 'r') as arquivo_js:
+#         conteudo_js = arquivo_js.read()
+
+#     # Retornar o conteúdo como resposta HTTP
+#     return HttpResponse(conteudo_js, content_type='application/javascript')
