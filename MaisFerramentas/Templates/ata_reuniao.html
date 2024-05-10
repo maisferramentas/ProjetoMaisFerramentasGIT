@@ -2043,13 +2043,14 @@
           $(document).off("ajaxSend");
           $.ajax({
             url: url,
-            data: {data: data},
+            type: "POST",
+            data: {data: data,csrfmiddlewaretoken: token},
             success: function(data){
               //console.log(data);
-              if($('#area_arrastavel')){
+              if(!$('#area_arrastavel')){
                 obter_id_ata();
                 salvar_antes_de_uma_requisicao_ajax();
-                alerta("Ata", "Ata Salva com Sucesso!", "success");
+                // alerta("Ata", "Ata Salva com Sucesso!", "success");
               }
             },
             error: function(data){

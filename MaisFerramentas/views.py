@@ -255,11 +255,12 @@ def def_atualiza_localizacao(request):
 import json
 from .models import model_ata_no_banco
 def enviar_ata_para_o_banco(request):
-    data = request.GET.get('data')
+    data = request.POST.get('data')
     # id_ata = request.GET.get('data')
 
 
     print('Aquiiiiiiiiiiiii')
+    # print(data)
     inserido_por = model_tb_acesso.objects.filter(nome_usuario_login=def_usuario_logado(request)).values_list('id_membro_interno', flat=True).first()
     
     inserido_em=timezone.now()

@@ -547,6 +547,7 @@
     </style>
   </head>
   <body>
+    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}" />
     <div class="menu">
       <div class="botao_e_Titulo">
         <!-- <div class="hamburger" onclick="sidebar_showorhidden()">
@@ -1094,5 +1095,7 @@
         //showConfirmButton: false,
       });
     }
+
+    token = document.getElementsByName("csrfmiddlewaretoken")[0].value;
   </script>
 </html>
