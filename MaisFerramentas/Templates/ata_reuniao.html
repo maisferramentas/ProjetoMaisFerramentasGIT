@@ -2054,7 +2054,10 @@
                 alerta("Ata", "Ata Salva com Sucesso!", "success");
               }
             },
-            error: function(data){console.log(data);}
+            error: function(data){
+              console.log(data);
+              alerta("Ata", "Erro ao salvar Ata!", "error")
+            }
           });
         }
       }
