@@ -333,6 +333,8 @@ def obter_id_ata(request):
 from .models import tb_chamados
 from .models import tb_hinos
 from .models import vw_usuarios
+from .models import tb_atas_padrao
+from .models import tb_cards_padrao
 def obter_informacoes_de_apoio(request):
     chamados = tb_chamados.objects.all()
     chamados = [model_to_dict(obj) for obj in chamados]
@@ -342,8 +344,15 @@ def obter_informacoes_de_apoio(request):
 
     nomes = vw_usuarios.objects.all()
     nomes = [model_to_dict(obj) for obj in nomes]
-    
-    return JsonResponse({'chamados': chamados,'hinos':hinos,'nomes':nomes})
+
+    atas_padrao = tb_atas_padrao.objects.all()
+    atas_padrao = [model_to_dict(obj) for obj in atas_padrao]
+
+    cards_padrao = tb_cards_padrao.objects.all()
+    cards_padrao = [model_to_dict(obj) for obj in cards_padrao]
+
+    return JsonResponse({'chamados': chamados,'hinos':hinos,'nomes':nomes, 'atas_padrao':atas_padrao, 'cards_padrao':cards_padrao})
+
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart

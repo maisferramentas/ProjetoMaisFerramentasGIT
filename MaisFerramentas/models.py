@@ -131,3 +131,37 @@ class vw_usuarios(models.Model):
 
     class Meta:
         db_table = '"maisferramentas"."vw_usuarios"'
+
+class tb_atas_padrao(models.Model):
+    versao_id_ata = models.AutoField(primary_key=True)
+    id_ata = models.IntegerField()
+    data_da_ata = models.DateTimeField()
+    tipo_de_ata = models.IntegerField()
+    card = models.IntegerField()
+    elemento_oculto = models.IntegerField()
+    label = models.CharField(max_length=255)
+    tipo = models.CharField(max_length=255)
+    value = models.CharField(max_length=255)
+    inserido_por = models.IntegerField()
+    inserido_em = models.DateTimeField()
+    status = models.IntegerField()
+
+    class Meta:
+        db_table = '"atas"."tb_atas_padrao"'
+
+class tb_cards_padrao(models.Model):
+    versao_id_ata = models.AutoField(primary_key=True)
+    id_ata = models.IntegerField()
+    data_da_ata = models.DateTimeField()
+    tipo_de_ata = models.IntegerField()
+    card = models.IntegerField()
+    elemento_oculto = models.IntegerField()
+    label = models.CharField(max_length=255)
+    tipo = models.CharField(max_length=255)
+    value = models.CharField(max_length=255)
+    inserido_por = models.IntegerField()
+    inserido_em = models.DateTimeField()
+    status = models.IntegerField()
+
+    class Meta:
+        db_table = '"atas"."tb_cards_padrao"'

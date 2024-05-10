@@ -2086,7 +2086,7 @@
         $.ajax({
           url:url,
           success: function(result){
-
+            
             result.chamados.forEach(function(chamado){
               chamados.push(chamado.chamado)
             });
@@ -2098,6 +2098,10 @@
             result.nomes.forEach(function(nome){
               nomes.push(nome.nome_interno)
             });
+
+            atas_padrao = result.atas_padrao;
+            cards_padrão = result.cards_padrao;
+            atualizar_cards_padrao();
 
             telefone_do_usuario_logado = telefone_do_usuario_logado;
 
@@ -2111,26 +2115,11 @@
 
       function usar_modelo_de_ata_padrao(){
         console.log('chegou');
-        console.log(tipo_de_ata);
-      }
 
-      obter_modelo_de_ata_padrao();
-      function obter_modelo_de_ata_padrao(){
-        url = '/obter_modelo_de_ata_padrao'
-        $.ajax({
-          url:url,
-          success: function(result){
-            modelo_de_ata_padrao = result.replace(/<script>/gi, '').replace(/<\/script>/gi, '');
-            // console.log(cards_padrão);
-            eval(modelo_de_ata_padrao);
-            console.log(cards_padrão);
-            atualizar_cards_padrao()
-          
-        },
-          error: function(result){console.log(result)},
-        });
+        ata_padrao_selecionada = atas_padrao.filter((ata_padrao) => ata_padrao.id_ata === parseInt(tipo_de_ata));
 
-        
+        cards = ata_padrao_selecionada;
+        carrega_dados();
       }
 
       // Adiciona um ouvinte de eventos para o clique no botão
