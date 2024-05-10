@@ -504,23 +504,29 @@
       }
 
       
-      .botao-flutuante {
+      .botaoSalvar {
           position: fixed;
           bottom: 20px;
           right: 20px;
-          padding: 10px 20px;
-          background-color: #007bff;
+          padding: 10px 10px;
+          background-color: #319857;
           color: #fff;
           border: none;
           border-radius: 5px;
           cursor: pointer;
           box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
           z-index: 1000;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border-radius: 50%;
+          width: 40px;
+          height: 40px;
       }
 
-      .botao-flutuante:hover {
+      /* .botaoSalvar:hover {
           background-color: #0056b3;
-      }
+      } */
 
       .botao_usar_ata_padrao{
         display: flex;
@@ -541,7 +547,13 @@
     </style>
   </head>
   <body>
-    <!-- <button id="botaoSalvar" class="botao-flutuante">Salvar</button> -->
+    <!-- <button id="botaoSalvar" class="botaoSalvar">Salvar</button> -->
+    <div  id="botaoSalvar" class="botaoSalvar">
+      <!-- <span class="material-symbols-outlined">
+        save
+      </span> -->
+      <svg xmlns="http://www.w3.org/2000/svg" height="48px" viewBox="0 -960 960 960" width="35px" fill="#fff"><path d="M840-683v503q0 24-18 42t-42 18H180q-24 0-42-18t-18-42v-600q0-24 18-42t42-18h503l157 157Zm-60 27L656-780H180v600h600v-476ZM479.76-245q43.24 0 73.74-30.26 30.5-30.27 30.5-73.5 0-43.24-30.26-73.74-30.27-30.5-73.5-30.5-43.24 0-73.74 30.26-30.5 30.27-30.5 73.5 0 43.24 30.26 73.74 30.27 30.5 73.5 30.5ZM233-584h358v-143H233v143Zm-53-72v476-600 124Z"/></svg>
+    </div>
     <div class="" id="conteudo">
       <!-- <div class="flex column">
         <button onclick="copiar_texto_completo_da_ata()">
@@ -1616,7 +1628,7 @@
         
         designacao = div.querySelector(".campo_titulo").textContent;
         hinos = "";
-        if (designacao === "Regente:" || designacao === "Organista:") {
+        if (designacao === "Regente: " || designacao === "Organista: ") {
           document.querySelectorAll("#hinos").forEach(function (hino) {
             hinos =
               hinos +
@@ -2123,10 +2135,10 @@
       }
 
       // Adiciona um ouvinte de eventos para o clique no botão
-      // document.getElementById("botaoSalvar").addEventListener("click", function() {
-      //     // Lógica para salvar aqui
-      //     alert("Salvando...");
-      // });
+      document.getElementById("botaoSalvar").addEventListener("click", function() {
+          // Lógica para salvar aqui
+          alert("Salvando...");
+      });
 
         
     </script>
