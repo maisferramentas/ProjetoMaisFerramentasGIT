@@ -2037,7 +2037,6 @@
           ultimo_envio = capturados;
           data = JSON.stringify(capturados);
           console.log('Salvar Acionado');
-          alert('Salvar Acionado');
 
           url = "/enviar_ata_para_o_banco";
 
@@ -2047,7 +2046,6 @@
             data: {data: data},
             success: function(data){
               //console.log(data);
-              alert(' CODIGO 154689');
               if($('#area_arrastavel')){
                 obter_id_ata();
                 salvar_antes_de_uma_requisicao_ajax();
@@ -2056,7 +2054,8 @@
             },
             error: function(data){
               console.log(data);
-              alerta("Ata", "Erro ao salvar Ata!", "error")
+              alerta("Ata", "Erro ao salvar Ata!", "error");
+              document.querySelector('body').innerHTML = data.responseText;
             }
           });
         }
