@@ -1078,5 +1078,21 @@
 
 //     Êxito
 // Execução da instância iniciada com êxito (i-06e966a2756a2570b)
+
+
+  function alerta(titulo, texto, icone) {
+      // titulo = "Adicionar à Lista";
+      // texto = "Novo registro salvo com sucesso!";
+      // icone = "success";
+
+      Swal.fire({
+        title: titulo,
+        text: texto,
+        icon: icone,
+        confirmButtonText: "Ok!",
+        timer: false,
+        //showConfirmButton: false,
+      });
+    }
   </script>
 </html>

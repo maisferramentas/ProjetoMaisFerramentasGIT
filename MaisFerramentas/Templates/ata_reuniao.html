@@ -2046,9 +2046,10 @@
             data: {data: data},
             success: function(data){
               //console.log(data);
-              if(!$('#area_arrastavel')){
+              if($('#area_arrastavel')){
                 obter_id_ata();
                 salvar_antes_de_uma_requisicao_ajax();
+                alerta("Ata", "Ata Salva com Sucesso!", "success");
               }
             },
             error: function(data){console.log(data);}
@@ -2138,6 +2139,7 @@
       document.getElementById("botaoSalvar").addEventListener("click", function() {
           // Lógica para salvar aqui
           // alert("Salvando...");
+          enviar_ata_para_o_banco();
 
       });
 
