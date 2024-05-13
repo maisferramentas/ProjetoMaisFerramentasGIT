@@ -1959,7 +1959,8 @@
           if (pageState) {
               // Restaura o estado da página
               pageState = JSON.parse(pageState);
-              window.scrollTo(0, pageState.scrollTop); // Restaura a posição de rolagem vertical
+              window.scrollTo(0, pageState.scrollTop);
+              alert('recarregou') // Restaura a posição de rolagem vertical
               // Restaure outras informações de estado, se necessário
               // Por exemplo, você pode precisar restaurar os valores dos campos de formulário
           }
