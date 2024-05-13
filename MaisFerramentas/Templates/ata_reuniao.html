@@ -1946,6 +1946,7 @@
       // Captura o estado da página antes de ser descarregada
       window.addEventListener('beforeunload', function(event) {
           // Capture o estado da página, por exemplo, usando localStorage
+          teste_salvamento = 'salvei os dados'
           localStorage.setItem('pageState', JSON.stringify({
               scrollTop: window.scrollY, // Posição de rolagem vertical
               // Outras informações de estado que você deseja capturar
@@ -1954,13 +1955,19 @@
 
       // Restaura o estado da página quando o usuário volta
       window.addEventListener('load', function(event) {
+        alert('recarregou');
+        if (typeof teste_salvamento === 'undefined'){
+          alert('Não Salvou');
+        }else{
+          alert('teste_salvamento');
+        }
           // Verifica se há um estado da página armazenado
           var pageState = localStorage.getItem('pageState');
           if (pageState) {
               // Restaura o estado da página
               pageState = JSON.parse(pageState);
               window.scrollTo(0, pageState.scrollTop);
-              alert('recarregou') // Restaura a posição de rolagem vertical
+              // Restaura a posição de rolagem vertical
               // Restaure outras informações de estado, se necessário
               // Por exemplo, você pode precisar restaurar os valores dos campos de formulário
           }
