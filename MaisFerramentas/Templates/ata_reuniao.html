@@ -1944,34 +1944,27 @@
       // linear-gradient( to bottom, #0e94b4, #50acc3, #66b7ca, #bcdee7)
 
       // Captura o estado da página antes de ser descarregada
-      window.addEventListener('beforeunload', function(event) {
-          // Capture o estado da página, por exemplo, usando localStorage
-          teste_salvamento = 'salvei os dados'
-          localStorage.setItem('pageState', JSON.stringify({
-              scrollTop: window.scrollY, // Posição de rolagem vertical
-              // Outras informações de estado que você deseja capturar
-          }));
-      });
+      // window.addEventListener('beforeunload', function(event) {
+      //     // Capture o estado da página, por exemplo, usando localStorage
+      //     localStorage.setItem('pageState', JSON.stringify({
+      //         scrollTop: window.scrollY, // Posição de rolagem vertical
+      //         // Outras informações de estado que você deseja capturar
+      //     }));
+      // });
 
-      // Restaura o estado da página quando o usuário volta
-      window.addEventListener('load', function(event) {
-        alert('recarregou');
-        if (typeof teste_salvamento === 'undefined'){
-          alert('Não Salvou');
-        }else{
-          alert('teste_salvamento');
-        }
-          // Verifica se há um estado da página armazenado
-          var pageState = localStorage.getItem('pageState');
-          if (pageState) {
-              // Restaura o estado da página
-              pageState = JSON.parse(pageState);
-              window.scrollTo(0, pageState.scrollTop);
-              // Restaura a posição de rolagem vertical
-              // Restaure outras informações de estado, se necessário
-              // Por exemplo, você pode precisar restaurar os valores dos campos de formulário
-          }
-      });
+      // // Restaura o estado da página quando o usuário volta
+      // window.addEventListener('load', function(event) {
+      //     // Verifica se há um estado da página armazenado
+      //     var pageState = localStorage.getItem('pageState');
+      //     if (pageState) {
+      //         // Restaura o estado da página
+      //         pageState = JSON.parse(pageState);
+      //         window.scrollTo(0, pageState.scrollTop);
+      //         // Restaura a posição de rolagem vertical
+      //         // Restaure outras informações de estado, se necessário
+      //         // Por exemplo, você pode precisar restaurar os valores dos campos de formulário
+      //     }
+      // });
 
 
 
@@ -1998,6 +1991,17 @@
       //     enviar_ata_para_o_banco();
       //   }
       // }
+
+      //Salva no celular antes quando o usuário minimiza
+      document.addEventListener("visibilitychange", salvar_antes_do_navegador_forcar_a_atualizcao);
+
+      function salvar_antes_do_navegador_forcar_a_atualizcao() {
+          if (document.visibilityState === 'hidden' && isMobile === true) {
+              // Se a página estiver oculta (quando o usuário troca de aba ou minimiza o navegador)
+              salvar_antes_de_atualizar_tela();
+              // alert('minimizou');
+          }
+      }
 
       //Salvamento automático em caso de fechar ou atualizar a aba
       window.addEventListener("beforeunload", salvar_antes_de_atualizar_tela);
@@ -2032,6 +2036,24 @@
         //Cria variável ultimo_envio
         if(typeof ultimo_envio === 'undefined'){
           ultimo_envio = capturados;
+        }
+
+        //Se a Ata foi excluida (Todos os cards deletados) configura um array com essa informação para salvar no banco
+        if(capturados.length === 0 && JSON.stringify(ultimo_envio) !== JSON.stringify(capturados)){
+          capturados.push({ 
+            card: null,
+            data_da_ata: data_da_ata,
+            elemento_oculto: null,
+            id_ata: id_ata,
+            label: null,
+            posicao_no_card: null,
+            tipo: "texto_livre",
+            tipo_de_ata: tipo_de_ata,
+            value: "Ata Excluída",
+          })
+
+          console.log('entrou');
+          console.log(capturados);
         }
         
         //Verifica se o último envio é igual ao atual para não inserir no banco informação repetida
@@ -2080,6 +2102,11 @@
           success: function(data){
             document.querySelector("#area_arrastavel").innerHTML = '';
             cards = data.data;
+
+            //Se A Ata foi excluída limpa a variavel de cards
+            if(cards.length === 1 && cards[0].value === 'Ata Excluída'){
+              cards = [];
+            }
             carrega_dados();
             captura_dados();
             ultimo_envio = capturados; 

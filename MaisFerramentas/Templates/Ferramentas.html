@@ -1000,6 +1000,7 @@
     }
 
     function deslogar() {
+      localStorage.setItem("url", null);
       $.ajax({
         url: "deslogar",
         success: function () {
@@ -1015,11 +1016,21 @@
         success: function (data) {
           $("#content").html(data); // Atualiza o conteúdo principal com o conteúdo da nova página
           // usuario = data.nome_usuario_logado;
+
+          //Salva no local localStorage a url acessada para sempre voltar da mesma página
+          localStorage.setItem("url", url);
         },
       });
     }
 
-    novo_conteudo("/ferramentas/atas");
+    //Restaura a tela de onde o usuário parou / volta ao incio se deslogado anteriormente
+    if(localStorage.url === undefined || localStorage.url === 'null'){
+      //Página inicial  
+      novo_conteudo("/ferramentas/atas");
+    }else{
+      novo_conteudo(localStorage.url);
+    }
+    // novo_conteudo("/ferramentas/atas");
     // novo_conteudo("/ferramentas/frequencia");
     // novo_conteudo("/ferramentas/mapa/");
 
