@@ -1616,7 +1616,7 @@
           nomes_concatenados = nomes_concatenados + " " + nome /*+ ","*/;
         });
 
-        data_e_tipo_de_reuniao = captura_data_e_tipo_de_reuniao();
+        // data_e_tipo_de_reuniao = captura_data_e_tipo_de_reuniao();
 
         convite = `Olá ${nomes_concatenados} tudo bem? O Bispado lhe estende o convite para participar da ${data_e_tipo_de_reuniao}, cumprindo a seguinte designação: \n`;
 
@@ -1628,10 +1628,10 @@
           document.querySelectorAll("#hinos").forEach(function (hino) {
             hinos =
               hinos +
-              "\n" +
+              "\n" +'*'+
               hino
                 .closest("#campo_card_com_label")
-                .querySelector(".campo_titulo").textContent +
+                .querySelector(".campo_titulo").textContent +'*'+
               " " +
               hino.value;
           });
@@ -2130,7 +2130,9 @@
       function usar_modelo_de_ata_padrao(){
         console.log('chegou');
 
-        ata_padrao_selecionada = atas_padrao.filter((ata_padrao) => ata_padrao.id_ata === parseInt(tipo_de_ata));
+        ata_padrao_selecionada = atas_padrao.filter((ata_padrao) => ata_padrao.tipo_de_ata === parseInt(tipo_de_ata));
+
+        console.log(ata_padrao_selecionada);
 
         cards = ata_padrao_selecionada;
         carrega_dados();
