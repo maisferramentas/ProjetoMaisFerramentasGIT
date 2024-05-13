@@ -1639,13 +1639,8 @@
           copiado = copiado + hinos;
         } else if (designacao === "Discursante: ") {
           orientacao_discursante =
-            `
-            Pode ser necessário ajustar a data ou a duração de seu discurso, lhe avisaremos se isso for necessário.
+            `Pode ser necessário ajustar a data ou a duração de seu discurso, lhe avisaremos se isso for necessário.\n Certifique-se de cumprir o tempo do discurso usando um relógio analógico (do celular por exemplo) pois o relógio da capela está danificado.\n Por favor siga as instruções do documento a seguir: https://drive.google.com/file/d/1qjlaU47EQw-F5GTEFo4GdG1n6WongjfF/view?usp=sharing`;
 
-            Certifique-se de cumprir o tempo do discurso usando um relógio analógico (do celular por exemplo) pois o relógio da capela está danificado.
-            
-            Por favor siga as instruções do documento a seguir: https://drive.google.com/file/d/1qjlaU47EQw-F5GTEFo4GdG1n6WongjfF/view?usp=sharing`;
-            
           copiado = copiado + "\n" + orientacao_discursante;
         } else if (designacao.substr(0, 6) === "Oração") {
           orientacao_oracao =
