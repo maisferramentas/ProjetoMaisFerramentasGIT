@@ -1628,10 +1628,10 @@
           document.querySelectorAll("#hinos").forEach(function (hino) {
             hinos =
               hinos +
-              "\n" +'*'+
+              "\n" + 
               hino
                 .closest("#campo_card_com_label")
-                .querySelector(".campo_titulo").textContent +'*'+
+                .querySelector(".campo_titulo").textContent +
               " " +
               hino.value;
           });
