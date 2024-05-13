@@ -1823,7 +1823,7 @@
 
           //Adiciona informações ao texto
           conteudo_texto_completo_da_ata =
-            conteudo_texto_completo_da_ata + "\n" +"*"+ element.label +"*"+ valor;
+            conteudo_texto_completo_da_ata + "\n" +"*" +element.label.replace(": ", ":* "); + valor;
         });
 
         //Acrescenta Cabeçalho com informação de data_e_tipo_de_reuniao
