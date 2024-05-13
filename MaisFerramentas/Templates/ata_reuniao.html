@@ -1648,6 +1648,7 @@
         }
 
         texto = convite + "\n" + copiado;
+        // console.log(texto);
         enviar_via_whatsapp(texto);
       }
 
@@ -1655,9 +1656,7 @@
       function enviar_via_whatsapp(texto) {
         texto = encodeURIComponent(texto);
 
-        contato = telefone_do_usuario_logado;
-
-        link = `https://api.whatsapp.com/send?phone=${contato}&text=${texto}`;
+        link = `https://api.whatsapp.com/send?phone=${telefone_do_usuario_logado}&text=${texto}`;
 
         window.open(link, "_blank");
       }
