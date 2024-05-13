@@ -1998,7 +1998,7 @@
       function salvar_antes_do_navegador_forcar_a_atualizcao() {
           if (document.visibilityState === 'hidden' && isMobile === true) {
               // Se a página estiver oculta (quando o usuário troca de aba ou minimiza o navegador)
-              salvar_antes_de_atualizar_tela();
+              enviar_ata_para_o_banco();
               // alert('minimizou');
           }
       }
