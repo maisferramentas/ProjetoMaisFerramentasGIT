@@ -1646,6 +1646,10 @@
           orientacao_oracao =
             "Por favor, esteja no púlpito antes que o hino termine, não espere o hino acabar para subir ao estrado.";
           copiado = copiado + "\n" + orientacao_oracao;
+        } else if(designacao.substr(0, 5) === 'Apoio' || designacao.substr(0, 12) === 'Desobrigação'){
+          orientacao_apoio_desobrigacao = `Por favor coloque-se de pé quando seu nome for citado.`
+
+          copiado = copiado + "\n" + orientacao_apoio_desobrigacao;
         }
 
         texto = convite + "\n" + copiado;
@@ -1828,7 +1832,7 @@
         });
 
         //Acrescenta Cabeçalho com informação de data_e_tipo_de_reuniao
-        conteudo_texto_completo_da_ata = captura_data_e_tipo_de_reuniao() + conteudo_texto_completo_da_ata;
+        conteudo_texto_completo_da_ata = +'*'+captura_data_e_tipo_de_reuniao()+'*' + conteudo_texto_completo_da_ata;
 
         return conteudo_texto_completo_da_ata;
       }
