@@ -113,16 +113,25 @@
 
             aniversariante.textContent = 
                 element.nome_interno + ' ' + 
-                element.data_aniversário + ' ' + 
+                formatar_data(element.data_aniversário) + ' ' + 
                 '(' +element.idade +' anos) '+
                 element.organizacao + ' ' 
             ;
 
             div_lista_de_aniversariantes.appendChild(aniversariante);
-
         });
+    }
 
+    function formatar_data(element){
+        dia = element.substr(8,2);
+        if(dia < 9){dia = '0'+dia;};
+
+        mes = element.substr(5,2);
         
+        ano = element.substr(0,4);
+
+        data_formatada = dia+'/'+mes+'/'+ano;
+        return data_formatada;
     }
 
     //Vermelho Verde e Azul
