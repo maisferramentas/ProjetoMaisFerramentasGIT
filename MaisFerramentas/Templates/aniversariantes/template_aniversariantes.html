@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+</head>
+<body>
+    <div class="conteudo" id="conteudo">
+        <h1>Aniversariantes</h1>
+        <label for="data">Data referência: </label>
+        <input type="date" name="" id="data">
+        <h3>Aniversariantes do Dia:</h3>
+        <h3>Aniversariantes do Dia Seguinte:</h3>
+        <h3>Aniversariantes do Mês:</h3>
+        <h3>Aniversariantes do Ano:</h3>
+    </div>
+</body>
+<script>
+    //Captura o campo de tada
+    var campo_data = $('#data');
+    
+    //Declara data atual
+    var hoje = new Date();
+
+    // Ajusta o fuso horário para GMT-03:00 (180 minutos antes de UTC)
+    hoje.setMinutes(hoje.getMinutes() -180);
+
+    //Formata para dar valor ao campo de data
+    var hojeFormatado = hoje.toISOString().split('T')[0];
+
+    //Atribui valor ao campo de data
+    campo_data.val(hojeFormatado);
+
+    //Atribui uma função para a alteração do campo
+    campo_data.on('change', alterar_data_selecionada);
+
+    //Chama função para atualizar variavel data_selecionada
+    alterar_data_selecionada();
+
+    function alterar_data_selecionada(){
+        data_selecionada = $('#data').val();
+    }
+    
+    //Obtem do banco todas os aniversariantes
+    obter_dados_aniversariantes();
+    function obter_dados_aniversariantes(){
+        var url = '/obter_dados_aniversariantes';
+        var sucesso = validar_dados_aniversariantes;
+        $.ajax({
+            url:url,
+            success: function(result){
+                sucesso(result);
+            },
+            error: function(result){console.log(result)},
+        });
+    }
+
+    function validar_dados_aniversariantes(result){
+        //Captura o array retornado
+        dados_aniversariantes = result.dados_aniversariantes;
+
+        //filtra a Data selecionada
+        data_selecionada = new Date(data_selecionada);
+        dia_selecionado = data_selecionada.getDate();
+        mes_selecionado = data_selecionada.getMonth()+1;
+
+        aniversariantes_do_ano = dados_aniversariantes;
+
+        aniversariantes_do_mes = dados_aniversariantes.filter((element) => parseInt(element.data_aniversário.substr(5,2)) === mes_selecionado);
+
+        aniversariantes_do_dia = dados_aniversariantes.filter((element) => parseInt(element.data_aniversário.substr(5,2)) === mes_selecionado && parseInt(element.data_aniversário.substr(8,2)) === dia_selecionado);
+
+        aniversariantes_do_dia_seguinte = dados_aniversariantes.filter((element) => parseInt(element.data_aniversário.substr(5,2)) === mes_selecionado && parseInt(element.data_aniversário.substr(8,2)) === dia_selecionado+1);
+
+        exibir_na_tela();
+    }
+
+    function exibir_na_tela(){
+        if(aniversariantes_do_dia.length > 0){
+            console.log(aniversariantes_do_dia);
+        }
+    }
+
+    //Vermelho Verde e Azul
+</script>
+</html>

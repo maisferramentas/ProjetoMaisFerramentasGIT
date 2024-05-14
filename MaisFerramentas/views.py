@@ -434,3 +434,6 @@ def obter_modelo_de_ata_padrao(request):
 
 #     # Retornar o conteúdo como resposta HTTP
 #     return HttpResponse(conteudo_js, content_type='application/javascript')
+
+# def aniversariantes(request):
+#     return render(request, 'aniversariantes/aniversariantes.html')

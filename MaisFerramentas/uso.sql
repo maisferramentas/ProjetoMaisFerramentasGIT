@@ -508,3 +508,20 @@
     return stringsFormatadas;
   }
 </script>
+
+select inserido_em from atas.tb_atas order by inserido_em desc limit 1
+delete from atas.tb_atas where inserido_em <> '2024-05-13 13:52:31.888273'
+select * from atas.tb_atas;
+
+drop table atas.tb_atas_padrao
+select * 
+into atas.tb_atas_padrao
+from atas.tb_atas;
+
+drop table atas.tb_cards_padrao
+select * 
+into atas.tb_cards_padrao
+from atas.tb_atas_padrao order by label;
+
+update atas.tb_atas_padrao
+set value = null
