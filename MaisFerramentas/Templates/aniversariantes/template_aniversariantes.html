@@ -8,17 +8,38 @@
 <body>
     <div class="conteudo" id="conteudo">
         <h1>Aniversariantes</h1>
-        <label for="data">Data referência: </label>
-        <input type="date" name="" id="data">
-        <h3>Aniversariantes do Dia:</h3>
+        <label for="data_inicio">Data Início: </label>
+        <input type="date" name="" id="data_inicio">
+
+        <label for="data_fim">Data Final: </label>
+        <input type="date" name="" id="data_fim">
+
+        <div class="div_lista_de_aniversariantes" >
+            <!-- <table>
+                <thead>
+                    <th>Nome</th>
+                    <th>Data Aniversário</th>
+                    <th>Idade</th>
+                    <th>Organização</th>
+                    <th>Contato</th>
+                    <th>Endereço</th>
+                </thead>
+            </table> -->
+            <!-- <p>Nome: </p>
+            <p>Aniversário: </p>
+            <p>Organização</p> -->
+        </div>
+
+        <!-- <h3>Aniversariantes do Dia:</h3>
         <h3>Aniversariantes do Dia Seguinte:</h3>
         <h3>Aniversariantes do Mês:</h3>
-        <h3>Aniversariantes do Ano:</h3>
+        <h3>Aniversariantes do Ano:</h3> -->
     </div>
 </body>
 <script>
     //Captura o campo de tada
-    var campo_data = $('#data');
+    var data_inicio = $('#data_inicio');
+    var data_fim = $('#data_fim');
     
     //Declara data atual
     var hoje = new Date();
@@ -30,16 +51,19 @@
     var hojeFormatado = hoje.toISOString().split('T')[0];
 
     //Atribui valor ao campo de data
-    campo_data.val(hojeFormatado);
+    data_inicio.val(hojeFormatado);
+    data_fim.val(hojeFormatado);
 
     //Atribui uma função para a alteração do campo
-    campo_data.on('change', alterar_data_selecionada);
+    data_inicio.on('change', alterar_data_selecionada);
+    data_fim.on('change', alterar_data_selecionada);
 
     //Chama função para atualizar variavel data_selecionada
     alterar_data_selecionada();
 
     function alterar_data_selecionada(){
-        data_selecionada = $('#data').val();
+        value_data_inicio = data_inicio.val();
+        value_data_fim = data_fim.val();
     }
     
     //Obtem do banco todas os aniversariantes
@@ -60,26 +84,45 @@
         //Captura o array retornado
         dados_aniversariantes = result.dados_aniversariantes;
 
+        //Captura as datas selecionadas
+        
+
         //filtra a Data selecionada
-        data_selecionada = new Date(data_selecionada);
-        dia_selecionado = data_selecionada.getDate();
-        mes_selecionado = data_selecionada.getMonth()+1;
+        // data_selecionada = new Date(data_selecionada);
+        // dia_selecionado = data_selecionada.getDate();
+        // mes_selecionado = data_selecionada.getMonth()+1;
 
-        aniversariantes_do_ano = dados_aniversariantes;
+        // aniversariantes_do_ano = dados_aniversariantes;
 
-        aniversariantes_do_mes = dados_aniversariantes.filter((element) => parseInt(element.data_aniversário.substr(5,2)) === mes_selecionado);
+        // aniversariantes_do_mes = dados_aniversariantes.filter((element) => parseInt(element.data_aniversário.substr(5,2)) === mes_selecionado);
 
-        aniversariantes_do_dia = dados_aniversariantes.filter((element) => parseInt(element.data_aniversário.substr(5,2)) === mes_selecionado && parseInt(element.data_aniversário.substr(8,2)) === dia_selecionado);
+        // aniversariantes_do_dia = dados_aniversariantes.filter((element) => parseInt(element.data_aniversário.substr(5,2)) === mes_selecionado && parseInt(element.data_aniversário.substr(8,2)) === dia_selecionado);
 
-        aniversariantes_do_dia_seguinte = dados_aniversariantes.filter((element) => parseInt(element.data_aniversário.substr(5,2)) === mes_selecionado && parseInt(element.data_aniversário.substr(8,2)) === dia_selecionado+1);
+        // aniversariantes_do_dia_seguinte = dados_aniversariantes.filter((element) => parseInt(element.data_aniversário.substr(5,2)) === mes_selecionado && parseInt(element.data_aniversário.substr(8,2)) === dia_selecionado+1);
 
         exibir_na_tela();
     }
 
     function exibir_na_tela(){
-        if(aniversariantes_do_dia.length > 0){
-            console.log(aniversariantes_do_dia);
-        }
+        console.log(dados_aniversariantes);
+
+        div_lista_de_aniversariantes = document.querySelector('.div_lista_de_aniversariantes');
+
+        dados_aniversariantes.forEach(function(element){
+            aniversariante = document.createElement('p');
+
+            aniversariante.textContent = 
+                element.nome_interno + ' ' + 
+                element.data_aniversário + ' ' + 
+                '(' +element.idade +' anos) '+
+                element.organizacao + ' ' 
+            ;
+
+            div_lista_de_aniversariantes.appendChild(aniversariante);
+
+        });
+
+        
     }
 
     //Vermelho Verde e Azul

@@ -10,6 +10,8 @@ class vw_aniversariantes(models.Model):
     organizacao	= models.CharField(max_length=255)
     data_aniversário = models.CharField(max_length=255)
     idade  = models.IntegerField()
+    telefone_individual = models.CharField(max_length=255)
+    endereco = models.CharField(max_length=255)
         
     class Meta:
         db_table = '"aniversariantes"."vw_aniversariantes"'
