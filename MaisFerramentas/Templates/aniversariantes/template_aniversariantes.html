@@ -11,28 +11,7 @@
         margin: 0;
         padding: 0;
     }
-    .container {
-        max-width: 600px;
-        margin: 50px auto;
-        padding: 20px;
-        background-color: #fff;
-        border-radius: 10px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
-    /* h1 {
-        text-align: center;
-        color: #333;
-    } */
-    .birthday {
-        margin-bottom: 20px;
-        padding: 10px;
-        background-color: #f7e6ff;
-        border-radius: 5px;
-    }
-    .birthday h2 {
-        color: #6a0dad;
-        margin-bottom: 5px;
-    }
+
     .div_lista_de_aniversariantes p {
         color: #555;
         margin: 0;
@@ -48,6 +27,11 @@
         display: flex;
         margin-bottom: 10px;
     }
+    .card_padrao{
+        display: flex;
+        margin-bottom: 10px;
+        display: none;
+    }
     .informacao_complementar_do_card{
         display: flex;
         flex-direction: column;
@@ -58,40 +42,39 @@
 <body>
     <div class="conteudo" id="conteudo">
         <h1>Aniversariantes</h1>
-        <label for="data_inicio">Data Início: </label>
+        <label for="data_inicio">Data Referência: </label>
         <input type="date" name="" id="data_inicio">
 
-        <label for="data_fim">Data Final: </label>
-        <input type="date" name="" id="data_fim">
+        <!-- <label for="data_inicio">Data Início: </label>
+        <input type="date" name="" id="data_inicio"> -->
 
+        <!-- <label for="data_fim">Data Final: </label>
+        <input type="date" name="" id="data_fim"> -->
+
+        <h3>Aniversariantes do Dia:</h3>
+        <div class="aniversariantes_do_dia"></div>
+
+        <h3>Aniversariantes do Dia Seguinte:</h3>
+        <div class="aniversariantes_do_dia_seguinte"></div>
+        
+        <h3>Aniversariantes do Mês:</h3>
+        <div class="aniversariantes_do_mes"></div>
+
+        <h3>Aniversariantes do Ano:</h3>
+        <div class="aniversariantes_do_ano"></div>
+
+        <!-- INICIO card padrão para clonar e replicar -->
         <div class="div_lista_de_aniversariantes" >
-            <div class="card">
+            <div class="card_padrao">
                 <svg xmlns="http://www.w3.org/2000/svg" height="48px" viewBox="0 -960 960 960" width="48px" fill="#5f6368"><path d="M480-242q-67 0-129 23.5T235-149v9h490v-9q-54-46-116-69.5T480-242Zm0-60q74 0 139.5 24.5T740-211v-609H220v609q55-42 120.5-66.5T480-302Zm2-139q-32.5 0-55.25-22.75T404-519q0-32.5 22.75-55.25T482-597q32.5 0 55.25 22.75T560-519q0 32.5-22.75 55.25T482-441ZM220-80q-24 0-42-18t-18-42v-680q0-24 18-42t42-18h520q24 0 42 18t18 42v680q0 24-18 42t-42 18H220Zm262-301q58 0 98-40t40-98q0-58-40-98t-98-40q-58 0-98 40t-40 98q0 58 40 98t98 40Zm-2-138Z"/></svg>
                 <div class="informacao_complementar_do_card" >
-                    <p>Leudacy Batista Scherner</p> 
-                    <p>12/04/1930 (94 anos) S. Socorro </p> 
-                </div>
-            </div>
-            <div class="card">
-                <svg xmlns="http://www.w3.org/2000/svg" height="48px" viewBox="0 -960 960 960" width="48px" fill="#5f6368"><path d="M480-242q-67 0-129 23.5T235-149v9h490v-9q-54-46-116-69.5T480-242Zm0-60q74 0 139.5 24.5T740-211v-609H220v609q55-42 120.5-66.5T480-302Zm2-139q-32.5 0-55.25-22.75T404-519q0-32.5 22.75-55.25T482-597q32.5 0 55.25 22.75T560-519q0 32.5-22.75 55.25T482-441ZM220-80q-24 0-42-18t-18-42v-680q0-24 18-42t42-18h520q24 0 42 18t18 42v680q0 24-18 42t-42 18H220Zm262-301q58 0 98-40t40-98q0-58-40-98t-98-40q-58 0-98 40t-40 98q0 58 40 98t98 40Zm-2-138Z"/></svg>
-                <div class="informacao_complementar_do_card" >
-                    <p>Leudacy Batista Scherner</p> 
-                    <p>12/04/1930 (94 anos) S. Socorro </p> 
-                </div>
-            </div>
-            <div class="card">
-                <svg xmlns="http://www.w3.org/2000/svg" height="48px" viewBox="0 -960 960 960" width="48px" fill="#5f6368"><path d="M480-242q-67 0-129 23.5T235-149v9h490v-9q-54-46-116-69.5T480-242Zm0-60q74 0 139.5 24.5T740-211v-609H220v609q55-42 120.5-66.5T480-302Zm2-139q-32.5 0-55.25-22.75T404-519q0-32.5 22.75-55.25T482-597q32.5 0 55.25 22.75T560-519q0 32.5-22.75 55.25T482-441ZM220-80q-24 0-42-18t-18-42v-680q0-24 18-42t42-18h520q24 0 42 18t18 42v680q0 24-18 42t-42 18H220Zm262-301q58 0 98-40t40-98q0-58-40-98t-98-40q-58 0-98 40t-40 98q0 58 40 98t98 40Zm-2-138Z"/></svg>
-                <div class="informacao_complementar_do_card" >
-                    <p>Leudacy Batista Scherner</p> 
-                    <p>12/04/1930 (94 anos) S. Socorro </p> 
+                    <p id="nome">Leudacy Batista Scherner</p> 
+                    <p id="data_idade_organizacao">12/04/1930 (94 anos) S. Socorro </p> 
                 </div>
             </div>
         </div>
+        <!-- FIM card padrão para clonar e replicar -->
 
-        <!-- <h3>Aniversariantes do Dia:</h3>
-        <h3>Aniversariantes do Dia Seguinte:</h3>
-        <h3>Aniversariantes do Mês:</h3>
-        <h3>Aniversariantes do Ano:</h3> -->
     </div>
 </body>
 <script>
@@ -129,13 +112,13 @@
     function obter_dados_aniversariantes(){
         var url = '/obter_dados_aniversariantes';
         var sucesso = validar_dados_aniversariantes;
-        // $.ajax({
-        //     url:url,
-        //     success: function(result){
-        //         sucesso(result);
-        //     },
-        //     error: function(result){console.log(result)},
-        // });
+        $.ajax({
+            url:url,
+            success: function(result){
+                sucesso(result);
+            },
+            error: function(result){console.log(result)},
+        });
     }
 
     function validar_dados_aniversariantes(result){
@@ -144,39 +127,44 @@
 
         //Captura as datas selecionadas
         
+        // filtra a Data selecionada
+        data_selecionada = new Date(data_inicio);
+        dia_selecionado = data_selecionada.getDate();
+        mes_selecionado = data_selecionada.getMonth()+1;
 
-        //filtra a Data selecionada
-        // data_selecionada = new Date(data_selecionada);
-        // dia_selecionado = data_selecionada.getDate();
-        // mes_selecionado = data_selecionada.getMonth()+1;
+        aniversariantes_do_ano = dados_aniversariantes;
 
-        // aniversariantes_do_ano = dados_aniversariantes;
+        aniversariantes_do_mes = dados_aniversariantes.filter((element) => parseInt(element.data_aniversário.substr(5,2)) === mes_selecionado);
 
-        // aniversariantes_do_mes = dados_aniversariantes.filter((element) => parseInt(element.data_aniversário.substr(5,2)) === mes_selecionado);
+        aniversariantes_do_dia = dados_aniversariantes.filter((element) => parseInt(element.data_aniversário.substr(5,2)) === mes_selecionado && parseInt(element.data_aniversário.substr(8,2)) === dia_selecionado);
 
-        // aniversariantes_do_dia = dados_aniversariantes.filter((element) => parseInt(element.data_aniversário.substr(5,2)) === mes_selecionado && parseInt(element.data_aniversário.substr(8,2)) === dia_selecionado);
+        aniversariantes_do_dia_seguinte = dados_aniversariantes.filter((element) => parseInt(element.data_aniversário.substr(5,2)) === mes_selecionado && parseInt(element.data_aniversário.substr(8,2)) === dia_selecionado+1);
 
-        // aniversariantes_do_dia_seguinte = dados_aniversariantes.filter((element) => parseInt(element.data_aniversário.substr(5,2)) === mes_selecionado && parseInt(element.data_aniversário.substr(8,2)) === dia_selecionado+1);
-
-        exibir_na_tela();
+        exibir_na_tela(aniversariantes_do_ano, 'aniversariantes_do_ano');
     }
 
-    function exibir_na_tela(){
-        console.log(dados_aniversariantes);
+    const copia_card_padrao = $('.div_lista_de_aniversariantes').clone();
+    function exibir_na_tela(dados,div) {
+        console.log(dados);
+        // div = `'.${div}'`
+        // div = $(div);
 
-        div_lista_de_aniversariantes = document.querySelector('.div_lista_de_aniversariantes');
+        var div_lista_de_aniversariantes = $('.div_lista_de_aniversariantes');
 
-        dados_aniversariantes.forEach(function(element){
-            aniversariante = document.createElement('p');
+        dados.forEach(function(element) {
+            copia_card_padrao.find('#nome').text(element.nome_interno);
 
-            aniversariante.textContent = 
-                element.nome_interno + ' ' + 
-                formatar_data(element.data_aniversário) + ' ' + 
-                '(' +element.idade +' anos) '+
-                element.organizacao + ' ' 
-            ;
+            var data_idade_organizacao = 
+                formatar_data(element.data_aniversário) + ' (' +
+                element.idade + ' anos) ' +
+                element.organizacao;
 
-            div_lista_de_aniversariantes.appendChild(aniversariante);
+            copia_card_padrao.find('#data_idade_organizacao').text(data_idade_organizacao);
+            
+            copia_card_padrao.find('.card_padrao').addClass('card');
+            copia_card_padrao.find('.card_padrao').removeClass('card_padrao');
+
+            div_lista_de_aniversariantes.append(copia_card_padrao.html());
         });
     }
 
@@ -191,7 +179,5 @@
         data_formatada = dia+'/'+mes+'/'+ano;
         return data_formatada;
     }
-
-    //Vermelho Verde e Azul
 </script>
 </html>
