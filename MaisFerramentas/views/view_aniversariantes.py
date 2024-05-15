@@ -17,3 +17,19 @@ def obter_dados_aniversariantes(request):
     # data = [model_to_dict(obj) for obj in resultado]
 
     return JsonResponse({'dados_aniversariantes':dados_aniversariantes})
+
+def template_JOB_notifica_aniversariantes_email(request):
+    return render(request, 'JOBS/template_JOB_notifica_aniversariantes_email.html')
+
+
+from .views import enviar_email
+def enviar_aniversariantes_por_email(request):
+    data = request.GET.get('data')
+
+    # Usar a função para enviar e-mail
+    enviar_email(
+    recipient_email="allyssonwylliansantosgomes@gmail.com",
+    subject="Notificação de Aniversariantes",
+    message=data,
+    )   
+    return JsonResponse({'enviar_aniversariantes_por_email':'chegou'})

@@ -57,9 +57,10 @@ urlpatterns = [
     path('template_aniversariantes', view_aniversariantes.template_aniversariantes, name='/template_aniversariantes'),
 
     path('obter_dados_aniversariantes', view_aniversariantes.obter_dados_aniversariantes, name='/obter_dados_aniversariantes'),
-    
 
+    path('enviar_aniversariantes_por_email', view_aniversariantes.enviar_aniversariantes_por_email, name='/enviar_aniversariantes_por_email'),
 
+    path('template_JOB_notifica_aniversariantes_email', view_aniversariantes.template_JOB_notifica_aniversariantes_email, name='/template_JOB_notifica_aniversariantes_email'),
     
 
 ]

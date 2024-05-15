@@ -69,7 +69,7 @@
     obter_dados_aniversariantes();
     function obter_dados_aniversariantes(){
         var url = '/obter_dados_aniversariantes';
-        var sucesso = preparar_dados;
+        var sucesso = verificar_aniversariantes;
         
         $.ajax({
             url:url,
@@ -78,6 +78,35 @@
             },
             error: function(result){console.log(result)},
         });
+    }
+
+    function verificar_aniversariantes(result){
+        
+        dados_aniversariantes = result.dados_aniversariantes;
+
+        aniversariantes_semana = dados_aniversariantes.filter((element) => 
+            //Filtro de Data (Dia)
+            parseInt(element.dia_aniversario) >= hoje.getDate()
+            && parseInt(element.dia_aniversario) <= proximo_domingo.getDate()
+            && parseInt(element.mes_aniversario) === hoje.getMonth()+1
+            && hoje.getDay() === 1
+        );
+
+        aniversariantes_amanha = dados_aniversariantes.filter((element) => 
+            //Filtro de Data (Dia)
+            parseInt(element.dia_aniversario) === amanha.getDate()
+            && parseInt(element.mes_aniversario) === hoje.getMonth()+1 
+        );
+
+        aniversariantes_dia = dados_aniversariantes.filter((element) => 
+            //Filtro de Data (Dia)
+            parseInt(element.dia_aniversario) === hoje.getDate()
+            && parseInt(element.mes_aniversario) === hoje.getMonth()+1
+        );
+
+        
+
+        console.log(aniversariantes_semana);
     }
 
     //Captura o campo de tada
@@ -120,6 +149,16 @@
     // Formata para dar valor ao campo de data
     var amanhaFormatado = amanha.toISOString().split('T')[0];
 
+    
+    // Declara data para o próximo domingo
+    var proximo_domingo = new Date(hoje);
+
+    // Adiciona dias até chegar ao próximo domingo (0 é domingo, 1 é segunda-feira, ..., 6 é sábado)
+    proximo_domingo.setDate(proximo_domingo.getDate() + (7 - proximo_domingo.getDay()));
+
+    // Formata para dar valor ao campo de data
+    var proximo_domingoFormatado = proximo_domingo.toISOString().split('T')[0];
+
     function preparar_dados(result){
         dados_aniversariantes = result.dados_aniversariantes;
         filtrar_dados_aniversariantes();
@@ -145,7 +184,7 @@
         value_data_fim = data_fim.val();
     }
     
-    const copia_card_padrao = $('.div_lista_de_aniversariantes').clone();
+    const copia_card_padrao_2 = $('.div_lista_de_aniversariantes').clone();
     function exibir_na_tela(dados) {
         console.log(dados);
 
@@ -155,19 +194,19 @@
         div_lista_de_aniversariantes.html('');
 
         dados.forEach(function(element) {
-            copia_card_padrao.find('#nome').text(element.nome_interno);
+            copia_card_padrao_2.find('#nome').text(element.nome_interno);
 
             var data_idade_organizacao = 
                 formatar_data(element.data_aniversário) + ' (' +
                 element.idade + ' anos) ' +
                 element.organizacao;
 
-            copia_card_padrao.find('#data_idade_organizacao').text(data_idade_organizacao);
+            copia_card_padrao_2.find('#data_idade_organizacao').text(data_idade_organizacao);
             
-            copia_card_padrao.find('.card_padrao').addClass('card');
-            copia_card_padrao.find('.card_padrao').removeClass('card_padrao');
+            copia_card_padrao_2.find('.card_padrao').addClass('card');
+            copia_card_padrao_2.find('.card_padrao').removeClass('card_padrao');
 
-            div_lista_de_aniversariantes.append(copia_card_padrao.html());
+            div_lista_de_aniversariantes.append(copia_card_padrao_2.html());
         });
     }
 
