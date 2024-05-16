@@ -21,7 +21,7 @@ def obter_dados_aniversariantes(request):
 def template_JOB_notifica_aniversariantes_email(request):
     return render(request, 'JOBS/template_JOB_notifica_aniversariantes_email.html')
 
-
+from django.core.mail import send_mail
 from .views import enviar_email
 def enviar_aniversariantes_por_email(request):
     data = request.GET.get('data')
@@ -32,4 +32,15 @@ def enviar_aniversariantes_por_email(request):
     subject="Notificação de Aniversariantes",
     message=data,
     )   
+
+    
+
+    # send_mail(
+    #     'Assunto do E-mail',
+    #     'Corpo do E-mail',
+    #     'maisferramentasmail@gmail.com',
+    #     ['allyssonwylliansantosgomes@gmail.com'],
+    #     fail_silently=False,
+    # )
+
     return JsonResponse({'enviar_aniversariantes_por_email':'chegou'})

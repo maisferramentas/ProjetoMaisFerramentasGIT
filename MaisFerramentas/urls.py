@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 # from .views import *
 # from .views import views
 # from .views import aniversariantes
-from MaisFerramentas.views import views,view_aniversariantes
+from MaisFerramentas.views import views,view_aniversariantes,view_redirect
 from django.contrib.auth.views import LogoutView
 # from .views import frequencia
 # from .views import registrar_frequencia
@@ -61,6 +61,9 @@ urlpatterns = [
     path('enviar_aniversariantes_por_email', view_aniversariantes.enviar_aniversariantes_por_email, name='/enviar_aniversariantes_por_email'),
 
     path('template_JOB_notifica_aniversariantes_email', view_aniversariantes.template_JOB_notifica_aniversariantes_email, name='/template_JOB_notifica_aniversariantes_email'),
+
+    path('redirect', view_redirect.redirect, name='/redirect'),
+    
     
 
 ]

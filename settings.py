@@ -12,6 +12,15 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 
+#mail
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = 'email-smtp.sa-east-1.amazonaws.com'
+# EMAIL_PORT = 587  # ou 25
+# EMAIL_USE_TLS = True
+# EMAIL_HOST_USER = 'AKIAXYKJU4FBYJI6UAUG'  # Nome de usuário SMTP
+# EMAIL_HOST_PASSWORD = 'BEgUP32F13quTuUNfO+4DPwPJJDdg3SOELUT8cp1yMJM' 
+
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 

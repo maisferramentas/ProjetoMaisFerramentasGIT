@@ -354,6 +354,17 @@ def obter_informacoes_de_apoio(request):
 
     return JsonResponse({'chamados': chamados,'hinos':hinos,'nomes':nomes, 'atas_padrao':atas_padrao, 'cards_padrao':cards_padrao})
 
+
+# Credenciais SMTP
+# Nome de usuário do IAM
+# ses-smtp-user.20240516-173633
+# Nome de usuário SMTP
+# AKIAXYKJU4FBYJI6UAUG
+# Senha SMTP
+# BEgUP32F13quTuUNfO+4DPwPJJDdg3SOELUT8cp1yMJM
+# endpoint SMTP email-smtp.sa-east-1.amazonaws.com
+
+
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart

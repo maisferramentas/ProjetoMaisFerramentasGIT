@@ -5,65 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title></title>
 <style>
-    body {
-        font-family: Arial, sans-serif;
-        background-color: #f0f0f0;
-        margin: 0;
-        padding: 0;
-    }
-
-    .div_lista_de_aniversariantes p {
-        color: #555;
-        margin: 0;
-    }
-    .div_lista_de_aniversariantes {
-        display:flex;
-        max-width: 400px;
-        flex-direction: column;
-        justify-content: center;
-        
-    }
-    .card{
-        display: flex;
-        margin-bottom: 10px;
-    }
-    .card_padrao{
-        display: flex;
-        margin-bottom: 10px;
-        display: none;
-    }
-    .informacao_complementar_do_card{
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-    }
+  
 </style>
 </head>
 <body>
     <div class="conteudo" id="conteudo">
         <h1>Aniversariantes</h1>
-        <div class="filtros">
-            <label for="data_inicio">Data Início: </label>
-            <input type="date" name="" id="data_inicio">
-        </div>
-
-        <label for="data_fim">Data Final: </label>
-        <input type="date" name="" id="data_fim">
-
-        <!-- INICIO card padrão para clonar e replicar -->
-        <div class="div_lista_de_aniversariantes" >
-            <div class="card_padrao">
-                <svg xmlns="http://www.w3.org/2000/svg" height="48px" viewBox="0 -960 960 960" width="48px" fill="#5f6368"><path d="M480-242q-67 0-129 23.5T235-149v9h490v-9q-54-46-116-69.5T480-242Zm0-60q74 0 139.5 24.5T740-211v-609H220v609q55-42 120.5-66.5T480-302Zm2-139q-32.5 0-55.25-22.75T404-519q0-32.5 22.75-55.25T482-597q32.5 0 55.25 22.75T560-519q0 32.5-22.75 55.25T482-441ZM220-80q-24 0-42-18t-18-42v-680q0-24 18-42t42-18h520q24 0 42 18t18 42v680q0 24-18 42t-42 18H220Zm262-301q58 0 98-40t40-98q0-58-40-98t-98-40q-58 0-98 40t-40 98q0 58 40 98t98 40Zm-2-138Z"/></svg>
-                <div class="informacao_complementar_do_card" >
-                    <p id="nome">Nome Exemplo</p> 
-                    <p id="data_idade_organizacao">Campo Exemplo: 12/04/1930 (94 anos) S. Socorro </p> 
-                </div>
-            </div>
-        </div>
-        <!-- FIM card padrão para clonar e replicar -->
-
+        <div class="div_lista_de_aniversariantes" ></div>
     </div>
 </body>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
     //Obtem do banco todas os aniversariantes
     obter_dados_aniversariantes();
@@ -85,28 +36,56 @@
         dados_aniversariantes = result.dados_aniversariantes;
 
         aniversariantes_semana = dados_aniversariantes.filter((element) => 
-            //Filtro de Data (Dia)
             parseInt(element.dia_aniversario) >= hoje.getDate()
             && parseInt(element.dia_aniversario) <= proximo_domingo.getDate()
             && parseInt(element.mes_aniversario) === hoje.getMonth()+1
-            && hoje.getDay() === 1
+            && hoje.getDay() === 0
         );
 
         aniversariantes_amanha = dados_aniversariantes.filter((element) => 
-            //Filtro de Data (Dia)
             parseInt(element.dia_aniversario) === amanha.getDate()
             && parseInt(element.mes_aniversario) === hoje.getMonth()+1 
         );
 
         aniversariantes_dia = dados_aniversariantes.filter((element) => 
-            //Filtro de Data (Dia)
             parseInt(element.dia_aniversario) === hoje.getDate()
             && parseInt(element.mes_aniversario) === hoje.getMonth()+1
         );
 
-        
+        notificacao = (aniversariantes_semana.length > 0? 'da semana,':'' )+ (aniversariantes_amanha.length > 0? ' de amanha,':'' )+ (aniversariantes_dia.length > 0? ' de hoje.':'');
 
-        console.log(aniversariantes_semana);
+        if(notificacao != ''){
+
+            if(window.location.toString().substr(0,16) === 'http://127.0.0.1'){
+                redirect = '/redirect?url=/template_aniversariantes';
+            }else{
+                redirect = 'http://18.231.47.174/redirect?url=/template_aniversariantes';
+            }
+
+            notificacao = 'Verifique a lista de aniversariantes '+notificacao + ' e demais aniversariantes. ';
+            
+            p_notificacao = document.createElement('p');
+            p_notificacao.textContent = notificacao;
+            $('.div_lista_de_aniversariantes').append(p_notificacao);
+            
+            // a_notificacao = document.createElement('a');
+            // a_notificacao.textContent = 'Clique Aqui!';
+            // a_notificacao.href = '/template_aniversariantes';
+            // a_notificacao.target = "_blank";
+            // a_notificacao.href = redirect;
+            
+            // $('.div_lista_de_aniversariantes').append(a_notificacao);
+
+            url = '/enviar_aniversariantes_por_email';
+            data = $('#conteudo').html();
+            console.log(data);
+            $.ajax({
+                url:url,
+                data:{data},
+                success:function(result){console.log(result)},
+                error: function(result){console.log(result)},
+            });
+        }
     }
 
     //Captura o campo de tada
@@ -114,6 +93,7 @@
 
     //Declara data atual
     var hoje = new Date();
+    hoje = new Date(2024,5-1,12+1);
 
     // Ajusta o fuso horário para GMT-03:00 (180 minutos antes de UTC)
     hoje.setMinutes(hoje.getMinutes() -180);
@@ -124,8 +104,6 @@
     //Atribui valor ao campo de data
     data_inicio.val(hojeFormatado);
 
-    //Atribui uma função para a alteração do campo
-    data_inicio.on('change', filtrar_dados_aniversariantes);
 
     //Captura o campo de tada
     var data_fim = $('#data_fim');
@@ -139,8 +117,7 @@
     //Atribui valor ao campo de data
     data_fim.val(ultimoDiaMesCorrenteFormatado);
 
-    //Atribui uma função para a alteração do campo
-    data_fim.on('change', filtrar_dados_aniversariantes);
+    
 
     // Declara data para amanhã
     var amanha = new Date(hoje);
@@ -158,67 +135,5 @@
 
     // Formata para dar valor ao campo de data
     var proximo_domingoFormatado = proximo_domingo.toISOString().split('T')[0];
-
-    function preparar_dados(result){
-        dados_aniversariantes = result.dados_aniversariantes;
-        filtrar_dados_aniversariantes();
-    }
-
-    function filtrar_dados_aniversariantes(){
-        capturar_filtros();
-
-        dados_aniversariantes_fltrados = dados_aniversariantes.filter((element) => 
-            //Filtro de Data (Dia)
-            parseInt(element.dia_aniversario) >= parseInt(value_data_inicio.substr(8,2))
-            && parseInt(element.dia_aniversario) <= parseInt(value_data_fim.substr(8,2))
-            //Filtro de Data (Mês)
-            && parseInt(element.mes_aniversario) >= parseInt(value_data_inicio.substr(5,2))
-            && parseInt(element.mes_aniversario) <= parseInt(value_data_fim.substr(5,2))
-        );
-
-        exibir_na_tela(dados_aniversariantes_fltrados)
-    }
-
-    function capturar_filtros(){
-        value_data_inicio = data_inicio.val();
-        value_data_fim = data_fim.val();
-    }
-    
-    const copia_card_padrao_2 = $('.div_lista_de_aniversariantes').clone();
-    function exibir_na_tela(dados) {
-        console.log(dados);
-
-
-        var div_lista_de_aniversariantes = $('.div_lista_de_aniversariantes');
-
-        div_lista_de_aniversariantes.html('');
-
-        dados.forEach(function(element) {
-            copia_card_padrao_2.find('#nome').text(element.nome_interno);
-
-            var data_idade_organizacao = 
-                formatar_data(element.data_aniversário) + ' (' +
-                element.idade + ' anos) ' +
-                element.organizacao;
-
-            copia_card_padrao_2.find('#data_idade_organizacao').text(data_idade_organizacao);
-            
-            copia_card_padrao_2.find('.card_padrao').addClass('card');
-            copia_card_padrao_2.find('.card_padrao').removeClass('card_padrao');
-
-            div_lista_de_aniversariantes.append(copia_card_padrao_2.html());
-        });
-    }
-
-    function formatar_data(element){
-        dia = element.substr(8,2);
-
-        mes = element.substr(5,2);
-
-        ano = element.substr(0,4);
-
-        data_formatada = dia+'/'+mes+'/'+ano;
-        return data_formatada;
-    }
 </script>
 </html>
