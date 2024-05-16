@@ -252,6 +252,16 @@ def def_atualiza_localizacao(request):
 
     return JsonResponse({'id_registro_localizacao': id_registro_localizacao})
 
+
+def testemail(request):
+    enviar_email(
+    recipient_email="allyssonwylliansantosgomes@gmail.com",
+    subject="Novo Acesso Registrado",
+    message='teste',
+    ) 
+
+    return JsonResponse({'testemail': 'testemail'})
+
 import json
 #from .models import model_ata_no_banco
 def enviar_ata_para_o_banco(request):

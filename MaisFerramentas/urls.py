@@ -63,6 +63,8 @@ urlpatterns = [
     path('template_JOB_notifica_aniversariantes_email', view_aniversariantes.template_JOB_notifica_aniversariantes_email, name='/template_JOB_notifica_aniversariantes_email'),
 
     path('redirect', view_redirect.redirect, name='/redirect'),
+
+    path('testemail', views.testemail, name='/testemail'),
     
     
 
