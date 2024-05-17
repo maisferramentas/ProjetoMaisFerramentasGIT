@@ -56,11 +56,11 @@
 
         if(notificacao != ''){
 
-            if(window.location.toString().substr(0,16) === 'http://127.0.0.1'){
-                redirect = 'http://127.0.0.1:8000/redirect?url=/template_aniversariantes';
-            }else{
+            // if(window.location.toString().substr(0,16) === 'http://127.0.0.1'){
+            //     redirect = 'http://127.0.0.1:8000/redirect?url=/template_aniversariantes';
+            // }else{
                 redirect = 'http://18.231.47.174/redirect?url=/template_aniversariantes';
-            }
+            // }
 
             notificacao = 'Verifique a lista de aniversariantes '+notificacao + ' e demais aniversariantes. ';
             
