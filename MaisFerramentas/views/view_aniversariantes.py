@@ -25,11 +25,13 @@ from django.core.mail import send_mail
 from .views import enviar_email
 def enviar_aniversariantes_por_email(request):
     data = request.GET.get('data')
+    subject = "Notificação de Aniversariantes"
+    subject = timezone.now().strftime('%Y-%m-%d %H:%M:%S.%f')
 
     # Usar a função para enviar e-mail
     enviar_email(
     recipient_email="allyssonwylliansantosgomes@gmail.com",
-    subject="Notificação de Aniversariantes",
+    subject=subject,
     message=data,
     )   
 

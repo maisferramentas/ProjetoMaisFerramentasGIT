@@ -82,7 +82,10 @@
             $.ajax({
                 url:url,
                 data:{data},
-                success:function(result){console.log(result)},
+                success:function(result){
+                    console.log(result)
+                    a_notificacao.id = 'ancora_aniversariantes';
+                },
                 error: function(result){console.log(result)},
             });
         }

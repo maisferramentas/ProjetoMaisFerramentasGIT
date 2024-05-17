@@ -476,6 +476,14 @@ def obter_modelo_de_ata_padrao(request):
     # return JsonResponse({'return':'return'})
 
 
+
+import subprocess
+from django.http import HttpResponse
+
+def testenode(request):
+    result = subprocess.run(['node', 'C:\Projetos\ProjetoMaisFerramentasGIT\puppeteer_script/teste.js'], capture_output=True, text=True)
+    return HttpResponse(result.stdout)
+
 # from django.http import HttpResponse
 # def obter_modelo_de_ata_padrao(request):
 #      # Ler o conteúdo do arquivo JavaScript

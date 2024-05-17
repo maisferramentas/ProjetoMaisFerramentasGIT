@@ -65,6 +65,8 @@ urlpatterns = [
     path('redirect', view_redirect.redirect, name='/redirect'),
 
     path('testemail', views.testemail, name='/testemail'),
+
+    path('testenode', views.testenode, name='/testenode'),
     
     
 
