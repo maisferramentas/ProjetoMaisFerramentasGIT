@@ -33,6 +33,7 @@ def enviar_aniversariantes_por_email(request):
     message=data,
     )   
 
+    # enviar()
     
 
     # send_mail(
@@ -44,3 +45,36 @@ def enviar_aniversariantes_por_email(request):
     # )
 
     return JsonResponse({'enviar_aniversariantes_por_email':'chegou'})
+
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+def enviar():
+    
+    # Configurar as informações do servidor SMTP do Outlook
+    smtp_host = 'smtp.office365.com'
+    smtp_port = 587  # Porta TLS
+    email_address = 'maisferramentas1@outlook.com'
+    email_password = '6Bdckjk8l53f4*'
+
+    # Configurar o e-mail
+    msg = MIMEMultipart()
+    msg['From'] = email_address
+    msg['To'] = 'allyssonwylliansantosgomes@gmail.com'
+    msg['Subject'] = 'Outlook teste'
+
+    # Adicionar corpo da mensagem
+    body = 'Conteúdo do e-mail.'
+    msg.attach(MIMEText(body, 'plain'))
+
+    # Iniciar conexão com o servidor SMTP
+    server = smtplib.SMTP(smtp_host, smtp_port)
+    server.starttls()  # Iniciar conexão segura
+    server.login(email_address, email_password)  # Fazer login no servidor SMTP
+
+    # Enviar e-mail
+    text = msg.as_string()
+    server.sendmail(email_address, 'allyssonwylliansantosgomes@gmail.com', text)
+
+    # Encerrar conexão com o servidor SMTP
+    server.quit()

@@ -379,31 +379,60 @@ import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 def enviar_email(recipient_email, subject, message):
-    smtp_host="smtp-relay.brevo.com"
-    sender_email="maisferramentasmail@gmail.com"
-    senha_email="OB3R6tgNS2XY7DWI"
-    smtp_port=587
+    # smtp_host="smtp-relay.brevo.com"
+    # sender_email="maisferramentasmail@gmail.com"
+    # senha_email="OB3R6tgNS2XY7DWI"
+    # smtp_port=587
     
+    # # Configurar o e-mail
+    # email = MIMEMultipart()
+    # email['From'] = sender_email
+    # email['To'] = recipient_email
+    # email['Subject'] = subject
+
+    # # Adicionar corpo da mensagem
+    # email.attach(MIMEText(message, 'plain'))
+
+    # # Configurar servidor SMTP
+    # server = smtplib.SMTP(smtp_host, smtp_port)
+    # server.starttls()  # Iniciar conexão segura
+    # server.login(sender_email, senha_email)  # Faça login no servidor SMTP
+
+    # # Enviar e-mail
+    # text = email.as_string()
+    # server.sendmail(sender_email, recipient_email, text)
+
+    # # Encerrar conexão com o servidor SMTP
+    # server.quit()
+
+    
+    # Configurar as informações do servidor SMTP do Outlook
+    smtp_host = 'smtp.office365.com'
+    smtp_port = 587  # Porta TLS
+    email_address = 'maisferramentas1@outlook.com'
+    email_password = '6Bdckjk8l53f4*'
+
     # Configurar o e-mail
-    email = MIMEMultipart()
-    email['From'] = sender_email
-    email['To'] = recipient_email
-    email['Subject'] = subject
+    msg = MIMEMultipart()
+    msg['From'] = email_address
+    msg['To'] = recipient_email
+    msg['Subject'] = subject
 
     # Adicionar corpo da mensagem
-    email.attach(MIMEText(message, 'plain'))
+    msg.attach(MIMEText(message, 'html'))
 
-    # Configurar servidor SMTP
+    # Iniciar conexão com o servidor SMTP
     server = smtplib.SMTP(smtp_host, smtp_port)
     server.starttls()  # Iniciar conexão segura
-    server.login(sender_email, senha_email)  # Faça login no servidor SMTP
+    server.login(email_address, email_password)  # Fazer login no servidor SMTP
 
     # Enviar e-mail
-    text = email.as_string()
-    server.sendmail(sender_email, recipient_email, text)
+    text = msg.as_string()
+    server.sendmail(email_address, recipient_email, text)
 
     # Encerrar conexão com o servidor SMTP
     server.quit()
+
 
 
 # import time

@@ -57,7 +57,7 @@
         if(notificacao != ''){
 
             if(window.location.toString().substr(0,16) === 'http://127.0.0.1'){
-                redirect = '/redirect?url=/template_aniversariantes';
+                redirect = 'http://127.0.0.1:8000/redirect?url=/template_aniversariantes';
             }else{
                 redirect = 'http://18.231.47.174/redirect?url=/template_aniversariantes';
             }
@@ -68,13 +68,13 @@
             p_notificacao.textContent = notificacao;
             $('.div_lista_de_aniversariantes').append(p_notificacao);
             
-            // a_notificacao = document.createElement('a');
-            // a_notificacao.textContent = 'Clique Aqui!';
-            // a_notificacao.href = '/template_aniversariantes';
-            // a_notificacao.target = "_blank";
-            // a_notificacao.href = redirect;
+            a_notificacao = document.createElement('a');
+            a_notificacao.textContent = 'Clique Aqui!';
+            a_notificacao.href = '/template_aniversariantes';
+            a_notificacao.target = "_blank";
+            a_notificacao.href = redirect;
             
-            // $('.div_lista_de_aniversariantes').append(a_notificacao);
+            $('.div_lista_de_aniversariantes').append(a_notificacao);
 
             url = '/enviar_aniversariantes_por_email';
             data = $('#conteudo').html();
