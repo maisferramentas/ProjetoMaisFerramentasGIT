@@ -11,7 +11,7 @@ const puppeteer = require('puppeteer');
     await page.waitForSelector('#ancora_aniversariantes'); // Substitua .some-element pelo seletor que você espera aparecer após a execução do AJAX
 
     const content = await page.content(); // Captura o conteúdo da página após o carregamento
-    console.log(content); // Exibe o conteúdo capturado
+    // console.log(content); // Exibe o conteúdo capturado
 
     await browser.close();
 })();

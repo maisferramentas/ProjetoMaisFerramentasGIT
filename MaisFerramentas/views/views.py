@@ -477,12 +477,20 @@ def obter_modelo_de_ata_padrao(request):
 
 
 
+import os
 import subprocess
 from django.http import HttpResponse
+from django.conf import settings
 
-def testenode(request):
-    result = subprocess.run(['node', 'C:\Projetos\ProjetoMaisFerramentasGIT\puppeteer_script/teste.js'], capture_output=True, text=True)
+def EXEC_JOB_notifica_aniversariantes_email(request):
+    # Caminho relativo ao diretório base do projeto
+    script_path = os.path.join(settings.BASE_DIR, 'puppeteer_script', 'acessa_pagina_de_aniversariantes.js')
+    
+    # Executa o script usando o caminho relativo
+    result = subprocess.run(['node', script_path], capture_output=True, text=True)
+    
     return HttpResponse(result.stdout)
+
 
 # from django.http import HttpResponse
 # def obter_modelo_de_ata_padrao(request):

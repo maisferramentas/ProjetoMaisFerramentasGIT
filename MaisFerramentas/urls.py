@@ -66,7 +66,7 @@ urlpatterns = [
 
     path('testemail', views.testemail, name='/testemail'),
 
-    path('testenode', views.testenode, name='/testenode'),
+    path('EXEC_JOB_notifica_aniversariantes_email', views.EXEC_JOB_notifica_aniversariantes_email, name='/EXEC_JOB_notifica_aniversariantes_email'),
     
     
 
