@@ -26,6 +26,7 @@
     .card{
         display: flex;
         margin-bottom: 10px;
+        align-items: center;
     }
     .card_padrao{
         display: flex;
@@ -36,6 +37,14 @@
         display: flex;
         flex-direction: column;
         justify-content: center;
+    }
+
+    .limite_box{
+        max-width: 240px;
+    }
+
+    .opcoes{
+        margin-left: auto;
     }
 </style>
 </head>
@@ -55,9 +64,13 @@
             <div class="card_padrao">
                 <svg xmlns="http://www.w3.org/2000/svg" height="48px" viewBox="0 -960 960 960" width="48px" fill="#5f6368"><path d="M480-242q-67 0-129 23.5T235-149v9h490v-9q-54-46-116-69.5T480-242Zm0-60q74 0 139.5 24.5T740-211v-609H220v609q55-42 120.5-66.5T480-302Zm2-139q-32.5 0-55.25-22.75T404-519q0-32.5 22.75-55.25T482-597q32.5 0 55.25 22.75T560-519q0 32.5-22.75 55.25T482-441ZM220-80q-24 0-42-18t-18-42v-680q0-24 18-42t42-18h520q24 0 42 18t18 42v680q0 24-18 42t-42 18H220Zm262-301q58 0 98-40t40-98q0-58-40-98t-98-40q-58 0-98 40t-40 98q0 58 40 98t98 40Zm-2-138Z"/></svg>
                 <div class="informacao_complementar_do_card" >
-                    <p id="nome">Nome Exemplo</p> 
-                    <p id="data_idade_organizacao">Campo Exemplo: 12/04/1930 (94 anos) S. Socorro </p> 
+                    <p id="nome" class="limite_box" >Nome Exemplo</p> 
+                    <p id="data_idade_organizacao" class="limite_box">Campo Exemplo: 12/04/1930 (94 anos) S. Socorro </p> 
+                    <p id="nova_idade_e_dia_da_semana" class="limite_box">40 anos quinta-feira </p> 
                 </div>
+                <span class="material-symbols-outlined opcoes">
+                    more_vert
+                </span>
             </div>
         </div>
         <!-- FIM card padrão para clonar e replicar -->
@@ -154,8 +167,11 @@
         div_lista_de_aniversariantes.html('');
 
         dados.forEach(function(element) {
+            //Linha do Nome
             copia_card_padrao.find('#nome').text(element.nome_interno);
 
+            //Lina da Idade e organização
+            //Monta o formato "20/5/1977 (47 anos) Q. Elderes"
             var data_idade_organizacao = 
                 formatar_data(element.data_aniversário) + ' (' +
                 element.idade + ' anos) ' +
@@ -163,22 +179,61 @@
 
             copia_card_padrao.find('#data_idade_organizacao').text(data_idade_organizacao);
             
+            //Linha da nova idade e dia da semana do aniversario
+            //Define a nova idade
+            if(dia <= hoje.getDate() && mes <= hoje.getMonth() + 1){
+                nova_idade = parseInt(element.idade); 
+            }else{
+                nova_idade = parseInt(element.idade)+1;
+            }
+
+            //Monta o formato "Faz: 40 anos quinta-feira" 
+            var nova_idade_e_dia_da_semana = nova_idade + ' anos ' + nome_do_dia_da_semana;
+
+            copia_card_padrao.find('#nova_idade_e_dia_da_semana').text(nova_idade_e_dia_da_semana);
+
+            //Ajusta a classe para exibir o card
             copia_card_padrao.find('.card_padrao').addClass('card');
             copia_card_padrao.find('.card_padrao').removeClass('card_padrao');
 
+            //Ajusta o Id
+            copia_card_padrao.find('.card')[0].id  = element.id_membro_interno;
+
+            //Insere o card na tela
             div_lista_de_aniversariantes.append(copia_card_padrao.html());
         });
     }
 
     function formatar_data(element){
-        dia = element.substr(8,2);
+        dia = parseInt(element.substr(8,2));
 
-        mes = element.substr(5,2);
+        mes = parseInt(element.substr(5,2));
 
-        ano = element.substr(0,4);
+        ano = parseInt(element.substr(0,4));
+
+        data_aniversario = new Date(hoje.getFullYear(),mes-1,dia);
+        
+        nome_do_dia_da_semana = obter_nome_do_dia_da_semana(data_aniversario.getDay());
 
         data_formatada = dia+'/'+mes+'/'+ano;
         return data_formatada;
     }
+
+    function obter_nome_do_dia_da_semana(numero_do_dia_da_semana){
+        var diasSemana = [
+          "Domingo",
+          "Segunda-feira",
+          "Terça-feira",
+          "Quarta-feira",
+          "Quinta-feira",
+          "Sexta-feira",
+          "Sábado",
+        ];
+
+        nome_do_dia_da_semana = diasSemana[numero_do_dia_da_semana];
+        
+        return nome_do_dia_da_semana;
+    }
+
 </script>
 </html>
