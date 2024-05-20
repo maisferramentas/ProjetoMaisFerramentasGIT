@@ -12,3 +12,7 @@ from django.views.decorators.cache import never_cache
 from django.http import HttpResponse
 from django.template.loader import render_to_string 
 import json
+import os
+import subprocess
+from django.http import HttpResponse
+from django.conf import settings

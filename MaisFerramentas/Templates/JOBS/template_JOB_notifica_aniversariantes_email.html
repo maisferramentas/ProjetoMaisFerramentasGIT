@@ -3,16 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title></title>
 <style>
   
 </style>
 </head>
 <body>
-    <div class="conteudo" id="conteudo">
-        <h1>Aniversariantes</h1>
-        <div class="div_lista_de_aniversariantes" ></div>
-    </div>
+    <div class="conteudo" id="conteudo"></div>
 </body>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
@@ -52,43 +48,56 @@
             && parseInt(element.mes_aniversario) === hoje.getMonth()+1
         );
 
-        notificacao = (aniversariantes_semana.length > 0? 'da semana,':'' )+ (aniversariantes_dia.length > 0? ' de hoje,':'')+ (aniversariantes_amanha.length > 0? ' de amanha,':'' );
+        notificacao = (aniversariantes_semana.length > 0? 'da semana,':'' )+ (aniversariantes_dia.length > 0? ' de hoje,':'')+ (aniversariantes_amanha.length > 0? ' de amanha':'' );
 
         if(notificacao != ''){
 
-            // if(window.location.toString().substr(0,16) === 'http://127.0.0.1'){
-            //     redirect = 'http://127.0.0.1:8000/redirect?url=/template_aniversariantes';
-            // }else{
-                redirect = 'http://18.231.47.174/redirect?url=/template_aniversariantes';
-            // }
+            redirect = 'http://18.231.47.174/redirect?url=/template_aniversariantes';
 
             notificacao = 'Verifique a lista de aniversariantes '+notificacao + ' e demais aniversariantes. ';
             
             p_notificacao = document.createElement('p');
             p_notificacao.textContent = notificacao;
-            $('.div_lista_de_aniversariantes').append(p_notificacao);
             
             a_notificacao = document.createElement('a');
             a_notificacao.textContent = 'Clique Aqui!';
             a_notificacao.href = '/template_aniversariantes';
             a_notificacao.target = "_blank";
             a_notificacao.href = redirect;
-            
-            $('.div_lista_de_aniversariantes').append(a_notificacao);
+            a_notificacao.id = 'link_aniversariantes';
 
-            url = '/enviar_aniversariantes_por_email';
-            data = $('#conteudo').html();
-            console.log(data);
+            //Captura o template do email e prepara o e-mail
+            url = '/template_email_padrao';
             $.ajax({
                 url:url,
-                data:{data},
                 success:function(result){
-                    console.log(result)
-                    a_notificacao.id = 'ancora_aniversariantes';
+                    template_email_padrao = result;
+                    $('#conteudo').append(template_email_padrao);
+                    $('#conteudo_email').append(p_notificacao);
+                    $('#conteudo_email').append(a_notificacao);
+                    
+                    enviar_email();
+                    
                 },
                 error: function(result){console.log(result)},
             });
         }
+    }
+
+
+    function enviar_email(){
+        conteudo = $('#conteudo').html();
+        
+        url = '/enviar_aniversariantes_por_email';
+        data = $('#conteudo').html();
+        $.ajax({
+            url:url,
+            data:{data},
+            success:function(result){
+                a_notificacao.id = 'ancora_aniversariantes';
+            },
+            error: function(result){console.log(result)},
+        });
     }
 
     //Captura o campo de tada

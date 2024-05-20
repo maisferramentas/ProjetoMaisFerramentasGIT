@@ -13,12 +13,6 @@ from django.http import HttpResponse
 from django.template.loader import render_to_string 
 import json
 
-# def dados_frequencia(request):
-#     dados_frequencia = Frequencia.objects.all()
-#     data = [model_to_dict(obj) for obj in dados_frequencia]
-#     # print(dados_frequencia)
-#     return JsonResponse({"data": data}, safe=False)
-# from MaisFerramentas.models import *
 from MaisFerramentas.models import models
 @login_required
 def def_dados_frequencia(request):
@@ -34,7 +28,6 @@ def def_dados_frequencia(request):
 @never_cache
 def def_login(request):
     return render(request, 'login.html')
-    # return redirect('/login.html/')
 
 @login_required
 def def_frequencia(request):
@@ -55,7 +48,6 @@ def def_registrar_frequencia(request):
     id_membro_interno = request.GET.get('id_membro_interno')
     status_frequencia = request.GET.get('status_frequencia')
     inserido_em = request.GET.get('inserido_em')
-    # inserido_por = request.GET.get('inserido_por')
     inserido_por = models.model_tb_acesso.objects.filter(nome_usuario_login=def_usuario_logado(request)).values_list('id_membro_interno', flat=True).first()
 
 
@@ -72,14 +64,12 @@ def def_registrar_frequencia(request):
 
     return JsonResponse({"retorno": "Frequência Registrada."}, safe=False)
 
-#from .models import models.model_cadastrar_novo_usuario
 @login_required
 def def_cadastrar_novo_usuario(request):
     nome_interno = request.GET.get('nome_interno')
     sexo = request.GET.get('sexo')
     ano_do_nascimento = request.GET.get('ano_do_nascimento')
     id_perfil = request.GET.get('id_perfil')
-    # inserido_por = request.GET.get('inserido_por')
     inserido_por = models.model_tb_acesso.objects.filter(nome_usuario_login=def_usuario_logado(request)).values_list('id_membro_interno', flat=True).first()
     
     cadastrar_novo_usuario = models.model_cadastrar_novo_usuario(
@@ -110,13 +100,11 @@ def def_cadastrar_novo_usuario(request):
         # Salva a atualização no banco de dados
         objeto_para_atualizar.save()
 
-    # return JsonResponse({"retorno": "Cadastro Registrado."}, safe=False)
     return JsonResponse({'id_membro_interno': id_membro_interno})
 
 from django.contrib.auth import authenticate, login
 from django.http import JsonResponse
 
-#from .models import models.model_tb_acesso
 def autenticar(request):
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -169,7 +157,6 @@ def def_mapa(request):
 
 
 # Python SDK: https://github.com/sendinblue/APIv3-python-library
-
 
 
 def def_teste(request):
@@ -268,7 +255,6 @@ def enviar_ata_para_o_banco(request):
     data = request.POST.get('data')
     # id_ata = request.GET.get('data')
 
-
     print('Aquiiiiiiiiiiiii')
     # print(data)
     inserido_por = models.model_tb_acesso.objects.filter(nome_usuario_login=def_usuario_logado(request)).values_list('id_membro_interno', flat=True).first()
@@ -341,11 +327,6 @@ def obter_id_ata(request):
     
     return JsonResponse({'id_ata': id_ata})
 
-#from .models import tb_chamados
-#from .models import tb_hinos
-#from .models import models.vw_usuarios
-#from .models import tb_atas_padrao
-#from .models import tb_cards_padrao
 def obter_informacoes_de_apoio(request):
     chamados = models.tb_chamados.objects.all()
     chamados = [model_to_dict(obj) for obj in chamados]
@@ -434,72 +415,10 @@ def enviar_email(recipient_email, subject, message):
     server.quit()
 
 
-
-# import time
-# import sib_api_v3_sdk
-# from sib_api_v3_sdk.rest import ApiException
-# from pprint import pprint
-    # # Configure API key authorization: api-key
-    # configuration = sib_api_v3_sdk.Configuration()
-    # configuration.api_key['api-key'] = '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'
-
-    # # create an instance of the API class
-    # api_instance = sib_api_v3_sdk.ContactsApi(sib_api_v3_sdk.ApiClient(configuration))
-    # create_contact = sib_api_v3_sdk.CreateContact(
-    # email= "maisferramentasmail2@gmail.com", 
-    # ) # CreateContact | Values to create a contact
-
-    # try:
-    #     # Create a contact
-    #     api_response = api_instance.create_contact(create_contact)
-    #     pprint(api_response)
-    # except ApiException as e:
-    #     print("Exception when calling ContactsApi->create_contact: %s\n" % e)
-
-# import schedule
-# import time
-
-# def minha_tarefa():
-#     print("Olá, mundo!")
-
-# # Agendar a tarefa para ser executada a cada 5 segundos
-# schedule.every(5).seconds.do(minha_tarefa)
-
-# # Loop para executar o agendador
-# while True:
-#     schedule.run_pending()
-#     time.sleep(1)  # Dormir por 1 segundo para evitar uso excessivo da CPU
-
-
 def obter_modelo_de_ata_padrao(request):
     return render(request, 'modelos_de_ata.html')
     # return JsonResponse({'return':'return'})
 
 
-
-import os
-import subprocess
-from django.http import HttpResponse
-from django.conf import settings
-
-def EXEC_JOB_notifica_aniversariantes_email(request):
-    # Caminho relativo ao diretório base do projeto
-    script_path = os.path.join(settings.BASE_DIR, 'puppeteer_script', 'acessa_pagina_de_aniversariantes.js')
-    
-    # Executa o script usando o caminho relativo
-    result = subprocess.run(['node', script_path], capture_output=True, text=True)
-    
-    return HttpResponse(result.stdout)
-
-
-# from django.http import HttpResponse
-# def obter_modelo_de_ata_padrao(request):
-#      # Ler o conteúdo do arquivo JavaScript
-#     with open('caminho/para/o/arquivo/modelos_de_ata.js', 'r') as arquivo_js:
-#         conteudo_js = arquivo_js.read()
-
-#     # Retornar o conteúdo como resposta HTTP
-#     return HttpResponse(conteudo_js, content_type='application/javascript')
-
-# def aniversariantes(request):
-#     return render(request, 'aniversariantes/aniversariantes.html')
+def template_email_padrao(request):
+    return render(request, 'Email/template_email_padrao.html')

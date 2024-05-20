@@ -1,12 +1,7 @@
 from django.urls import path
 from django.contrib.auth.decorators import login_required
-# from .views import *
-# from .views import views
-# from .views import aniversariantes
-from MaisFerramentas.views import views,view_aniversariantes,view_redirect
+from MaisFerramentas.views import views,view_aniversariantes,view_redirect,view_JOB_notifica_aniversariantes_email
 from django.contrib.auth.views import LogoutView
-# from .views import frequencia
-# from .views import registrar_frequencia
 
 urlpatterns = [
     path('ferramentas/', views.def_Ferramentas_template, name='def_Ferramentas_template'),
@@ -58,15 +53,17 @@ urlpatterns = [
 
     path('obter_dados_aniversariantes', view_aniversariantes.obter_dados_aniversariantes, name='/obter_dados_aniversariantes'),
 
-    path('enviar_aniversariantes_por_email', view_aniversariantes.enviar_aniversariantes_por_email, name='/enviar_aniversariantes_por_email'),
+    path('enviar_aniversariantes_por_email', view_JOB_notifica_aniversariantes_email.enviar_aniversariantes_por_email, name='/enviar_aniversariantes_por_email'),
 
-    path('template_JOB_notifica_aniversariantes_email', view_aniversariantes.template_JOB_notifica_aniversariantes_email, name='/template_JOB_notifica_aniversariantes_email'),
+    path('template_JOB_notifica_aniversariantes_email', view_JOB_notifica_aniversariantes_email.template_JOB_notifica_aniversariantes_email, name='/template_JOB_notifica_aniversariantes_email'),
 
     path('redirect', view_redirect.redirect, name='/redirect'),
 
     path('testemail', views.testemail, name='/testemail'),
 
-    path('EXEC_JOB_notifica_aniversariantes_email', views.EXEC_JOB_notifica_aniversariantes_email, name='/EXEC_JOB_notifica_aniversariantes_email'),
+    path('EXEC_JOB_notifica_aniversariantes_email', view_JOB_notifica_aniversariantes_email.EXEC_JOB_notifica_aniversariantes_email, name='/EXEC_JOB_notifica_aniversariantes_email'),
+    
+    path('template_email_padrao', views.template_email_padrao, name='/template_email_padrao'),
     
     
 
