@@ -21,7 +21,7 @@
         max-width: 400px;
         flex-direction: column;
         justify-content: center;
-        
+        position: relative;
     }
     .card{
         display: flex;
@@ -44,8 +44,35 @@
         max-width: 320px;
     }
 
-    .opcoes{
+    .botao_para_expandir_opcoes{
         margin-left: auto;
+    }
+
+    
+    .expandable-div {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 0;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+        transition: width 0.5s ease-in-out;
+        z-index: 10;
+    }
+    .expandable-div.expanded {
+        width: 300px; /* Define a largura final da div expandida */
+    }
+    .opcoes{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        /* right: 0; */
+        background-color: rgba(0, 0, 0, 0.7);
+        transition: width 0.5s ease-in-out;
+        z-index: 10;
+        /* width: 300px; */
+        right: 0;
     }
 </style>
 </head>
@@ -69,9 +96,13 @@
                     <p id="data_idade_organizacao" class="limite_box">Campo Exemplo: 12/04/1930 (94 anos) S. Socorro </p> 
                     <p id="nova_idade_e_dia_da_semana" class="limite_box">40 anos quinta-feira </p> 
                 </div>
-                <span class="material-symbols-outlined opcoes">
+                
+                <div class="opcoes"></div>
+                <span class="material-symbols-outlined botao_para_expandir_opcoes">
                     more_vert
                 </span>
+                
+                
             </div>
         </div>
         <!-- FIM card padrão para clonar e replicar -->
@@ -203,6 +234,7 @@
             //Insere o card na tela
             div_lista_de_aniversariantes.append(copia_card_padrao.html());
         });
+        $('.botao_para_expandir_opcoes').on('click', expandir_opcoes);
     }
 
     function formatar_data(element){
@@ -234,6 +266,17 @@
         nome_do_dia_da_semana = diasSemana[numero_do_dia_da_semana];
         
         return nome_do_dia_da_semana;
+    }
+
+    
+
+    function expandir_opcoes(){
+        
+        div_card_id = this.closest('.card').id;
+        console.log(div_card_id);
+        teste= $('.opcoes').css(  'width', '150px');
+        // teste= $('.opcoes').html;
+        // teste.style.width = '150px';
     }
 
 </script>
