@@ -67,12 +67,23 @@
         align-items: center;
         justify-content: center;
         position: absolute;
-        /* right: 0; */
-        background-color: rgba(0, 0, 0, 0.7);
+        background-color: rgba(14, 211, 233, 0.7);
         transition: width 0.5s ease-in-out;
         z-index: 10;
-        /* width: 300px; */
-        right: 0;
+        right: 60px;
+        border-radius: 50px 50px 50px 50px;
+        padding: 4px;
+        /* width: 0px; */
+        display: none;
+    }
+    .icones_opcao{
+        margin-right: 10px;
+        background-color: white;
+        border-radius: 50%;
+        
+    }
+    .remove_margem{
+        margin: 0;
     }
 </style>
 </head>
@@ -96,11 +107,24 @@
                     <p id="data_idade_organizacao" class="limite_box">Campo Exemplo: 12/04/1930 (94 anos) S. Socorro </p> 
                     <p id="nova_idade_e_dia_da_semana" class="limite_box">40 anos quinta-feira </p> 
                 </div>
-                
-                <div class="opcoes"></div>
                 <span class="material-symbols-outlined botao_para_expandir_opcoes">
                     more_vert
                 </span>
+                <div class="opcoes">
+                    <span class="material-symbols-outlined icones_opcao">
+                        send
+                    </span>
+                    <span class="material-symbols-outlined icones_opcao">
+                        featured_seasonal_and_gifts
+                    </span>
+                    <span class="material-symbols-outlined icones_opcao">
+                        content_copy
+                    </span>
+                    <span class="material-symbols-outlined icones_opcao remove_margem">
+                        location_on
+                    </span>
+                </div>
+                
                 
                 
             </div>
@@ -174,12 +198,10 @@
         capturar_filtros();
 
         dados_aniversariantes_fltrados = dados_aniversariantes.filter((element) => 
-            //Filtro de Data (Dia)
-            parseInt(element.dia_aniversario) >= parseInt(value_data_inicio.substr(8,2))
-            && parseInt(element.dia_aniversario) <= parseInt(value_data_fim.substr(8,2))
-            //Filtro de Data (Mês)
-            && parseInt(element.mes_aniversario) >= parseInt(value_data_inicio.substr(5,2))
-            && parseInt(element.mes_aniversario) <= parseInt(value_data_fim.substr(5,2))
+            //Formata as datas para o padrão JS
+            formatar_data(element.data_aniversário) === formatar_data(element.data_aniversário) &&
+            //Filtro de Data de acordo com o selecionado 
+            js_data_aniversario >= js_data_inicio && js_data_aniversario <= js_data_fim
         );
 
         exibir_na_tela(dados_aniversariantes_fltrados)
@@ -188,6 +210,9 @@
     function capturar_filtros(){
         value_data_inicio = data_inicio.val();
         value_data_fim = data_fim.val();
+
+        js_data_inicio = new Date(value_data_inicio);
+        js_data_fim = new Date(value_data_fim);
     }
     
     const copia_card_padrao = $('.div_lista_de_aniversariantes').clone();
@@ -203,9 +228,10 @@
             copia_card_padrao.find('#nome').text(element.nome_interno);
 
             //Lina da Idade e organização
-            //Monta o formato "20/5/1977 (47 anos) Q. Elderes"
+            //Monta o formato "20/05/1977 (47 anos) Q. Elderes"
+            formatar_data(element.data_aniversário);
             var data_idade_organizacao = 
-                formatar_data(element.data_aniversário) + ' (' +
+                br_data_aniversario + ' (' +
                 element.idade + ' anos) ' +
                 element.organizacao;
 
@@ -213,13 +239,13 @@
             
             //Linha da nova idade e dia da semana do aniversario
             //Define a nova idade
-            if(dia <= hoje.getDate() && mes <= hoje.getMonth() + 1){
+            if(js_data_aniversario < hoje){
                 nova_idade = parseInt(element.idade); 
             }else{
                 nova_idade = parseInt(element.idade)+1;
             }
 
-            //Monta o formato "Faz: 40 anos quinta-feira" 
+            //Monta o formato "40 anos quinta-feira" 
             var nova_idade_e_dia_da_semana = nova_idade + ' anos ' + nome_do_dia_da_semana;
 
             copia_card_padrao.find('#nova_idade_e_dia_da_semana').text(nova_idade_e_dia_da_semana);
@@ -228,28 +254,35 @@
             copia_card_padrao.find('.card_padrao').addClass('card');
             copia_card_padrao.find('.card_padrao').removeClass('card_padrao');
 
-            //Ajusta o Id
+            //Ajusta o Id da div
             copia_card_padrao.find('.card')[0].id  = element.id_membro_interno;
 
             //Insere o card na tela
             div_lista_de_aniversariantes.append(copia_card_padrao.html());
         });
         $('.botao_para_expandir_opcoes').on('click', expandir_opcoes);
+        $(window).on('click', recolher_todas_opcoes);
     }
 
     function formatar_data(element){
-        dia = parseInt(element.substr(8,2));
+        //Padrão brasileiro
+        dia = element.substr(8,2);
+        mes = element.substr(5,2);
+        ano = element.substr(0,4);
+        br_data_aniversario = dia+'/'+mes+'/'+ano;
 
-        mes = parseInt(element.substr(5,2));
+        //transformando para inteiros
+        int_dia = parseInt(element.substr(8,2));
+        int_mes = parseInt(element.substr(5,2));
+        int_ano = parseInt(element.substr(0,4));
 
-        ano = parseInt(element.substr(0,4));
-
-        data_aniversario = new Date(hoje.getFullYear(),mes-1,dia);
+        //Padrão Js
+        js_data_aniversario = new Date(hoje.getFullYear(),mes-1,dia);
         
-        nome_do_dia_da_semana = obter_nome_do_dia_da_semana(data_aniversario.getDay());
+        //Nome da semana em portugues
+        nome_do_dia_da_semana = obter_nome_do_dia_da_semana(js_data_aniversario.getDay());
 
-        data_formatada = dia+'/'+mes+'/'+ano;
-        return data_formatada;
+        return br_data_aniversario;
     }
 
     function obter_nome_do_dia_da_semana(numero_do_dia_da_semana){
@@ -271,13 +304,17 @@
     
 
     function expandir_opcoes(){
-        
-        div_card_id = this.closest('.card').id;
-        console.log(div_card_id);
-        teste= $('.opcoes').css(  'width', '150px');
-        // teste= $('.opcoes').html;
-        // teste.style.width = '150px';
+        $('.opcoes').css('display','none');
+        $(this).closest('.card').find('.opcoes').css('display','flex');
     }
+
+    function recolher_todas_opcoes(){
+        if(!event.target.className.includes('botao_para_expandir_opcoes')){
+            $('.opcoes').css('display','none');
+        }
+    }
+    
+    
 
 </script>
 </html>
