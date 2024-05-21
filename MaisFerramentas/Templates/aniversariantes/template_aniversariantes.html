@@ -91,13 +91,25 @@
     <div class="conteudo" id="conteudo">
         <h1>Aniversariantes</h1>
         <div class="filtros">
-            <label for="data_inicio">Data Início: </label>
-            <input type="date" name="" id="data_inicio">
+            <div>
+                <label for="data_inicio">Data Início: </label>
+                <input type="date" name="" id="data_inicio">
+            </div>
+            <div>
+                <label for="data_fim">Data Final: </label>
+                <input type="date" name="" id="data_fim">
+            </div>
+            <div>
+                <label for="">Pesquisar:</label>
+                <input type="text" name="" id="caixa_de_pesquisa">
+            </div>
+            <div>
+                <input type="radio" name="opcao_de_periodo" id="hoje">Hoje
+                <input type="radio" name="opcao_de_periodo" id="amanha">Amanhã
+                <input type="radio" name="opcao_de_periodo" id="semana_atual">Semana Atual
+                <input type="radio" name="opcao_de_periodo" id="todos">Todos
+            </div>
         </div>
-
-        <label for="data_fim">Data Final: </label>
-        <input type="date" name="" id="data_fim">
-
         <!-- INICIO card padrão para clonar e replicar -->
         <div class="div_lista_de_aniversariantes" >
             <div class="card_padrao">
@@ -188,6 +200,10 @@
 
     function preparar_dados(result){
         dados_aniversariantes = result.dados_aniversariantes;
+        //Exibe Todos na Tela
+        exibir_na_tela(dados_aniversariantes);
+
+        //Re-Ajusta a Exibição para os filtros;
         filtrar_dados_aniversariantes();
     }
 
@@ -198,7 +214,9 @@
             //Formata as datas para o padrão JS
             formatar_data(element.data_aniversário) === formatar_data(element.data_aniversário) &&
             //Filtro de Data de acordo com o selecionado 
-            js_data_aniversario >= js_data_inicio && js_data_aniversario <= js_data_fim
+            js_data_aniversario >= js_data_inicio && js_data_aniversario <= js_data_fim 
+            //Filtro de texto
+            && element.texto_exibido_na_tela.toLowerCase().includes(value_caixa_de_pesquisa.toLowerCase())
         );
 
         exibir_na_tela(dados_aniversariantes_fltrados)
@@ -210,6 +228,8 @@
 
         js_data_inicio = new Date(value_data_inicio);
         js_data_fim = new Date(value_data_fim);
+
+        value_caixa_de_pesquisa = $('#caixa_de_pesquisa').val();
     }
     
     const copia_card_padrao = $('.div_lista_de_aniversariantes').clone();
@@ -254,8 +274,15 @@
             //Ajusta o Id da div
             copia_card_padrao.find('.card').attr('id', element.id_membro_interno);
 
+            
+
             //Insere o card na tela
             div_lista_de_aniversariantes.append(copia_card_padrao.html());
+
+            //Insere no Array dados_aniversariantes_fltrados o texto_exibido_na_tela
+            texto_exibido_na_tela = $('#'+element.id_membro_interno).find('.informacao_complementar_do_card').text();
+
+            element.texto_exibido_na_tela = texto_exibido_na_tela;
         });
         $('.botao_para_expandir_opcoes').on('click', expandir_opcoes);
         $(window).on('click', recolher_todas_opcoes);
@@ -374,5 +401,7 @@
         
         return texto;
       }
+
+      $('#caixa_de_pesquisa').on('keyup',filtrar_dados_aniversariantes)
 </script>
 </html>
