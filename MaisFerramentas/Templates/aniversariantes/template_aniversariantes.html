@@ -124,9 +124,6 @@
                         location_on
                     </span>
                 </div>
-                
-                
-                
             </div>
         </div>
         <!-- FIM card padrão para clonar e replicar -->
@@ -255,13 +252,14 @@
             copia_card_padrao.find('.card_padrao').removeClass('card_padrao');
 
             //Ajusta o Id da div
-            copia_card_padrao.find('.card')[0].id  = element.id_membro_interno;
+            copia_card_padrao.find('.card').attr('id', element.id_membro_interno);
 
             //Insere o card na tela
             div_lista_de_aniversariantes.append(copia_card_padrao.html());
         });
         $('.botao_para_expandir_opcoes').on('click', expandir_opcoes);
         $(window).on('click', recolher_todas_opcoes);
+        $('.icones_opcao').on('click', acionar_opcao)
     }
 
     function formatar_data(element){
@@ -300,21 +298,81 @@
         
         return nome_do_dia_da_semana;
     }
-
     
-
     function expandir_opcoes(){
-        $('.opcoes').css('display','none');
-        $(this).closest('.card').find('.opcoes').css('display','flex');
+        //Se ainda não estiver expandida expande
+        if($(this).closest('.card').find('.opcoes').css('display') != 'flex'){
+            $('.opcoes').css('display','none');
+            $(this).closest('.card').find('.opcoes').css('display','flex');
+        //Se já estiver expandido recolhe
+        }else{
+            $('.opcoes').css('display','none');
+        }    
     }
 
     function recolher_todas_opcoes(){
-        if(!event.target.className.includes('botao_para_expandir_opcoes')){
+        if(!event.target.className.includes('botao_para_expandir_opcoes') 
+        ){
             $('.opcoes').css('display','none');
         }
     }
     
-    
+    function acionar_opcao(){
+        //Prepara todas as informações que serão usadas
+        id_membro_interno = $(this).closest('.card').attr('id');
 
+        dados_do_aniversariante = dados_aniversariantes_fltrados.filter((element)=> parseInt(element.id_membro_interno) === parseInt(id_membro_interno))
+
+        informacoes_prontas_na_tela = $(this).closest('.card').find('.informacao_complementar_do_card').text();
+
+        endereco = dados_do_aniversariante[0].endereco;
+        
+        telefone = dados_do_aniversariante[0].telefone_individual;
+
+        link_endereco = `https://www.google.com/maps?q=${encodeURIComponent(endereco)}`;
+
+        link_telefone = `https://api.whatsapp.com/send?phone=${telefone}`;
+
+        primeiro_nome = dados_do_aniversariante[0].nome_interno.split(" ")[0];
+
+        conteudo_completo = `${assinatura_do_site}\n\n*Notificação de Aniversário:*\n\n${informacoes_prontas_na_tela.replace(/\s+/g, ' ')}\n\nContato: ${telefone}\n${link_telefone}\n\nEndereço: ${endereco}\n${link_endereco}\n\n\nPor que Lembrar do Aniversário de alguém?\nhttps://www.churchofjesuschrist.org/study/liahona/2019/08/latter-day-saint-voices/the-birthday-lasagna?lang=por`;
+       
+        //Filtra a ação solicitada e executa seu comando
+
+        //Copiar conteudo
+        if($(this).text().includes('content_copy')){
+            copiar_texto(conteudo_completo);
+        }
+        
+        //Enviar conteudo via Whatsapp
+        if($(this).text().includes('send')){
+            link = `https://api.whatsapp.com/send?phone=${telefone_do_usuario_logado}&text=${encodeURIComponent(conteudo_completo)}`;
+
+            window.open(link, "_blank");
+        }
+
+        //Copiar Mensagem de parabenização
+        if($(this).text().includes('featured_seasonal_and_gifts')){
+            mensagem = `Olá, ${primeiro_nome}, parabéns por seu aniversário!\n\nA felicidade é uma condição da alma. O Profeta Joseph declarou: “A felicidade é a razão de ser e o propósito da nossa existência e, portanto, a alcançaremos, caso sigamos o caminho que nos leva a ela, que é a trilha da virtude, da retidão, da fidelidade e da santidade, guardando todos os mandamentos de Deus”.\n\nLhe desejamos grande felicidade hoje e sempre em sua vida!\n\nhttps://www.churchofjesuschrist.org/study/general-conference/2005/10/true-happiness-a-conscious-decision?lang=por`;
+
+            copiar_texto(mensagem);
+        }
+
+        //Acessar endereço via google maps
+        if($(this).text().includes('location_on')){
+            window.open(link_endereco, "_blank");
+        }
+    }
+    
+    function copiar_texto(texto) {
+        textarea = document.createElement("textarea");
+        textarea.value = texto;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand("copy");
+        textarea.remove();
+        
+        return texto;
+      }
 </script>
 </html>
