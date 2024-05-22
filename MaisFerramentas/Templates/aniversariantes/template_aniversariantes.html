@@ -107,10 +107,15 @@
         /* width: 100%; */
         /* padding: 10px; */
         box-sizing: border-box;
-        /* border: 2px solid #000; */
+        /* border: 2px solid #006f9b; */
         border-radius: 5px;
         /* font-size: 16px; */
         font-family: Arial, sans-serif;
+        color: #006f9b;
+    }
+
+    .opcoes_do_radio{
+        display: flex; text-align: center;
     }
 </style>
 </head>
@@ -130,20 +135,20 @@
             <div class="div_opcao_de_periodo" >
                 <p>Filtrar por período:</p>
                 <div class="div_opcao_de_periodo_central">
-                    <div>
-                        <input type="radio" name="opcao_de_periodo" id="hoje">Hoje
+                    <div class="opcoes_do_radio">
+                        <input type="radio" name="opcao_de_periodo" id="hoje"><label for="">Hoje</label>
                     </div>
-                    <div>
-                        <input type="radio" name="opcao_de_periodo" id="amanha">Amanhã
+                    <div class="opcoes_do_radio" >
+                        <input type="radio" name="opcao_de_periodo" id="amanha"><label for="">Amanhã</label>
                     </div>
-                    <div>
-                        <input type="radio" name="opcao_de_periodo" id="semana_atual">Semana Atual
+                    <div class="opcoes_do_radio">
+                        <input type="radio" name="opcao_de_periodo" id="semana_atual"><label for="">Semana Atual</label>
+                    </div class="opcoes_do_radio">
+                    <div class="opcoes_do_radio">
+                        <input type="radio" name="opcao_de_periodo" id="mes_atual"><label for="">Mês Atual</label>
                     </div>
-                    <div>
-                        <input type="radio" name="opcao_de_periodo" id="mes_atual">Mês Atual
-                    </div>
-                    <div>
-                        <input type="radio" name="opcao_de_periodo" id="todos">Todos
+                    <div class="opcoes_do_radio">
+                        <input type="radio" name="opcao_de_periodo" id="todos"><label for="">Todos</label>
                     </div>
                 </div>
             </div>
@@ -331,8 +336,8 @@
                 cor = '#006f9b';
             }
 
-            copia_card_padrao.find('#nome, #data_idade_organizacao, #nova_idade_e_dia_da_semana, .botao_para_expandir_opcoes').css('color',cor)
-            copia_card_padrao.find('svg').attr('fill',cor) 
+            copia_card_padrao.find('#nome, #data_idade_organizacao, #nova_idade_e_dia_da_semana, .botao_para_expandir_opcoes').css('color',cor);
+            copia_card_padrao.find('svg').attr('fill',cor);
             
 
             //Insere o card na tela
@@ -526,6 +531,6 @@
         var sabadoDaSemana = saturdayFormatted;
         var primeiroDiaDoMes = firstDayOfMonthFormatted;
         var ultimoDiaDoMes = lastDayOfMonthFormatted;
-
+        $('.conteudo').find('h1, label, p').css('color','#006f9b');
 </script>
 </html>
