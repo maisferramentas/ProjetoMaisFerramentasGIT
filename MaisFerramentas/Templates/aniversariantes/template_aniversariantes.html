@@ -233,16 +233,17 @@
 
         js_data_inicio = new Date(value_data_inicio);
         js_data_fim = new Date(value_data_fim);
-        // js_data_inicio.setDate(js_data_inicio.getDate()+1);
-        // js_data_fim.setDate(js_data_fim.getDate()+1);
+        js_data_inicio.setDate(js_data_inicio.getDate()+1);
+        js_data_fim.setDate(js_data_fim.getDate()+1);
+        js_data_inicio.setHours(0);
+        js_data_fim.setHours(0);
         
-        console.log( js_data_inicio,js_data_fim );
         value_caixa_de_pesquisa = $('#caixa_de_pesquisa').val();
     }
     
     const copia_card_padrao = $('.div_lista_de_aniversariantes').clone();
     function exibir_na_tela(dados) {
-        console.log(dados);
+        // console.log(dados);
 
         var div_lista_de_aniversariantes = $('.div_lista_de_aniversariantes');
 
@@ -314,7 +315,7 @@
         
         //Nome da semana em portugues
         nome_do_dia_da_semana = obter_nome_do_dia_da_semana(js_data_aniversario.getDay());
-        console.log( js_data_aniversario )
+
         return br_data_aniversario;
     }
 
@@ -455,11 +456,11 @@
         const day = currentDate.getDate();
 
         // Calculate the day of the week for Sunday of the current week
-        const sunday = new Date(year, month, day - (currentDate.getDay() + 1) % 7);
+        const sunday = new Date(year, month, day - (currentDate.getDay()) % 7);
         const sundayFormatted = sunday.toISOString().slice(0, 10); // Format to YYYY-MM-DD
 
         // Calculate the day of the week for Saturday of the current week
-        const saturday = new Date(year, month, day + 6 - (currentDate.getDay() + 1) % 7);
+        const saturday = new Date(year, month, day + 6 - (currentDate.getDay()) % 7);
         const saturdayFormatted = saturday.toISOString().slice(0, 10); // Format to YYYY-MM-DD
 
         // Calculate the first day of the current month
