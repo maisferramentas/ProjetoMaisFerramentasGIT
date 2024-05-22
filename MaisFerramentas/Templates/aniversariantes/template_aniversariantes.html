@@ -85,6 +85,9 @@
     .remove_margem{
         margin: 0;
     }
+    .div_opcao_de_periodo{
+        max-width: 280px;
+    }
 </style>
 </head>
 <body>
@@ -103,7 +106,7 @@
                 <label for="">Pesquisar:</label>
                 <input type="text" name="" id="caixa_de_pesquisa">
             </div>
-            <div>
+            <div class="div_opcao_de_periodo" >
                 <input type="radio" name="opcao_de_periodo" id="hoje">Hoje
                 <input type="radio" name="opcao_de_periodo" id="amanha">Amanhã
                 <input type="radio" name="opcao_de_periodo" id="semana_atual">Semana Atual
@@ -212,6 +215,7 @@
         capturar_filtros();
 
         dados_aniversariantes_fltrados = dados_aniversariantes.filter((element) => 
+        
             //Formata as datas para o padrão JS
             formatar_data(element.data_aniversário) === formatar_data(element.data_aniversário) &&
             //Filtro de Data de acordo com o selecionado 
@@ -229,7 +233,10 @@
 
         js_data_inicio = new Date(value_data_inicio);
         js_data_fim = new Date(value_data_fim);
-
+        // js_data_inicio.setDate(js_data_inicio.getDate()+1);
+        // js_data_fim.setDate(js_data_fim.getDate()+1);
+        
+        console.log( js_data_inicio,js_data_fim );
         value_caixa_de_pesquisa = $('#caixa_de_pesquisa').val();
     }
     
@@ -307,7 +314,7 @@
         
         //Nome da semana em portugues
         nome_do_dia_da_semana = obter_nome_do_dia_da_semana(js_data_aniversario.getDay());
-
+        console.log( js_data_aniversario )
         return br_data_aniversario;
     }
 
@@ -404,5 +411,70 @@
       }
 
       $('#caixa_de_pesquisa').on('keyup',filtrar_dados_aniversariantes)
+      $('.div_opcao_de_periodo').find('input[type=radio]').on('change', alterar_filtro_de_periodos);
+
+      function alterar_filtro_de_periodos(){
+
+        opcao_de_periodo_selecionada=$(this).attr('id');
+
+        if(opcao_de_periodo_selecionada==='hoje'){
+            data_inicio.val(hojeFormatado);
+            data_fim.val(hojeFormatado);
+        }
+
+        if(opcao_de_periodo_selecionada==='amanha'){
+            data_inicio.val(amanhaFormatado);
+            data_fim.val(amanhaFormatado);
+        }
+
+        if(opcao_de_periodo_selecionada==='semana_atual'){
+            data_inicio.val(domingoDaSemana);
+            data_fim.val(sabadoDaSemana);
+        }
+
+        if(opcao_de_periodo_selecionada==='mes_atual'){
+            data_inicio.val(primeiroDiaDoMes);
+            data_fim.val(ultimoDiaDoMes);
+        }
+
+        if(opcao_de_periodo_selecionada==='todos'){
+            data_inicio.val(`${year}-01-01`);
+            data_fim.val(`${year}-12-31`);
+        }
+
+        filtrar_dados_aniversariantes();
+      }
+
+        //DemaisVariaveis
+        // Get the current date
+        const currentDate = new Date();
+
+        // Get the year, month, and day from the current date
+        const year = currentDate.getFullYear();
+        const month = currentDate.getMonth();
+        const day = currentDate.getDate();
+
+        // Calculate the day of the week for Sunday of the current week
+        const sunday = new Date(year, month, day - (currentDate.getDay() + 1) % 7);
+        const sundayFormatted = sunday.toISOString().slice(0, 10); // Format to YYYY-MM-DD
+
+        // Calculate the day of the week for Saturday of the current week
+        const saturday = new Date(year, month, day + 6 - (currentDate.getDay() + 1) % 7);
+        const saturdayFormatted = saturday.toISOString().slice(0, 10); // Format to YYYY-MM-DD
+
+        // Calculate the first day of the current month
+        const firstDayOfMonth = new Date(year, month, 1);
+        const firstDayOfMonthFormatted = firstDayOfMonth.toISOString().slice(0, 10); // Format to YYYY-MM-DD
+
+        // Calculate the last day of the current month
+        const lastDayOfMonth = new Date(year, month + 1, 0); // Set day to 0 to get the last day of the previous month
+        const lastDayOfMonthFormatted = lastDayOfMonth.toISOString().slice(0, 10); // Format to YYYY-MM-DD
+
+        // Create the variables
+        const domingoDaSemana = sundayFormatted;
+        const sabadoDaSemana = saturdayFormatted;
+        const primeiroDiaDoMes = firstDayOfMonthFormatted;
+        const ultimoDiaDoMes = lastDayOfMonthFormatted;
+
 </script>
 </html>
