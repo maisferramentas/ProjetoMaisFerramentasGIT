@@ -87,6 +87,30 @@
     }
     .div_opcao_de_periodo{
         max-width: 280px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 25px;
+    }
+    .div_caixa_de_pesquisa{
+        margin-bottom: 25px;
+    }
+    /* .div_opcao_de_periodo_central{
+        display: none;
+    } */
+    .conteudo{
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+    }
+    #data_inicio, #data_fim{
+        /* width: 100%; */
+        /* padding: 10px; */
+        box-sizing: border-box;
+        /* border: 2px solid #000; */
+        border-radius: 5px;
+        /* font-size: 16px; */
+        font-family: Arial, sans-serif;
     }
 </style>
 </head>
@@ -102,16 +126,30 @@
                 <label for="data_fim">Data Final: </label>
                 <input type="date" name="" id="data_fim">
             </div>
-            <div>
+            
+            <div class="div_opcao_de_periodo" >
+                <p>Filtrar por período:</p>
+                <div class="div_opcao_de_periodo_central">
+                    <div>
+                        <input type="radio" name="opcao_de_periodo" id="hoje">Hoje
+                    </div>
+                    <div>
+                        <input type="radio" name="opcao_de_periodo" id="amanha">Amanhã
+                    </div>
+                    <div>
+                        <input type="radio" name="opcao_de_periodo" id="semana_atual">Semana Atual
+                    </div>
+                    <div>
+                        <input type="radio" name="opcao_de_periodo" id="mes_atual">Mês Atual
+                    </div>
+                    <div>
+                        <input type="radio" name="opcao_de_periodo" id="todos">Todos
+                    </div>
+                </div>
+            </div>
+            <div class="div_caixa_de_pesquisa" >
                 <label for="">Pesquisar:</label>
                 <input type="text" name="" id="caixa_de_pesquisa">
-            </div>
-            <div class="div_opcao_de_periodo" >
-                <input type="radio" name="opcao_de_periodo" id="hoje">Hoje
-                <input type="radio" name="opcao_de_periodo" id="amanha">Amanhã
-                <input type="radio" name="opcao_de_periodo" id="semana_atual">Semana Atual
-                <input type="radio" name="opcao_de_periodo" id="mes_atual">Mês Atual
-                <input type="radio" name="opcao_de_periodo" id="todos">Todos
             </div>
         </div>
         <!-- INICIO card padrão para clonar e replicar -->
@@ -241,7 +279,8 @@
         value_caixa_de_pesquisa = $('#caixa_de_pesquisa').val();
     }
     
-    const copia_card_padrao = $('.div_lista_de_aniversariantes').clone();
+        var copia_card_padrao = $('.div_lista_de_aniversariantes').clone();
+    
     function exibir_na_tela(dados) {
         // console.log(dados);
 
@@ -448,34 +487,34 @@
 
         //DemaisVariaveis
         // Get the current date
-        const currentDate = new Date();
+        var currentDate = new Date();
 
         // Get the year, month, and day from the current date
-        const year = currentDate.getFullYear();
-        const month = currentDate.getMonth();
-        const day = currentDate.getDate();
+        var year = currentDate.getFullYear();
+        var month = currentDate.getMonth();
+        var day = currentDate.getDate();
 
         // Calculate the day of the week for Sunday of the current week
-        const sunday = new Date(year, month, day - (currentDate.getDay()) % 7);
-        const sundayFormatted = sunday.toISOString().slice(0, 10); // Format to YYYY-MM-DD
+        var sunday = new Date(year, month, day - (currentDate.getDay()) % 7);
+        var sundayFormatted = sunday.toISOString().slice(0, 10); // Format to YYYY-MM-DD
 
         // Calculate the day of the week for Saturday of the current week
-        const saturday = new Date(year, month, day + 6 - (currentDate.getDay()) % 7);
-        const saturdayFormatted = saturday.toISOString().slice(0, 10); // Format to YYYY-MM-DD
+        var saturday = new Date(year, month, day + 6 - (currentDate.getDay()) % 7);
+        var saturdayFormatted = saturday.toISOString().slice(0, 10); // Format to YYYY-MM-DD
 
         // Calculate the first day of the current month
-        const firstDayOfMonth = new Date(year, month, 1);
-        const firstDayOfMonthFormatted = firstDayOfMonth.toISOString().slice(0, 10); // Format to YYYY-MM-DD
+        var firstDayOfMonth = new Date(year, month, 1);
+        var firstDayOfMonthFormatted = firstDayOfMonth.toISOString().slice(0, 10); // Format to YYYY-MM-DD
 
         // Calculate the last day of the current month
-        const lastDayOfMonth = new Date(year, month + 1, 0); // Set day to 0 to get the last day of the previous month
-        const lastDayOfMonthFormatted = lastDayOfMonth.toISOString().slice(0, 10); // Format to YYYY-MM-DD
+        var lastDayOfMonth = new Date(year, month + 1, 0); // Set day to 0 to get the last day of the previous month
+        var lastDayOfMonthFormatted = lastDayOfMonth.toISOString().slice(0, 10); // Format to YYYY-MM-DD
 
         // Create the variables
-        const domingoDaSemana = sundayFormatted;
-        const sabadoDaSemana = saturdayFormatted;
-        const primeiroDiaDoMes = firstDayOfMonthFormatted;
-        const ultimoDiaDoMes = lastDayOfMonthFormatted;
+        var domingoDaSemana = sundayFormatted;
+        var sabadoDaSemana = saturdayFormatted;
+        var primeiroDiaDoMes = firstDayOfMonthFormatted;
+        var ultimoDiaDoMes = lastDayOfMonthFormatted;
 
 </script>
 </html>
