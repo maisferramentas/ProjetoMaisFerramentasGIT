@@ -151,6 +151,14 @@
     .filtros {
         display: none;
     }
+    .expandir_filtros{
+        display: flex;
+        color: #006f9b;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 10px;
+        margin-top: -10px;
+    }
 </style>
 </head>
 <body>
@@ -191,6 +199,12 @@
         <div class="div_caixa_de_pesquisa" >
             <!-- <label for="">Pesquisar:</label> -->
             <input type="text" name="" id="caixa_de_pesquisa" placeholder="🔍︎Procurar:" >
+        </div>
+        <div class="expandir_filtros" >
+            <span class="material-symbols-outlined">
+                filter_list
+            </span>
+            <label for="Filtros">Filtros</label>
         </div>
         <!-- INICIO card padrão para clonar e replicar -->
         <div class="div_lista_de_aniversariantes" >
@@ -540,6 +554,15 @@
         filtrar_dados_aniversariantes();
       }
 
+      $('.expandir_filtros').on('click',expandir_filtros)
+      function expandir_filtros(){
+        
+        if($('.filtros').css('display') === 'none'){
+            $('.filtros').css('display','flex')
+        }else{
+            $('.filtros').css('display','none')
+        }
+      }
         //DemaisVariaveis
         // Get the current date
         var currentDate = new Date();
