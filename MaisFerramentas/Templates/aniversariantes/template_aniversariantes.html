@@ -322,6 +322,17 @@
             //Ajusta o Id da div
             copia_card_padrao.find('.card').attr('id', element.id_membro_interno);
 
+            console.log(element.sexo);
+            //Ajusta as cores
+            if(element.sexo === 'M'){
+                cor = '#006f9b';
+            }else{
+                cor = '#ca14b6';
+                cor = '#006f9b';
+            }
+
+            copia_card_padrao.find('#nome, #data_idade_organizacao, #nova_idade_e_dia_da_semana, .botao_para_expandir_opcoes').css('color',cor)
+            copia_card_padrao.find('svg').attr('fill',cor) 
             
 
             //Insere o card na tela

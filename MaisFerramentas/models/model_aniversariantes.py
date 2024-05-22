@@ -15,6 +15,7 @@ class vw_aniversariantes(models.Model):
     idade  = models.IntegerField()
     telefone_individual = models.CharField(max_length=255)
     endereco = models.CharField(max_length=255)
+    sexo = models.CharField(max_length=255)
         
     class Meta:
         db_table = '"aniversariantes"."vw_aniversariantes"'
