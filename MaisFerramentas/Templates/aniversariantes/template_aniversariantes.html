@@ -100,6 +100,10 @@
         border: 2px solid #378db0;
         width: 320px;
     }
+
+    #caixa_de_pesquisa:focus{
+        border: 2px solid #378db0;
+    }
     /* .div_opcao_de_periodo_central{
         display: none;
     } */
@@ -144,6 +148,9 @@
     #nome {
         font-weight: bold;
     }
+    .filtros {
+        display: none;
+    }
 </style>
 </head>
 <body>
@@ -179,10 +186,11 @@
                     </div>
                 </div>
             </div>
-            <div class="div_caixa_de_pesquisa" >
-                <!-- <label for="">Pesquisar:</label> -->
-                <input type="text" name="" id="caixa_de_pesquisa" placeholder="🔍︎Procurar:" >
-            </div>
+            
+        </div>
+        <div class="div_caixa_de_pesquisa" >
+            <!-- <label for="">Pesquisar:</label> -->
+            <input type="text" name="" id="caixa_de_pesquisa" placeholder="🔍︎Procurar:" >
         </div>
         <!-- INICIO card padrão para clonar e replicar -->
         <div class="div_lista_de_aniversariantes" >
