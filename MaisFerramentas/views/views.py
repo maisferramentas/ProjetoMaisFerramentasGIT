@@ -18,11 +18,11 @@ from MaisFerramentas.models import models
 def def_dados_frequencia(request):
     data_frequencia = request.GET.get('data_frequencia')
     id_tipo_frequencia = request.GET.get('id_tipo_frequencia')
-
+    
     resultado = models.model_dados_frequencia.objects.obter_dados_frequencia_query(data_frequencia, id_tipo_frequencia)
     
     data = [model_to_dict(obj) for obj in resultado]
-
+    
     return JsonResponse({"data": data}, safe=False)
 
 @never_cache

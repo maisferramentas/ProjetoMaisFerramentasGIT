@@ -1790,6 +1790,7 @@
         });
       },
       error: function (data) {
+        alerta("Frequência", "Falha ao tentar registrar!", "error");
         console.log(
           data.responseText.slice(
             data.responseText.match("<th>Exception Value:</th>").index,
@@ -1797,7 +1798,7 @@
           )
         );
 
-        alerta("Frequência", "Falha ao tentar registrar!", "error");
+        
       },
     });
   }
