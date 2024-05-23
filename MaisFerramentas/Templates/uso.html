@@ -2,10 +2,6 @@
 
 
 --Ao Criar cards há um espaço branco no overlay
-
-
---3) Ajustar ovo
-
 --Bugs na criação de ata 
 --Salvamento duplo de usuários
 --Editor de Usuários
@@ -17,7 +13,10 @@
 --Separar as views
 --Criar banco postgres com o AWS
 
-
+SELECT pg_terminate_backend(pid)
+FROM pg_stat_activity
+WHERE state = 'idle' AND backend_type = 'client backend'
+and client_port not in (46698);
 
 --Para subir uma atualização
 cd C:\Projetos\ProjetoMaisFerramentasGIT>

@@ -547,9 +547,9 @@
     </style>
   </head>
   <body>
-    <!-- <div  id="botaoSalvar" class="botaoSalvar">
+    <div  id="botaoSalvar" class="botaoSalvar">
       <svg xmlns="http://www.w3.org/2000/svg" height="48px" viewBox="0 -960 960 960" width="35px" fill="#fff"><path d="M840-683v503q0 24-18 42t-42 18H180q-24 0-42-18t-18-42v-600q0-24 18-42t42-18h503l157 157Zm-60 27L656-780H180v600h600v-476ZM479.76-245q43.24 0 73.74-30.26 30.5-30.27 30.5-73.5 0-43.24-30.26-73.74-30.27-30.5-73.5-30.5-43.24 0-73.74 30.26-30.5 30.27-30.5 73.5 0 43.24 30.26 73.74 30.27 30.5 73.5 30.5ZM233-584h358v-143H233v143Zm-53-72v476-600 124Z"/></svg>
-    </div> -->
+    </div>
     <div class="" id="conteudo">
       <!-- <div class="flex column">
         <button onclick="copiar_texto_completo_da_ata()">
@@ -1464,7 +1464,6 @@
             id_ata: id_ata,
           });
         });
-        // console.log(capturados);
       }
 
       function obter_id_ata(){
@@ -1480,7 +1479,7 @@
             id_ata = result.id_ata;
             obter_dados_de_ata_no_banco();
           },
-          error: function(data){console.log(data)},
+          error: function(data){alerta('Atas', 'Erro em: obter_id_ata', 'error')},
         });
 
         atualiza_variaveis_data_da_ata_e_tipo_de_ata();
@@ -1653,7 +1652,6 @@
         }
 
         texto = convite + "\n" + copiado;
-        // console.log(texto);
         enviar_via_whatsapp(texto);
       }
 
@@ -1892,7 +1890,7 @@
               });
           },
           error: function(data){
-            console.log(data);
+            alerta('Atas', 'Erro em: carrega_menu_data_e_tipo_de_reuniao', 'error');
           }
         })
       }
@@ -1944,96 +1942,52 @@
       }
 
 
+      // //Tentativa de Salvamento automático
 
-      // linear-gradient( to right, #bcdee7, #66b7ca, #50acc3, #0e94b4 )
-      // linear-gradient( to bottom, #0e94b4, #50acc3, #66b7ca, #bcdee7)
+      // //Salva no celular antes quando o usuário minimiza
+      // document.addEventListener("visibilitychange", salvar_antes_do_navegador_forcar_a_atualizcao);
 
-      // Captura o estado da página antes de ser descarregada
-      // window.addEventListener('beforeunload', function(event) {
-      //     // Capture o estado da página, por exemplo, usando localStorage
-      //     localStorage.setItem('pageState', JSON.stringify({
-      //         scrollTop: window.scrollY, // Posição de rolagem vertical
-      //         // Outras informações de estado que você deseja capturar
-      //     }));
-      // });
-
-      // // Restaura o estado da página quando o usuário volta
-      // window.addEventListener('load', function(event) {
-      //     // Verifica se há um estado da página armazenado
-      //     var pageState = localStorage.getItem('pageState');
-      //     if (pageState) {
-      //         // Restaura o estado da página
-      //         pageState = JSON.parse(pageState);
-      //         window.scrollTo(0, pageState.scrollTop);
-      //         // Restaura a posição de rolagem vertical
-      //         // Restaure outras informações de estado, se necessário
-      //         // Por exemplo, você pode precisar restaurar os valores dos campos de formulário
+      // function salvar_antes_do_navegador_forcar_a_atualizcao() {
+      //     if (document.visibilityState === 'hidden' && isMobile === true) {
+      //         // Se a página estiver oculta (quando o usuário troca de aba ou minimiza o navegador)
+      //         console.log('Acionado via salvar_antes_do_navegador_forcar_a_atualizcao');
+      //         enviar_ata_para_o_banco();
+      //         // alert('minimizou');
       //     }
-      // });
-
-
-
-      //funções para salvar o formulário:
-      
-      // //Verifica se a tela foi fechada ou minimizada a fim de salvar os dados atuais
-      // document.addEventListener(
-      //   "visibilitychange",
-      //   verifica_tela_fechada_ou_minimizada_ou_descarregada
-      // ); //minimiza
-
-      // document.addEventListener(
-      //   "beforeunload",
-      //   verifica_tela_fechada_ou_minimizada_ou_descarregada
-      // ); //
-      
-
-      // function verifica_tela_fechada_ou_minimizada_ou_descarregada(event) {
-      //   if (
-      //     event.type === "beforeunload"
-      //     //|| document.visibilityState === "hidden" 
-      //     //|| event.type === 'ajaxSend'
-      //   ) {
-      //     enviar_ata_para_o_banco();
-      //   }
       // }
 
-      //Salva no celular antes quando o usuário minimiza
-      document.addEventListener("visibilitychange", salvar_antes_do_navegador_forcar_a_atualizcao);
+      // //Salvamento automático em caso de fechar ou atualizar a aba
+      // window.addEventListener("beforeunload", salvar_antes_de_atualizar_tela);
 
-      function salvar_antes_do_navegador_forcar_a_atualizcao() {
-          if (document.visibilityState === 'hidden' && isMobile === true) {
-              // Se a página estiver oculta (quando o usuário troca de aba ou minimiza o navegador)
-              enviar_ata_para_o_banco();
-              // alert('minimizou');
-          }
-      }
+      // function salvar_antes_de_atualizar_tela(event) {
+      //   console.log('Acionado via salvar_antes_de_atualizar_tela');
+      //   //Salva as Informações
+      //   enviar_ata_para_o_banco();
 
-      //Salvamento automático em caso de fechar ou atualizar a aba
-      window.addEventListener("beforeunload", salvar_antes_de_atualizar_tela);
+      //   //Burla o navegador segurando a página por tempo suficiente para envio da requisição
+      //   novaJanela = window.open('', '_blank');
+      //   setTimeout(function() {
+      //       novaJanela.close();
+      //   }, 0);
+      // }
 
-      function salvar_antes_de_atualizar_tela(event) {
-        //Salva as Informações
-        enviar_ata_para_o_banco();
-
-        //Burla o navegador segurando a página por tempo suficiente para envio da requisição
-        novaJanela = window.open('', '_blank');
-        setTimeout(function() {
-            novaJanela.close();
-        }, 0);
-      }
-
-      //Salvamento Automático: Intercepta qualquer ajax (redirecionamento / Deslogar) e salva o conteúdo da ata antes.
-      salvar_antes_de_uma_requisicao_ajax();
-      function salvar_antes_de_uma_requisicao_ajax(){
-        $(document).on("ajaxSend", function(event, jqXHR, ajaxOptions) {
-          if(document.querySelector("#area_arrastavel") != null){
-            enviar_ata_para_o_banco();
-          }else{
-            $(document).off("ajaxSend");
-            window.removeEventListener("beforeunload", salvar_antes_de_atualizar_tela);
-          }
-        });
-      }
+      // //Salvamento Automático: Intercepta qualquer ajax (redirecionamento / Deslogar) e salva o conteúdo da ata antes.
+      // salvar_antes_de_uma_requisicao_ajax();
+      // function salvar_antes_de_uma_requisicao_ajax(){
+      //   $(document).on("ajaxSend", function(event, jqXHR, ajaxOptions) {
+      //     if(document.querySelector("#area_arrastavel") != null){
+             
+      //       console.log('Acionado via salvar_antes_de_uma_requisicao_ajax');
+          
+      //       console.log(ajaxOptions);
+      //       enviar_ata_para_o_banco();
+              
+      //     }else{
+      //       $(document).off("ajaxSend");
+      //       window.removeEventListener("beforeunload", salvar_antes_de_atualizar_tela);
+      //     }
+      //   });
+      // }
       
       function enviar_ata_para_o_banco(){
         captura_dados();
@@ -2056,9 +2010,6 @@
             tipo_de_ata: tipo_de_ata,
             value: "Ata Excluída",
           })
-
-          console.log('entrou');
-          console.log(capturados);
         }
         
         //Verifica se o último envio é igual ao atual para não inserir no banco informação repetida
@@ -2066,7 +2017,6 @@
           //Atualiza o ultimo_envio
           ultimo_envio = capturados;
           data = JSON.stringify(capturados);
-          console.log('Salvar Acionado');
 
           url = "/enviar_ata_para_o_banco";
 
@@ -2076,19 +2026,21 @@
             type: "POST",
             data: {data: data,csrfmiddlewaretoken: token},
             success: function(data){
-              //console.log(data);
               if(!$('#area_arrastavel')){
                 obter_id_ata();
-                salvar_antes_de_uma_requisicao_ajax();
-                // alerta("Ata", "Ata Salva com Sucesso!", "success");
+                // salvar_antes_de_uma_requisicao_ajax();
               }
+              alerta("Ata", "Ata Salva com Sucesso!", "success");
+                document.getElementById("botaoSalvar").style.display = 'flex';
             },
             error: function(data){
-              console.log(data);
               alerta("Ata", "Erro ao salvar Ata!", "error");
               document.querySelector('body').innerHTML = data.responseText;
             }
           });
+        }else{
+          alerta("Ata", "Ata Salva com Sucesso!", "success");
+          document.getElementById("botaoSalvar").style.display = 'flex';
         }
       }
 
@@ -2099,7 +2051,7 @@
 
         //data = [data_inicio: data_inicio]
         url = '/obter_dados_de_ata_no_banco';
-        data = capturados;
+        data = id_ata;
         $(document).off("ajaxSend");
         $.ajax({
           url: url,
@@ -2115,16 +2067,9 @@
             carrega_dados();
             captura_dados();
             ultimo_envio = capturados; 
-            // console.log('entrou');
-            // async function a(){
-            //   captura_dados();
-            //   ultimo_envio = capturados; 
-            //   console.log('entrou');
-            // };
-            // a();
-            salvar_antes_de_uma_requisicao_ajax();
+            // salvar_antes_de_uma_requisicao_ajax();
           },
-          error: function(data){console.log(data);}
+          error: function(data){alerta('Atas', 'Erro em: obter_dados_de_ata_no_banco', 'error');}
         })
       }
 
@@ -2159,7 +2104,7 @@
             telefone_do_usuario_logado = telefone_do_usuario_logado;
 
           },
-          error: function(result){console.log(result)},
+          error: function(result){alerta('Atas', 'Erro em: obter_informacoes_de_apoio', 'error');},
         })
       }
       
@@ -2167,23 +2112,16 @@
       document.querySelector('#botao_usar_ata_padrao').addEventListener('click',usar_modelo_de_ata_padrao);
 
       function usar_modelo_de_ata_padrao(){
-        console.log('chegou');
-
         ata_padrao_selecionada = atas_padrao.filter((ata_padrao) => ata_padrao.tipo_de_ata === parseInt(tipo_de_ata));
-
-        console.log(ata_padrao_selecionada);
-
         cards = ata_padrao_selecionada;
         carrega_dados();
       }
 
       // Adiciona um ouvinte de eventos para o clique no botão
-      // document.getElementById("botaoSalvar").addEventListener("click", function() {
-      //     // Lógica para salvar aqui
-      //     // alert("Salvando...");
-      //     enviar_ata_para_o_banco();
-
-      // });
+      document.getElementById("botaoSalvar").addEventListener("click", function() {
+          document.getElementById("botaoSalvar").style.display = 'none';
+          enviar_ata_para_o_banco();
+      });
 
         
     </script>

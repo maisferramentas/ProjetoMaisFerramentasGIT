@@ -260,7 +260,7 @@
             success: function(result){
                 sucesso(result);
             },
-            error: function(result){console.log(result)},
+            error: function(result){alerta('Aniversariantes', 'Erro em: obter_dados_aniversariantes', 'error');},
         });
     }
 
@@ -346,8 +346,6 @@
         var copia_card_padrao = $('.div_lista_de_aniversariantes').clone();
     
     function exibir_na_tela(dados) {
-        // console.log(dados);
-
         var div_lista_de_aniversariantes = $('.div_lista_de_aniversariantes');
 
         div_lista_de_aniversariantes.html('');
