@@ -159,11 +159,26 @@
         margin-bottom: 10px;
         margin-top: -10px;
     }
+    .filtros{
+        display: flex;
+        flex-direction: column;
+        display: none;
+    }
 </style>
 </head>
 <body>
     <div class="conteudo" id="conteudo">
         <h1>Aniversariantes</h1>
+        <div class="div_caixa_de_pesquisa" >
+            <!-- <label for="">Pesquisar:</label> -->
+            <input type="text" name="" id="caixa_de_pesquisa" placeholder="🔍︎Procurar:" >
+        </div>
+        <div class="expandir_filtros" >
+            <span class="material-symbols-outlined">
+                filter_list
+            </span>
+            <label for="Filtros">Filtros</label>
+        </div>
         <div class="filtros">
             <div>
                 <label for="data_inicio">Data Início: </label>
@@ -195,16 +210,6 @@
                 </div>
             </div>
             
-        </div>
-        <div class="div_caixa_de_pesquisa" >
-            <!-- <label for="">Pesquisar:</label> -->
-            <input type="text" name="" id="caixa_de_pesquisa" placeholder="🔍︎Procurar:" >
-        </div>
-        <div class="expandir_filtros" >
-            <span class="material-symbols-outlined">
-                filter_list
-            </span>
-            <label for="Filtros">Filtros</label>
         </div>
         <!-- INICIO card padrão para clonar e replicar -->
         <div class="div_lista_de_aniversariantes" >
