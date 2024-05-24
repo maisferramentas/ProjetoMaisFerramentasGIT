@@ -65,6 +65,7 @@ urlpatterns = [
     
     path('template_email_padrao', views.template_email_padrao, name='/template_email_padrao'),
     
+    path('historico_de_frequencia_do_membro', views.historico_de_frequencia_do_membro, name='/historico_de_frequencia_do_membro'),
     
 
 ]

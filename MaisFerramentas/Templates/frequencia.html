@@ -184,7 +184,28 @@
   input[type="number"] {
     -moz-appearance: textfield; /* Firefox */
   }
+  .exibir_historico_de_frequencia_do_membro{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+  }
+  .simbolo_de_frequencia{
+    margin-left: 15px;
+  }
+  #informacao_de_historico{
+    margin: 0px;
+  }
 </style>
+
+<!-- <div>
+  <div class="exibir_historico_de_frequencia_do_membro">
+    <p id="informacao_de_historico">Reunião Sacramental 25/02/2024</p>
+    <span class="material-symbols-outlined simbolo_de_frequencia">
+      radio_button_unchecked  check_circle
+    </span>
+  </div>
+</div> -->
 
 <div
   class="configurar_frequencia"
@@ -1228,6 +1249,8 @@
     </table>
   </div>
 </div>
+
+
 <script>
   function exibir_tabela_detalhe() {
     if (
@@ -1557,7 +1580,7 @@
               `
 
                 <div class="informacoes_membro">
-                  <div class="nome_membro"> ` +
+                  <div class="nome_membro" onclick="obter_historico_de_frequencia_do_membro(${dados_frequencia.id_membro_interno})"> ` +
               dados_frequencia.nome_interno +
               ` </div>
                   <div class="outras_informacoes">Idade: ` +
@@ -1591,7 +1614,7 @@
               ` onchange="registrar_frequencia(id)">
                 </div>
               </div>`;
-
+            
             return card;
           },
         },
@@ -2291,5 +2314,31 @@
       document.getElementById("caixa_de_filtros").style.display = "none";
       relatorios_filtros = "inativo";
     }
+  }
+  
+  function obter_historico_de_frequencia_do_membro(id_membro_interno){
+    data_fim = $('#data').val();
+    data_inicio = new Date(new Date(data_fim).getTime() - (90 * 24 * 60 * 60 * 1000));
+
+    url = '/historico_de_frequencia_do_membro';
+    data = {id_membro_interno,data_inicio, data_fim};
+    data = JSON.stringify(data)
+    
+
+    sucesso = exibir_historico_de_frequencia_do_membro;
+    $.ajax({
+        url:url,
+        data: {data},
+        success: function(result){
+            sucesso(result);
+        },
+        error: function(result){alerta('Frequencia', 'Erro em: obter_historico_de_frequencia_do_membro', 'error');},
+    });
+  }
+
+  function exibir_historico_de_frequencia_do_membro(result){
+    historico_de_frequencia_do_membro = result.historico_de_frequencia_do_membro;
+    console.log(historico_de_frequencia_do_membro);
+    $('.cobertura_content').css('display','flex');
   }
 </script>

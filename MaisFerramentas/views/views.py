@@ -253,10 +253,7 @@ import json
 #from .models import model_ata_no_banco
 def enviar_ata_para_o_banco(request):
     data = request.POST.get('data')
-    # id_ata = request.GET.get('data')
 
-    print('Aquiiiiiiiiiiiii')
-    # print(data)
     inserido_por = models.model_tb_acesso.objects.filter(nome_usuario_login=def_usuario_logado(request)).values_list('id_membro_interno', flat=True).first()
     
     inserido_em=timezone.now()
@@ -422,3 +419,17 @@ def obter_modelo_de_ata_padrao(request):
 
 def template_email_padrao(request):
     return render(request, 'Email/template_email_padrao.html')
+
+# from .models import frequencia_vw_frequencia
+def historico_de_frequencia_do_membro(request):
+    data = request.GET.get('data')
+    data = json.loads(data)
+
+    id_membro_interno = data['id_membro_interno']
+    data_fim = data['data_fim']
+    data_inicio = data['data_inicio']
+
+    historico_de_frequencia_do_membro = models.frequencia_vw_frequencia.objects.filter(id_membro_interno=id_membro_interno,data_frequencia__range=[data_inicio, data_fim],status_frequencia=1)
+    historico_de_frequencia_do_membro = [model_to_dict(obj) for obj in historico_de_frequencia_do_membro]
+
+    return JsonResponse({"historico_de_frequencia_do_membro":historico_de_frequencia_do_membro})

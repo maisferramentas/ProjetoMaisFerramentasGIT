@@ -1,0 +1,2295 @@
+<!-- <script src="javascript.js"></script> -->
+
+<!-- Estilos -->
+<!-- <link
+  rel="stylesheet"
+  type="text/css"
+  href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css"
+/>
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="https://cdn.datatables.net/buttons/1.7.1/css/buttons.dataTables.min.css"
+/> -->
+
+<!-- JavaScript -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script> -->
+<!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
+<!-- <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script> -->
+
+<!-- <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.7.1/js/dataTables.buttons.min.js"></script> -->
+<!-- <script src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.print.min.js"></script> -->
+
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.js"></script> -->
+
+<!-- DataTables CSS e JS -->
+
+<!-- DataTables Buttons CSS e JS -->
+<!-- <script
+  type="text/javascript"
+  src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.html5.min.js"
+></script> -->
+<!-- <script
+  type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"
+></script>
+<script
+  type="text/javascript"
+  src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.flash.min.js"
+></script>
+<script
+  type="text/javascript"
+  src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.colVis.min.js"
+></script> -->
+<style>
+  .swal2-popup {
+    width: 350px;
+    height: 300px;
+  }
+
+  @media print {
+    .check_presenca {
+      -webkit-print-color-adjust: exact !important; /* Chrome, Safari 6 – 15.3, Edge */
+      color-adjust: exact !important; /* Firefox 48 – 96 */
+      print-color-adjust: exact !important; /* Firefox 97+, Safari 15.4+ */
+    }
+
+    .botao_imprime,
+    .botao_relatorios_filtros,
+    .junino,
+    .sidebar,
+    .caixa_de_filtros,
+    .menu,
+    .botao_adicionar_a_lista,
+    .configuracoes_frequencia,
+    .dataTables_length,
+    .dataTables_filter,
+    .dataTables_info,
+    .dataTables_paginate {
+      display: none !important;
+    }
+
+    .content {
+      margin-left: 0px !important;
+    }
+  }
+
+  .check_presenca {
+    width: 23px;
+    height: 23px;
+    color: dodgerblue;
+    vertical-align: middle;
+    -webkit-appearance: none;
+    background: none;
+    border: 0;
+    outline: 0;
+    flex-grow: 0;
+    border-radius: 50%;
+    background-color: #ffffff;
+    transition: background 300ms;
+    cursor: pointer;
+    /* background-color: dodgerblue;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E %3Cpath d='M15.88 8.29L10 14.17l-1.88-1.88a.996.996 0 1 0-1.41 1.41l2.59 2.59c.39.39 1.02.39 1.41 0L17.3 9.7a.996.996 0 0 0 0-1.41c-.39-.39-1.03-.39-1.42 0z' fill='%23fff'/%3E %3C/svg%3E"); */
+  }
+
+  /* Pseudo element for check styling */
+
+  .check_presenca::before {
+    content: "";
+    color: transparent;
+    display: block;
+    width: inherit;
+    height: inherit;
+    border-radius: inherit;
+    border: 0;
+    background-color: transparent;
+    background-size: contain;
+    box-shadow: inset 0 0 0 1px #003057;
+    /* #002040, #003057, #0099c8, #00bfff,#1E90FF */
+  }
+
+  /* Checked */
+
+  .check_presenca:checked {
+    background-color: currentcolor;
+    background-color: dodgerblue;
+  }
+
+  .check_presenca:checked::before {
+    box-shadow: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E %3Cpath d='M15.88 8.29L10 14.17l-1.88-1.88a.996.996 0 1 0-1.41 1.41l2.59 2.59c.39.39 1.02.39 1.41 0L17.3 9.7a.996.996 0 0 0 0-1.41c-.39-.39-1.03-.39-1.42 0z' fill='%23fff'/%3E %3C/svg%3E");
+  }
+
+  /* Disabled */
+
+  .check_presenca:disabled {
+    background-color: #ccd3d8;
+    opacity: 0.84;
+    cursor: not-allowed;
+  }
+
+  /* IE */
+
+  .check_presenca::-ms-check {
+    content: "";
+    color: transparent;
+    display: block;
+    width: inherit;
+    height: inherit;
+    border-radius: inherit;
+    border: 0;
+    background-color: transparent;
+    background-size: contain;
+    box-shadow: inset 0 0 0 1px #ccd3d8;
+  }
+
+  /* .check_presenca:checked::-ms-check {
+            box-shadow: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E %3Cpath d='M15.88 8.29L10 14.17l-1.88-1.88a.996.996 0 1 0-1.41 1.41l2.59 2.59c.39.39 1.02.39 1.41 0L17.3 9.7a.996.996 0 0 0 0-1.41c-.39-.39-1.03-.39-1.42 0z' fill='%23fff'/%3E %3C/svg%3E");
+          } */
+  .div_check_presenca {
+    padding-bottom: 5px;
+  }
+
+  .estilo_copia_avatar {
+    margin-top: -20px;
+    margin-left: 15px;
+  }
+
+  .estilo_copia_avatar_mulher {
+    margin-top: -20px;
+    margin-left: 3px;
+  }
+  #example {
+    border: none;
+  }
+
+  #example th,
+  #example td {
+    border: none !important;
+  }
+
+  #example th {
+    display: none;
+  }
+
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  input[type="number"] {
+    -moz-appearance: textfield; /* Firefox */
+  }
+</style>
+
+<div
+  class="configurar_frequencia"
+  style="
+    display: flex;
+    align-items: center;
+    /* text-align: center;  */
+    flex-direction: column;
+    /* justify-content: center; */
+  "
+>
+  <div
+    class="div_registro_frequencia"
+    style="
+      margin-bottom: 25px;
+      max-width: 400px;
+      display: flex;
+      flex-direction: column;
+      background-color: rgba(92, 100, 109, 0.2);
+      background: linear-gradient(
+        to bottom,
+        rgba(92, 100, 109, 0.3),
+        rgba(92, 100, 109, 0.17),
+        transparent 130%
+      );
+      /* margin-right: auto; */
+      align-items: center;
+      justify-content: center;
+      border-radius: 30px 30px 30px 30px;
+      margin-top: 15px;
+    "
+  >
+    <div style="display: flex; /* margin-right: 250px; */">
+      <img
+        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtH-0xHC7BTirHSSW5TWieEUK72b38FQpocWVfWgjIQ2oechpsZEt7RLxpqcD74Qkq4kI&usqp=CAU"
+        alt=""
+        style="
+          width: auto; /* Ajusta automaticamente a largura para manter a proporção original */
+          max-width: 100px; /* Garante que a imagem não ultrapasse a largura do contêiner pai */
+          height: 100px; /* Define a altura desejada para a imagem (ajuste conforme necessário) */
+          border-radius: 50%; /* Torna a imagem um círculo perfeito */
+          display: block; /* Remove espaço extra abaixo da imagem */
+          margin: 0 auto;
+          margin-top: -30px;
+          margin-bottom: 15px;
+        "
+      />
+    </div>
+
+    <div
+      style="
+        display: flex;
+        flex-direction: column;
+        margin-left: 10px;
+        align-items: center;
+        text-align: center;
+        color: #003057;
+      "
+    >
+      <label
+        for=""
+        style="margin-bottom: 10px; font-weight: bold; font-size: 140%"
+        >Registro de Frequência</label
+      >
+      <label for="" style="color: black"
+        >Serviço de controle de presença das reuniões da Igreja.</label
+      >
+    </div>
+
+    <!-- <div
+      style="
+        margin-top: 15px;
+        color: #003057;
+        display: flex;
+        /* flex-direction: column;  */
+        align-items: center;
+      "
+    >
+      <span class="material-symbols-outlined" style="margin-right: 5px">
+        filter_list
+      </span>
+      Fltros
+    </div> -->
+    <div class="configuracoes_frequencia">
+      <div style="margin-bottom: 15px; margin-top: 10px">
+        <label for="data" style="font-weight: bold; margin-bottom: 5px"
+          >Data</label
+        >
+        <input
+          type="date"
+          id="data"
+          name="data"
+          style="
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            border: 2px solid #000;
+            border-radius: 5px;
+            font-size: 16px;
+            font-family: Arial, sans-serif;
+            text-align: center;
+          "
+          onchange="filtros()"
+        />
+      </div>
+
+      <div style="margin-bottom: 15px">
+        <label
+          for="tipo"
+          style="display: block; font-weight: bold; margin-bottom: 5px"
+          >Tipo</label
+        >
+
+        <select
+          id="tipo"
+          name="tipo"
+          style="
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            border: 2px solid #000;
+            border-radius: 5px;
+            font-size: 16px;
+            background-color: #fff;
+          "
+          onchange="filtros()"
+        >
+          <option value="1">Reunião Sacramental</option>
+          <option value="2">Aula do Seminário</option>
+          <option value="3">Classes</option>
+        </select>
+      </div>
+    </div>
+    <!-- <input
+      type="button"
+      value="Aplicar"
+      style="
+        background-color: #4caf50;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+        margin-bottom: 13px;
+      "
+      onmouseover="this.style.backgroundColor='#45a049'"
+      onmouseout="this.style.backgroundColor='#4caf50'"
+      onclick="filtros()"
+    /> -->
+    <div
+      style="
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        font-weight: bold;
+        color: #003057;
+      "
+    >
+      <label for="" id="descricao">Exibindo listagem de Frequência para: </label
+      ><br />
+      <div
+        style="
+          display: flex;
+          align-items: center;
+          flex-direction: column;
+          font-weight: bold;
+          color: #003057;
+        "
+      >
+        <label for="" id="indicador_topo"></label>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="cobertura_content"
+  style="
+    background-color: rgba(0, 0, 0, 0.4);
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: -18px;
+    right: 0;
+    bottom: 0;
+    /* display: none; */
+    z-index: 1;
+    display: none;
+  "
+  onclick="document.querySelector('.cobertura_content').style.display = 'none';
+  document.querySelector('.inserir_regisro').style.display = 'none';"
+></div>
+
+<div
+  class="inserir_regisro"
+  id="inserir_regisro"
+  style="
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    flex-direction: column;
+    overflow: auto;
+    border-style: solid 2px;
+    border-color: #319857;
+
+    background-image: url('https://i.pinimg.com/originals/e4/5f/2f/e45f2f35ecfa6631f4e71363ad6b919b.jpg');
+    background-size: 70%;
+    background-repeat: no-repeat;
+    background-color: rgba(255, 255, 255, 9.9);
+    background-position: -60px 135px;
+
+    position: absolute;
+    top: 273px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 350px;
+    z-index: 2;
+    max-width: 370px;
+
+    display: none;
+  "
+>
+  <div
+    style="
+      background-color: rgb(92, 100, 109); /*19857*/
+      width: 100%;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      height: 70px;
+    "
+  >
+    <div
+      style="
+        color: #af2d16;
+        display: flex;
+        margin-left: auto;
+        justify-content: center;
+        align-items: center;
+      "
+      onclick="
+          document.querySelector('.cobertura_content').style.display = 'none';
+          document.querySelector('.inserir_regisro').style.display = 'none';
+        "
+    >
+      <span class="material-symbols-outlined"> cancel </span>
+    </div>
+
+    <div
+      class="botao_adicionar_a_lista"
+      style="
+        display: flex;
+        align-items: center;
+        border-radius: 2px;
+        color: white; /*c0d1db 319857*/
+        margin-bottom: 10px;
+        /* border-style: solid;/*"
+    >
+      <span
+        class="material-symbols-outlined"
+        style="
+          font-variation-settings: 'FILL' 0, 'wght' 1000000, 'GRAD' 0, 'opsz' 24;
+        "
+      >
+        group_add
+      </span>
+      Adicionar à Lista
+    </div>
+  </div>
+
+  <div
+    class="inserir_regisro_nome"
+    id="inserir_regisro_nome"
+    style="
+      display: flex;
+      flex-direction: column;
+      margin-top: 10px;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 20px;
+    "
+  >
+    <!-- <label for="">Nome</label>  -->
+    <input
+      type="text"
+      name="nome"
+      id="nome"
+      placeholder="Nome"
+      style="
+        width: 80%;
+        height: large;
+        font-size: large;
+        text-align: center;
+        box-sizing: border-box;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 16px;
+        background-color: #fff;
+        font-size: larger;
+      "
+    />
+  </div>
+
+  <div style="display: flex; margin-top: -25px">
+    <!-- <label for="">Sexo</label>  -->
+    <div style="display: flex">
+      <div
+        class="avatar_homem"
+        id="avatar_homem"
+        style="
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          padding: 10px 20px; /* Ajuste conforme necessário */
+        "
+        onclick="definir_sexo(id)"
+      >
+        <svg
+          class="iconCss_i1b8s8h6"
+          role="img"
+          viewBox="0 0 24 24"
+          width="40"
+          height="40"
+          fill="currentColor"
+          style="border-radius: 50%"
+        >
+          <path
+            class="avatarBgCss_a1kg80op"
+            fill="#a6eefa"
+            d="M0 0h24v24H0z"
+          ></path>
+          <path
+            class="avatarHairCss_a1p46hu9"
+            d="M7.73 11.07S7.11 9.44 7 9.18 7.07 8 7 7.85s-.2-2.85.73-3.7a6.48 6.48 0 011.49-1s0-.34.9-.34.12-.55 1.53-.33a16.13 16.13 0 001.68.23h.31s1.13.44 1.06.92 1.13 0 1.13 0v.27s1 0 1 2.59-.19 3.33-.47 3.47a2.23 2.23 0 00-.59.67s-2.77 1.94-8.04.44z"
+            fill="#003057"
+          ></path>
+          <path
+            class="avatarFaceCss_a13ovmoh"
+            d="M15.56 17.59c-.35-.26-.38-2.91-.38-2.91a1.38 1.38 0 00.34-.72 2.34 2.34 0 01.36-1.26.57.57 0 00.39-.18c.15-.19.19-1.37.31-1.71s.19-.89-.2-.85-.58.67-.58.67a5.12 5.12 0 00-.16-1.7c-.23-.67.2-2.15-.74-2.71A3.55 3.55 0 0012.19 6a5.05 5.05 0 01-2.53-.19c-.75-.26-1.37 1-1.49 1.52a25.44 25.44 0 00-.47 3.25V11s-.27-1.19-.51-1.26-.66-.07-.58.81.17.2.51 1.86c.18 1 .53.22.53.22a4.33 4.33 0 001 2.54v1.38a1.8 1.8 0 01-1.3 1.78c4.33 4.62 9.91.15 9.91.15s-1.49-.74-1.7-.89z"
+            fill="#0181a1"
+          ></path>
+          <path
+            class="avatarShadowCss_a47si0s"
+            d="M15.18 14.68a11.17 11.17 0 01-1.85 1.72 3.4 3.4 0 01-3.64-.22 4.31 4.31 0 01-1.06-.94V16c2.12 2.91 5.4 1.63 7 1.6-.43-.27-.45-2.92-.45-2.92z"
+            fill="#007694"
+          ></path>
+          <path
+            class="avatarShirtCss_a17p2za8"
+            d="M21.34 24a5.73 5.73 0 00.66-2.75c0-2.13-6.07-3.5-6.07-3.5l-.14.23s-.71 1.57-4 1.57a4.56 4.56 0 01-3.57-1.73C7.44 18 2 19 2 21.27A5.89 5.89 0 002.64 24z"
+            fill="#01496e"
+          ></path>
+        </svg>
+
+        <label for="" style="color: #0181a1">Masculino</label>
+      </div>
+
+      <div
+        class="avatar_mulher"
+        id="avatar_mulher"
+        style="
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          padding: 10px 20px; /* Ajuste conforme necessário */
+        "
+        onclick="definir_sexo(id)"
+      >
+        <svg
+          class="iconCss_i1b8s8h6"
+          role="img"
+          viewBox="0 0 24 24"
+          width="40"
+          height="40"
+          fill="currentColor"
+          style="border-radius: 50%"
+        >
+          <path
+            class="avatarBgCss_a1kg80op"
+            fill="#ffd2d2"
+            d="M0 0h24v24H0z"
+          ></path>
+          <path
+            class="avatarFaceCss_a13ovmoh"
+            d="M17.09 5.63L7.46 5s1.1 13.85 1 13.78a5.89 5.89 0 01-1 .26l.94 2.23 7.5-.16z"
+            fill="#dd2762"
+          ></path>
+          <path
+            class="avatarShadowCss_a47si0s"
+            d="M15.34 18.74l-.71-4-.48.72a5.32 5.32 0 01-1.1 1.22 2.15 2.15 0 01-1.74-.05 7.51 7.51 0 01-1-.87c-.18-.2-.58-.76-.87-1.07 0 .22.34 1.64.34 1.73a5.91 5.91 0 005.56 2.32z"
+            fill="#cb1f57"
+          ></path>
+          <path
+            class="avatarHairCss_a1p46hu9"
+            d="M19.45 11.44A3.18 3.18 0 0119 9.25c-.34-1.27-.86-3.48-2.23-4.6-.64-.5-1.22-1.63-2.24-1.76a4.19 4.19 0 00-1 .09s-1.77-.85-2.86-.45C9.73 2.62 4.45 6.59 6 8c0 0-.32.1-.44-.53a1.29 1.29 0 000 1.18s-1.72 1.89-1.24 2.86a5.19 5.19 0 00.31.5c-.3.33-1 1.17-.71 1.85.1.26-.09.44 0 .59a1.07 1.07 0 00.64.54l.3.88c.62 1.92 2.48 2.35 4.2 3.22-.25-.84.32-.79.55-1.45a5.94 5.94 0 00.27-2.29 1.3 1.3 0 00-.2-.49A4.38 4.38 0 018.33 12c.05-.5-.19-.7-.18-1.29s.38.13.43-.11c.09-.46.13-1.31.37-1.53.79-.74.46-.2 1.36-1C11.53 7 10.62 8 11.53 7a6.67 6.67 0 011.74-1.29A3 3 0 0015.1 7c.39.21.12 1.45.1 2.05 0 .44 0 1.22.44 1.22.76-.75 1 .36.95 1.13a1.85 1.85 0 01-.07.41 1.42 1.42 0 01-.14.36c-.11.34-.81.18-.78.37a2 2 0 010 .78 5.53 5.53 0 01-1 1.48c-.25.35-.68 2.45-.06 3.15a2.54 2.54 0 00.73.73 3.69 3.69 0 001.87.44 2.62 2.62 0 01.35-1.6 6.38 6.38 0 011-.8s.78-.83.38-1 .23-.41.23-.41l-.49-.31s.67-.15.44-.48.68-1.41.68-1.41.4-.52-.28-1.67z"
+            fill="#6e0d33"
+          ></path>
+          <path
+            class="avatarShirtCss_a17p2za8"
+            d="M20.28 24a6.45 6.45 0 00.39-2.22c-.58-1.6-3.76-2.45-4.1-2.59s-1.09-.37-1.09-.37l-.11.21s-.68 2-3.86 2a4.29 4.29 0 01-3.44-2.13c-.72.2-4.74.58-4.74 2.86a6.87 6.87 0 00.4 2.24z"
+            fill="#a0084c"
+          ></path>
+        </svg>
+        <label for="" style="color: #dd2762">Feminino</label>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="inserir_regisro_idade"
+    id="inserir_regisro_idade"
+    style="
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 10px;
+    "
+  >
+    <div
+      style="
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: center;
+      "
+    >
+      <!-- <label for="">Idade</label> -->
+      <!-- <input type="number" name="" id="" min="0" max="100"> -->
+      <div
+        style="
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          justify-content: center;
+          background-color: #c0d1db;
+        "
+      >
+        <span
+          class="material-symbols-outlined"
+          id="remove"
+          onclick="definir_idade(id)"
+        >
+          remove
+        </span>
+
+        <input
+          type="number"
+          name=""
+          id="idade"
+          style="
+            width: 50px;
+            height: large;
+            font-size: large;
+            text-align: center;
+          "
+          placeholder="Idade"
+          oninput="validarNumero(this)"
+        />
+
+        <span
+          class="material-symbols-outlined"
+          id="adiciona"
+          onclick="definir_idade(id)"
+        >
+          add
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <div style="margin-bottom: 30px">
+      <input
+        type="button"
+        value="Membro"
+        id="membro"
+        style="
+          background-color: #007da5;
+          font-size: large;
+          border: 2px solid #007da5;
+          background-color: transparent;
+          color: #007da5;
+          padding: 5px 10px; /* Ajuste conforme necessário */
+          cursor: pointer;
+          transition: background-color 0.3s, color 0.3s;
+        "
+        onclick="membro(id)"
+      />
+
+      <input
+        type="button"
+        value="Visitante"
+        id="visitante"
+        class="botao-membro"
+        style="
+          background-color: #e66e26;
+          font-size: large;
+          border: 2px solid #e66e26;
+          background-color: transparent;
+          color: #e66e26;
+          padding: 5px 10px; /* Ajuste conforme necessário */
+          cursor: pointer;
+          transition: background-color 0.3s, color 0.3s;
+        "
+        onclick="membro(id)"
+      />
+
+      <input
+        type="button"
+        value="Criança"
+        id="crianca"
+        class="botao-membro"
+        style="
+          background-color: #f7b714;
+          font-size: large;
+          border: 2px solid #f7b714;
+          background-color: transparent;
+          color: #f7b714;
+          padding: 5px 10px; /* Ajuste conforme necessário */
+          cursor: pointer;
+          transition: background-color 0.3s, color 0.3s;
+        "
+        onclick="membro(id)"
+      />
+
+      <div style="display: flex; align-items: center; flex-direction: column">
+        <span class="material-symbols-outlined" style="margin-right: 5px">
+          filter_list
+        </span>
+
+        <div
+          style="
+            background-color: #c0d1db;
+            max-width: 200px;
+            min-width: 185px;
+            display: flex;
+            align-items: center;
+            border-radius: 30px 30px 30px 30px;
+            padding: 2px;
+            /* display: none; */
+            /* margin-top: 5px; */
+          "
+          id="div_outra_unidade"
+        >
+          <input type="checkbox" class="check_presenca" id="outra_unidade" />De
+          outra unidade
+        </div>
+      </div>
+
+      <div
+        style="
+          margin-top: 5px;
+          display: flex;
+          align-items: center;
+          flex-direction: column;
+        "
+      >
+        <div
+          style="
+            background-color: #c0d1db;
+            max-width: 200px;
+            min-width: 185px;
+            display: flex;
+            align-items: center;
+            border-radius: 30px 30px 30px 30px;
+            padding: 2px;
+            /* display: none; */
+          "
+        >
+          Registrar Presença<input
+            type="checkbox"
+            class="check_presenca"
+            id="registrar_presenca"
+          />
+        </div>
+      </div>
+    </div>
+    <div style="margin-top: -20px">
+      <input
+        type="button"
+        value="Fechar"
+        style="
+          background-color: #af2d16; /* Cor de fundo */
+          color: #fff; /* Cor do texto */
+          padding: 10px 20px; /* Espaçamento interno */
+          font-size: 16px; /* Tamanho da fonte */
+          border: none; /* Sem borda */
+          border-radius: 5px; /* Borda arredondada */
+          cursor: pointer; /* Cursor do mouse */
+          transition: background-color 0.3s; /* Transição suave da cor de fundo */
+          margin-bottom: 2px;
+        "
+        onclick="
+              document.querySelector('.cobertura_content').style.display = 'none';
+              document.querySelector('.inserir_regisro').style.display = 'none';
+            "
+      />
+
+      <!-- <input type="button" value="Cancelar"> -->
+      <input
+        type="button"
+        value="Salvar"
+        style="
+          background-color: #319857; /* Cor de fundo */
+          color: #fff; /* Cor do texto */
+          padding: 10px 20px; /* Espaçamento interno */
+          font-size: 16px; /* Tamanho da fonte */
+          border: none; /* Sem borda */
+          border-radius: 5px; /* Borda arredondada */
+          cursor: pointer; /* Cursor do mouse */
+          transition: background-color 0.3s; /* Transição suave da cor de fundo */
+          margin-bottom: 10px;
+        "
+        onclick="verificar()"
+      />
+    </div>
+  </div>
+
+  <div class="inserir_regisro_genero" id="inserir_regisro_genero">
+    <!-- <input type="radio" name="genero" id="M" value="Masculino">Masculino
+        <input type="radio" name="genero" id="F">Feminino -->
+  </div>
+</div>
+
+<div
+  class="estrutura_listagem"
+  style="display: flex; flex-direction: column; align-items: center"
+>
+  <div
+    class="listagem"
+    style="
+      display: flex;
+      /* align-items: center; 
+    justify-content: center;  */
+      width: 400px;
+      flex-direction: column;
+    "
+  >
+    <div
+      style="
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+      "
+    >
+      <div
+        class="botao_imprime"
+        style="
+          margin-top: 15px;
+          color: #003057;
+          display: flex;
+          /* flex-direction: column;  */
+          align-items: center;
+        "
+        onclick="imprimir()"
+      >
+        <span class="material-symbols-outlined" style="margin-right: 5px">
+          print
+        </span>
+        <span class="material-symbols-outlined" style="margin-right: 5px">
+          save
+        </span>
+        Imprimir ou Salvar
+      </div>
+
+      <div
+        class="botao_relatorios_filtros"
+        style="
+          margin-top: 15px;
+          color: #003057;
+          display: flex;
+          /* flex-direction: column;  */
+          align-items: center;
+        "
+        onclick="relatorio_filtros()"
+      >
+        <span class="material-symbols-outlined"> expand_more </span>
+        Relatório e Filtros
+      </div>
+
+      <div
+        class="junino"
+        style="
+          display: flex;
+          justify-content: center;
+          flex-direction: column;
+          align-items: center;
+        "
+      >
+        <div style="display: flex; justify-content: center; margin-top: 20px">
+          <div
+            class="div_botao_relatorio"
+            style="
+              display: flex;
+              align-items: center;
+              border: #d49012 1px solid;
+              border-radius: 10px 10px 10px 10px;
+              width: 190px;
+              justify-content: center;
+
+              background-color: #d49012;
+              font-size: large;
+              border: 2px solid #d49012;
+              background-color: transparent;
+              color: #d49012;
+              padding: 5px 10px; /* Ajuste conforme necessário */
+              cursor: pointer;
+              transition: background-color 0.3s, color 0.3s;
+            "
+            onclick="relatorio()"
+          >
+            <span
+              class="material-icons icone_frequencia_sidebar"
+              style="
+                color: #d49012;
+                font-variation-settings: 'FILL' 0, 'GRAD' 0, 'opsz' 24;
+              "
+            >
+              fact_check
+            </span>
+            <label for="">Visão de Relatório</label>
+          </div>
+        </div>
+
+        <div
+          class="botao_fitros"
+          style="
+            margin-top: 15px;
+            color: #d49012;
+            display: flex;
+            /* flex-direction: column;  */
+            align-items: center;
+          "
+          onclick="aba_filtros()"
+        >
+          <span class="material-symbols-outlined" style="margin-right: 5px">
+            filter_list
+          </span>
+          Personalizar Fltros
+        </div>
+      </div>
+
+      <div
+        style="
+          display: none;
+          flex-direction: column;
+          margin-left: 33px;
+          margin-top: 13px;
+        "
+        id="caixa_de_filtros"
+        class="caixa_de_filtros"
+      >
+        <div style="display: flex; align-items: center; margin-left: 92px">
+          <input
+            type="checkbox"
+            checked
+            name=""
+            id="Selecionar_Todos"
+            onchange="selecionar_todos_filtro()"
+          />Selecionar Todos
+        </div>
+
+        <label for="" style="margin-top: 5px; margin-bottom: 5px"
+          >Gênero:</label
+        >
+        <div style="display: flex; align-items: center; margin-left: 92px">
+          <input
+            type="checkbox"
+            checked
+            name=""
+            id="filtro_Homem"
+            onchange="alterar_filtros()"
+          />Homem
+        </div>
+
+        <div style="display: flex; align-items: center; margin-left: 92px">
+          <input
+            type="checkbox"
+            name=""
+            checked
+            id="filtro_Mulher"
+            onchange="alterar_filtros()"
+          />Mulher
+        </div>
+
+        <label for="" style="margin-top: 5px; margin-bottom: 5px">Tipo:</label>
+        <div style="display: flex; align-items: center; margin-left: 92px">
+          <input
+            type="checkbox"
+            name=""
+            checked
+            id="filtro_Membro"
+            onchange="alterar_filtros()"
+          />Membro
+        </div>
+
+        <div style="display: flex; align-items: center; margin-left: 92px">
+          <input
+            type="checkbox"
+            name=""
+            checked
+            id="filtro_Visitante"
+            onchange="alterar_filtros()"
+          />Visitante
+        </div>
+
+        <div style="display: flex; align-items: center; margin-left: 92px">
+          <input
+            type="checkbox"
+            name=""
+            checked
+            id="filtro_Criança"
+            onchange="alterar_filtros()"
+          />Criança
+        </div>
+
+        <div style="display: flex; align-items: center; margin-left: 92px">
+          <input
+            type="checkbox"
+            name=""
+            checked
+            id="filtro_Deoutraala"
+            onchange="alterar_filtros()"
+          />De outra Ala
+        </div>
+
+        <label for="" style="margin-top: 5px; margin-bottom: 5px"
+          >Status:</label
+        >
+        <div style="display: flex; align-items: center; margin-left: 92px">
+          <input
+            type="checkbox"
+            name=""
+            checked
+            id="filtro_Ativo"
+            onchange="alterar_filtros()"
+          />Ativo
+        </div>
+
+        <div style="display: flex; align-items: center; margin-left: 92px">
+          <input
+            type="checkbox"
+            name=""
+            checked
+            id="filtro_Inativo"
+            onchange="alterar_filtros()"
+          />Inativo
+        </div>
+
+        <label for="" style="margin-top: 5px; margin-bottom: 5px"
+          >Frequência:</label
+        >
+        <div style="display: flex; align-items: center; margin-left: 92px">
+          <input
+            type="checkbox"
+            name=""
+            checked
+            id="filtro_Presente"
+            onchange="alterar_filtros()"
+          />Presente
+        </div>
+        <div style="display: flex; align-items: center; margin-left: 92px">
+          <input
+            type="checkbox"
+            name=""
+            checked
+            id="filtro_Faltou"
+            onchange="alterar_filtros()"
+          />Faltou
+        </div>
+
+        <label for="" style="margin-top: 5px; margin-bottom: 5px"
+          >Organizações:</label
+        >
+
+        <div style="display: flex; align-items: center; margin-left: 92px">
+          <input
+            type="checkbox"
+            name=""
+            checked
+            id="filtro_SSocorro"
+            onchange="alterar_filtros()"
+          />S.Socorro
+        </div>
+        <div style="display: flex; align-items: center; margin-left: 92px">
+          <input
+            type="checkbox"
+            name=""
+            checked
+            id="filtro_QElderes"
+            onchange="alterar_filtros()"
+          />Q.Elderes
+        </div>
+        <div style="display: flex; align-items: center; margin-left: 92px">
+          <input
+            type="checkbox"
+            name=""
+            checked
+            id="filtro_Rapazes"
+            onchange="alterar_filtros()"
+          />Rapazes
+        </div>
+        <div style="display: flex; align-items: center; margin-left: 92px">
+          <input
+            type="checkbox"
+            name=""
+            checked
+            id="filtro_Mocas"
+            onchange="alterar_filtros()"
+          />Moças
+        </div>
+        <div style="display: flex; align-items: center; margin-left: 92px">
+          <input
+            type="checkbox"
+            name=""
+            checked
+            id="filtro_Primaria"
+            onchange="alterar_filtros()"
+          />Primária
+        </div>
+
+        <label for="" style="margin-top: 5px; margin-bottom: 5px"
+          >Ministrantes:</label
+        >
+        <div style="display: flex; align-items: center">
+          <input
+            type="checkbox"
+            name=""
+            id="ministradores_para_presentes"
+            onchange="exibir_ministradores()"
+          />Exibir Ministradores de membros presentes
+        </div>
+        <div style="display: flex; align-items: center">
+          <input
+            type="checkbox"
+            name=""
+            id="ministradores_para_absenteistas"
+            onchange="exibir_ministradores()"
+          />Exibir Ministradores de membros que faltaram
+        </div>
+      </div>
+
+      <h1
+        id="contador"
+        onclick="exibir_tabela_detalhe()"
+        style="color: #003057"
+      ></h1>
+      <!-- <button onclick="imprimir()" >Aqui</button> -->
+
+      <div
+        class="div_tabela_contagem_organizacao"
+        style="
+          display: none;
+          flex-direction: column;
+          align-items: center;
+          margin-bottom: 30px;
+        "
+      >
+        <table id="tabela_contagem_organizacao">
+          <thead>
+            <th>Organiz.</th>
+            <th>Total</th>
+            <th>Freq.</th>
+            <th>Faltas</th>
+            <th>%</th>
+          </thead>
+        </table>
+      </div>
+
+      <div
+        class="botao_adicionar_a_lista"
+        style="display: flex; justify-content: center; padding-bottom: 30px"
+      >
+        <div
+          style="
+            display: flex;
+            align-items: center;
+            border: #319857 1px solid;
+            border-radius: 10px 10px 10px 10px;
+            width: 170px;
+            justify-content: center;
+
+            background-color: #319857;
+            font-size: large;
+            border: 2px solid #319857;
+            background-color: transparent;
+            color: #319857;
+            padding: 5px 10px; /* Ajuste conforme necessário */
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+          "
+          onclick="
+    document.querySelector('.cobertura_content').style.display = 'flex';
+    document.querySelector('.inserir_regisro').style.display = 'flex';
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+    "
+          onmouseover="this.style.backgroundColor='transparent'"
+          onmouseout="this.style.backgroundColor='transparent'"
+        >
+          <span
+            class="material-symbols-outlined"
+            style="
+              color: #319857;
+              font-variation-settings: 'FILL' 0, 'GRAD' 0, 'opsz' 24;
+            "
+          >
+            group_add
+          </span>
+          <label for="">Adicionar à Lista</label>
+        </div>
+      </div>
+
+      <!-- <h1>45</h1> -->
+    </div>
+
+    <table border="1" id="example" style="width: 100%">
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>Presente</th>
+          <th>Ativo</th>
+          <th>Sexo</th>
+          <th>Organização</th>
+          <th>Listagem</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <!-- Linhas de dados aqui -->
+      </tbody>
+    </table>
+  </div>
+</div>
+<script>
+  function exibir_tabela_detalhe() {
+    if (
+      document.querySelector(".div_tabela_contagem_organizacao").style
+        .display === "none"
+    ) {
+      document.querySelector(".div_tabela_contagem_organizacao").style.display =
+        "flex";
+    } else {
+      document.querySelector(".div_tabela_contagem_organizacao").style.display =
+        "none";
+    }
+  }
+
+  function f_dados_tabela_contagem_organizacao() {
+    contador_qelderes_presentes = 0;
+    contador_qelderes_absenteista = 0;
+    contador_ssocorro_presentes = 0;
+    contador_ssocorro_absenteista = 0;
+    contador_rapazes_presentes = 0;
+    contador_rapazes_absenteista = 0;
+    contador_mocas_presentes = 0;
+    contador_mocas_absenteista = 0;
+    contador_primaria_presentes = 0;
+    contador_primaria_absenteista = 0;
+
+    tabela
+      .column(4, { search: "applied" })
+      .data()
+      .each(function (data) {
+        if (
+          data.organizacao === "Q. Elderes" &&
+          document.getElementById(data.id_membro_interno).checked === true
+        ) {
+          contador_qelderes_presentes++;
+        } else if (
+          data.organizacao === "Q. Elderes" &&
+          document.getElementById(data.id_membro_interno).checked === false
+        ) {
+          contador_qelderes_absenteista++;
+        } else if (
+          data.organizacao === "S. Socorro" &&
+          document.getElementById(data.id_membro_interno).checked === true
+        ) {
+          contador_ssocorro_presentes++;
+        } else if (
+          data.organizacao === "S. Socorro" &&
+          document.getElementById(data.id_membro_interno).checked === false
+        ) {
+          contador_ssocorro_absenteista++;
+        } else if (
+          data.organizacao === "Rapazes" &&
+          document.getElementById(data.id_membro_interno).checked === true
+        ) {
+          contador_rapazes_presentes++;
+        } else if (
+          data.organizacao === "Rapazes" &&
+          document.getElementById(data.id_membro_interno).checked === false
+        ) {
+          contador_rapazes_absenteista++;
+        } else if (
+          data.organizacao === "Moças" &&
+          document.getElementById(data.id_membro_interno).checked === true
+        ) {
+          contador_mocas_presentes++;
+        } else if (
+          data.organizacao === "Moças" &&
+          document.getElementById(data.id_membro_interno).checked === false
+        ) {
+          contador_mocas_absenteista++;
+        } else if (
+          data.organizacao === "Primária" &&
+          document.getElementById(data.id_membro_interno).checked === true
+        ) {
+          contador_primaria_presentes++;
+        } else if (
+          data.organizacao === "Primária" &&
+          document.getElementById(data.id_membro_interno).checked === false
+        ) {
+          contador_primaria_absenteista++;
+        }
+      });
+
+    total_contador_qelderes =
+      contador_qelderes_presentes + contador_qelderes_absenteista;
+
+    total_contador_ssocorro =
+      contador_ssocorro_presentes + contador_ssocorro_absenteista;
+
+    total_contador_rapazes =
+      contador_rapazes_presentes + contador_rapazes_absenteista;
+
+    total_contador_mocas =
+      contador_mocas_presentes + contador_mocas_absenteista;
+
+    total_contador_primaria =
+      contador_primaria_presentes + contador_primaria_absenteista;
+
+    percentual_contador_qelderes =
+      ((contador_qelderes_presentes / total_contador_qelderes) * 100).toFixed(
+        0
+      ) + "%";
+
+    percentual_contador_ssocorro =
+      ((contador_ssocorro_presentes / total_contador_ssocorro) * 100).toFixed(
+        0
+      ) + "%";
+
+    percentual_contador_rapazes =
+      ((contador_rapazes_presentes / total_contador_rapazes) * 100).toFixed(0) +
+      "%";
+
+    percentual_contador_mocas =
+      ((contador_mocas_presentes / total_contador_mocas) * 100).toFixed(0) +
+      "%";
+
+    percentual_contador_primaria =
+      ((contador_primaria_presentes / total_contador_primaria) * 100).toFixed(
+        0
+      ) + "%";
+
+    // $("#tabela_contagem_organizacao").DataTable({})
+
+    dados_tabela_contagem_organizacao = [
+      {
+        organização: "Q. Elderes",
+        total: total_contador_qelderes,
+        frequência: contador_qelderes_presentes,
+        faltas: contador_qelderes_absenteista,
+        percentual: percentual_contador_qelderes,
+      },
+      {
+        organização: "S. Socorro",
+        total: total_contador_ssocorro,
+        frequência: contador_ssocorro_presentes,
+        faltas: contador_ssocorro_absenteista,
+        percentual: percentual_contador_ssocorro,
+      },
+      {
+        organização: "Rapazes",
+        total: total_contador_rapazes,
+        frequência: contador_rapazes_presentes,
+        faltas: contador_rapazes_absenteista,
+        percentual: percentual_contador_rapazes,
+      },
+      {
+        organização: "Moças",
+        total: total_contador_mocas,
+        frequência: contador_mocas_presentes,
+        faltas: contador_mocas_absenteista,
+        percentual: percentual_contador_mocas,
+      },
+      {
+        organização: "Primária",
+        total: total_contador_primaria,
+        frequência: contador_primaria_presentes,
+        faltas: contador_primaria_absenteista,
+        percentual: percentual_contador_primaria,
+      },
+    ];
+    return dados_tabela_contagem_organizacao;
+  }
+
+  document.getElementById("data").valueAsDate = new Date();
+  $(document).ready(function () {
+    tabela = $("#example").DataTable({
+      // dom: 'Bfrtip',
+      // buttons: [
+      //   'print', 'pdf'
+      // ],
+      language: {
+        search: "Procurar:",
+        emptyTable: "Nenhum registro encontrado",
+        zeroRecords: "Nenhum registro correspondente encontrado",
+        info: "Mostrando _START_ a _END_ de _TOTAL_ registros",
+        infoEmpty: "Mostrando 0 a 0 de 0 registros",
+        infoFiltered: "(filtrado de _MAX_ registros totais)",
+        paginate: {
+          first: "Primeiro",
+          last: "Último",
+          next: "Próximo",
+          previous: "Anterior",
+        },
+      },
+      paging: false, // oculta a paginação
+      lengthMenu: [-1], // exibe todos os registros
+      //"order": [[1, "asc"]],
+
+      ajax: {
+        url: "/ferramentas/frequencia/dados_frequencia/",
+        data: {
+          data_frequencia: function () {
+            return $("#data").val();
+          },
+          id_tipo_frequencia: function () {
+            return $("#tipo").val();
+          },
+        },
+        //type: 'GET',
+        dataType: "json",
+        // success: async function (data) {
+        //   console.log(data);
+        // },
+        error: async function (data) {
+          console.log(data);
+        },
+      },
+      // Especifique a rota do seu servidor que fornece os dados
+      columns: [
+        { data: "nome_interno" },
+        { data: "status_frequencia" },
+        { data: "ativo" },
+        { data: "sexo" },
+        {
+          data: null, //"organizacao"
+          render: function (data, type, dados_frequencia) {
+            if (dados_frequencia.organizacao === "Q. Elderes") {
+              id_organizacao = 1;
+            }
+            if (dados_frequencia.organizacao === "S. Socorro") {
+              id_organizacao = 2;
+            }
+            if (dados_frequencia.organizacao === "Rapazes") {
+              id_organizacao = 3;
+            }
+            if (dados_frequencia.organizacao === "Moças") {
+              id_organizacao = 4;
+            }
+            if (dados_frequencia.organizacao === "Primária") {
+              id_organizacao = 5;
+            }
+
+            return id_organizacao;
+          },
+        },
+        {
+          data: null,
+          render: function (data, type, dados_frequencia) {
+            if (dados_frequencia.sexo === "M") {
+              avatar = `
+                <div class="avatar_homem" id="avatar_homem">
+                  <svg class="iconCss_i1b8s8h6" role="img" viewBox="0 0 24 24" width="40" height="40" fill="currentColor" style="border-radius: 50%;">
+                    <path class="avatarBgCss_a1kg80op" fill="#a6eefa" d="M0 0h24v24H0z"></path>
+                    <path class="avatarHairCss_a1p46hu9" d="M7.73 11.07S7.11 9.44 7 9.18 7.07 8 7 7.85s-.2-2.85.73-3.7a6.48 6.48 0 011.49-1s0-.34.9-.34.12-.55 1.53-.33a16.13 16.13 0 001.68.23h.31s1.13.44 1.06.92 1.13 0 1.13 0v.27s1 0 1 2.59-.19 3.33-.47 3.47a2.23 2.23 0 00-.59.67s-2.77 1.94-8.04.44z" fill="#003057"></path>
+                    <path class="avatarFaceCss_a13ovmoh" d="M15.56 17.59c-.35-.26-.38-2.91-.38-2.91a1.38 1.38 0 00.34-.72 2.34 2.34 0 01.36-1.26.57.57 0 00.39-.18c.15-.19.19-1.37.31-1.71s.19-.89-.2-.85-.58.67-.58.67a5.12 5.12 0 00-.16-1.7c-.23-.67.2-2.15-.74-2.71A3.55 3.55 0 0012.19 6a5.05 5.05 0 01-2.53-.19c-.75-.26-1.37 1-1.49 1.52a25.44 25.44 0 00-.47 3.25V11s-.27-1.19-.51-1.26-.66-.07-.58.81.17.2.51 1.86c.18 1 .53.22.53.22a4.33 4.33 0 001 2.54v1.38a1.8 1.8 0 01-1.3 1.78c4.33 4.62 9.91.15 9.91.15s-1.49-.74-1.7-.89z" fill="#0181a1"></path>
+                    <path class="avatarShadowCss_a47si0s" d="M15.18 14.68a11.17 11.17 0 01-1.85 1.72 3.4 3.4 0 01-3.64-.22 4.31 4.31 0 01-1.06-.94V16c2.12 2.91 5.4 1.63 7 1.6-.43-.27-.45-2.92-.45-2.92z" fill="#007694"></path>
+                    <path class="avatarShirtCss_a17p2za8" d="M21.34 24a5.73 5.73 0 00.66-2.75c0-2.13-6.07-3.5-6.07-3.5l-.14.23s-.71 1.57-4 1.57a4.56 4.56 0 01-3.57-1.73C7.44 18 2 19 2 21.27A5.89 5.89 0 002.64 24z" fill="#01496e"></path>
+                  </svg>
+                </div>`;
+            } else {
+              avatar = `
+                <div class="avatar_mulher" id="avatar_mulher">
+                  <svg class="iconCss_i1b8s8h6" role="img" viewBox="0 0 24 24" width="40" height="40" fill="currentColor" style="border-radius: 50%;">
+                    <path class="avatarBgCss_a1kg80op" fill="#ffd2d2" d="M0 0h24v24H0z"></path>
+                    <path class="avatarFaceCss_a13ovmoh" d="M17.09 5.63L7.46 5s1.1 13.85 1 13.78a5.89 5.89 0 01-1 .26l.94 2.23 7.5-.16z" fill="#dd2762"></path>
+                    <path class="avatarShadowCss_a47si0s" d="M15.34 18.74l-.71-4-.48.72a5.32 5.32 0 01-1.1 1.22 2.15 2.15 0 01-1.74-.05 7.51 7.51 0 01-1-.87c-.18-.2-.58-.76-.87-1.07 0 .22.34 1.64.34 1.73a5.91 5.91 0 005.56 2.32z" fill="#cb1f57"></path>
+                    <path class="avatarHairCss_a1p46hu9" d="M19.45 11.44A3.18 3.18 0 0119 9.25c-.34-1.27-.86-3.48-2.23-4.6-.64-.5-1.22-1.63-2.24-1.76a4.19 4.19 0 00-1 .09s-1.77-.85-2.86-.45C9.73 2.62 4.45 6.59 6 8c0 0-.32.1-.44-.53a1.29 1.29 0 000 1.18s-1.72 1.89-1.24 2.86a5.19 5.19 0 00.31.5c-.3.33-1 1.17-.71 1.85.1.26-.09.44 0 .59a1.07 1.07 0 00.64.54l.3.88c.62 1.92 2.48 2.35 4.2 3.22-.25-.84.32-.79.55-1.45a5.94 5.94 0 00.27-2.29 1.3 1.3 0 00-.2-.49A4.38 4.38 0 018.33 12c.05-.5-.19-.7-.18-1.29s.38.13.43-.11c.09-.46.13-1.31.37-1.53.79-.74.46-.2 1.36-1C1background-im1.53 7 10.62 8 11.53 7a6.67 6.67 0 011.74-1.29A3 3 0 0015.1 7c.39.21.12 1.45.1 2.05 0 .44 0 1.22.44 1.22.76-.75 1 .36.95 1.13a1.85 1.85 0 01-.07.41 1.42 1.42 0 01-.14.36c-.11.34-.81.18-.78.37a2 2 0 010 .78 5.53 5.53 0 01-1 1.48c-.25.35-.68 2.45-.06 3.15a2.54 2.54 0 00.73.73 3.69 3.69 0 001.87.44 2.62 2.62 0 01.35-1.6 6.38 6.38 0 011-.8s.78-.83.38-1 .23-.41.23-.41l-.49-.31s.67-.15.44-.48.68-1.41.68-1.41.4-.52-.28-1.67z" fill="#6e0d33"></path>
+                    <path class="avatarShirtCss_a17p2za8" d="M20.28 24a6.45 6.45 0 00.39-2.22c-.58-1.6-3.76-2.45-4.1-2.59s-1.09-.37-1.09-.37l-.11.21s-.68 2-3.86 2a4.29 4.29 0 01-3.44-2.13c-.72.2-4.74.58-4.74 2.86a6.87 6.87 0 00.4 2.24z" fill="#a0084c"></path>
+                  </svg>
+                </div>
+                `;
+            }
+
+            if (dados_frequencia.status_frequencia === 1) {
+              status_frequencia = "checked";
+            } else {
+              status_frequencia = "";
+            }
+
+            tag_membro = "";
+            tag_ativo = "";
+
+            if (
+              dados_frequencia.id_perfil === 1 ||
+              dados_frequencia.id_perfil === 4
+            ) {
+              tag_membro = `<label for="" style="color: #007da5">Membro</label>`;
+            } else if (
+              dados_frequencia.id_perfil === 2 ||
+              dados_frequencia.id_perfil === 5
+            ) {
+              tag_membro = `<label for="" style="color: #e66e26">Visitante</label>`;
+            } else if (
+              dados_frequencia.id_perfil === 3 ||
+              dados_frequencia.id_perfil === 6
+            ) {
+              tag_membro = `<label for="" style="color: #f7b714">Criança</label>`;
+            }
+
+            if ([4, 5, 6].includes(dados_frequencia.id_perfil)) {
+              tag_outra_unidade = `<label for="" style="color: black; padding-left: 3px;">(de outra unidade)</label>`;
+            } else {
+              tag_outra_unidade = "";
+            }
+
+            if (dados_frequencia.ativo === 1) {
+              tag_ativo = `<label for="" style="color: #007da5; padding-left: 3px;">Ativo</label>`;
+            } else {
+              tag_ativo = `<label for="" style="color: crimson;padding-left: 3px;">Inativo</label>`;
+            }
+
+            ministradores = "";
+            if (
+              document.getElementById("ministradores_para_presentes")
+                .checked === true &&
+              dados_frequencia.ministradores != "" &&
+              dados_frequencia.status_frequencia === 1
+            ) {
+              ministradores =
+                '<label for="" style="color:red">Ministradores: </label>' +
+                dados_frequencia.ministradores;
+            } else if (
+              document.getElementById("ministradores_para_absenteistas")
+                .checked === true &&
+              dados_frequencia.ministradores != "" &&
+              dados_frequencia.status_frequencia === 0
+            ) {
+              ministradores =
+                '<label for="" style="color:red">Ministradores: </label>' +
+                dados_frequencia.ministradores;
+            }
+
+            card =
+              `
+              <div class="card_membro" style="max-width = 370px;">` +
+              avatar +
+              `
+
+                <div class="informacoes_membro">
+                  <div class="nome_membro"> ` +
+              dados_frequencia.nome_interno +
+              ` </div>
+                  <div class="outras_informacoes">Idade: ` +
+              dados_frequencia.idade +
+              ` anos (` +
+              dados_frequencia.organizacao +
+              `).
+            <div> ` +
+              tag_membro +
+              tag_ativo +
+              tag_outra_unidade +
+              `</div>
+              <div class="ministradores">
+                <label for="">
+                ` +
+              ministradores +
+              `
+                </label>
+              </div>
+
+
+              </div>
+                </div>
+                <div class="div_check_presenca">
+                  <input type="checkbox" class = "check_presenca" id="` +
+              dados_frequencia.id_membro_interno +
+              `" value="` +
+              dados_frequencia.data_frequencia +
+              `" ` +
+              status_frequencia +
+              ` onchange="registrar_frequencia(id)">
+                </div>
+              </div>`;
+
+            return card;
+          },
+        },
+      ],
+      columnDefs: [
+        {
+          targets: [0, 1, 2, 3, 4], // Substitua 'indexDaColuna' pelo índice da coluna que você deseja esconder (índice 0-based)
+          visible: false,
+        },
+      ],
+    });
+
+    tabela.on("init.dt", function () {
+      atualiza_contador();
+      atualiza_opcoes();
+
+      window.scrollTo({
+        top: 385,
+        behavior: "smooth",
+      });
+
+      numeros();
+    });
+  });
+
+  function aqui2() {
+    window.scrollTo({
+      top: 480,
+      behavior: "smooth",
+    });
+  }
+
+  function numeros() {
+    if (
+      $("#tabela_contagem_organizacao").DataTable() != null ||
+      $("#tabela_contagem_organizacao").DataTable() != undefined
+    ) {
+      $("#tabela_contagem_organizacao").DataTable().destroy();
+    }
+
+    $("#tabela_contagem_organizacao").DataTable({
+      searching: false, // Remove a caixa de pesquisa
+      paging: false, // Remove a paginação
+      info: false, // Remove as informações de ex
+      data: f_dados_tabela_contagem_organizacao(),
+      columns: [
+        { data: "organização" },
+        { data: "total" },
+        { data: "frequência" },
+        { data: "faltas" },
+        { data: "percentual" },
+      ],
+      order: [[4, "desc"]],
+    });
+  }
+
+  function imprimir() {
+    // if (relatorios === "desativado") {
+    //   // relatorio();
+    //   status_relatorio_reativar = "sim";
+    // }
+    // if (status_sidebar != "escondida") {
+    //   sidebar_escondida();
+    // }
+
+    if (
+      document.querySelector(".div_tabela_contagem_organizacao").style
+        .display === "none"
+    ) {
+      document.querySelector(".div_tabela_contagem_organizacao").style.display =
+        "flex";
+    }
+
+    janelaImpressao = window;
+    // janelaImpressao.document
+    //   .querySelectorAll(
+    //     " .botao_imprime,.botao_relatorios_filtros, .junino , .caixa_de_filtros, .sidebar, .menu, .botao_adicionar_a_lista, .configuracoes_frequencia, .dataTables_length, .dataTables_filter, .dataTables_info, .dataTables_paginate"
+    //   )
+    //   .forEach(function (elemento) {
+    //     elemento.style.display = "none";
+    //   });
+
+    // janelaImpressao.document.querySelector(
+    //   ".div_registro_frequencia"
+    // ).style.marginBottom = "0px";
+
+    // janelaImpressao.addEventListener("afterprint", function () {
+    //   setTimeout(() => {
+    //     janelaImpressao.document
+    //       .querySelectorAll(
+    //         ".sidebar, .menu, .botao_relatorios_filtros, .botao_adicionar_a_lista, .configuracoes_frequencia, .dataTables_length, .dataTables_filter, .dataTables_info, .dataTables_paginate"
+    //       )
+    //       .forEach(function (elemento) {
+    //         elemento.style.display = "";
+    //       });
+    //     janelaImpressao.document.querySelector(
+    //       ".botao_relatorios_filtros"
+    //     ).style.display = "flex";
+    //     janelaImpressao.document.querySelector(".botao_imprime").style.display =
+    //       "flex";
+    //     janelaImpressao.document.querySelector(
+    //       ".div_registro_frequencia"
+    //     ).style.marginBottom = "25px";
+
+    //     sidebar_escondida();
+
+    //     // if (status_relatorio_reativar === "sim") {
+    //     //   // relatorio();
+    //     // }
+
+    //     // janelaImpressao.document.removeEventListener("afterprint");
+    //     janelaImpressao.removeEventListener("afterprint", arguments.callee);
+
+    //     window.scrollTo({
+    //       top: 385,
+    //     });
+    //   }, 1000);
+    // });
+
+    janelaImpressao.print();
+  }
+
+  data_frequencia = document.getElementById("data").value;
+  function filtros() {
+    data_frequencia = document.getElementById("data").value;
+
+    atualiza_opcoes();
+
+    $("#example")
+      .DataTable()
+      .ajax.reload(function () {
+        atualiza_contador();
+        numeros();
+      });
+  }
+
+  function atualiza_opcoes() {
+    data_selecionada = new Date(document.getElementById("data").value);
+    dia =
+      data_selecionada.getDate() + 1 > 31
+        ? "1"
+        : data_selecionada.getDate() + 1;
+    dataFormatada =
+      (dia < 10 ? "0" : "") +
+      dia +
+      "/" +
+      (data_selecionada.getMonth() + 1 < 10 ? "0" : "") +
+      (data_selecionada.getMonth() + 1) +
+      "/" +
+      data_selecionada.getFullYear();
+    document.getElementById("indicador_topo").textContent =
+      document.getElementById("tipo").options[
+        document.getElementById("tipo").selectedIndex
+      ].textContent +
+      " do dia " +
+      dataFormatada;
+  }
+
+  function registrar_frequencia(id_membro_interno) {
+    data_frequencia = $("#data").val();
+    id_tipo_frequencia = $("#tipo").val();
+    id_membro_interno = id_membro_interno;
+    inserido_em = new Date().toISOString().slice(0, 23).replace("T", " ");
+    inserido_por = 90;
+
+    if (document.getElementById(id_membro_interno).checked) {
+      status_frequencia = 1;
+      contador++;
+      document.getElementById("contador").textContent =
+        "Frequência: " + contador;
+      numeros();
+    } else {
+      status_frequencia = 0;
+      contador--;
+      document.getElementById("contador").textContent =
+        "Frequência: " + contador;
+    }
+
+    $.ajax({
+      data: {
+        data_frequencia,
+        id_tipo_frequencia,
+        id_membro_interno,
+        status_frequencia,
+        inserido_em,
+        inserido_por,
+      },
+      url: "/ferramentas/frequencia/registrar_frequencia",
+      success: function (data) {
+        // console.log(data.retorno);
+        tabela.ajax.reload(function () {
+          $('input[type="search"][aria-controls="example"]').val("");
+          $('input[type="search"][aria-controls="example"]').trigger("input");
+          atualiza_contador();
+          numeros();
+        });
+      },
+      error: function (data) {
+        alerta("Frequência", "Falha ao tentar registrar!", "error");
+        console.log(
+          data.responseText.slice(
+            data.responseText.match("<th>Exception Value:</th>").index,
+            data.responseText.match("<th>Exception Value:</th>").index + 300
+          )
+        );
+
+        
+      },
+    });
+  }
+
+  // document.getElementById('inserir_regisro').display = 'flex';
+
+  sexo_definido = "pendente";
+  function definir_sexo(id) {
+    if (id === "avatar_homem" && sexo_definido === "pendente") {
+      document.getElementById("avatar_mulher").style.display = "none";
+      sexo_definido = "homem";
+      // alert(sexo_definido);
+    } else if (id === "avatar_homem" && sexo_definido === "homem") {
+      document.getElementById("avatar_mulher").style.display = "flex";
+      sexo_definido = "pendente";
+    }
+
+    if (id === "avatar_mulher" && sexo_definido === "pendente") {
+      document.getElementById("avatar_homem").style.display = "none";
+      sexo_definido = "mulher";
+      // alert(sexo_definido);
+    } else if (id === "avatar_mulher" && sexo_definido === "mulher") {
+      document.getElementById("avatar_homem").style.display = "flex";
+      sexo_definido = "pendente";
+    }
+  }
+
+  membro_definido = "pendente";
+  function membro(id) {
+    if (id === "membro" && membro_definido === "pendente") {
+      document.getElementById("visitante").style.display = "none";
+      document.getElementById("crianca").style.display = "none";
+      membro_definido = "membro";
+    } else if (id === "membro" && membro_definido === "membro") {
+      document.getElementById("visitante").style.display = "";
+      document.getElementById("crianca").style.display = "";
+      membro_definido = "pendente";
+    }
+
+    if (id === "visitante" && membro_definido === "pendente") {
+      document.getElementById("membro").style.display = "none";
+      document.getElementById("crianca").style.display = "none";
+      membro_definido = "visitante";
+    } else if (id === "visitante" && membro_definido === "visitante") {
+      document.getElementById("membro").style.display = "";
+      document.getElementById("crianca").style.display = "";
+      membro_definido = "pendente";
+    }
+
+    if (id === "crianca" && membro_definido === "pendente") {
+      document.getElementById("membro").style.display = "none";
+      document.getElementById("visitante").style.display = "none";
+      membro_definido = "crianca";
+    } else if (id === "crianca" && membro_definido === "crianca") {
+      document.getElementById("membro").style.display = "";
+      document.getElementById("visitante").style.display = "";
+      membro_definido = "pendente";
+    }
+  }
+
+  function atualiza_contador() {
+    contador = 0;
+
+    tabela
+      .column(1, { search: "applied" })
+      .data()
+      .each(function (value) {
+        if (value === 1) {
+          contador++;
+        }
+      });
+
+    document.getElementById("contador").textContent = "Frequência: " + contador;
+  }
+
+  function definir_idade(id) {
+    if (id === "adiciona") {
+      document.getElementById("idade").value++;
+    } else if (document.getElementById("idade").value != 0) {
+      document.getElementById("idade").value--;
+    }
+  }
+
+  function validarNumero(input) {
+    // Remove caracteres não numéricos utilizando uma expressão regular
+    input.value = input.value.replace(/[^0-9]/g, "");
+  }
+
+  function verificar() {
+    if (
+      document.getElementById("nome").value === "" ||
+      sexo_definido === "pendente" ||
+      document.getElementById("idade").value === "" ||
+      membro_definido === "pendente"
+    ) {
+      alerta(
+        "Adicionar à Lista",
+        "Por favor, preencha todos os campos.",
+        "error"
+      );
+    } else {
+      nome_interno = document.getElementById("nome").value;
+
+      if (sexo_definido === "homem") {
+        sexo = "M";
+      } else {
+        sexo = "F";
+      }
+
+      ano_do_nascimento =
+        new Date().getFullYear() - document.getElementById("idade").value;
+
+      if (document.getElementById("outra_unidade").checked) {
+        outra_unidade = 1;
+      } else {
+        outra_unidade = 0;
+      }
+
+      if (membro_definido === "membro" && outra_unidade === 0) {
+        id_perfil = 1;
+      } else if (membro_definido === "visitante" && outra_unidade === 0) {
+        id_perfil = 2;
+      } else if (membro_definido === "crianca" && outra_unidade === 0) {
+        id_perfil = 3;
+      } else if (membro_definido === "membro" && outra_unidade === 1) {
+        id_perfil = 4;
+      } else if (membro_definido === "visitante" && outra_unidade === 1) {
+        id_perfil = 5;
+      } else if (membro_definido === "crianca" && outra_unidade === 1) {
+        id_perfil = 6;
+      }
+
+      if (document.getElementById("registrar_presenca").checked === true) {
+        registrar_presenca = 1;
+      } else {
+        registrar_presenca = 0;
+      }
+
+      salvar();
+    }
+  }
+
+  function salvar() {
+    // nome_interno, sexo, ano_do_nascimento, idade, data_de_confirmação;
+
+    inserido_por = 90;
+
+    $.ajax({
+      url: "/ferramentas/frequencia/cadastrar_novo_usuario",
+      data: {
+        nome_interno,
+        sexo,
+        ano_do_nascimento,
+        id_perfil,
+        inserido_por,
+      },
+      success: function (data) {
+        // console.log("êxito: ", data);
+        // console.log(data.id_membro_interno);
+        novo_id_criado = data.id_membro_interno;
+
+        document.getElementById("idade").value = "";
+        document.getElementById("nome").value = "";
+        document.getElementById("avatar_mulher").style.display = "flex";
+        document.getElementById("avatar_homem").style.display = "flex";
+        document.getElementById("visitante").style.display = "";
+        document.getElementById("crianca").style.display = "";
+        document.getElementById("membro").style.display = "";
+        document.getElementById("outra_unidade").checked = false;
+        document.getElementById("registrar_presenca").checked = false;
+        sexo_definido = "pendente";
+        membro_definido = "pendente";
+
+        alerta(
+          "Adicionar à Lista",
+          "Novo registro salvo com sucesso!",
+          "success"
+        );
+
+        document.querySelector(".cobertura_content").style.display = "none";
+        document.querySelector(".inserir_regisro").style.display = "none";
+
+        $("#example")
+          .DataTable()
+          .ajax.reload(async function () {
+            if (registrar_presenca === 1) {
+              console.log(novo_id_criado);
+              document.getElementById(novo_id_criado).checked = true;
+
+              registrar_frequencia(novo_id_criado);
+            } else {
+              atualiza_contador();
+              numeros();
+            }
+          });
+      },
+      error: function (data) {
+        //console.log("erro: ", data.responseText);
+        console.log(
+          data.responseText.slice(
+            data.responseText.match("<th>Exception Value:</th>").index,
+            data.responseText.match("<th>Exception Value:</th>").index + 300
+          )
+        );
+
+        alerta("Adicionar à Lista", "Falha ao tentar cadastrar!", "error");
+      },
+    });
+  }
+  // Adiciona um listener para o evento 'draw'
+
+  function alerta(titulo, texto, icone) {
+    // titulo = "Adicionar à Lista";
+    // texto = "Novo registro salvo com sucesso!";
+    // icone = "success";
+
+    Swal.fire({
+      title: titulo,
+      text: texto,
+      icon: icone,
+      confirmButtonText: "Ok!",
+      timer: false,
+      //showConfirmButton: false,
+    });
+  }
+
+  function alterar_filtros() {
+    if (document.getElementById("filtro_Presente").checked === true) {
+      filtro_Presente = "";
+    } else {
+      filtro_Presente = "1|";
+    }
+
+    if (document.getElementById("filtro_Faltou").checked === true) {
+      filtro_Faltou = "";
+    } else {
+      filtro_Faltou = "0|";
+    }
+
+    variavel_presente = filtro_Presente + filtro_Faltou;
+    variavel_presente = variavel_presente.slice(
+      0,
+      variavel_presente.length - 1
+    );
+
+    $("#example").DataTable().column(1).search("");
+    if (variavel_presente != "") {
+      document.getElementById("Selecionar_Todos").checked = false;
+      $("#example")
+        .DataTable()
+        .column(1)
+        .search("^(?!.*(" + variavel_presente + ")).*$", true);
+    }
+
+    ///////////////////////////////////////////////////
+    if (document.getElementById("filtro_Ativo").checked === true) {
+      // filtro_Ativo = '';
+      $("#example").DataTable().column(2).search("");
+    } else {
+      // filtro_Ativo = 'Ativo|';
+      document.getElementById("Selecionar_Todos").checked = false;
+      $("#example").DataTable().column(2).search("^(?!.*(1)).*$", true);
+    }
+    ///////////////////////////////////////////////////
+
+    if (document.getElementById("filtro_Homem").checked === true) {
+      filtro_Homem = "";
+    } else {
+      filtro_Homem = "M|";
+    }
+
+    if (document.getElementById("filtro_Mulher").checked === true) {
+      filtro_Mulher = "";
+    } else {
+      filtro_Mulher = "F|";
+    }
+
+    variavel_sexo = filtro_Homem + filtro_Mulher;
+    variavel_sexo = variavel_sexo.slice(0, variavel_sexo.length - 1);
+
+    $("#example").DataTable().column(3).search("");
+    if (variavel_sexo != "") {
+      document.getElementById("Selecionar_Todos").checked = false;
+      $("#example")
+        .DataTable()
+        .column(3)
+        .search("^(?!.*(" + variavel_sexo + ")).*$", true);
+    }
+    ///////////////////////////////////////////////////
+
+    if (document.getElementById("filtro_Membro").checked === true) {
+      filtro_Membro = "";
+    } else {
+      filtro_Membro = "Membro|";
+    }
+
+    if (document.getElementById("filtro_Visitante").checked === true) {
+      filtro_Visitante = "";
+    } else {
+      filtro_Visitante = "Visitante|";
+    }
+
+    if (document.getElementById("filtro_Criança").checked === true) {
+      filtro_Criança = "";
+    } else {
+      filtro_Criança = "Criança|";
+    }
+
+    if (document.getElementById("filtro_Inativo").checked === true) {
+      filtro_Inativo = "";
+    } else {
+      filtro_Inativo = "Inativo|";
+    }
+
+    if (document.getElementById("filtro_Deoutraala").checked === true) {
+      filtro_Deoutraala = "";
+    } else {
+      filtro_Deoutraala = "unidade|";
+    }
+
+    if (document.getElementById("filtro_SSocorro").checked === true) {
+      filtro_SSocorro = "";
+    } else {
+      filtro_SSocorro = "Socorro|";
+    }
+
+    if (document.getElementById("filtro_QElderes").checked === true) {
+      filtro_QElderes = "";
+    } else {
+      filtro_QElderes = "Elderes|";
+    }
+
+    if (document.getElementById("filtro_Rapazes").checked === true) {
+      filtro_Rapazes = "";
+    } else {
+      filtro_Rapazes = "Rapazes|";
+    }
+
+    if (document.getElementById("filtro_Mocas").checked === true) {
+      filtro_Mocas = "";
+    } else {
+      filtro_Mocas = "Moças|";
+    }
+
+    if (document.getElementById("filtro_Primaria").checked === true) {
+      filtro_Primaria = "";
+    } else {
+      filtro_Primaria = "Primária|";
+    }
+
+    variavel =
+      filtro_Membro +
+      filtro_Visitante +
+      filtro_Criança +
+      filtro_Inativo +
+      filtro_Deoutraala +
+      filtro_SSocorro +
+      filtro_QElderes +
+      filtro_Rapazes +
+      filtro_Mocas +
+      filtro_Primaria;
+    variavel = variavel.slice(0, variavel.length - 1);
+
+    $("#example").DataTable().column(5).search("");
+    if (variavel != "") {
+      document.getElementById("Selecionar_Todos").checked = false;
+      $("#example")
+        .DataTable()
+        .column(5)
+        .search("^(?!.*(" + variavel + ")).*$", true);
+    }
+
+    $("#example").DataTable().draw();
+    atualiza_contador();
+  }
+
+  function selecionar_todos_filtro() {
+    if (document.getElementById("Selecionar_Todos").checked === true) {
+      document.getElementById("filtro_Presente").checked = true;
+      document.getElementById("filtro_Faltou").checked = true;
+      document.getElementById("filtro_Ativo").checked = true;
+      document.getElementById("filtro_Homem").checked = true;
+      document.getElementById("filtro_Mulher").checked = true;
+      document.getElementById("filtro_Membro").checked = true;
+      document.getElementById("filtro_Visitante").checked = true;
+      document.getElementById("filtro_Criança").checked = true;
+      document.getElementById("filtro_Inativo").checked = true;
+      document.getElementById("filtro_Deoutraala").checked = true;
+
+      document.getElementById("filtro_SSocorro").checked = true;
+      document.getElementById("filtro_QElderes").checked = true;
+      document.getElementById("filtro_Rapazes").checked = true;
+      document.getElementById("filtro_Mocas").checked = true;
+      document.getElementById("filtro_Primaria").checked = true;
+    } else {
+      document.getElementById("filtro_Presente").checked = false;
+      document.getElementById("filtro_Faltou").checked = false;
+      document.getElementById("filtro_Ativo").checked = false;
+      document.getElementById("filtro_Homem").checked = false;
+      document.getElementById("filtro_Mulher").checked = false;
+      document.getElementById("filtro_Membro").checked = false;
+      document.getElementById("filtro_Visitante").checked = false;
+      document.getElementById("filtro_Criança").checked = false;
+      document.getElementById("filtro_Inativo").checked = false;
+      document.getElementById("filtro_Deoutraala").checked = false;
+
+      document.getElementById("filtro_SSocorro").checked = false;
+      document.getElementById("filtro_QElderes").checked = false;
+      document.getElementById("filtro_Rapazes").checked = false;
+      document.getElementById("filtro_Mocas").checked = false;
+      document.getElementById("filtro_Primaria").checked = false;
+    }
+
+    alterar_filtros();
+  }
+
+  function aba_filtros() {
+    if (document.getElementById("caixa_de_filtros").style.display === "none") {
+      document.getElementById("caixa_de_filtros").style.display = "flex";
+    } else {
+      document.getElementById("caixa_de_filtros").style.display = "none";
+    }
+  }
+
+  relatorios = "desativado";
+  function relatorio() {
+    if (relatorios === "desativado") {
+      document.getElementById("Selecionar_Todos").checked = true;
+      selecionar_todos_filtro();
+      // document.getElementById("filtro_Inativo").checked = false;
+      document.getElementById("ministradores_para_absenteistas").checked = true;
+      document.getElementById("ministradores_para_presentes").checked = false;
+
+      document.querySelector(".div_tabela_contagem_organizacao").style.display =
+        "flex";
+
+      // document.getElementById('filtro_Deoutraala').checked = false;
+
+      alterar_filtros();
+      $("#example").DataTable().ajax.reload();
+
+      numeros();
+
+      tabela
+        .order([
+          [2, "desc"],
+          [1, "asc"],
+          [4, "asc"],
+          [0, "asc"],
+        ])
+        .draw();
+
+      relatorios = "ativado";
+    } else {
+      document.getElementById("Selecionar_Todos").checked = true;
+      selecionar_todos_filtro();
+      document.getElementById(
+        "ministradores_para_absenteistas"
+      ).checked = false;
+      $("#example").DataTable().ajax.reload();
+
+      numeros();
+
+      tabela.order([[0, "asc"]]).draw();
+
+      relatorios = "desativado";
+    }
+
+    window.scrollTo({
+      top: 640,
+      behavior: "smooth",
+    });
+  }
+
+  function exibir_ministradores() {
+    $("#example").DataTable().ajax.reload();
+
+    numeros();
+  }
+
+  relatorios_filtros = "ativo";
+  relatorio_filtros();
+  function relatorio_filtros() {
+    if (relatorios_filtros === "inativo") {
+      document.querySelector(".junino").style.display = "flex";
+
+      relatorios_filtros = "ativo";
+    } else {
+      document.querySelector(".junino").style.display = "none";
+      document.getElementById("caixa_de_filtros").style.display = "none";
+      relatorios_filtros = "inativo";
+    }
+  }
+</script>

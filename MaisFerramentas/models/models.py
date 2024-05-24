@@ -165,3 +165,20 @@ class tb_cards_padrao(models.Model):
 
     class Meta:
         db_table = '"atas"."tb_cards_padrao"'
+    
+
+class frequencia_vw_frequencia(models.Model):
+    id_membro_interno = models.AutoField(primary_key=True)
+    data_frequencia = models.DateTimeField()
+    nome_interno = models.CharField(max_length=255)
+    sexo = models.CharField(max_length=255)
+    idade = models.IntegerField()
+    id_tipo_frequencia = models.IntegerField()
+    tipo_frequencia = models.CharField(max_length=255)
+    status_frequencia = models.IntegerField()
+    inserido_em = models.DateTimeField()
+    inserido_por = models.IntegerField()
+    inserido_por_nome = models.CharField(max_length=255)
+
+    class Meta:
+            db_table = '"frequencia"."vw_frequencia"'
