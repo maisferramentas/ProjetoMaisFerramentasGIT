@@ -7,9 +7,10 @@ from bs4 import BeautifulSoup
 import time
 import json
 import requests
-
+import os
 # pip install selenium
 # pip install webdriver-manager
+# pip install BeautifulSoup
 
 # Configurar opções do Chromium
 options = webdriver.ChromeOptions()
@@ -20,8 +21,13 @@ options.add_argument("--disable-dev-shm-usage")
 
 try:
     print('iniciando navegador')
-    # Iniciar o WebDriver
-    driver = webdriver.Chrome(options=options)
+    if os.name == 'posix':
+        executable_path = '/usr/bin/chromium-browser'
+        chromedriver_path = '/usr/bin/chromedriver'
+        options.binary_location = executable_path
+        driver = webdriver.Chrome(service=service, options=options)
+    else:
+        driver = webdriver.Chrome(options=options)
 
     # Navegar para a página
     driver.get('https://lcr.churchofjesuschrist.org/?lang=por')
