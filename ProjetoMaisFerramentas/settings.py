@@ -101,15 +101,27 @@ WSGI_APPLICATION = 'ProjetoMaisFerramentas.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'kwjetfdy',
+#         'USER': 'kwjetfdy',
+#         'PASSWORD': 'OJykuUEJI4lH6Km7VWyuwKjoudClVcUQ',
+#         'HOST': 'silly.db.elephantsql.com',
+#         'PORT': '5432',
+       
+#     }
+# }
+
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'kwjetfdy',
-        'USER': 'kwjetfdy',
-        'PASSWORD': 'OJykuUEJI4lH6Km7VWyuwKjoudClVcUQ',
-        'HOST': 'silly.db.elephantsql.com',
+        'NAME': 'maisferramentas',
+        'USER': 'postgres',
+        'PASSWORD': '6Bdckjk8l53f4*',
+        'HOST': 'database-3.cti4gmus24fc.sa-east-1.rds.amazonaws.com',
         'PORT': '5432',
-       
     }
 }
 
