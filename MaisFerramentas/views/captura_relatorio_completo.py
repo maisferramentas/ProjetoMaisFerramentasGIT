@@ -25,7 +25,8 @@ try:
         executable_path = '/usr/bin/chromium-browser'
         chromedriver_path = '/usr/bin/chromedriver'
         options.binary_location = executable_path
-        driver = webdriver.Chrome(Service=service, options=options)
+        service = ChromeService(executable_path=chromedriver_path)
+        driver = webdriver.Chrome(service=service, options=options)
     else:
         driver = webdriver.Chrome(options=options)
 
