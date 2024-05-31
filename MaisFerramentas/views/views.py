@@ -433,3 +433,4 @@ def historico_de_frequencia_do_membro(request):
     historico_de_frequencia_do_membro = [model_to_dict(obj) for obj in historico_de_frequencia_do_membro]
 
     return JsonResponse({"historico_de_frequencia_do_membro":historico_de_frequencia_do_membro})
+

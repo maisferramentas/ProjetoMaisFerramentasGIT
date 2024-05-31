@@ -1,18 +1,29 @@
-from selenium import webdriver
-from selenium.webdriver.common.by import By
-
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from bs4 import BeautifulSoup
 import time
 import json
 import requests
 import os
+import json
+from django.http import JsonResponse
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from bs4 import BeautifulSoup
 from selenium.webdriver.chrome.service import Service as ChromeService
 from selenium.webdriver.chrome.options import Options
+#Importa funções
+from .utils import *
 # pip install selenium
 # pip install webdriver-manager
 # pip install BeautifulSoup
+# pip install bs4
+
+# No Ubuntu
+# pip install selenium
+# pip install webdriver-manager
+# sudo apt-get install -y chromium-chromedriver
+# sudo apt-get install -y chromium-browser
+
 
 # Configurar opções do Chromium
 options = webdriver.ChromeOptions()
@@ -21,7 +32,19 @@ options.add_argument("--disable-gpu")
 options.add_argument("--no-sandbox") 
 options.add_argument("--disable-dev-shm-usage")
 
-try:
+from MaisFerramentas.models import model_tb_data_user
+def update_data_user(request):
+    data_user = update_tb_user('get')
+    print(data_user)
+
+    inserido_por = models.model_tb_acesso.objects.filter(nome_usuario_login=def_usuario_logado(request)).values_list('id_membro_interno', flat=True).first()
+    
+    inserido_em=timezone.now()
+
+    
+    return data_user
+
+def update_tb_user(request):
     print('iniciando navegador')
     if os.name == 'posix':
         executable_path = '/usr/bin/chromium-browser'
@@ -60,7 +83,7 @@ try:
 
     # Esperar o login ser concluído
     WebDriverWait(driver, 20).until(EC.url_contains('lcr.churchofjesuschrist.org'))
-    print('login finalizado com sucesso')
+    print('login realizado com sucesso')
     
     print('acessando relatório')
     # Acessa o Relatório
@@ -75,24 +98,21 @@ try:
     # Usar BeautifulSoup para analisar o HTML e encontrar o JSON
     soup = BeautifulSoup(html_content, 'html.parser')
     pre_tag = soup.find('pre')
-    if pre_tag:
-        json_text = pre_tag.text
-        data = json.loads(json_text)
-        
-        # Acessar o objeto membros dentro do JSON
-        membros = data.get("members", [])
-        
-        # Enviar os membros para a rota externa
-        response = requests.post('http://18.231.47.174/relatorio?relatorio=members', json=membros)
-        if response.status_code == 200:
-            print('Dados enviados com sucesso.')
-        else:
-            print(f'Erro ao enviar dados: {response.status_code}')
-    else:
-        print("Erro: tag <pre> não encontrada.")
+    json_text = pre_tag.text
+    data = json.loads(json_text)
+    
+    # Acessar o objeto membros dentro do JSON
+    membros = data.get("members", [])
+    
+    # Enviar os dados para a rota externa
+    # response = requests.post('http://18.231.47.174/relatorio?relatorio=members', json=membros)
 
     print('relatório extraído com sucesso')
-finally:
+
     # Fechar o navegador
     driver.quit()
     print("finalizando processo.")
+    
+    return membros
+
+# update_tb_user('nada')

@@ -1,6 +1,6 @@
 from django.urls import path
 from django.contrib.auth.decorators import login_required
-from MaisFerramentas.views import views,view_aniversariantes,view_redirect,view_JOB_notifica_aniversariantes_email
+from MaisFerramentas.views import views,view_aniversariantes,view_redirect,view_JOB_notifica_aniversariantes_email,view_update_tb_user
 from django.contrib.auth.views import LogoutView
 
 urlpatterns = [
@@ -67,5 +67,6 @@ urlpatterns = [
     
     path('historico_de_frequencia_do_membro', views.historico_de_frequencia_do_membro, name='/historico_de_frequencia_do_membro'),
     
+    path('update_tb_user', view_update_tb_user.update_data_user, name='/update_data_user'),
 
 ]
