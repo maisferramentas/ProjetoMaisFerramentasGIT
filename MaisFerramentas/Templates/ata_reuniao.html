@@ -117,7 +117,7 @@
         position: relative;
         padding-bottom: 20px;
         padding-top: 20px;
-        /* background-image: url("https://lh3.googleusercontent.com/u/0/drive-viewer/AKGpihashdFwspuu_FFEENE5OwOA-hx1cpncY9jAG_VEu-iS9HkknAl29yXZOiRLgpjwCeOyTjzNk5HkOHN_MUNoEl5etYofGqH-Hg=w1366-h612");
+        /* background-image: url("https://lh3.googleusercontent.com/u/0/drive-viewer/AKGpihbQpd6NsgwsMmAsn1zl5oJaWHIWSYRjVAIAsmPwf-HuFovgsFoAMShG_NehD0F1biIIKPwfvdnIMFLU_H7lZ6Mld1DpTnVWtQ=w1366-h612");
         background-repeat: no-repeat; */
         /* background-color: rgba(255, 255, 255, 9.9); */
         /* background-position: -60px 135px; */
@@ -625,7 +625,7 @@
             <img
               draggable="false"
               class="img_canto"
-              src="https://lh3.googleusercontent.com/u/0/drive-viewer/AKGpihashdFwspuu_FFEENE5OwOA-hx1cpncY9jAG_VEu-iS9HkknAl29yXZOiRLgpjwCeOyTjzNk5HkOHN_MUNoEl5etYofGqH-Hg=w1366-h612"
+              src="https://lh3.googleusercontent.com/u/0/drive-viewer/AKGpihbQpd6NsgwsMmAsn1zl5oJaWHIWSYRjVAIAsmPwf-HuFovgsFoAMShG_NehD0F1biIIKPwfvdnIMFLU_H7lZ6Mld1DpTnVWtQ=w1366-h612"
               alt=""
             />
             <div class="div_card_info flex column left_50px dropdown">
@@ -723,7 +723,7 @@
             <img
               draggable="false"
               class="img_canto"
-              src="https://lh3.googleusercontent.com/u/0/drive-viewer/AKGpihashdFwspuu_FFEENE5OwOA-hx1cpncY9jAG_VEu-iS9HkknAl29yXZOiRLgpjwCeOyTjzNk5HkOHN_MUNoEl5etYofGqH-Hg=w1366-h612"
+              src="https://lh3.googleusercontent.com/u/0/drive-viewer/AKGpihbQpd6NsgwsMmAsn1zl5oJaWHIWSYRjVAIAsmPwf-HuFovgsFoAMShG_NehD0F1biIIKPwfvdnIMFLU_H7lZ6Mld1DpTnVWtQ=w1366-h612"
               alt=""
             />
             <div class="div_card_info flex column left_50px dropdown">
@@ -765,7 +765,7 @@
         <img
           draggable="false"
           class="img_canto"
-          src="https://lh3.googleusercontent.com/u/0/drive-viewer/AKGpihashdFwspuu_FFEENE5OwOA-hx1cpncY9jAG_VEu-iS9HkknAl29yXZOiRLgpjwCeOyTjzNk5HkOHN_MUNoEl5etYofGqH-Hg=w1366-h612"
+          src="https://lh3.googleusercontent.com/u/0/drive-viewer/AKGpihbQpd6NsgwsMmAsn1zl5oJaWHIWSYRjVAIAsmPwf-HuFovgsFoAMShG_NehD0F1biIIKPwfvdnIMFLU_H7lZ6Mld1DpTnVWtQ=w1366-h612"
           alt=""
         />
         <div class="div_card_info flex column left_55px dropdown">
@@ -1314,22 +1314,24 @@
       function separar_array() {
         // Objeto para armazenar os cards agrupados
         cardsAgrupados = {};
-
         // Iterando sobre o array de dados
         cards.forEach((item) => {
           // Verificando se o card já existe no objeto de cards agrupados
-          if (!cardsAgrupados[item.card]) {
+          if (!cardsAgrupados[parseInt(item.card)]) {
             // Se não existe, criamos um novo array para esse card
-            cardsAgrupados[item.card] = [];
+            cardsAgrupados[parseInt(item.card)] = [];
           }
+          cardsAgrupados[parseInt(item.card)].push(item);  
+        
           // Adicionamos o item atual ao array correspondente ao seu card
-          cardsAgrupados[item.card].push(item);
+          
         });
       }
 
       numero_de_cards = 0;
       function carrega_dados() {
         separar_array();
+
         // document.querySelector("#area_arrastavel").innerHTML = '';
 
         // Agora, vamos renderizar os cards
@@ -2059,7 +2061,6 @@
           success: function(data){
             document.querySelector("#area_arrastavel").innerHTML = '';
             cards = data.data;
-
             //Se A Ata foi excluída limpa a variavel de cards
             if(cards.length === 1 && cards[0].value === 'Ata Excluída'){
               cards = [];
@@ -2096,7 +2097,7 @@
             result.nomes.forEach(function(nome){
               nomes.push(nome.nome_interno)
             });
-
+            
             atas_padrao = result.atas_padrao;
             cards_padrão = result.cards_padrao;
             atualizar_cards_padrao();

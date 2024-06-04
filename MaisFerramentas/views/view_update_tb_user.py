@@ -33,16 +33,30 @@ options.add_argument("--no-sandbox")
 options.add_argument("--disable-dev-shm-usage")
 
 from MaisFerramentas.models import model_tb_data_user
+from MaisFerramentas.models import models
+from .views import def_usuario_logado
 def update_data_user(request):
-    data_user = update_tb_user('get')
-    print(data_user)
+    tb_data_user = model_tb_data_user.tb_data_user(
+        address_city = 'teste'
+    )
+    # Salvar a instância no banco de dados
+    tb_data_user.save()
+    # data_user = update_tb_user('get')
+    # data_user = json.loads(json.dumps(data_user))
+    # print(data_user)
 
     inserido_por = models.model_tb_acesso.objects.filter(nome_usuario_login=def_usuario_logado(request)).values_list('id_membro_interno', flat=True).first()
-    
     inserido_em=timezone.now()
 
-    
-    return data_user
+    # for item in data_user:
+    #     tb_data_user = model_tb_data_user.tb_data_user(
+    #         address_city = item.get('address_city')
+    #     )
+    #     # Salvar a instância no banco de dados
+    #     tb_data_user.save()
+
+
+    return JsonResponse({'ok':'ok'})
 
 def update_tb_user(request):
     print('iniciando navegador')
