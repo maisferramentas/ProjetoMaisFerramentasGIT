@@ -1,527 +1,176 @@
-<style>
-  .conteudo {
-    font-family: Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: larger;
-  }
-  .container_column {
-    display: flex;
-    flex-direction: column;
-    /* gap: 10px; */
-  }
-  .container_row {
-    display: flex;
-    flex-direction: row;
-    /* gap: 10px; */
-  }
-  .align {
-    align-items: center;
-  }
+SELECT 
+  --==============================
+  --Informações de Contato
+  --==============================
+  tb_data_users.id_tb_data_users,
+  tb_data_users.id,
+  tb_data_users.full_name,
+  tb_data_users.gender,
+  EXTRACT(YEAR FROM AGE(TO_DATE("birthDateSort", 'YYYYMMDD'))) age,
+  --Organization 
+  CASE 
+    WHEN (SELECT EXTRACT(YEAR FROM CURRENT_DATE) - tb_data_users.birth_year::INTEGER) < 12 THEN 'Primary'
+    WHEN EXTRACT(YEAR FROM AGE(TO_DATE("birthDateSort", 'YYYYMMDD'))) >= 18 AND tb_data_users.gender = 'F' THEN 'Relief Society'
+    WHEN EXTRACT(YEAR FROM AGE(TO_DATE("birthDateSort", 'YYYYMMDD'))) >= 18 AND tb_data_users.gender = 'M' THEN 'Elders Quorum'
+    WHEN tb_data_users.gender = 'M' THEN 'Aaronic Priesthood Quorum'
+    WHEN tb_data_users.gender = 'F' THEN 'Young Women'
+  END AS organization,
+  tb_data_users.individual_phone,
+  tb_data_users.individual_email,
+  --Endereço Completo
+  CONCAT(tb_data_users.address_street_1,
+  tb_data_users.address_street_2,
+  tb_data_users.address_city,
+  tb_data_users.address_state,
+  tb_data_users.address_country,
+  tb_data_users.address_postal_code) complete_address,
+  
+  --======================================
+  --Informações sobre a situação de membro
+  --======================================
+  --Recomendação
+  null is_active,
+  null last_atendance_date,
+  tb_data_users.temple_recommend_type,
+  tb_data_users.temple_recommend_status,
+  TO_CHAR(TO_DATE(tb_data_users."templeRecommendExpirationDateSort", 'YYYYMMDD'), 'YYYY-MM-DD') "templeRecommendExpirationDateSort",
+  --Dizimo
+  null is_tithe,
+  null last_tithe_date,
+  null value_of_last_tithe_date,
+  --Chamado
+  tb_data_users.callings,
+  tb_data_users.callings_with_date_sustained,
+  tb_data_users.callings_with_date_sustained_and_set_apart,
+  --Ministração
+  tb_data_users.has_home_teacher,
+  tb_data_users.home_teachers,
+  tb_data_users.has_visiting_teachers,
+  tb_data_users.visiting_teachers,
+  --Seminário
+  tb_data_users.potential_seminary_student,
+  tb_data_users.is_attending_seminary,
+  tb_data_users.seminary_status,
+  --Instituto
+  tb_data_users.potential_institute_student,
+  tb_data_users.is_attending_institute,
+  tb_data_users.institute_status,
+  tb_data_users.class_assignment,
 
-  .justify {
-    justify-content: center;
-  }
-  .draggable {
-    cursor: grab;
-    padding: 10px;
-    /* background-color: #f0f0f0; */
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    margin-bottom: 15px;
-    padding-top: 15px;
-    padding-bottom: 15px;
-    min-width: 350px;
-    max-width: 350px;
-  }
-  .imagem_icone {
-    border-radius: 100px 100px 100px 100px;
-    width: 40px;
-    height: 40px;
-    margin-right: 4px;
-  }
+  --======================================
+  --Informações históricas do Membro
+  --======================================
+  --Nascimento
+  TO_CHAR(TO_DATE(tb_data_users."birthDateSort", 'YYYYMMDD'), 'YYYY-MM-DD') "birthDateSort",
+  tb_data_users.birthplace,
+  tb_data_users.birth_country,
+  --Selamento aos Pais
+  tb_data_users.is_sealed_to_parents,
+  -- TO_CHAR(TO_DATE(tb_data_users."sealingToParentsSort", 'YYYYMMDD'), 'YYYY-MM-DD') "sealingToParentsSort",
+  tb_data_users."sealingToParentsSort",
+  --Batismo e Confirmação
+  tb_data_users.is_convert,
+  TO_CHAR(TO_DATE(tb_data_users."baptismDateSort", 'YYYYMMDD'), 'YYYY-MM-DD') "baptismDateSort",
+  TO_CHAR(TO_DATE(tb_data_users."confirmationDateSort", 'YYYYMMDD'), 'YYYY-MM-DD') "confirmationDateSort",
+  
+  --Sacerdócio
+  tb_data_users.priesthood,
+  tb_data_users.priesthood_office,
+  TO_CHAR(TO_DATE(tb_data_users."ordainedDateSort", 'YYYYMMDD'), 'YYYY-MM-DD') "ordainedDateSort",
+  
+  --Investidura
+  tb_data_users.is_endowed,
+  tb_data_users.endowment_status,
+  TO_CHAR(TO_DATE(tb_data_users."endowmentDateSort", 'YYYYMMDD'), 'YYYY-MM-DD') "endowmentDateSort",
+  
+  --Missão
+  tb_data_users.is_returned_missionary,
+  tb_data_users.mission_country,
+  tb_data_users.mission_language,
+  --Casamento
+  tb_data_users.is_single,
+  tb_data_users.is_married,
+  tb_data_users.marriage_status,
+  tb_data_users.spouse_name,
+  TO_CHAR(TO_DATE(tb_data_users."marriageDateSort", 'YYYYMMDD'), 'YYYY-MM-DD') "marriageDateSort",
+  
+  --Selamento
+  tb_data_users.is_sealed_to_a_spouse,
+  tb_data_users.is_sealed_to_current_spouse,
+  TO_CHAR(TO_DATE(tb_data_users."sealingToSpouseSort", 'YYYYMMDD'), 'YYYY-MM-DD') "sealingToSpouseSort",
+  -- tb_data_users."sealingToSpouseSort",
+  
+  --divórcio
+  tb_data_users.is_divorced,
+  tb_data_users.is_sealed_to_prior_spouse,
+  --Filhos
+  tb_data_users.has_children,
+  tb_data_users.is_accountable,
+  --Família
+  tb_data_users.household_position,
+  tb_data_users.head_of_house,
+  tb_data_users.spouse_of_head_of_house,
+  tb_data_users.head_of_house_and_spouse,
+  --Transferência / Criação do 
+  TO_CHAR(TO_DATE(tb_data_users."moveInDateSort", 'YYYYMMDD'), 'YYYY-MM-DD') "moveInDateSort",
+  
+  --Unidade
+  tb_data_users.unit,
+  --Endereço por partes
+  tb_data_users.address_street_1,
+  tb_data_users.address_street_2,
+  tb_data_users.address_city,
+  tb_data_users.address_state,
+  tb_data_users.address_country,
+  tb_data_users.address_postal_code,
+  --Informações de Controle da Tabela
+  tb_data_users.inserted_date,
+  tb_data_users.inserted_by
+FROM maisferramentas.tb_data_users
+INNER JOIN 
+(
+  SELECT 
+    tb_data_users_1.id,
+    max(tb_data_users_1.inserted_date) AS inserted_date
+  FROM maisferramentas.tb_data_users tb_data_users_1
+  GROUP BY tb_data_users_1.id
+) registro 
+  ON registro.id = tb_data_users.id AND registro.inserted_date = tb_data_users.inserted_date
 
-  .espaco_longo_vertical_elemento_card {
-    margin-bottom: 15px;
-  }
-  .espaco_curto_vertical_elemento_card {
-    margin-bottom: 5px;
-  }
-
-  .drag_indicator {
-    margin-right: 13px;
-  }
-
-  .conteudo {
-    margin-top: 50px;
-    align-items: center;
-  }
-  .flex {
-    display: flex;
-  }
-
-  .entrada_texto {
-    width: 100%;
-    /* padding: 2px; */
-    box-sizing: border-box;
-    border: 2px solid #ccc;
-    border-radius: 5px;
-    font-size: large;
-    /* background-color: #fff; */
-    /* text-align: center; */
-  }
-</style>
-
-<div class="conteudo container_column">
-  <div id="1" class="draggable container_row align" draggable="true">
-    <span class="material-symbols-outlined drag_indicator">
-      drag_indicator
-    </span>
-    <!-- <img
-      src="https://content.churchofjesuschrist.org/acp/bc/cp/Canada/images2020/Does%20God%20Really%20Want%20to%20Speak%20to%20You%20Yes/1-banner-prayer-church.jpg"
-      alt=""
-      class="imagem_icone"
-    /> -->
-    <div class="container_column">
-      <label for="">Oração:</label>
-      <input type="text" name="" id="Oração" class="entrada_texto" />
-    </div>
-  </div>
-
-  <div id="2" class="draggable container_row align" draggable="true">
-    <span class="material-symbols-outlined drag_indicator">
-      drag_indicator
-    </span>
-    <!-- <img
-      src="https://www.churchofjesuschrist.org/bc/content/ldsorg/church/news/09/06/580-speaking-in-church.jpg"
-      alt=""
-      class="imagem_icone"
-    /> -->
-    <div class="container_column">
-      <label for=""> Discursante:</label>
-      <input
-        type="text"
-        name=""
-        id="Discursante"
-        value=""
-        class="espaco_longo_vertical_elemento_card"
-      />
-
-      <label for="" class="">Tema:</label>
-      <input
-        type="text"
-        name=""
-        id="Tema"
-        value=""
-        class="espaco_curto_vertical_elemento_card"
-      />
-      <div class="container_row">
-        <label for="" class="espaco_curto_vertical_elemento_card"
-          >Até às:</label
-        >
-        <input
-          type="time"
-          id="Até"
-          class="espaco_curto_vertical_elemento_card"
-        />
-        <label for="" class="espaco_curto_vertical_elemento_card">Hrs</label>
-      </div>
-      <div class="container_row">
-        <label for="">Duração:</label>
-        <input type="time" name="a" id="Duração" value="" />
-        <label for="">minutos</label>
-      </div>
-    </div>
-    <!-- <textarea
-      name="a"
-      id="campo"
-      rows="2"
-      value=""
-      style="font-family: Arial, sans-serif; font-weight: bold"
-    ></textarea> -->
-  </div>
-
-  <div id="3" class="draggable container_row align" draggable="true">
-    <span class="material-symbols-outlined drag_indicator">
-      drag_indicator
-    </span>
-    <!-- <img
-      src="https://newsroom.churchofjesuschrist.org/media/orig/girl-spanish-hymnbook-resized.jpg"
-      alt=""
-      class="imagem_icone"
-    /> -->
-    <div class="container_column">
-      <label for="">Hino:</label>
-      <input type="text" id="Hino" name="" value="" />
-
-      <label for="">Apresentado por:</label>
-      <input type="text" id="Apresentado_por" name="" value="" />
-    </div>
-  </div>
-
-  <div id="4" class="draggable container_row align" draggable="true">
-    <span class="material-symbols-outlined drag_indicator">
-      drag_indicator
-    </span>
-    <!-- <img
-      src="https://www.churchofjesuschrist.org/bc/content/ldsorg/church/news/09/06/580-speaking-in-church.jpg"
-      alt=""
-      class="imagem_icone"
-    /> -->
-    <div class="container_column justify">
-      <label for="">Anúncio:</label>
-      <input
-        type="text"
-        name=""
-        id="Anúncio"
-        class="espaco_longo_vertical_elemento_card"
-      />
-
-      <label for="">Para:</label>
-      <input
-        type="text"
-        name=""
-        id="Para"
-        class="espaco_curto_vertical_elemento_card"
-      />
-
-      <label for="">Local:</label>
-      <input
-        type="text"
-        name=""
-        id="Local"
-        class="espaco_curto_vertical_elemento_card"
-      />
-
-      <label for="">Data:</label>
-      <input
-        type="date"
-        name=""
-        id="Data"
-        class="espaco_curto_vertical_elemento_card"
-      />
-
-      <label for="">Horário:</label>
-      <input
-        type="time"
-        id="Horário"
-        required
-        class="espaco_curto_vertical_elemento_card"
-      />
-    </div>
-  </div>
-
-  <div id="5" class="draggable container_row align" draggable="true">
-    <span class="material-symbols-outlined drag_indicator">
-      drag_indicator
-    </span>
-    <!-- <img
-      src="https://content.churchofjesuschrist.org/acp/bc/cp/Canada/images2020/Does%20God%20Really%20Want%20to%20Speak%20to%20You%20Yes/1-banner-prayer-church.jpg"
-      alt=""
-      class="imagem_icone"
-    /> -->
-    <div class="container_column">
-      <label for="">Confirmação:</label>
-      <input type="text" name="" id="Confirmação" />
-    </div>
-  </div>
-
-  <div id="6" class="draggable container_row align" draggable="true">
-    <span class="material-symbols-outlined drag_indicator">
-      drag_indicator
-    </span>
-    <!-- <img
-      src="https://content.churchofjesuschrist.org/acp/bc/cp/Canada/images2020/Does%20God%20Really%20Want%20to%20Speak%20to%20You%20Yes/1-banner-prayer-church.jpg"
-      alt=""
-      class="imagem_icone"
-    /> -->
-    <div class="container_column">
-      <label for="">Apresentação de membros novos:</label>
-      <input type="text" name="" id="Membros_novos" />
-    </div>
-  </div>
-
-  <div id="7" class="draggable container_row align" draggable="true">
-    <span class="material-symbols-outlined drag_indicator">
-      drag_indicator
-    </span>
-    <!-- <img
-      src="https://content.churchofjesuschrist.org/acp/bc/cp/Canada/images2020/Does%20God%20Really%20Want%20to%20Speak%20to%20You%20Yes/1-banner-prayer-church.jpg"
-      alt=""
-      class="imagem_icone"
-    /> -->
-    <div class="container_column">
-      <label for="" class="espaco_longo_vertical_elemento_card"
-        >Apoio para Ordenação ao Sacerdócio</label
-      >
-      <label for="">Nome:</label>
-      <input
-        type="text"
-        name=""
-        id="Ordenação_Nome"
-        class="espaco_curto_vertical_elemento_card"
-      />
-
-      <label for="">Oficio:</label>
-      <input type="text" name="" id="Oficio" />
-    </div>
-  </div>
-
-  <div id="8" class="draggable container_row align" draggable="true">
-    <span class="material-symbols-outlined drag_indicator">
-      drag_indicator
-    </span>
-    <!-- <img
-      src="https://content.churchofjesuschrist.org/acp/bc/cp/Canada/images2020/Does%20God%20Really%20Want%20to%20Speak%20to%20You%20Yes/1-banner-prayer-church.jpg"
-      alt=""
-      class="imagem_icone"
-    /> -->
-    <div class="container_column">
-      <label for="" class="espaco_longo_vertical_elemento_card"
-        >Apoio para Chamado</label
-      >
-
-      <label for="">Nome:</label>
-      <input
-        type="text"
-        name=""
-        id="Apoio_Nome"
-        class="espaco_curto_vertical_elemento_card"
-      />
-
-      <label for="">Chamado:</label>
-      <input type="text" name="" id="Chamado" />
-    </div>
-  </div>
-
-  <div id="9" class="draggable container_row align" draggable="true">
-    <span class="material-symbols-outlined drag_indicator">
-      drag_indicator
-    </span>
-    <!-- <img
-      src="https://content.churchofjesuschrist.org/acp/bc/cp/Canada/images2020/Does%20God%20Really%20Want%20to%20Speak%20to%20You%20Yes/1-banner-prayer-church.jpg"
-      alt=""
-      class="imagem_icone"
-    /> -->
-    <div class="container_column">
-      <label for="" class="espaco_longo_vertical_elemento_card"
-        >Desobrigação</label
-      >
-      <label for="">Nome:</label>
-      <input
-        type="text"
-        name=""
-        id="Desobrigação_Nome"
-        class="espaco_curto_vertical_elemento_card"
-      />
-
-      <label for="">Chamado:</label>
-      <input type="text" name="" id="Chamado" />
-    </div>
-  </div>
-
-  <div id="10" class="draggable container_row align" draggable="true">
-    <span class="material-symbols-outlined drag_indicator">
-      drag_indicator
-    </span>
-    <!-- <img
-      src="https://content.churchofjesuschrist.org/acp/bc/cp/Canada/images2020/Does%20God%20Really%20Want%20to%20Speak%20to%20You%20Yes/1-banner-prayer-church.jpg"
-      alt=""
-      class="imagem_icone"
-    /> -->
-    <label for="">Preside:</label>
-    <input type="text" name="" id="Preside" />
-  </div>
-
-  <div id="11" class="draggable container_row align" draggable="true">
-    <span class="material-symbols-outlined drag_indicator">
-      drag_indicator
-    </span>
-    <!-- <img
-      src="https://content.churchofjesuschrist.org/acp/bc/cp/Canada/images2020/Does%20God%20Really%20Want%20to%20Speak%20to%20You%20Yes/1-banner-prayer-church.jpg"
-      alt=""
-      class="imagem_icone"
-    /> -->
-    <label for="">Dirige:</label>
-    <input type="text" name="" id="Dirige" />
-  </div>
-
-  <div id="12" class="draggable container_row align" draggable="true">
-    <span class="material-symbols-outlined drag_indicator">
-      drag_indicator
-    </span>
-    <!-- <img
-      src="https://content.churchofjesuschrist.org/acp/bc/cp/Canada/images2020/Does%20God%20Really%20Want%20to%20Speak%20to%20You%20Yes/1-banner-prayer-church.jpg"
-      alt=""
-      class="imagem_icone"
-    /> -->
-    <label for="">Organista:</label>
-    <input type="text" name="" id="Organista" />
-  </div>
-
-  <div id="13" class="draggable container_row align" draggable="true">
-    <span class="material-symbols-outlined drag_indicator">
-      drag_indicator
-    </span>
-    <!-- <img
-      src="https://content.churchofjesuschrist.org/acp/bc/cp/Canada/images2020/Does%20God%20Really%20Want%20to%20Speak%20to%20You%20Yes/1-banner-prayer-church.jpg"
-      alt=""
-      class="imagem_icone"
-    /> -->
-    <label for="">Regente:</label>
-    <input type="text" name="" id="Regente" />
-  </div>
-
-  <div id="14" class="draggable container_row align" draggable="true">
-    <span class="material-symbols-outlined drag_indicator">
-      drag_indicator
-    </span>
-    <!-- <img
-      src="https://content.churchofjesuschrist.org/acp/bc/cp/Canada/images2020/Does%20God%20Really%20Want%20to%20Speak%20to%20You%20Yes/1-banner-prayer-church.jpg"
-      alt=""
-      class="imagem_icone"
-    /> -->
-    <div class="container_column">
-      <label for="">Reconhecimento:</label>
-      <input type="text" name="" id="Reconhecimento" />
-    </div>
-  </div>
-
-  <div id="15" class="draggable container_row align" draggable="true">
-    <span class="material-symbols-outlined drag_indicator">
-      drag_indicator
-    </span>
-    <!-- <img
-      src="https://content.churchofjesuschrist.org/acp/bc/cp/Canada/images2020/Does%20God%20Really%20Want%20to%20Speak%20to%20You%20Yes/1-banner-prayer-church.jpg"
-      alt=""
-      class="imagem_icone"
-    /> -->
-    <label for="">Testemunho:</label>
-    <input type="text" name="" id="Testemunho" />
-  </div>
-
-  <input type="button" value="Aqui" onclick="capturarValores()" />
-</div>
-<script>
-  const draggableElements = document.querySelectorAll(".draggable");
-
-  draggableElements.forEach((element) => {
-    element.addEventListener("dragstart", dragStart);
-    element.addEventListener("dragover", dragOver);
-    element.addEventListener("drop", dragDrop);
-  });
-
-  function dragStart(event) {
-    event.dataTransfer.setData("text/plain", event.target.id);
-  }
-
-  function dragOver(event) {
-    event.preventDefault();
-  }
-
-  function dragDrop(event) {
-    const idDragged = event.dataTransfer.getData("text");
-    const idDropped = event.target.id;
-
-    const elementDragged = document.getElementById(idDragged);
-    const elementDropped = document.getElementById(idDropped);
-
-    // Verifica se o elementoDropped é nulo ou se não é uma div arrastável
-    if (!elementDropped || !elementDropped.classList.contains("draggable")) {
-      return; // Sai da função se não for possível soltar em um elemento droppable
-    }
-    const container_column = elementDropped.parentNode;
-
-    // Obtém a posição do elemento sendo solto
-    const indexDragged = Array.from(container_column.children).indexOf(
-      elementDragged
-    );
-    // Obtém a posição do elemento sobre o qual o elemento está sendo solto
-    const indexDropped = Array.from(container_column.children).indexOf(
-      elementDropped
-    );
-
-    // Insere o elemento sendo arrastado na posição correta
-    if (indexDragged < indexDropped) {
-      container_column.insertBefore(elementDragged, elementDropped.nextSibling);
-    } else {
-      container_column.insertBefore(elementDragged, elementDropped);
-    }
-
-    // Atualizar IDs
-    const allDraggables = document.querySelectorAll(".draggable");
-    allDraggables.forEach((element, index) => {
-      element.id = index + 1;
-    });
-
-    id_proxima_div = parseInt(allDraggables[allDraggables.length - 1].id) + 1;
-  }
-
-  // Função para capturar os valores de todos os tipos de inputs dentro de cada div e transformá-los em strings formatadas
-  function capturarValores() {
-    // Seleciona todas as divs com a classe 'draggable'
-    const allDraggables = document.querySelectorAll(".draggable");
-
-    // Objeto para armazenar as strings formatadas
-    const stringsFormatadas = {};
-
-    // Itera sobre cada div
-    allDraggables.forEach((div) => {
-      // Obtém o ID da div atual
-      const divId = div.id;
-
-      // Seleciona todos os inputs dentro da div atual
-      const inputs = div.querySelectorAll(
-        'input[type="text"], input[type="hidden"], input[type="date"], input[type="time"], select'
-      );
-
-      // Array para armazenar os valores dos inputs da div atual
-      const valoresInputs = [];
-
-      // Itera sobre cada input dentro da div atual
-      inputs.forEach((input) => {
-        // Obtém o ID do input
-        const inputId = input.id;
-
-        // Adiciona o valor do input com ou sem o ID como prefixo, dependendo se o ID está vazio ou não
-        const valor = `${inputId}: ${input.value}`;
-        valoresInputs.push(valor);
-      });
-
-      // Verifica se há algum valor na div
-      if (valoresInputs.length > 0) {
-        // Se houver valores, adiciona ao objeto de strings formatadas
-        // Verifica se há mais de um valor
-        if (valoresInputs.length > 1) {
-          // Se houver mais de um valor, os valores são unidos com pipe
-          stringsFormatadas[`${divId}`] = valoresInputs.join(" | ");
-        } else {
-          // Se houver apenas um valor, não há pipes
-          stringsFormatadas[`${divId}`] = valoresInputs[0];
-        }
-      }
-    });
-
-    // Retorna o objeto com as strings formatadas
-    console.log(stringsFormatadas);
-    return stringsFormatadas;
-  }
-</script>
-
-select inserido_em from atas.tb_atas order by inserido_em desc limit 1
-delete from atas.tb_atas where inserido_em <> '2024-05-13 13:52:31.888273'
-select * from atas.tb_atas;
-
-drop table atas.tb_atas_padrao
-select * 
-into atas.tb_atas_padrao
-from atas.tb_atas;
-
-drop table atas.tb_cards_padrao
-select * 
-into atas.tb_cards_padrao
-from atas.tb_atas_padrao order by label;
-
-update atas.tb_atas_padrao
-set value = null
+/*
+--======================
+--Colunas Não Utilizadas
+--======================
+  -- tb_data_users.age,
+  -- tb_data_users.birth_year,
+  -- tb_data_users."birthMonthSort",
+  -- tb_data_users.birth_day,
+  -- tb_data_users.birthday,
+  -- tb_data_users.birth_date,
+  -- tb_data_users.birth_month,
+  -- tb_data_users."birthDaySort",
+  -- tb_data_users."fullNameSort",
+  -- tb_data_users."preferredNameSort",
+  -- tb_data_users.preferred_name,
+  -- tb_data_users."ageSort",
+  -- tb_data_users.temple_recommend_expiration_date,
+  -- tb_data_users.sealing_to_parents,
+  -- tb_data_users.baptism_date,
+  -- tb_data_users.confirmation_date,
+  -- tb_data_users.ordination_date,
+  -- tb_data_users."priesthoodOfficeSort",
+  -- tb_data_users.endowment_date,
+  -- tb_data_users.marriage_date,
+  -- tb_data_users.sealing_to_spouse,
+  -- tb_data_users."spouseNameSort",
+  -- tb_data_users."spouseOfHeadOfHouseSort",
+  -- tb_data_users."headOfHouseAndSpouseSort",
+  -- tb_data_users."headOfHouseSort",
+  -- tb_data_users.move_in_date,
+  -- tb_data_users."groupByUnitName",
+  -- tb_data_users.unit_abbreviation,
+  -- tb_data_users.is_bic,
+  -- tb_data_users.maiden_name,
+  -- tb_data_users."maidenNameSort",
+  -- tb_data_users.is_widowed,
+*/
