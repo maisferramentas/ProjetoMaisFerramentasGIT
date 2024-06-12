@@ -16,3 +16,21 @@ import os
 import subprocess
 from django.http import HttpResponse
 from django.conf import settings
+
+
+
+# Robo
+import time
+import json
+import requests
+import os
+import json
+from django.http import JsonResponse
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from bs4 import BeautifulSoup
+from selenium.webdriver.chrome.service import Service as ChromeService
+from selenium.webdriver.chrome.options import Options
+from .utils import *

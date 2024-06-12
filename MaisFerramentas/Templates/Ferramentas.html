@@ -548,6 +548,7 @@
     </style>
   </head>
   <body>
+    <!-- <iframe src="https://lcrf.churchofjesuschrist.org" title="description"></iframe>  -->
     <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}" />
     <div class="menu">
       <div class="botao_e_Titulo">
@@ -629,8 +630,10 @@
         <span class="material-symbols-outlined icone_frequencia_sidebar">
           bar_chart_4_bars
         </span>
-        <label for="" class="descricao_opcoes_menu">Dashboard</label>
+        <label for="" class="descricao_opcoes_menu"
+        onclick="novo_conteudo('/get_donations_from_lcr')">Dashboard</label>
       </div>
+      
 
       <div class="option_sidebar" onclick="suboptions(id)" id="option_1">
         <span class="material-icons icone_frequencia_sidebar">

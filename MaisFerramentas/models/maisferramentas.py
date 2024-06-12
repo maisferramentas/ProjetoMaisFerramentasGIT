@@ -107,3 +107,17 @@ class tb_data_users(models.Model):
     class Meta:
         db_table = '"maisferramentas"."tb_data_users"'
         managed = False
+
+class tb_participants(models.Model):
+  id_tb_participants=models.AutoField(primary_key=True)
+  name = models.CharField()
+  age = models.IntegerField()
+  transactionParticipantId = models.BigIntegerField()
+  membershipId = models.CharField()
+  unitNumber = models.IntegerField()
+  member = models.BooleanField()
+  inserted_date = models.CharField()
+  inserted_by = models.IntegerField()
+
+  class Meta:
+    db_table = '"maisferramentas"."tb_participants"' 

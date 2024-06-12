@@ -31,9 +31,8 @@ options.add_argument("--disable-gpu")
 options.add_argument("--no-sandbox") 
 options.add_argument("--disable-dev-shm-usage")
 
-def access_lcr(request):
-    print(request)
-    url = request
+def access_lcr():
+    # url = request
     print('iniciando navegador')
     if os.name == 'posix':
         executable_path = '/usr/bin/chromium-browser'
@@ -77,18 +76,7 @@ def access_lcr(request):
     print('acessando link solicitado')
     # Acessa o Relatório
     time.sleep(2) # Pausa para o redirecionamento
-    driver.get(url)
-    WebDriverWait(driver, 20).until(EC.url_contains('lcr.churchofjesuschrist.org'))
     
-    # Extrair o HTML da página
-    html_content = driver.page_source
-
-    print('link acessado com sucesso')
-
-    # Fechar o navegador
-    driver.quit()
-    print("finalizando processo.")
-    
-    return html_content
+    return driver
 
 # update_tb_user('nada')

@@ -1,9 +1,12 @@
 SELECT 
-  --==============================
+  --======================================
   --Informações de Contato
-  --==============================
+  --======================================
   tb_data_users.id_tb_data_users,
   tb_data_users.id,
+  vw_participants."transactionParticipantId",
+  vw_participants."membershipId",
+  TRIM(SUBSTRING(full_name FROM POSITION(',' IN full_name) + 1)) || ' ' || TRIM(SUBSTRING(full_name FROM 1 FOR POSITION(',' IN full_name) - 1)) AS full_name_formatted,
   tb_data_users.full_name,
   tb_data_users.gender,
   EXTRACT(YEAR FROM AGE(TO_DATE("birthDateSort", 'YYYYMMDD'))) age,
@@ -18,12 +21,27 @@ SELECT
   tb_data_users.individual_phone,
   tb_data_users.individual_email,
   --Endereço Completo
-  CONCAT(tb_data_users.address_street_1,
-  tb_data_users.address_street_2,
-  tb_data_users.address_city,
-  tb_data_users.address_state,
-  tb_data_users.address_country,
+  CONCAT(tb_data_users.address_street_1, ' ',
+  tb_data_users.address_street_2, ' ',
+  tb_data_users.address_city, ' ',
+  tb_data_users.address_state, ' ',
+  tb_data_users.address_country, ' ',
   tb_data_users.address_postal_code) complete_address,
+  --Família
+  CASE 
+    WHEN tb_data_users.household_position = 'Head of Household' THEN 1
+    WHEN tb_data_users.household_position = 'Spouse of Head of House' THEN 2
+    WHEN tb_data_users.household_position = 'Son' THEN 3
+    WHEN tb_data_users.household_position = 'Daughter' THEN 4
+    WHEN tb_data_users.household_position = 'Other' THEN 5
+  END AS order_household_position,
+  tb_data_users.household_position,
+  TRIM(SUBSTRING(tb_data_users.head_of_house FROM POSITION(',' IN tb_data_users.head_of_house) + 1)) || ' ' || TRIM(SUBSTRING(tb_data_users.head_of_house FROM 1 FOR POSITION(',' IN tb_data_users.head_of_house) - 1)) AS head_of_house_formatted,
+  tb_data_users.head_of_house,
+  TRIM(SUBSTRING(tb_data_users.spouse_of_head_of_house FROM POSITION(',' IN tb_data_users.spouse_of_head_of_house) + 1)) || ' ' || TRIM(SUBSTRING(tb_data_users.spouse_of_head_of_house FROM 1 FOR POSITION(',' IN tb_data_users.spouse_of_head_of_house) - 1)) AS spouse_of_head_of_house_formatted,
+  tb_data_users.spouse_of_head_of_house,
+  TRIM(SUBSTRING(tb_data_users.head_of_house_and_spouse FROM POSITION(',' IN tb_data_users.head_of_house_and_spouse) + 1)) || ' ' || TRIM(SUBSTRING(tb_data_users.head_of_house_and_spouse FROM 1 FOR POSITION(',' IN tb_data_users.head_of_house_and_spouse) - 1)) AS head_of_house_and_spouse_formatted,
+  tb_data_users.head_of_house_and_spouse,
   
   --======================================
   --Informações sobre a situação de membro
@@ -39,11 +57,38 @@ SELECT
   null last_tithe_date,
   null value_of_last_tithe_date,
   --Chamado
-  tb_data_users.callings,
-  tb_data_users.callings_with_date_sustained,
+  -- tb_data_users.callings,
+  -- tb_data_users.callings_with_date_sustained,
+  regexp_replace(
+    regexp_replace(
+        callings_with_date_sustained_and_set_apart,
+        E'<span class="custom-report-position">(.*?)</span>',
+        E'\\1',
+        'g' -- Aplica a substituição globalmente em toda a string
+    ),
+    E'</span>',
+    ' / ',
+    'g' -- Remove todas as tags de fechamento span restantes
+  ) AS callings_with_date_sustained_and_set_apart_formatted,
   tb_data_users.callings_with_date_sustained_and_set_apart,
   --Ministração
   tb_data_users.has_home_teacher,
+  array_to_string(
+      ARRAY(
+          SELECT 
+              -- Reorganizando "Sobrenome, Nome" para "Nome Sobrenome"
+              -- Captura partes do nome considerando possíveis múltiplos espaços
+              regexp_replace(
+                  trim(name_part), 
+                  '([^,]+), (.+)',
+                  E'\\2 \\1'
+              )
+          FROM unnest(
+              string_to_array(home_teachers, ' / ')
+          ) AS name_part
+      ),
+      ' / '
+  ) AS home_teachers_formatted,
   tb_data_users.home_teachers,
   tb_data_users.has_visiting_teachers,
   tb_data_users.visiting_teachers,
@@ -66,8 +111,12 @@ SELECT
   tb_data_users.birth_country,
   --Selamento aos Pais
   tb_data_users.is_sealed_to_parents,
-  -- TO_CHAR(TO_DATE(tb_data_users."sealingToParentsSort", 'YYYYMMDD'), 'YYYY-MM-DD') "sealingToParentsSort",
-  tb_data_users."sealingToParentsSort",
+  CASE
+    WHEN tb_data_users."sealingToParentsSort" ~ '^[0-9]{8}$' THEN
+      TO_CHAR(TO_DATE(tb_data_users."sealingToParentsSort", 'YYYYMMDD'), 'YYYY-MM-DD')
+    ELSE
+      tb_data_users."sealingToParentsSort"
+  END AS "sealingToParentsSort",
   --Batismo e Confirmação
   tb_data_users.is_convert,
   TO_CHAR(TO_DATE(tb_data_users."baptismDateSort", 'YYYYMMDD'), 'YYYY-MM-DD') "baptismDateSort",
@@ -91,6 +140,7 @@ SELECT
   tb_data_users.is_single,
   tb_data_users.is_married,
   tb_data_users.marriage_status,
+  TRIM(SUBSTRING(tb_data_users.spouse_name FROM POSITION(',' IN tb_data_users.spouse_name) + 1)) || ' ' || TRIM(SUBSTRING(tb_data_users.spouse_name FROM 1 FOR POSITION(',' IN tb_data_users.spouse_name) - 1)) AS spouse_name_formatted,
   tb_data_users.spouse_name,
   TO_CHAR(TO_DATE(tb_data_users."marriageDateSort", 'YYYYMMDD'), 'YYYY-MM-DD') "marriageDateSort",
   
@@ -106,15 +156,11 @@ SELECT
   --Filhos
   tb_data_users.has_children,
   tb_data_users.is_accountable,
-  --Família
-  tb_data_users.household_position,
-  tb_data_users.head_of_house,
-  tb_data_users.spouse_of_head_of_house,
-  tb_data_users.head_of_house_and_spouse,
   --Transferência / Criação do 
   TO_CHAR(TO_DATE(tb_data_users."moveInDateSort", 'YYYYMMDD'), 'YYYY-MM-DD') "moveInDateSort",
   
   --Unidade
+  vw_participants."unitNumber",
   tb_data_users.unit,
   --Endereço por partes
   tb_data_users.address_street_1,
@@ -136,7 +182,9 @@ INNER JOIN
   GROUP BY tb_data_users_1.id
 ) registro 
   ON registro.id = tb_data_users.id AND registro.inserted_date = tb_data_users.inserted_date
-
+LEFT JOIN maisferramentas.vw_participants vw_participants 
+  ON vw_participants.name = tb_data_users.full_name
+ORDER BY TRIM(SUBSTRING(full_name FROM POSITION(',' IN full_name) + 1)) || ' ' || TRIM(SUBSTRING(full_name FROM 1 FOR POSITION(',' IN full_name) - 1))
 /*
 --======================
 --Colunas Não Utilizadas

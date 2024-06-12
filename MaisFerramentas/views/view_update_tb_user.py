@@ -1,6 +1,6 @@
 
 from .utils import *
-from MaisFerramentas.models import model_tb_data_users
+from MaisFerramentas.models import maisferramentas
 from MaisFerramentas.models import models
 from .views import def_usuario_logado
 from .view_access_lcr import access_lcr
@@ -9,7 +9,16 @@ from bs4 import BeautifulSoup
 def update_data_user(request):
     url = 'https://lcr.churchofjesuschrist.org/api/report/custom-reports/run-report/45c90fc8-f097-4fa9-9ea6-151956b0d5af?lang=eng'
     
-    html_content = access_lcr(url)
+    driver = access_lcr()
+    
+    driver.get(url)
+    WebDriverWait(driver, 20).until(EC.url_contains('lcr.churchofjesuschrist.org'))
+    
+    # Extrair o HTML da página
+    html_content = driver.page_source
+
+    print('link acessado com sucesso')
+    print("finalizando processo.")
 
     # Usar BeautifulSoup para analisar o HTML e encontrar o JSON
     soup = BeautifulSoup(html_content, 'html.parser')
@@ -26,7 +35,7 @@ def update_data_user(request):
     inserido_em=timezone.now().strftime('%Y-%m-%d %H:%M:%S.%f')
 
     for item in data_user:
-        tb_data_users = model_tb_data_users.tb_data_users(
+        tb_data_users = maisferramentas.tb_data_users(
             marriage_status=item.get('MARRIAGE_STATUS'),
             spouseOfHeadOfHouseSort=item.get('spouseOfHeadOfHouseSort'),
             birth_year=item.get('BIRTH_YEAR'),
@@ -128,5 +137,36 @@ def update_data_user(request):
         # Salvar a instância no banco de dados
         tb_data_users.save()
 
+    #Acessando lcrffe para extrair o numero de membro e o transactionParticipantId
+    driver.get('https://lcrffe.churchofjesuschrist.org')
+    time.sleep(5)
+    driver.get('https://lcrffe.churchofjesuschrist.org/donations?tab=donationSummary')
+    time.sleep(5)
+    driver.get('https://lcrf.churchofjesuschrist.org/finance/in-unit-participants?orgId=35820&showDonor=true&showPayee=true&showRecipient=true')
+
+    html_content = driver.page_source
+
+    # Usar BeautifulSoup para analisar o HTML e encontrar o JSON
+    soup = BeautifulSoup(html_content, 'html.parser')
+    pre_tag = soup.find('pre')
+    json_text = pre_tag.text
+    data = json.loads(json_text)
+
+    for item in data:
+        tb_participants = maisferramentas.tb_participants(
+            name = item.get('name'),
+            age = item.get('age'),
+            transactionParticipantId = item.get('transactionParticipantId'),
+            membershipId = item.get('membershipId'),
+            unitNumber = item.get('unitNumber'),
+            member = item.get('member'),
+            inserted_date = inserido_em,
+            inserted_by = inserido_por
+        )
+        # Salvar a instância no banco de dados
+        tb_participants.save()
+
+    # Fechar o navegador
+    driver.quit()
 
     return JsonResponse({'ok':'ok'})
