@@ -165,52 +165,62 @@
         flex-direction: column;
         display: none;
     }
+    .div_data{
+        display: flex;
+    }
+    .linha_congelada{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
 </style>
 </head>
 <body>
     <div class="conteudo" id="conteudo">
-        <h1>Aniversariantes</h1>
-        <div class="div_caixa_de_pesquisa" >
-            <!-- <label for="">Pesquisar:</label> -->
-            <input type="text" name="" id="caixa_de_pesquisa" placeholder="🔍︎Procurar:" >
-        </div>
-        <div class="expandir_filtros" >
-            <span class="material-symbols-outlined">
-                filter_list
-            </span>
-            <label for="Filtros">Filtros</label>
-        </div>
-        <div class="filtros">
-            <div>
-                <label for="data_inicio">Data Início: </label>
-                <input type="date" name="" id="data_inicio">
+        <div class="linha_congelada" >
+            <h1>Aniversariantes</h1>
+            <div class="div_caixa_de_pesquisa" >
+                <!-- <label for="">Pesquisar:</label> -->
+                <input type="text" name="" id="caixa_de_pesquisa" placeholder="🔍︎Procurar:" >
             </div>
-            <div>
-                <label for="data_fim">Data Final: </label>
-                <input type="date" name="" id="data_fim">
+        
+            <div class="expandir_filtros" >
+                <span class="material-symbols-outlined">
+                    filter_list
+                </span>
+                <label for="Filtros">Filtros</label>
             </div>
-            
-            <div class="div_opcao_de_periodo" >
-                <p>Filtrar por período:</p>
-                <div class="div_opcao_de_periodo_central">
-                    <div class="opcoes_do_radio">
-                        <input type="radio" name="opcao_de_periodo" id="hoje"><label for="">Hoje</label>
-                    </div>
-                    <div class="opcoes_do_radio" >
-                        <input type="radio" name="opcao_de_periodo" id="amanha"><label for="">Amanhã</label>
-                    </div>
-                    <div class="opcoes_do_radio">
-                        <input type="radio" name="opcao_de_periodo" id="semana_atual"><label for="">Semana Atual</label>
-                    </div class="opcoes_do_radio">
-                    <div class="opcoes_do_radio">
-                        <input type="radio" name="opcao_de_periodo" id="mes_atual"><label for="">Mês Atual</label>
-                    </div>
-                    <div class="opcoes_do_radio">
-                        <input type="radio" name="opcao_de_periodo" id="todos"><label for="">Todos</label>
+            <div class="filtros">
+                <div class="div_data">
+                    <label for="data_inicio">Data Início: </label>
+                    <input type="date" name="" id="data_inicio">
+                </div>
+                <div>
+                    <label for="data_fim">Data Final: </label>
+                    <input type="date" name="" id="data_fim">
+                </div>
+                
+                <div class="div_opcao_de_periodo" >
+                    <p>Filtrar por período:</p>
+                    <div class="div_opcao_de_periodo_central">
+                        <div class="opcoes_do_radio">
+                            <input type="radio" name="opcao_de_periodo" id="hoje"><label for="">Hoje</label>
+                        </div>
+                        <div class="opcoes_do_radio" >
+                            <input type="radio" name="opcao_de_periodo" id="amanha"><label for="">Amanhã</label>
+                        </div>
+                        <div class="opcoes_do_radio">
+                            <input type="radio" name="opcao_de_periodo" id="semana_atual"><label for="">Semana Atual</label>
+                        </div class="opcoes_do_radio">
+                        <div class="opcoes_do_radio">
+                            <input type="radio" name="opcao_de_periodo" id="mes_atual"><label for="">Mês Atual</label>
+                        </div>
+                        <div class="opcoes_do_radio">
+                            <input type="radio" name="opcao_de_periodo" id="todos"><label for="">Todos</label>
+                        </div>
                     </div>
                 </div>
             </div>
-            
         </div>
         <!-- INICIO card padrão para clonar e replicar -->
         <div class="div_lista_de_aniversariantes" >

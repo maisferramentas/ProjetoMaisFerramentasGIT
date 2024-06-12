@@ -72,8 +72,7 @@ def access_lcr():
     # Esperar o login ser concluído
     WebDriverWait(driver, 20).until(EC.url_contains('lcr.churchofjesuschrist.org'))
     print('login realizado com sucesso')
-    
-    print('acessando link solicitado')
+
     # Acessa o Relatório
     time.sleep(2) # Pausa para o redirecionamento
     

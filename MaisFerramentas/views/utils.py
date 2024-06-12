@@ -34,3 +34,5 @@ from bs4 import BeautifulSoup
 from selenium.webdriver.chrome.service import Service as ChromeService
 from selenium.webdriver.chrome.options import Options
 from .utils import *
+from .views import enviar_email
+from .views import *
