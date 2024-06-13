@@ -36,3 +36,17 @@ from selenium.webdriver.chrome.options import Options
 from .utils import *
 from .views import enviar_email
 from .views import *
+
+
+#################
+# Hora Atual
+#################
+import pytz
+# Obtém o tempo atual em UTC
+now_utc = timezone.now()
+# Converte para o fuso horário desejado (por exemplo, 'America/Sao_Paulo')
+timezone_sao_paulo = pytz.timezone('America/Sao_Paulo')
+now_sao_paulo = now_utc.astimezone(timezone_sao_paulo)
+# Formata a data e hora ajustadas
+timestamps = now_sao_paulo.strftime('%Y-%m-%d %H:%M:%S.%f')
+

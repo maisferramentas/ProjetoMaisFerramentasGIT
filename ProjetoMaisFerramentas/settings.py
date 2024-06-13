@@ -15,6 +15,8 @@ import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+TIME_ZONE = 'America/Sao_Paulo'
+USE_TZ = True
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
@@ -112,7 +114,6 @@ WSGI_APPLICATION = 'ProjetoMaisFerramentas.wsgi.application'
        
 #     }
 # }
-
 
 DATABASES = {
     'default': {

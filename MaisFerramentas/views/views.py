@@ -12,6 +12,7 @@ from django.views.decorators.cache import never_cache
 from django.http import HttpResponse
 from django.template.loader import render_to_string 
 import json
+# from .utils import *
 
 from MaisFerramentas.models import models
 @login_required
@@ -140,6 +141,22 @@ def def_usuario_logado(request):
         return usuario_logado
     else:
         return JsonResponse({'usuario_logado': None})
+
+def user_logged(request):
+    user_logged = models.model_tb_acesso.objects.filter(nome_usuario_login=def_usuario_logado(request)).values_list('id_membro_interno', flat=True).first()
+
+    return user_logged
+import pytz
+def timestamp():
+    # Obtém o tempo atual em UTC
+    now_utc = timezone.now()
+    # Converte para o fuso horário desejado (por exemplo, 'America/Sao_Paulo')
+    timezone_sao_paulo = pytz.timezone('America/Sao_Paulo')
+    now_sao_paulo = now_utc.astimezone(timezone_sao_paulo)
+    # Formata a data e hora ajustadas
+    timestamp = now_sao_paulo.strftime('%Y-%m-%d %H:%M:%S.%f')
+    return timestamp
+    
 
 def def_dados_usuario_logado(request):
     id_membro_interno = models.model_tb_acesso.objects.filter(nome_usuario_login=def_usuario_logado(request)).values_list('id_membro_interno', flat=True).first()

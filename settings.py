@@ -97,7 +97,8 @@ DATABASES = {
        
     }
 }
-
+TIME_ZONE = 'America/Sao_Paulo'
+USE_TZ = True
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.postgresql',

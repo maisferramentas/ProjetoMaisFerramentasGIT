@@ -1,10 +1,9 @@
 
 from .utils import *
 from MaisFerramentas.models import maisferramentas
-from MaisFerramentas.models import models
-from .views import def_usuario_logado
 from .view_access_lcr import access_lcr
 from bs4 import BeautifulSoup
+
 
 def get_data_from_lds(request):
     try:
@@ -27,9 +26,12 @@ def get_data_from_lds(request):
 
         data_user = json.loads(json.dumps(data_user))
 
-        inserido_por = models.model_tb_acesso.objects.filter(nome_usuario_login=def_usuario_logado(request)).values_list('id_membro_interno', flat=True).first()
-        inserido_em=timezone.now().strftime('%Y-%m-%d %H:%M:%S.%f')
+        inserido_por = user_logged(request)
+        inserido_em = timestamp()
 
+        inserido_por = user_logged(request)
+        inserido_em = timestamp()
+        
         for item in data_user:
             tb_data_users = maisferramentas.tb_data_users(
                 marriage_status=item.get('MARRIAGE_STATUS'),
@@ -163,7 +165,6 @@ def get_data_from_lds(request):
             # Salvar a instância no banco de dados
             tb_participants.save()
         #####################################################
-        
         # Fechar o navegador
         driver.quit()
 
