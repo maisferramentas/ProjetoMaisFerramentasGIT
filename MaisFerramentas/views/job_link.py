@@ -23,7 +23,7 @@ def perform_get_requests():
             print(f"Erro ao fazer a requisição para {url}: {e}")
 
 # Agendar a tarefa para ser executada diariamente às 5 da manhã
-schedule.every().day.at("18:12").do(perform_get_requests)
+schedule.every().day.at("06:00").do(perform_get_requests)
 
 # Loop contínuo para verificar o agendamento
 while True:
