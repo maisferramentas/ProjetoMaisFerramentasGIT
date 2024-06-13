@@ -29,3 +29,24 @@ schedule.every().day.at("06:00").do(perform_get_requests)
 while True:
     schedule.run_pending()
     time.sleep(1)  # Aguarda 1 segundo entre as verificações
+
+
+
+# Criar um serviço (JOB) no Ubuntu:
+# Description=Executa Job Link
+# After=network.target
+
+# [Service]
+# User=ubuntu
+# Group=ubuntu
+# WorkingDirectory=/home/ubuntu/projetos/projetomaisferramentas/ProjetoMaisFerramentas
+# ExecStart=/usr/bin/python3 /home/ubuntu/projetos/projetomaisferramentas/ProjetoMaisFerramentas/MaisFerramentas/views/jo>Restart=always
+# RestartSec=10s
+
+# [Install]
+# WantedBy=multi-user.target
+
+# --Executar os comandos de inicialização
+# sudo systemctl daemon-reload
+# sudo systemctl restart meu_projeto_job_link
+
