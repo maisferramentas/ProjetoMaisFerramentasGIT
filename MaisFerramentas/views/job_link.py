@@ -49,4 +49,5 @@ while True:
 # --Executar os comandos de inicialização
 # sudo systemctl daemon-reload
 # sudo systemctl restart meu_projeto_job_link
+# sudo systemctl status meu_projeto_job_link
 

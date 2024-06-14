@@ -1,3 +1,4 @@
+
 SELECT 
   --======================================
   --Informações de Contato
@@ -52,10 +53,6 @@ SELECT
   tb_data_users.temple_recommend_type,
   tb_data_users.temple_recommend_status,
   TO_CHAR(TO_DATE(tb_data_users."templeRecommendExpirationDateSort", 'YYYYMMDD'), 'YYYY-MM-DD') "templeRecommendExpirationDateSort",
-  --Dizimo
-  null is_tithe,
-  null last_tithe_date,
-  null value_of_last_tithe_date,
   --Chamado
   -- tb_data_users.callings,
   -- tb_data_users.callings_with_date_sustained,
@@ -156,9 +153,17 @@ SELECT
   --Filhos
   tb_data_users.has_children,
   tb_data_users.is_accountable,
-  --Transferência / Criação do 
+
+  --Transferência / Criação do para a unidade
   TO_CHAR(TO_DATE(tb_data_users."moveInDateSort", 'YYYYMMDD'), 'YYYY-MM-DD') "moveInDateSort",
-  
+  --Transferência / Falecimento para fora da unidade
+  vw_members_moved_out."moveDate",
+  vw_members_moved_out."priorUnit",
+  vw_members_moved_out."nextUnitName",
+  vw_members_moved_out."nextUnitNumber",
+  vw_members_moved_out.deceased,
+  tb_data_users.birth_date ,
+  TO_CHAR(TO_DATE(tb_data_users."birthDateSort", 'YYYYMMDD'), 'YYYY-MM-DD'),
   --Unidade
   vw_participants."unitNumber",
   tb_data_users.unit,
@@ -170,6 +175,9 @@ SELECT
   tb_data_users.address_country,
   tb_data_users.address_postal_code,
   --Informações de Controle da Tabela
+  CASE 
+    WHEN tb_max_inserted_date.inserted_date = tb_data_users.inserted_date THEN 1 ELSE 0 
+  END id_status,
   tb_data_users.inserted_date,
   tb_data_users.inserted_by
 FROM maisferramentas.tb_data_users
@@ -184,7 +192,17 @@ INNER JOIN
   ON registro.id = tb_data_users.id AND registro.inserted_date = tb_data_users.inserted_date
 LEFT JOIN maisferramentas.vw_participants vw_participants 
   ON vw_participants.name = tb_data_users.full_name
+LEFT JOIN 
+  (
+    SELECT max(tb_data_users_1.inserted_date) inserted_date 
+    FROM maisferramentas.tb_data_users tb_data_users_1
+  ) tb_max_inserted_date 
+  ON tb_max_inserted_date.inserted_date = tb_max_inserted_date.inserted_date
+LEFT JOIN maisferramentas.vw_members_moved_out vw_members_moved_out 
+  ON vw_members_moved_out.name = tb_data_users.full_name
+  AND vw_members_moved_out."birthDate" = TO_CHAR(TO_DATE(tb_data_users."birthDateSort", 'YYYYMMDD'), 'YYYY-MM-DD')
 ORDER BY TRIM(SUBSTRING(full_name FROM POSITION(',' IN full_name) + 1)) || ' ' || TRIM(SUBSTRING(full_name FROM 1 FOR POSITION(',' IN full_name) - 1))
+
 /*
 --======================
 --Colunas Não Utilizadas

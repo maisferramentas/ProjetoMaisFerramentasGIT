@@ -121,3 +121,19 @@ class tb_participants(models.Model):
 
   class Meta:
     db_table = '"maisferramentas"."tb_participants"' 
+
+
+class tb_members_moved_out(models.Model):
+  id_tb_members_moved_out = models.AutoField(primary_key=True)
+  name = models.CharField()
+  birthDate = models.CharField()
+  moveDate = models.CharField()  
+  priorUnit = models.CharField()
+  nextUnitName = models.CharField()
+  nextUnitNumber = models.CharField()
+  deceased = models.CharField()
+  inserted_date = models.CharField()
+  inserted_by = models.IntegerField()
+
+  class Meta:
+    db_table = '"maisferramentas"."tb_members_moved_out"'

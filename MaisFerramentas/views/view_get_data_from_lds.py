@@ -165,6 +165,38 @@ def get_data_from_lds(request):
             # Salvar a instância no banco de dados
             tb_participants.save()
         #####################################################
+
+        
+        #####################################################
+        # Captura as informações de membros transferidos
+        #####################################################
+        driver.get('https://lcr.churchofjesuschrist.org/api/umlu/report/members-moved-out/unit/355828/12?lang=por')
+
+        html_content = driver.page_source
+
+        # Usar BeautifulSoup para analisar o HTML e encontrar o JSON
+        soup = BeautifulSoup(html_content, 'html.parser')
+        pre_tag = soup.find('pre')
+        json_text = pre_tag.text
+        data = json.loads(json_text)
+
+        
+        #inserindo dados na tabela
+        for item in data:
+            tb_members_moved_out = maisferramentas.tb_members_moved_out(
+                name = item.get('name'),
+                birthDate = item.get('birthDate'),
+                moveDate = item.get('moveDate'),
+                priorUnit = item.get('priorUnit'),
+                nextUnitName = item.get('nextUnitName'),
+                nextUnitNumber = item.get('nextUnitNumber'),
+                deceased = item.get('deceased'),
+                inserted_date = inserido_em,
+                inserted_by = inserido_por
+            )
+            # Salvar a instância no banco de dados
+            tb_members_moved_out.save()
+        #####################################################
         # Fechar o navegador
         driver.quit()
 

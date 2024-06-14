@@ -507,6 +507,7 @@ SELECT
   tb_data_users.address_country,
   tb_data_users.address_postal_code,
   --Informações de Controle da Tabela
+  IIF(tb_max_inserted_date.inserted_date = tb_data_users.inserted_date;1;0) id_status,
   tb_data_users.inserted_date,
   tb_data_users.inserted_by
 FROM maisferramentas.tb_data_users
@@ -521,6 +522,12 @@ INNER JOIN
   ON registro.id = tb_data_users.id AND registro.inserted_date = tb_data_users.inserted_date
 LEFT JOIN maisferramentas.vw_participants vw_participants 
   ON vw_participants.name = tb_data_users.full_name
+LEFT JOIN 
+  (
+    SELECT max(tb_data_users_1.inserted_date) inserted_date 
+    FROM maisferramentas.tb_data_users tb_data_users_1
+  ) tb_max_inserted_date 
+  ON tb_max_inserted_date.inserted_date = tb_max_inserted_date.inserted_date
 ORDER BY TRIM(SUBSTRING(full_name FROM POSITION(',' IN full_name) + 1)) || ' ' || TRIM(SUBSTRING(full_name FROM 1 FOR POSITION(',' IN full_name) - 1))
 /*
 --======================
