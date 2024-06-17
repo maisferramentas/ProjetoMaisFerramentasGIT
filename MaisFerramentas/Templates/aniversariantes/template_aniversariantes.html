@@ -185,7 +185,7 @@
             </div>
         
             <div class="expandir_filtros" >
-                <span class="material-symbols-outlined">
+                <span translate="no" class="material-symbols-outlined">
                     filter_list
                 </span>
                 <label for="Filtros">Filtros</label>
@@ -225,10 +225,10 @@
         <!-- INICIO card padrão para clonar e replicar -->
         <div class="div_lista_de_aniversariantes" >
             <div class="card_padrao">
-                <span class="material-symbols-outlined account_circle">
+                <span translate="no" class="material-symbols-outlined account_circle">
                     account_circle
                 </span>
-                <!-- <span class="material-symbols-outlined account_circle">
+                <!-- <span translate="no" class="material-symbols-outlined account_circle">
                     person_book
                 </span> -->
                 <div class="informacao_complementar_do_card" >
@@ -236,20 +236,20 @@
                     <p id="data_idade_organizacao" class="limite_box">Campo Exemplo: 12/04/1930 (94 anos) S. Socorro </p> 
                     <p id="nova_idade_e_dia_da_semana" class="limite_box">40 anos quinta-feira </p> 
                 </div>
-                <span class="material-symbols-outlined botao_para_expandir_opcoes">
+                <span translate="no" class="material-symbols-outlined botao_para_expandir_opcoes">
                     more_vert
                 </span>
                 <div class="opcoes">
-                    <span class="material-symbols-outlined icones_opcao">
+                    <span translate="no" class="material-symbols-outlined icones_opcao">
                         send
                     </span>
-                    <span class="material-symbols-outlined icones_opcao">
+                    <span translate="no" class="material-symbols-outlined icones_opcao">
                         featured_seasonal_and_gifts
                     </span>
-                    <span class="material-symbols-outlined icones_opcao">
+                    <span translate="no" class="material-symbols-outlined icones_opcao">
                         content_copy
                     </span>
-                    <span class="material-symbols-outlined icones_opcao remove_margem">
+                    <span translate="no" class="material-symbols-outlined icones_opcao remove_margem">
                         location_on
                     </span>
                 </div>
@@ -259,6 +259,12 @@
 
     </div>
 </body>
+<script type="text/javascript">
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+    }
+</script>
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 <script>
     //Obtem do banco todas os aniversariantes
     obter_dados_aniversariantes();
