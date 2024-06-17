@@ -576,3 +576,57 @@ SELECT
 FROM frequencia.vw_frequencia
 WHERE status_frequencia =1
 GROUP BY id_membro_interno, CASE WHEN data_frequencia::DATE <= CURRENT_DATE THEN 0 ELSE 1 END
+
+-- View: aniversariantes.vw_aniversariantes
+
+-- DROP VIEW aniversariantes.vw_aniversariantes;
+
+CREATE OR REPLACE VIEW aniversariantes.vw_aniversariantes
+ AS
+ WITH aniversariantes AS (
+         SELECT vw_usuarios.id_membro_interno,
+            vw_usuarios.nome_interno,
+            vw_usuarios.organizacao,
+            vw_usuarios.ano_do_nascimento,
+                CASE
+                    WHEN vw_usuarios."mês_do_nascimento"::text = 'jan'::text THEN '01'::text
+                    WHEN vw_usuarios."mês_do_nascimento"::text = 'fev'::text THEN '02'::text
+                    WHEN vw_usuarios."mês_do_nascimento"::text = 'mar'::text THEN '03'::text
+                    WHEN vw_usuarios."mês_do_nascimento"::text = 'abr'::text THEN '04'::text
+                    WHEN vw_usuarios."mês_do_nascimento"::text = 'mai'::text THEN '05'::text
+                    WHEN vw_usuarios."mês_do_nascimento"::text = 'jun'::text THEN '06'::text
+                    WHEN vw_usuarios."mês_do_nascimento"::text = 'jul'::text THEN '07'::text
+                    WHEN vw_usuarios."mês_do_nascimento"::text = 'ago'::text THEN '08'::text
+                    WHEN vw_usuarios."mês_do_nascimento"::text = 'set'::text THEN '09'::text
+                    WHEN vw_usuarios."mês_do_nascimento"::text = 'out'::text THEN '10'::text
+                    WHEN vw_usuarios."mês_do_nascimento"::text = 'nov'::text THEN '11'::text
+                    WHEN vw_usuarios."mês_do_nascimento"::text = 'dez'::text THEN '12'::text
+                    ELSE '01'::text
+                END AS mes_aniversario,
+                CASE
+                    WHEN COALESCE(vw_usuarios.dia_do_nascimento, 1::bigint)::integer < 10 THEN concat('0', COALESCE(vw_usuarios.dia_do_nascimento, 1::bigint))
+                    ELSE vw_usuarios.dia_do_nascimento::text
+                END AS dia_aniversario,
+            vw_usuarios.idade,
+            vw_usuarios.telefone_individual,
+            concat(vw_usuarios."endereço__rua_1", ' ', vw_usuarios."endereço__rua_2", ' ', vw_usuarios."endereço__cidade", ' ', vw_usuarios."endereço__estado_ou_província", ' ', vw_usuarios."endereço__país", ' ', vw_usuarios."endereço__código_postal") AS endereco,
+            vw_usuarios.sexo
+           FROM maisferramentas.vw_usuarios
+        )
+ SELECT id_membro_interno,
+    nome_interno,
+    organizacao,
+    ano_do_nascimento,
+    mes_aniversario,
+    dia_aniversario,
+    idade,
+    telefone_individual,
+    endereco,
+    concat(ano_do_nascimento, '-', mes_aniversario, '-', dia_aniversario) AS "data_aniversário",
+    sexo
+   FROM aniversariantes
+  ORDER BY mes_aniversario, dia_aniversario, nome_interno;
+
+ALTER TABLE aniversariantes.vw_aniversariantes
+    OWNER TO postgres;
+

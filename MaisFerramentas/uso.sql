@@ -1,3 +1,41 @@
+WITH tb_family AS
+(	--Este Select Visa agrupar toda a família sob seu chefe em uma única linha
+	SELECT 
+		head_of_house, 
+		STRING_AGG(full_name || ' ' || household_position, ' ; ') complete_family,
+		STRING_AGG(TRIM(SUBSTRING(full_name FROM POSITION(',' IN full_name) + 1)) || ' ' || TRIM(SUBSTRING(full_name FROM 1 FOR POSITION(',' IN full_name) - 1)) || ' ' || household_position, ' ; ') complete_family_formatted
+	FROM 
+	--Este From lista todos os registros com seus respectivos chefes de família e posição
+	(
+		SELECT  
+			DISTINCT
+			full_name,
+			head_of_house,
+			household_position,
+			"birthDateSort",
+			CASE 
+				WHEN household_position = 'Head of Household' THEN 1
+				WHEN household_position = 'Spouse of Head of House' THEN 2
+				WHEN household_position = 'Son' THEN 3
+				WHEN household_position = 'Daughter' THEN 3
+				WHEN household_position = 'Other' THEN 5
+			END AS order_household_position
+		FROM maisferramentas.tb_data_users
+		ORDER BY 
+			head_of_house,
+			CASE 
+				WHEN household_position = 'Head of Household' THEN 1
+				WHEN household_position = 'Spouse of Head of House' THEN 2
+				WHEN household_position = 'Son' THEN 3
+				WHEN household_position = 'Daughter' THEN 3
+				WHEN household_position = 'Other' THEN 5
+			END, "birthDateSort"
+	)
+	GROUP BY head_of_house
+	ORDER BY head_of_house
+)
+
+
 
 SELECT 
   --======================================
@@ -43,7 +81,10 @@ SELECT
   tb_data_users.spouse_of_head_of_house,
   TRIM(SUBSTRING(tb_data_users.head_of_house_and_spouse FROM POSITION(',' IN tb_data_users.head_of_house_and_spouse) + 1)) || ' ' || TRIM(SUBSTRING(tb_data_users.head_of_house_and_spouse FROM 1 FOR POSITION(',' IN tb_data_users.head_of_house_and_spouse) - 1)) AS head_of_house_and_spouse_formatted,
   tb_data_users.head_of_house_and_spouse,
+  tb_family.complete_family_formatted,
+  tb_family.complete_family,
   
+
   --======================================
   --Informações sobre a situação de membro
   --======================================
@@ -176,7 +217,7 @@ SELECT
   tb_data_users.address_postal_code,
   --Informações de Controle da Tabela
   CASE 
-    WHEN tb_max_inserted_date.inserted_date = tb_data_users.inserted_date THEN 1 ELSE 0 
+    WHEN vw_members_moved_out."moveDate" IS NULL THEN 1 ELSE 0 
   END id_status,
   tb_data_users.inserted_date,
   tb_data_users.inserted_by
@@ -192,15 +233,10 @@ INNER JOIN
   ON registro.id = tb_data_users.id AND registro.inserted_date = tb_data_users.inserted_date
 LEFT JOIN maisferramentas.vw_participants vw_participants 
   ON vw_participants.name = tb_data_users.full_name
-LEFT JOIN 
-  (
-    SELECT max(tb_data_users_1.inserted_date) inserted_date 
-    FROM maisferramentas.tb_data_users tb_data_users_1
-  ) tb_max_inserted_date 
-  ON tb_max_inserted_date.inserted_date = tb_max_inserted_date.inserted_date
 LEFT JOIN maisferramentas.vw_members_moved_out vw_members_moved_out 
   ON vw_members_moved_out.name = tb_data_users.full_name
   AND vw_members_moved_out."birthDate" = TO_CHAR(TO_DATE(tb_data_users."birthDateSort", 'YYYYMMDD'), 'YYYY-MM-DD')
+LEFT JOIN tb_family ON tb_family.head_of_house = tb_data_users.head_of_house
 ORDER BY TRIM(SUBSTRING(full_name FROM POSITION(',' IN full_name) + 1)) || ' ' || TRIM(SUBSTRING(full_name FROM 1 FOR POSITION(',' IN full_name) - 1))
 
 /*
