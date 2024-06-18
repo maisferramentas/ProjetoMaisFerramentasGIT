@@ -553,7 +553,7 @@
     <div class="menu">
       <div class="botao_e_Titulo">
         <!-- <div class="hamburger" onclick="sidebar_showorhidden()">
-            <span translate="no" class="material-icons">
+            <span  class="material-icons">
               menu
             </span>
           </div> -->
@@ -583,7 +583,7 @@
       <div class="icones">
         <!-- 
           <div class="option_sidebar_2">
-          <span translate="no" class="material-icons ">
+          <span  class="material-icons ">
             notifications
           </span>
           </div> -->
@@ -601,12 +601,12 @@
         </div>
 
         <div class="option_sidebar_2">
-          <span translate="no" class="material-icons"> notifications </span>
+          <span  class="material-icons"> notifications </span>
           <div class="option_sidebar_3"></div>
-          <!-- <span translate="no" class="material-icons ">
+          <!-- <span  class="material-icons ">
               search
             </span> -->
-          <span translate="no" class="material-icons"> settings </span>
+          <span  class="material-icons"> settings </span>
         </div>
       </div>
     </div>
@@ -616,6 +616,7 @@
       onmouseenter="sidebar_grande()"
       onmouseleave="sidebar_pequena()"
     >
+      <div id="google_translate_element"></div>
       <div class="div_botao_fixar">
         <span
           class="material-icons botao_fixar"
@@ -627,7 +628,7 @@
       </div>
 
       <div class="option_sidebar" onclick="suboptions(id)" id="option_5">
-        <span translate="no" class="material-symbols-outlined icone_frequencia_sidebar">
+        <span  class="material-symbols-outlined icone_frequencia_sidebar">
           bar_chart_4_bars
         </span>
         <label for="" class="descricao_opcoes_menu"
@@ -636,7 +637,7 @@
       
 
       <div class="option_sidebar" onclick="suboptions(id)" id="option_1">
-        <span translate="no" class="material-icons icone_frequencia_sidebar">
+        <span  class="material-icons icone_frequencia_sidebar">
           fact_check
         </span>
         <label for="" class="descricao_opcoes_menu">Frequência</label>
@@ -661,7 +662,7 @@
       </div>
 
       <div class="option_sidebar" onclick="suboptions(id)" id="option_2">
-        <span translate="no" class="material-icons icone_frequencia_sidebar">
+        <span  class="material-icons icone_frequencia_sidebar">
           recent_actors
         </span>
         <label for="">Lista de Membros</label>
@@ -682,7 +683,7 @@
       </div>
 
       <div class="option_sidebar" onclick="suboptions(id)" id="option_3">
-        <span translate="no" class="material-icons icone_frequencia_sidebar"> menu_book </span>
+        <span  class="material-icons icone_frequencia_sidebar"> menu_book </span>
         <label for="">Ata de Reunião</label>
       </div>
       <div class="suboptions" id="suboption_3">
@@ -694,7 +695,7 @@
       </div>
 
       <div class="option_sidebar" onclick="suboptions(id)" id="option_4">
-        <span translate="no" class="material-icons icone_frequencia_sidebar">
+        <span  class="material-icons icone_frequencia_sidebar">
           location_on
         </span>
         <label for="">Mapa da Ala</label>
@@ -711,7 +712,7 @@
 
     <div class="overlay" onclick="sidebar_escondida()">
       <div class="minimiza_sidebar">
-        <span translate="no" class="material-symbols-outlined"> login </span>
+        <span  class="material-symbols-outlined"> login </span>
       </div>
       <img
         class="background-imgs"
@@ -726,6 +727,30 @@
 
     <div class="content" id="content"></div>
   </body>
+  <style>
+    #goog-gt-tt,
+    .VIpgJd-ZVi9od-l4eHX-hSRGPd{
+        display: none !important;
+    }
+    /* .goog-te-banner-frame {
+      display: none !important;
+    } */
+  </style>
+  <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+  <script type="text/javascript">
+    $('span').attr('translate','no');
+    function googleTranslateElementInit() {
+        new google.translate.TranslateElement({
+            pageLanguage: 'pt', 
+            // layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+            // includedLanguages: 'en,es,pt',
+            // layout: google.translate.TranslateElement.InlineLayout.VERTICAL
+          }, 'google_translate_element');
+    }
+
+    console.log($('body'));
+        
+  </script>
   <script>
     $(document).ready(function () {
       $.ajax({
@@ -1011,10 +1036,12 @@
         type: "GET",
         success: function (data) {
           $("#content").html(data); // Atualiza o conteúdo principal com o conteúdo da nova página
+          
           // usuario = data.nome_usuario_logado;
 
           //Salva no local localStorage a url acessada para sempre voltar da mesma página
           localStorage.setItem("url", url);
+          $('span').attr('translate','no');
         },
       });
     }
