@@ -125,6 +125,14 @@
 
         //Remove o texto powered by
         $('#google_translate_element .skiptranslate div')[0].nextSibling.remove();
+
+        //Seta o idioma padrão
+        $('.goog-te-combo').val('pt');
+        document.querySelector('.goog-te-combo').dispatchEvent(new Event('change'));
+
+        //Remove o idioma
+        // $('.VIpgJd-ZVi9od-ORHb-OEVmcd').css('display','flex') 
+        // $('.VIpgJd-ZVi9od-TvD9Pc-hSRGPd').click() 
       }
 
       //Acresenta o atributo translate="no" a todos os Span
