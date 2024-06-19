@@ -70,10 +70,12 @@
     ></script>
 
     <style>
+      /*Oculta os elementos*/
       /* tooltip */
       #goog-gt-tt,
+      .goog-te-balloon-frame,
       /* texto: Google TradutorTradutor */
-      /* .VIpgJd-ZVi9od-l4eHX-hSRGPd,  */
+      .VIpgJd-ZVi9od-l4eHX-hSRGPd, 
       /* menu superior */
       .VIpgJd-ZVi9od-ORHb-OEVmcd,
       /* widget flutuante */
@@ -81,22 +83,63 @@
       {
           display: none !important;
       }
+      /*Remove o hover das palavras traduzidas*/
+      .VIpgJd-yAWNEb-VIpgJd-fmcmS-sn54Q:hover,
+      .VIpgJd-yAWNEb-VIpgJd-fmcmS-sn54Q {
+          background: none !important;
+          box-shadow: none !important;
+          color: inherit !important; 
+          outline: none !important;
+      }
+      /*Ajusta a posição do body*/
       body {
         top: 0 !important;
       }
-    </style>
-    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-    <script type="text/javascript">
-      $('span').attr('translate','no');
-      function googleTranslateElementInit() {
-          new google.translate.TranslateElement({
-              pageLanguage: 'en', 
-              // layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
-              // includedLanguages: 'en,es,pt',
-              layout: google.translate.TranslateElement.InlineLayout.VERTICAL
-            }, 'google_translate_element');
+      
+      /*Estilo para a div que recebe o select */
+      #google_translate_element {
+          color: white;
+          text-align: center;
+          display: flex;
+          align-items: center;
+          justify-content: center;
       }
-      console.log($('#google_translate_element').text());
+      /*ajusta cor e texto do select box*/
+      .goog-te-combo{
+        background-color: #002344;
+        color: white;
+        border: none;
+        font-family: Arial, sans-serif !important;
+        font-size: 145% !important;
+        max-width: 150px !important;
+      }
+    </style>
+    <!-- carrega a api do google tradutor -->
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <!-- configura a api conforme preferências -->
+    <script type="text/javascript">
+      function googleTranslateElementInit() {
+        new google.translate.TranslateElement({
+          pageLanguage: 'en'
+        }, 'google_translate_element');
+
+        //Remove o texto powered by
+        $('#google_translate_element .skiptranslate div')[0].nextSibling.remove();
+      }
+
+      //Acresenta o atributo translate="no" a todos os Span
+      $('span').attr('translate','no');
+      document.addEventListener('DOMContentLoaded', () => {
+          const observer = new MutationObserver(mutations => {
+              mutations.forEach(mutation => {
+                  $('span').attr('translate','no');
+              });
+          });
+
+          observer.observe(document.body, {
+              childList: true
+          });
+      });
     </script>
 
 
@@ -648,7 +691,6 @@
       onmouseenter="sidebar_grande()"
       onmouseleave="sidebar_pequena()"
     >
-      <div id="google_translate_element"></div>
       <div class="div_botao_fixar">
         <span
           class="material-icons botao_fixar"
@@ -659,6 +701,12 @@
         </span>
       </div>
 
+      <div id="google_translate_element">
+        <span class="material-symbols-outlined">
+          g_translate
+        </span>
+      </div>
+      
       <div class="option_sidebar" onclick="suboptions(id)" id="option_5">
         <span  class="material-symbols-outlined icone_frequencia_sidebar">
           bar_chart_4_bars
@@ -729,7 +777,7 @@
         <span  class="material-icons icone_frequencia_sidebar">
           location_on
         </span>
-        <label for="">Mapa da Ala</label>
+        <label for="">Ward Map</label>
       </div>
 
       <div class="suboptions" id="suboption_4">
@@ -739,6 +787,8 @@
           >
         </div>
       </div>
+
+      
     </div>
 
     <div class="overlay" onclick="sidebar_escondida()">
