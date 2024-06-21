@@ -102,7 +102,8 @@
           text-align: center;
           display: flex;
           align-items: center;
-          justify-content: center;
+          /* justify-content: center; */
+          margin-left: 5%;
       }
       /*ajusta cor e texto do select box*/
       .goog-te-combo{
@@ -116,7 +117,6 @@
     </style>
     <!-- carrega a api do google tradutor -->
     <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-    <!-- configura a api conforme preferências -->
     <script type="text/javascript">
       function googleTranslateElementInit() {
         new google.translate.TranslateElement({
@@ -127,27 +127,26 @@
         $('#google_translate_element .skiptranslate div')[0].nextSibling.remove();
 
         //Seta o idioma padrão
-        $('.goog-te-combo').val('pt');
-        document.querySelector('.goog-te-combo').dispatchEvent(new Event('change'));
+        // $('.goog-te-combo').val('pt');
+        // document.querykSelector('.goog-te-combo').dispatchEvent(new Event('change'));
 
         //Remove o idioma
         // $('.VIpgJd-ZVi9od-ORHb-OEVmcd').css('display','flex') 
-        // $('.VIpgJd-ZVi9od-TvD9Pc-hSRGPd').click() 
+        // $('.VIpgJd-ZVi9od-TvD9Pc-hSRGPd').click()
+        
+        // Observa o DOM para adicionar translate="no" a novos spans
+
+        //Acresenta o atributo translate="no" a todos os Span
+        const observer = new MutationObserver((mutationsList) => {
+          $('span').attr('translate', 'no');
+        });
+
+        // Inicia a observação do corpo do documento
+        observer.observe(document.body, {
+          childList: true,
+          subtree: true
+        });
       }
-
-      //Acresenta o atributo translate="no" a todos os Span
-      $('span').attr('translate','no');
-      document.addEventListener('DOMContentLoaded', () => {
-          const observer = new MutationObserver(mutations => {
-              mutations.forEach(mutation => {
-                  $('span').attr('translate','no');
-              });
-          });
-
-          observer.observe(document.body, {
-              childList: true
-          });
-      });
     </script>
 
 

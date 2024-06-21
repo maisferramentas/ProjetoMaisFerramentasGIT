@@ -203,8 +203,8 @@ SELECT
   vw_members_moved_out."nextUnitName",
   vw_members_moved_out."nextUnitNumber",
   vw_members_moved_out.deceased,
-  tb_data_users.birth_date ,
-  TO_CHAR(TO_DATE(tb_data_users."birthDateSort", 'YYYYMMDD'), 'YYYY-MM-DD'),
+  --tb_data_users.birth_date ,
+  TO_CHAR(TO_DATE(tb_data_users."birthDateSort", 'YYYYMMDD'), 'YYYY-MM-DD') birth_date,
   --Unidade
   vw_participants."unitNumber",
   tb_data_users.unit,
