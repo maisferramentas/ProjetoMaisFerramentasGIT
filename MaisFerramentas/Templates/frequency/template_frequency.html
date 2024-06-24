@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+</head>
+<style>
+    .session{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+    }
+    .title_page{
+        color: #006f9b;
+    }
+    .div_caixa_de_pesquisa{
+        margin-bottom: 25px;
+    }
+    #caixa_de_pesquisa{
+        font-size: 107%;
+        border-radius: 50px 50px 50px 50px;
+        color: #378db0;
+        padding-left: 15px;
+        border: 2px solid #378db0;
+        width: 320px;
+    }
+
+    #caixa_de_pesquisa:focus{
+        border: 2px solid #378db0;
+    }
+
+    
+    .div_lista_de_aniversariantes p {
+        color: #555;
+        margin: 0;
+    }
+    .div_lista_de_aniversariantes {
+        display:flex;
+        max-width: 400px;
+        flex-direction: column;
+        justify-content: center;
+        position: relative;
+    }
+</style>
+<body>
+    <div class="session">
+        <h1 class="title_page" >Frequency</h1>
+        <div class="div_caixa_de_pesquisa" >
+            <input type="text" name="" id="caixa_de_pesquisa" placeholder="Search:" >
+        </div>
+        
+        <!-- INICIO card padrão para clonar e replicar -->
+        <div class="div_lista_de_aniversariantes" >
+            <div class="card_padrao">
+                <span  class="material-symbols-outlined account_circle">
+                    account_circle
+                </span>
+                <!-- <span  class="material-symbols-outlined account_circle">
+                    person_book
+                </span> -->
+                <div class="informacao_complementar_do_card" >
+                    <p id="nome" class="limite_box" >Nome Exemplo</p> 
+                    <p id="data_idade_organizacao" class="limite_box">Campo Exemplo: 12/04/1930 (94 anos) S. Socorro </p> 
+                    <p id="nova_idade_e_dia_da_semana" class="limite_box">40 anos quinta-feira </p> 
+                </div>
+                <span  class="material-symbols-outlined botao_para_expandir_opcoes">
+                    more_vert
+                </span>
+                <div class="opcoes">
+                    <span  class="material-symbols-outlined icones_opcao">
+                        send
+                    </span>
+                    <span  class="material-symbols-outlined icones_opcao">
+                        featured_seasonal_and_gifts
+                    </span>
+                    <span  class="material-symbols-outlined icones_opcao">
+                        content_copy
+                    </span>
+                    <span  class="material-symbols-outlined icones_opcao remove_margem">
+                        location_on
+                    </span>
+                </div>
+            </div>
+        </div>
+        <!-- FIM card padrão para clonar e replicar -->
+    </div>
+</body>
+</html>

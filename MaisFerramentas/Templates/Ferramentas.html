@@ -127,7 +127,7 @@
         $('#google_translate_element .skiptranslate div')[0].nextSibling.remove();
 
         //Inicia o tradutor
-        $('.goog-te-combo').val('en');
+        $('.goog-te-combo').val('pt');
         document.querySelector('.goog-te-combo').dispatchEvent(new Event('change'));
 
         //Acresenta o atributo translate="no" a todos os Span
@@ -734,7 +734,7 @@
           </label>
         </div>
 
-        <div class="suboptions_min">
+        <div class="suboptions_min" onclick="novo_conteudo('/template_frequency')">
           <label for="" class="Frequência"
             ><i class="mdi mdi-chevron-right"></i>Listar Frequência</label
           >

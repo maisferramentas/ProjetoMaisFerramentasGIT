@@ -1,6 +1,6 @@
 from django.urls import path
 from django.contrib.auth.decorators import login_required
-from MaisFerramentas.views import views,view_aniversariantes,view_redirect,view_JOB_notifica_aniversariantes_email,view_get_data_from_lds,view_get_donations_from_lcr
+from MaisFerramentas.views import views,view_aniversariantes,view_redirect,view_JOB_notifica_aniversariantes_email,view_get_data_from_lds,view_get_donations_from_lcr,view_frequency
 from django.contrib.auth.views import LogoutView
 
 urlpatterns = [
@@ -70,5 +70,7 @@ urlpatterns = [
     path('get_data_from_lds', view_get_data_from_lds.get_data_from_lds, name='/get_data_from_lds'),
 
     path('get_donations_from_lcr', view_get_donations_from_lcr.get_donations_from_lcr, name='/get_donations_from_lcr'),
+
+    path('template_frequency', view_frequency.template_frequency, name='/template_frequency'),
 
 ]
