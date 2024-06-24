@@ -126,25 +126,20 @@
         //Remove o texto powered by
         $('#google_translate_element .skiptranslate div')[0].nextSibling.remove();
 
-        //Seta o idioma para o qual traduzir
-        console.log('cheegou');
+        //Inicia o tradutor
         $('.goog-te-combo').val('en');
         document.querySelector('.goog-te-combo').dispatchEvent(new Event('change'));
 
-        //Remove o idioma
-        // $('.VIpgJd-ZVi9od-ORHb-OEVmcd').css('display','flex') 
-        // $('.VIpgJd-ZVi9od-TvD9Pc-hSRGPd').click()
-
         //Acresenta o atributo translate="no" a todos os Span
-        // const observer = new MutationObserver((mutationsList) => {
-        //   $('span').attr('translate', 'no');
-        // });
+        const observer = new MutationObserver(function(mutation){
+          $('span').attr('translate', 'no');
+        });
 
-        // // Inicia a observação do corpo do documento
-        // observer.observe(document.body, {
-        //   childList: true,
-        //   subtree: true
-        // });
+        // Inicia a observação do corpo do documento
+        observer.observe(document.body, {
+          childList: true,
+          subtree: true
+        });
       }
     </script>
 
