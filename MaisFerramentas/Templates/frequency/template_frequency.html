@@ -15,10 +15,10 @@
     .title_page{
         color: #006f9b;
     }
-    .div_caixa_de_pesquisa{
+    .div_search_box{
         margin-bottom: 25px;
     }
-    #caixa_de_pesquisa{
+    #input_search_box{
         font-size: 107%;
         border-radius: 50px 50px 50px 50px;
         color: #378db0;
@@ -27,48 +27,86 @@
         width: 320px;
     }
 
-    #caixa_de_pesquisa:focus{
+    #input_search_box:focus{
         border: 2px solid #378db0;
     }
-
-    
-    .div_lista_de_aniversariantes p {
-        color: #555;
-        margin: 0;
+    .div_card_example{
+        display: flex;
+        align-items: center;
     }
-    .div_lista_de_aniversariantes {
-        display:flex;
-        max-width: 400px;
+    .div_info_card{
+        display: flex;
         flex-direction: column;
         justify-content: center;
-        position: relative;
+    }
+    .div_card_example p{
+        margin: 0;
+        color: #378db0;
+    }
+    .account_circle{
+        font-variation-settings:
+        'FILL' 0,
+        'wght' 300,
+        'GRAD' 0,
+        'opsz' 48;
+        font-size: 48px;
+        border-radius: 50%;
+        color: #378db0;
+    }
+    .div_options{
+        display: none;
+    }
+    .div_options{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        background-color: rgba(14, 211, 233, 0.7);
+        background-color: #016f9b99;
+        transition: width 0.5s ease-in-out;
+        z-index: 10;
+        right: 60px;
+        right: 20px;
+        border-radius: 50px 50px 50px 50px;
+        display: none;
+        padding: 5px;
+        right: 300px;
+    }
+    .icones_opcao{
+        margin-right: 10px;
+        background-color: white;
+        border-radius: 50%;
+        color: #106283;
+    }
+    .span_expand_option{
+        color: #106283;
+    }
+    .remove_margin{
+        margin: 0;
     }
 </style>
 <body>
     <div class="session">
-        <h1 class="title_page" >Frequency</h1>
-        <div class="div_caixa_de_pesquisa" >
-            <input type="text" name="" id="caixa_de_pesquisa" placeholder="Search:" >
+        <h1 class="title_page" >Example</h1>
+        <div class="div_search_box" >
+            <input type="text" name="" id="input_search_box" placeholder="🔍︎Search:" >
         </div>
         
         <!-- INICIO card padrão para clonar e replicar -->
-        <div class="div_lista_de_aniversariantes" >
-            <div class="card_padrao">
+        <div class="list" >
+            <div class="div_card_example">
                 <span  class="material-symbols-outlined account_circle">
                     account_circle
                 </span>
-                <!-- <span  class="material-symbols-outlined account_circle">
-                    person_book
-                </span> -->
-                <div class="informacao_complementar_do_card" >
-                    <p id="nome" class="limite_box" >Nome Exemplo</p> 
-                    <p id="data_idade_organizacao" class="limite_box">Campo Exemplo: 12/04/1930 (94 anos) S. Socorro </p> 
-                    <p id="nova_idade_e_dia_da_semana" class="limite_box">40 anos quinta-feira </p> 
+                <div class="div_info_card" >
+                    <p id="nome" class="limit_box" >Nome Exemplo</p> 
+                    <p id="data_idade_organizacao" class="limit_box">12/04/1930 (94 anos) S. Socorro </p> 
+                    <p id="nova_idade_e_dia_da_semana" class="limit_box">40 anos quinta-feira </p> 
                 </div>
-                <span  class="material-symbols-outlined botao_para_expandir_opcoes">
+                <span  class="material-symbols-outlined span_expand_option">
                     more_vert
                 </span>
-                <div class="opcoes">
+                <div class="div_options">
                     <span  class="material-symbols-outlined icones_opcao">
                         send
                     </span>
@@ -78,7 +116,7 @@
                     <span  class="material-symbols-outlined icones_opcao">
                         content_copy
                     </span>
-                    <span  class="material-symbols-outlined icones_opcao remove_margem">
+                    <span  class="material-symbols-outlined icones_opcao remove_margin">
                         location_on
                     </span>
                 </div>
@@ -88,3 +126,23 @@
     </div>
 </body>
 </html>
+<script>
+    $('.span_expand_option').on('click',expand_option);
+    function expand_option(){
+        if($(this.nextElementSibling).css('display') === 'none'){
+            console.log('entrou');
+            $('.div_options').css('display','none');
+            $(this.nextElementSibling).css('display','flex');
+        }else{
+            $('.div_options').css('display','none');
+        }
+    }
+
+    $(window).on('click', recolher_todas_opcoes);
+    function recolher_todas_opcoes(){
+        if(!event.target.className.includes('span_expand_option') 
+        ){
+            $('.div_options').css('display','none');
+        }
+    }
+</script>
