@@ -26,7 +26,6 @@
         border: 2px solid #378db0;
         width: 320px;
     }
-
     #input_search_box:focus{
         border: 2px solid #378db0;
     }
@@ -39,9 +38,9 @@
         flex-direction: column;
         justify-content: center;
     }
-    .div_card_example p{
+    .session p{
         margin: 0;
-        color: #378db0;
+        color: #006f9b;
     }
     .account_circle{
         font-variation-settings:
@@ -51,13 +50,12 @@
         'opsz' 48;
         font-size: 48px;
         border-radius: 50%;
-        color: #378db0;
+        color: #006f9b;
+    }
+    .span_expand_option{
+        color: #106283;
     }
     .div_options{
-        display: none;
-    }
-    .div_options{
-        display: flex;
         align-items: center;
         justify-content: center;
         position: absolute;
@@ -72,26 +70,84 @@
         padding: 5px;
         right: 300px;
     }
-    .icones_opcao{
+    .name{
+        font-weight: bold;
+    }
+    .icon_option{
         margin-right: 10px;
         background-color: white;
         border-radius: 50%;
-        color: #106283;
-    }
-    .span_expand_option{
-        color: #106283;
+        color: #006f9b;
     }
     .remove_margin{
         margin: 0;
     }
+    .div_expand_filter{
+        display: flex;
+        color: #006f9b;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 10px;
+        margin-top: -10px;
+    }
+    .div_filters{
+        display: none;
+        flex-direction: column;
+        margin-bottom: 10px;
+        /* padding: 5px; */
+        border: 1px solid #004871 ;
+        border-radius: 10px 10px 0px 0px;
+        background-color: #004871;
+        min-width: 250px;
+        align-items: center;
+        text-align: center;
+        justify-content: center;
+        color: white;
+        /* #002040 #004e78 #7c828a5e aqui */
+    }
+    .div_filters p{
+        color: white;
+    } 
+    .div_title_box_filters{
+        /* background-color: #2e4963; */
+        display: flex;
+        align-items: center;
+    }
+    .div_content_filter{
+        display: flex;
+        width: 100%;
+        align-items: center;
+        justify-content: center;
+        padding: 5px;
+        background-color: #6b89a5;
+        max-width: 300px;
+    }
 </style>
 <body>
     <div class="session">
+        <!-- caixa de pesquisa -->
         <h1 class="title_page" >Example</h1>
         <div class="div_search_box" >
             <input type="text" name="" id="input_search_box" placeholder="🔍︎Search:" >
         </div>
-        
+        <!-- filtros -->
+        <div class="div_expand_filter" >
+            <span  class="material-symbols-outlined">
+                filter_list
+            </span>
+            <label for="Filtros">Filters</label>
+        </div>
+        <div class="div_filters">
+            <div class="div_title_box_filters">
+                <span  class="material-symbols-outlined">
+                    filter_list
+                </span>
+                <label for="Filtros">Filters</label>
+            </div>
+            <div class="div_content_filter" >
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit dignissimos ipsa cupiditate, mollitia vitae a pariatur necessitatibus ducimus architecto laborum in voluptate, dolores vero ratione vel recusandae. Repellendus, fuga a.</p>
+            </div>
+        </div>
         <!-- INICIO card padrão para clonar e replicar -->
         <div class="list" >
             <div class="div_card_example">
@@ -99,24 +155,24 @@
                     account_circle
                 </span>
                 <div class="div_info_card" >
-                    <p id="nome" class="limit_box" >Nome Exemplo</p> 
-                    <p id="data_idade_organizacao" class="limit_box">12/04/1930 (94 anos) S. Socorro </p> 
-                    <p id="nova_idade_e_dia_da_semana" class="limit_box">40 anos quinta-feira </p> 
+                    <p id="name" class="name" >Nome Exemplo</p> 
+                    <p id="data_idade_organizacao">12/04/1930 (94 anos) S. Socorro </p> 
+                    <p id="nova_idade_e_dia_da_semana">40 anos quinta-feira </p> 
                 </div>
                 <span  class="material-symbols-outlined span_expand_option">
                     more_vert
                 </span>
                 <div class="div_options">
-                    <span  class="material-symbols-outlined icones_opcao">
+                    <span  class="material-symbols-outlined icon_option">
                         send
                     </span>
-                    <span  class="material-symbols-outlined icones_opcao">
+                    <span  class="material-symbols-outlined icon_option">
                         featured_seasonal_and_gifts
                     </span>
-                    <span  class="material-symbols-outlined icones_opcao">
+                    <span  class="material-symbols-outlined icon_option">
                         content_copy
                     </span>
-                    <span  class="material-symbols-outlined icones_opcao remove_margin">
+                    <span  class="material-symbols-outlined icon_option remove_margin">
                         location_on
                     </span>
                 </div>
@@ -127,22 +183,34 @@
 </body>
 </html>
 <script>
+    //expande as opções
     $('.span_expand_option').on('click',expand_option);
     function expand_option(){
-        if($(this.nextElementSibling).css('display') === 'none'){
-            console.log('entrou');
-            $('.div_options').css('display','none');
-            $(this.nextElementSibling).css('display','flex');
+        const option_selected = $(this.nextElementSibling);
+        const all_options = $('.div_options');
+        if(option_selected.css('display') === 'none'){
+            all_options.css('display','none');
+            option_selected.css('display','flex');
         }else{
-            $('.div_options').css('display','none');
+            all_options.css('display','none');
         }
     }
-
+    //Recolhe as opções ao clicar fora
     $(window).on('click', recolher_todas_opcoes);
     function recolher_todas_opcoes(){
         if(!event.target.className.includes('span_expand_option') 
         ){
             $('.div_options').css('display','none');
+        }
+    }
+    //Expande a caixa de filtros
+    $('.div_expand_filter').on('click',expand_filter);
+    function expand_filter(){
+        const div_filters = $('.div_filters');
+        if(div_filters.css('display') === 'none'){
+            div_filters.css('display','flex');
+        }else{
+            div_filters.css('display','none');
         }
     }
 </script>
