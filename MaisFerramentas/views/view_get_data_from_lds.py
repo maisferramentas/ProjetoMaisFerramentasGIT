@@ -3,7 +3,7 @@ from .utils import *
 from MaisFerramentas.models import maisferramentas
 from .view_access_lcr import access_lcr
 from bs4 import BeautifulSoup
-
+import base64
 
 def get_data_from_lds(request):
     try:
@@ -197,6 +197,62 @@ def get_data_from_lds(request):
             # Salvar a instância no banco de dados
             tb_members_moved_out.save()
         #####################################################
+
+        #####################################################
+        # Captura as imagens dos membros
+        #####################################################
+        #Acessa a página de fotos
+        driver.get('https://lcr.churchofjesuschrist.org/api/photos/manage-photos/approved-image-individuals/355828?lang=eng')
+
+        # Extrair o HTML da página
+        html_content = driver.page_source
+
+        # Usar BeautifulSoup para analisar o HTML e encontrar o JSON
+        soup = BeautifulSoup(html_content, 'html.parser')
+        pre_tag = soup.find('pre')
+        json_text = pre_tag.text
+        data = json.loads(json_text)
+        
+        # Nova lista para armazenar os valores de `individualId` que não são `null`
+        individual_ids = []
+        
+        #Acessa O Json e extrai o Id dos membros com foto atualmente
+        # Acessar os objetos dentro de `data` e filtrar `individualId` que não são `null`
+        if isinstance(data, list):  # Verifica se data é uma lista
+            for item in data:
+                # Verificar se o campo 'image' existe e não é `null`
+                if 'image' in item and item['image'] is not None:
+                    image_info = item['image']
+                    # Verificar se o campo 'individualId' existe e não é `null`
+                    if 'individualId' in image_info and image_info['individualId'] is not None:
+                        individual_ids.append(image_info['individualId'])
+
+        #Criar uma pasta para armazenar as imagens
+        image_dir = 'media/user_images/'
+        if not os.path.exists(image_dir):
+            os.makedirs(image_dir)
+
+        #Loop para armazenar as fotos
+        for individual_id in individual_ids:
+            image_id = individual_id
+            image_url = f'https://lcr.churchofjesuschrist.org/api/avatar/{image_id}/MEDIUM?lang=eng'
+            driver.get(image_url)
+
+            # captura a imagem
+            img_element = driver.find_element(By.TAG_NAME, 'img')
+
+            #Tira print da imagem
+            image_data_base64 = img_element.screenshot_as_base64
+
+            # Decodificar o base64 para bytes
+            image_data = base64.b64decode(image_data_base64)
+
+            # Salvar a imagem no sistema de arquivos
+            image_path = os.path.join(image_dir, f'{image_id}.jpg')
+            with open(image_path, 'wb') as f:
+                f.write(image_data)
+        #####################################################
+
         # Fechar o navegador
         driver.quit()
 
