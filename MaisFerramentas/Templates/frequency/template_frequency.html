@@ -93,8 +93,16 @@
         margin-bottom: 10px;
         margin-top: -10px;
     }
+
+    .div_expand_filter_retract{
+        color: #006f9b!important;
+        background: none!important;
+        border: none!important;
+    }
+
     .div_filters{
-        display: none;
+        /* display: none; */
+        display: flex;
         flex-direction: column;
         margin-bottom: 10px;
         border: 1px solid /*#004871*/ #2f7fad;
@@ -117,7 +125,7 @@
         justify-content: center;
         padding: 5px;
         background-color: white;
-        max-width: 330px;
+        max-width: 320px;
         flex-direction: column;
     }
     .user_image{
@@ -142,7 +150,7 @@
         font-size: 15px;
     }
     .div_date{
-        width: 210px;
+        min-width: 210px;
         display: flex;
         justify-content: space-between;
     }
@@ -163,12 +171,6 @@
             <input type="text" name="" id="input_search_box" placeholder="🔍︎Search:" >
         </div>
         <!-- filtros -->
-        <div class="div_expand_filter" >
-            <span  class="material-symbols-outlined">
-                filter_list
-            </span>
-            <label for="Filtros">Filters</label>
-        </div>
         <div class="div_filters">
             <div class="div_title_box_filters">
                 <span  class="material-symbols-outlined">
@@ -212,7 +214,7 @@
                 <div class="div_info_card" >
                     <p id="name_line" class="name_line notranslate">Allysson Wyllian Santos Gomes</p> 
                     <p id="principal_info_line">1999-05-02 (25 years old) Elderes Quorum </p> 
-                    <p id="additional_info_line">40 anos quinta-feira </p> 
+                    <p id="additional_info_line">25 anos quinta-feira </p> 
                 </div>
                 <span  class="material-symbols-outlined span_expand_option">
                     more_vert
@@ -259,13 +261,17 @@
         }
     }
     //Expande a caixa de filtros
-    $('.div_expand_filter').on('click',expand_filter);
+    $('.div_filters').on('click',expand_filter);
+    expand_filter();
     function expand_filter(){
+        const div_content_filter = $('.div_content_filter');
         const div_filters = $('.div_filters');
-        if(div_filters.css('display') === 'none'){
-            div_filters.css('display','flex');
+        if(div_content_filter.css('display') === 'none'){
+            div_content_filter.css('display','flex');
+            div_filters.removeClass('div_expand_filter_retract') 
         }else{
-            div_filters.css('display','none');
+            div_content_filter.css('display','none');
+            div_filters.addClass('div_expand_filter_retract') 
         }
     }
 </script>
