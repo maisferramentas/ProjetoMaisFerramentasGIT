@@ -32,6 +32,7 @@
     .div_card_example{
         display: flex;
         align-items: center;
+        max-width: 360px;
     }
     .div_info_card{
         display: flex;
@@ -95,9 +96,9 @@
         flex-direction: column;
         margin-bottom: 10px;
         /* padding: 5px; */
-        border: 1px solid #004871 ;
+        border: 1px solid /*#004871*/ #2f7fad;
         border-radius: 10px 10px 0px 0px;
-        background-color: #004871;
+        background-color: /*#004871*/ #2f7fad;
         min-width: 330px;
         align-items: center;
         text-align: center;
@@ -122,6 +123,7 @@
         /* background-color: #6b89a5; */
         background-color: white;
         max-width: 330px;
+        flex-direction: column;
     }
     .user_image{
         height: 48px;
@@ -139,6 +141,10 @@
 
     #additional_info_line{
         font-size: 13.8px;
+    }
+    .div_content_filter label{
+        color: #006f9b;
+        font-size: 15px;
     }
 </style>
 <body>
@@ -164,7 +170,14 @@
                 <label for="Filtros">Filters</label>
             </div>
             <div class="div_content_filter" >
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit dignissimos ipsa cupiditate, mollitia vitae a pariatur necessitatibus ducimus architecto laborum in voluptate, dolores vero ratione vel recusandae. Repellendus, fuga a.</p>
+                <div>
+                    <label for="">Initial Date:</label>
+                    <input type="date" name="" id="">
+                </div>
+                <div>
+                    <label for="">End Date:</label>
+                    <input type="date" name="" id="">
+                </div>
             </div>
         </div>
         <!-- INICIO card padrão para clonar e replicar -->
@@ -175,7 +188,7 @@
                 </span> -->
                 <img src="/get_file?path=media/user_images/29012683707.jpg" class="user_image">
                 <div class="div_info_card" >
-                    <p id="name_line" class="name_line" >Allysson Wyllian Santos Gomes</p> 
+                    <p id="name_line" class="name_line notranslate">Allysson Wyllian Santos Gomes</p> 
                     <p id="principal_info_line">1999-05-02 (25 years old) Elderes Quorum </p> 
                     <p id="additional_info_line">40 anos quinta-feira </p> 
                 </div>
