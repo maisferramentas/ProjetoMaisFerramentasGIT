@@ -3,7 +3,13 @@ from django.contrib.auth.decorators import login_required
 from MaisFerramentas.views import views,view_aniversariantes,view_redirect,view_JOB_notifica_aniversariantes_email,view_get_data_from_lds,view_get_donations_from_lcr,view_frequency
 from django.contrib.auth.views import LogoutView
 
+from django.conf import settings
+from django.conf.urls.static import static
+from django.contrib import admin
+
 urlpatterns = [
+    path('admin/', admin.site.urls),
+
     path('ferramentas/', views.def_Ferramentas_template, name='def_Ferramentas_template'),
 
     path('ferramentas/frequencia', views.def_frequencia, name='def_frequencia'),
@@ -73,4 +79,8 @@ urlpatterns = [
 
     path('template_frequency', view_frequency.template_frequency, name='/template_frequency'),
 
+    path('get_file', views.def_get_file, name='/get_file'),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

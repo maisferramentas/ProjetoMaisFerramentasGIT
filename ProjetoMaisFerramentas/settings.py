@@ -34,6 +34,10 @@ ALLOWED_HOSTS = [
 ]
 
 
+import os
+# URL para acessar arquivos de mídia
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
 

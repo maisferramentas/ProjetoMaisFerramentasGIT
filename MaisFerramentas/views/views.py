@@ -26,6 +26,14 @@ def def_dados_frequencia(request):
     
     return JsonResponse({"data": data}, safe=False)
 
+from django.http import FileResponse, Http404
+from django.conf import settings
+import os
+
+def def_get_file(request):
+    path = request.GET.get('path')
+    return FileResponse(open(path, 'rb'))
+
 @never_cache
 def def_login(request):
     return render(request, 'login.html')

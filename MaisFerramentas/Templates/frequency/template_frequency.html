@@ -70,7 +70,7 @@
         padding: 5px;
         right: 300px;
     }
-    .name{
+    .name_line{
         font-weight: bold;
     }
     .icon_option{
@@ -123,16 +123,26 @@
         background-color: white;
         max-width: 300px;
     }
+    .user_image{
+        height: 48px;
+        width: 48px;
+        border-radius: 50px;
+        margin-right: 5px;
+    }
+
+    #principal_info_line{
+        font-size: 15px;
+    }
+
+    #additional_info_line{
+        font-size: 13px;
+    }
 </style>
 <body>
     
     <div class="session">
-        <!-- caixa de pesquisa -->
+        <!-- titulo e caixa de pesquisa -->
         <h1 class="title_page" >Example</h1>
-        
-        <img src="file:///C:/Projetos/ProjetoMaisFerramentasGIT/media/user_images/17107566775.jpg" alt="">
-
-
         <div class="div_search_box" >
             <input type="text" name="" id="input_search_box" placeholder="🔍︎Search:" >
         </div>
@@ -157,13 +167,14 @@
         <!-- INICIO card padrão para clonar e replicar -->
         <div class="list" >
             <div class="div_card_example">
-                <span  class="material-symbols-outlined account_circle">
+                <!-- <span  class="material-symbols-outlined account_circle">
                     account_circle
-                </span>
+                </span> -->
+                <img src="/get_file?path=media/user_images/29012683707.jpg" class="user_image">
                 <div class="div_info_card" >
-                    <p id="name" class="name" >Nome Exemplo</p> 
-                    <p id="data_idade_organizacao">12/04/1930 (94 anos) S. Socorro </p> 
-                    <p id="nova_idade_e_dia_da_semana">40 anos quinta-feira </p> 
+                    <p id="name_line" class="name_line" >Nome Exemplo</p> 
+                    <p id="principal_info_line">12/04/1930 (94 anos) S. Socorro </p> 
+                    <p id="additional_info_line">40 anos quinta-feira </p> 
                 </div>
                 <span  class="material-symbols-outlined span_expand_option">
                     more_vert
