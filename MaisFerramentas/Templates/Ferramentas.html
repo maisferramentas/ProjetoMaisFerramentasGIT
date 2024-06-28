@@ -101,6 +101,13 @@
         /* background-position: 400px 2px; */
         background-size: cover;
       }
+
+      .bodys{
+        background-image: url('/get_file?path=media/fundo/fundo.png'), linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
+        /* background-position: 400px 2px; */
+        background-size: cover;
+      }
+      
       /* body{
         background-image: url('https://assets.churchofjesuschrist.org/f8/2f/f82f8cfdb8b29e97db59341bb043d981e0ed321e/church_jesus_christ_lowfidelity_symbol.png');
         background-color: #999999!important;
@@ -1216,5 +1223,12 @@
     token = document.getElementsByName("csrfmiddlewaretoken")[0].value;
 
     assinatura_do_site = `Projeto MaisFerramentas - https://6x.work/+Ferramentas`;
+
+
+    $('#option_5').on('click',function(){
+      $('body').addClass('bodys');
+      $('span, p , label,h1').css('color','white');
+      
+    });    
   </script>
 </html>
