@@ -59,6 +59,7 @@
         color: #106283;
     }
     .div_options{
+        display: flex;
         align-items: center;
         justify-content: center;
         position: absolute;
@@ -66,13 +67,21 @@
         background-color: #016f9b99;
         transition: width 0.5s ease-in-out;
         z-index: 10;
-        right: 60px;
-        right: 20px;
         border-radius: 50px 50px 50px 50px;
         display: none;
         padding: 5px;
-        right: 280px\;
+        left: 465px;
+        right: auto;
+        
     }
+    @media only screen and (max-width: 600px) {
+        .div_options{
+            right: 30px;
+            left: auto;
+        }
+    }
+
+
     .name_line{
         font-weight: bold;
     }

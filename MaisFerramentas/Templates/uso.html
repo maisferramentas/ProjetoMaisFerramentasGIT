@@ -6,8 +6,11 @@
 
 --backend
 --Separar as views
---Criar banco postgres com o AWS
+--WebSocket
+--React
+--Java
 
+/;
 SELECT pg_terminate_backend(pid)
 FROM pg_stat_activity
 WHERE state = 'idle' AND backend_type = 'client backend'
